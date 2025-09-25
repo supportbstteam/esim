@@ -31,7 +31,7 @@ export default function Home() {
        <TravelPlans />
        <EasyStep />
 
-      </div> 
+      </div>
     </>
   );
 }
