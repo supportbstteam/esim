@@ -5,7 +5,7 @@ import { Plan } from "@/components/home/Plan";
 import TravelPlans from "@/components/home/TravelPlans";
 import { Journey } from "@/components/home/Journey";
 import { EasyStep } from "@/components/home/EasyStep";
-
+import TrustedTravel from '@/components/home/TrustedTravel';
 export default function Home() {
   return (
     <>
@@ -30,6 +30,7 @@ export default function Home() {
        <Journey />
        <TravelPlans />
        <EasyStep />
+       <TrustedTravel />
 
       </div>
     </>

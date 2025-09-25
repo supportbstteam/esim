@@ -1,7 +1,7 @@
 // components/TravelPlans.jsx
 import Link from 'next/link';
 import { IoIosArrowForward } from "react-icons/io";
-
+import PageTitle from '../ui/PageTitle';
 const TravelPlans = () => {
   const countries = [
     { name: "Eritrea", flag: "1.webp" },
@@ -21,14 +21,8 @@ const TravelPlans = () => {
   return (
     <section className="bg-white px-4 sm:px-6 md:px-[10%] py-8 md:py-12 mt-10">
       {/* Section Heading */}
-      <div className="text-center">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-          Country-Specific Travel Plan
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-500 mt-3 sm:mt-5">
-          Choose a plan that works in each country you travel to
-        </p>
-      </div>
+      <PageTitle title="Country-Specific Travel Plan" subtitle="Choose a plan that works in each country you travel to" />
+   
 
       {/* Cards */}
       <div className="mt-8 sm:mt-10 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
