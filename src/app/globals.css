@@ -6,23 +6,26 @@
 /* Custom utilities */
 
 @layer utilities {
+  body{
+    font-family: 'DM Sans', 'Arial', 'sans-serif';
+  }
     .h1 {
-        @apply text-[42px] font-semibold leading-[56px] text-[#1A0F33];
+        @apply  text-[42px] font-semibold leading-[56px] text-[#1A0F33];
     }
     .h2 {
-        @apply text-[32px] font-semibold leading-[44px] text-[#1A0F33];
+        @apply  text-[32px] font-semibold leading-[44px] text-[#1A0F33];
     }
     .h3 {
-        @apply text-2xl font-semibold leading-[32px] text-[#1A0F33];
+        @apply  text-2xl font-semibold leading-[32px] text-[#1A0F33];
     }
      .h4 {
-        @apply text-[20px] font-semibold leading-[32px] text-[#1A0F33];
+        @apply  text-[20px] font-semibold leading-[32px] text-[#1A0F33];
     }
     .subtext {
-        @apply text-[#64748B] text-[16px] leading-6;
+        @apply  text-[#64748B] text-[16px] leading-6;
     }
     .container {
-        @apply max-w-[1320px] px-4 mx-auto md:px-0;
+        @apply  max-w-[1320px] px-4 mx-auto md:px-0;
     }
 }
 .scrollbar-hide::-webkit-scrollbar {
@@ -72,6 +75,54 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+        }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+        }
+    }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+        }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+        }
+    }
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+        }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+        }
+    }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+        }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+        }
+    }
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+        }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+        }
+    }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+        }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+        }
+    }
   @keyframes marquee {
   from {
     transform: translateX(0);
@@ -166,4 +217,44 @@
   body {
     @apply bg-background text-foreground;
     }
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 20s) linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse var(--duration, 20s) linear infinite;
+}
+.bg_wrap {
+  position: relative;
+  background: url('/bg_ring.png');
+  background-repeat: no-repeat;
+  background-size: 450px;
+  background-position: bottom right;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 36;
 }

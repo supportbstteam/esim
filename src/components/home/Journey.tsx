@@ -8,12 +8,12 @@ import { TbBrandWhatsapp } from "react-icons/tb";
 
 export const Journey = () => {
     return (
-       <div className="bg-[#E5EFF780] px-6 md:px-[10%] py-12 mt-10">
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+       <div className="bg-[#E5EFF780] px-6 md:px-[10%] py-12 mt-10 ">
+  <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
     {/* Right Image - Mobile first */}
     <div className="order-1 md:order-2 flex justify-center md:justify-end">
-      <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
+      <div className="relative w-full ">
         <img
           src="/journey.png"
           alt="Phone with eSIM"
@@ -24,7 +24,7 @@ export const Journey = () => {
 
     {/* Left Content */}
     <div className="order-2 md:order-1">
-      <h1 className="text-[#1A0F33] font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight">
+      <h1 className="h1 leading-tight">
         One eSIM, Unlimited Journeys
       </h1>
       <h4 className="text-[#64748B] text-lg sm:text-xl mt-4">
@@ -32,8 +32,9 @@ export const Journey = () => {
         your trip, not your SIM.
       </h4>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-18">
         <div>
+          <span className="material-symbols-outlined">sim_card</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold">
             Instant Activation
           </h5>
@@ -43,6 +44,7 @@ export const Journey = () => {
           </p>
         </div>
         <div>
+          <span className="material-symbols-outlined">airplane_ticket</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold">
             Affordable Plans
           </h5>
@@ -51,6 +53,7 @@ export const Journey = () => {
           </p>
         </div>
         <div>
+          <span className="material-symbols-outlined">encrypted</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold">
             Secure & Private
           </h5>
@@ -60,6 +63,7 @@ export const Journey = () => {
           </p>
         </div>
         <div>
+          <span className="material-symbols-outlined">map</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold">
             Trusted by Travelers
           </h5>

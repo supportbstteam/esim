@@ -6,13 +6,14 @@ import TravelPlans from "@/components/home/TravelPlans";
 import { Journey } from "@/components/home/Journey";
 import { EasyStep } from "@/components/home/EasyStep";
 import TrustedTravel from '@/components/home/TrustedTravel';
+import FAQ from "@/components/home/Faq";
 export default function Home() {
   return (
     <>
       <div className="min-h-screen bg-white">
         <HeroSection />
          
-        <div className="bg-[#133365] p-8 text-[#FFFFFF]">
+        <div className="bg-[#133365] p-5 text-[#FFFFFF]">
         <Marquee
           items={[
             "Global Coverage",
@@ -31,6 +32,7 @@ export default function Home() {
        <TravelPlans />
        <EasyStep />
        <TrustedTravel />
+       <FAQ />
 
       </div>
     </>

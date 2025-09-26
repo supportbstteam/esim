@@ -8,16 +8,13 @@ import { TbBrandWhatsapp } from "react-icons/tb";
 
 export const Footer = () => {
     return (
-        <footer className="bg-blue-900 text-white px-6 md:px-[10%] py-12 mt-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-20">
+        <footer className=" bg-[#052766] text-white  md:px-[10%] py-12 pt-25">
+            <div className="max-w-[1380px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-10">
                 {/* Logo & About */}
-                <div>
-                    <img src={`/footerLogo.png`} alt="footerLogo" className="w-36" />
-                    <p className="mt-4 text-sm leading-relaxed text-gray-300">
-                        It is a long established fact that a reader will be distracted by
-                        the readable content of a page when looking at its layout. The point
-                        of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution of letters.
+                <div className="md:col-span-2 pr-15">
+                    <img src={`/footerLogo.png`} alt="footerLogo" className="w-[115px]" />
+                    <p className="mt-4 subtext  !text-gray-300">
+                       We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless connectivity in 200+ countries.
                     </p>
                 </div>
 
@@ -86,17 +83,17 @@ export const Footer = () => {
                 <div>
                     <h4 className="text-lg  mb-4">Connect With Us</h4>
                     <div className="flex gap-5  text-2xl">
-                        <LuFacebook />
-                        <RiTwitterXFill />
-                        <MdOutlineEmail />
-                        <CiLinkedin />
-                        <TbBrandWhatsapp />
+                        <LuFacebook className="h-10 w-10" />
+                        <RiTwitterXFill className="h-10 w-10"  />
+                        <MdOutlineEmail className="h-10 w-10"   />
+                        <CiLinkedin  className="h-10 w-10"  />
+                        <TbBrandWhatsapp  className="h-10 w-10"  />
                     </div>
                 </div>
             </div>
 
             {/* Divider */}
-            <div className="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-400">
+            <div className="border-t mt-20 border-white  pt-6 text-center text-sm text-white">
                 © {new Date().getFullYear()} Your Company. All rights reserved.
             </div>
         </footer>

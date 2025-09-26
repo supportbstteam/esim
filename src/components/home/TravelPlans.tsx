@@ -19,7 +19,7 @@ const TravelPlans = () => {
   ];
 
   return (
-    <section className="bg-white px-4 sm:px-6 md:px-[10%] py-8 md:py-12 mt-10">
+    <section className="bg-white px-0  mt-25 container">
       {/* Section Heading */}
       <PageTitle title="Country-Specific Travel Plan" subtitle="Choose a plan that works in each country you travel to" />
    
@@ -54,7 +54,7 @@ const TravelPlans = () => {
       </div>
 
       {/* Explore Button */}
-      <div className="flex justify-center mt-6 sm:mt-8 text-gray-600 hover:text-green-600 transition">
+      <div className="flex justify-center mt-12 sm:mt-8 text-gray-600 hover:text-green-600 transition">
         <Link
           href="#"
           className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium"

@@ -1,16 +1,18 @@
 // components/HeroSection.jsx
 export default function HeroSection() {
     return (
-        <section className="relative bg-white flex flex-col-reverse md:flex-row items-center px-4 sm:px-6 md:px-[10%] py-8 md:py-12">
+        <section className=" relative bg-white  px-4 sm:px-6 md:px-[10%] py-8 md:py-12 bg_wrap">
             {/* Left Content */}
-            <div className="md:w-1/2 space-y-6 flex flex-col justify-center text-center md:text-left">
+           <div className="container flex flex-col-reverse md:flex-row items-center">
+
+            <div className="md:w-1/2 space-y-6 flex flex-col justify-center text-center md:text-left ">
                 {/* Badge */}
-                <span className="inline-block w-full sm:w-[70%] md:w-[60%] mx-auto md:mx-0 bg-gray-100 px-4 py-2 rounded-full text-xs sm:text-sm md:text-base">
-                    <span className="font-semibold text-[#1A0F33]">E-Sim Aero:</span> World’s No. 1 E-Sim Provider
+                <span className="flex items-center  w-fit mx-auto md:mx-0 bg-[#DBE6F966] px-4 py-3 rounded-full text-[#1A0F33] text-xs sm:text-sm md:text-base">
+                 <img src="/Vector_best.png" className="h-[19px] mr-2"  />   <span className="font-semibold text-[#1A0F33]">E-Sim Aero:</span> World’s No. 1 E-Sim Provider
                 </span>
 
                 {/* Headline */}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold text-gray-900 leading-snug md:leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight">
                     Affordable <span className="text-green-500">eSIM</span> Data for International Travel
                 </h1>
 
@@ -20,12 +22,12 @@ export default function HeroSection() {
                 </p>
 
                 {/* Destination Selector */}
-                <div className="flex mt-4 sm:mt-6 w-full sm:w-[90%] md:w-[75%] mx-auto md:mx-0 px-3 sm:px-4 py-2 sm:py-3 rounded-full border border-green-500 hover:bg-green-50 transition">
+                <div className="flex mt-4 sm:mt-6 w-full sm:w-[90%] md:w-[75%] mx-auto md:mx-0 px-3  sm:px-4 py-1  rounded-full border border-[#3BC852] hover:bg-green-50 transition !pr-1">
                     {/* Input */}
                     <input
                         type="text"
                         placeholder="Choose Your Destination"
-                        className="flex-1 bg-transparent text-green-700 placeholder-green-500 text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-green-400"
+                        className="flex-1 bg-transparent text-[#006110] placeholder-[#006110] text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-green-400"
                     />
 
                     {/* Button */}
@@ -53,11 +55,12 @@ export default function HeroSection() {
             <div className="w-full md:w-1/2 flex justify-center md:justify-end mb-6 md:mb-0">
                 <div className="relative w-[70%] sm:w-[60%] md:w-[90%] lg:w-[85%]">
                     <img
-                        src="/mobile2.png"
+                        src="/glob_new.png"
                         alt="Phone with eSIM"
                         className="w-full h-auto object-contain"
                     />
                 </div>
+            </div>
             </div>
         </section>
 

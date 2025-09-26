@@ -1,6 +1,6 @@
 import React from 'react'
 import PageTitle from '../ui/PageTitle'
-// import {QuoteSlider} from '@/components/ui/QuoteSlider';
+import {QuoteSlider} from '@/components/ui/QuoteSlider';
 function TrustedTravel() {
   return (
     <div>
@@ -13,7 +13,7 @@ function TrustedTravel() {
         />
 
         <div className="mt-18">
-            {/* <QuoteSlider /> */}
+            <QuoteSlider />
         </div>
     </div>
   )
