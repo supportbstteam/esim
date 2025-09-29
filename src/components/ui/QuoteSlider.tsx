@@ -3,7 +3,7 @@
 import React, { JSX, useState } from "react";
 import { Marquee } from "@/components/ui/marquee"; // path to your Marquee
 import QuoteCard from "./QuoteCard"; // import your QuoteCard
-import { ArrowRight, ChevronRight } from "lucide-react";
+import {ChevronRight } from "lucide-react";
 interface Quote {
   quote: string;
   name: string;
