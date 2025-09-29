@@ -26,7 +26,7 @@ export const Plan = () => {
       {/* Plans List */}
       <div className="mt-8 space-y-5">
         {plans.map((plan) => {
-          // console.log("------- list of the  plans -----", plan)
+          console.log("------- list of the  plans -----", plan)
           return (
             <div
               key={plan.id}
@@ -41,13 +41,18 @@ export const Plan = () => {
                   alt={plan.country}
                   className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
                 /> */}
-                  <p className="text-base sm:text-lg text-[#1A0F33] font-medium">{plan?.country?.name}</p>
+                  <p className="text-base  sm:text-lg text-[#1A0F33] font-medium">{plan?.country?.name}</p>
                 </div>
 
                 {/* Plan Info */}
-                <div className="text-sm sm:text-base text-center sm:text-left text-gray-700 ">
-                  <span className="text-[#64748B94]">Internet:</span> {plan?.data}GB
-                </div>
+                {
+                  plan?.data && plan?.validityDays && <div className="text-sm sm:text-base text-center sm:text-left text-gray-700 ">
+                    <span className="text-[#64748B94]">Starter:</span> <span className="text-lg sm:text-xl font-semibold text-center sm:text-left text-gray-800">
+                      {plan.data}GB / {plan.validityDays} days
+                    </span>
+                  </div>
+                }
+
 
                 {/* Price */}
                 <div className="text-sm sm:text-base md:text-lg bg-[#F3F5F7] rounded-2xl px-4 sm:px-6 py-2 font-bold">
