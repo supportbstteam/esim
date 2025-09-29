@@ -3,23 +3,24 @@ import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import ReduxProvider from "@/providers/reduxProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap", 
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap", 
+  display: "swap",
 });
 
 const dmSans = DM_Sans({
-  variable: "--font-dm-sans", 
+  variable: "--font-dm-sans",
   subsets: ["latin"],
-  display: "swap", 
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -45,13 +46,15 @@ export default function RootLayout({
           rel="stylesheet"
         /> */}
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`} // Apply all fonts here
-      >
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
+      <ReduxProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`} // Apply all fonts here
+        >
+          <Navbar />
+          {children}
+          <Footer />
+        </body>
+      </ReduxProvider>
     </html>
   );
 }
