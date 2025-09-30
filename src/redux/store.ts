@@ -3,11 +3,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import countrySlice from "./slice/CountrySlice"
 import planSlice from "./slice/PlanSlice"
+import userSlice from "./slice/UserSlice"
 export const store = configureStore({
     reducer: {
         country: countrySlice,
-        plan: planSlice
-
+        plan: planSlice,
+        user: userSlice
     },
 });
 

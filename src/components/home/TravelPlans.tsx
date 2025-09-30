@@ -6,20 +6,6 @@ import { useAppSelector } from '@/redux/store';
 const TravelPlans = () => {
 
   const { countries } = useAppSelector((state) => state?.country);
-  // const countries = [
-  //   { name: "Eritrea", flag: "1.webp" },
-  //   { name: "Japan", flag: "2.webp" },
-  //   { name: "Belarus", flag: "3.webp" },
-  //   { name: "Italy", flag: "4.webp" },
-  //   { name: "El Salvador", flag: "5.webp" },
-  //   { name: "Bolivia", flag: "6.webp" },
-  //   { name: "Djibouti", flag: "7.webp" },
-  //   { name: "Ecaudor", flag: "8.webp" },
-  //   { name: "Gabon", flag: "9.webp" },
-  //   { name: "Brazil", flag: "10.webp" },
-  //   { name: "United States Of America", flag: "11.webp" },
-  //   { name: "Iraq", flag: "12.webp" },
-  // ];
 
   return (
     <section className="bg-white px-0  mt-25 container">
