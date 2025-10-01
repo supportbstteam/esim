@@ -37,14 +37,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* You no longer need these links because next/font will automatically handle font loading */}
-        {/* <link
+        <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
           rel="stylesheet"
         />
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
           rel="stylesheet"
-        /> */}
+        /> 
       </head>
       <ReduxProvider>
         <body

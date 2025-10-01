@@ -5,7 +5,8 @@ import * as Yup from "yup";
 import { useAppDispatch } from "@/redux/store";
 import { loginUser, signupUser } from "@/redux/slice/UserSlice";
 import toast from "react-hot-toast";
-
+import Image from "next/image";
+import Success from "./Success";
 type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -70,6 +71,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         }
     };
 
+    const[ showForgotPassword, setShowForgotPassword ] = useState(false);
+
     if (!isOpen) return null;
 
     return (
@@ -77,170 +80,214 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 "
             onClick={onClose}
         >
-            <div className="flex bg-white w-full px-4 md:px-0  md:!w-[835px] md:h-[630px]">
-                <div className="w-[40%] py-14 px-[25px] bg-[#D0DFF4]">
-                    <h2 className="h1">Your Gateway to Smarter Connectivity</h2>
-                    <p className="mt-9 subtext">
-                        Log in or sign up to explore affordable, secure, and borderless mobile experiences.
-                    </p>
+          
+            <div className="flex bg-white w-full px-4 md:px-0  md:!w-[835px] md:h-[624px]">
+                <div className="w-[40%]  bg-[#D0DFF4]">
+                    <Image src="/new_esim1.png" alt="main login" className="h-full object-cover object-left" width={700} height={700} />
                 </div>
                 <div
-                    className="w-[60%] px-14 py-5 bg-white"
+                    className={`w-[60%] px-14 py-5 bg-white flex items-start flex-col ${!showForgotPassword ? 'justify-center pt-6' : 'justify-start' }`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Toggle Buttons */}
-                     <h2 className="h2 text-start">
-                     {isLogin ? "Welcome Back" : "Create Your Account"}
+                    { !showForgotPassword  ? (
+                    //   <Success />
+                    <div className="account_log w-full">
+                        <h2 className="h2 text-start">
+                            {isLogin ? "Welcome Back" : "Create Your Account"}
 
-                     </h2>
-                    <div className="flex justify-center mb-6  mt-6 bg-[#F3F5F7] rounded-2xl ">
-                        <button
-                            className={`px-6 py-2 w-full rounded-2xl font-semibold ${!isLogin ? "bg-[#3BC85221] text-[#3BC852] " : "bg-[#F3F5F7] text-gray-700 "
-                                }`}
-                            onClick={() => setIsLogin(false)}
-                            disabled={!isLogin}
-                        >
-                            Register
-                        </button>
-                        <button
-                            className={`px-6 py-2 w-full rounded-2xl  font-semibold ${isLogin ? "bg-[#3BC85221] text-[#3BC852] " : "bg-[#F3F5F7] text-gray-700 "
-                                }`}
-                            onClick={() => setIsLogin(true)}
-                            disabled={isLogin}
-                        >
-                            Login
-                        </button>
+                        </h2>
+                        <div className="flex justify-center items-center mb-6  mt-6 bg-[#F3F5F7] rounded-2xl  w-full">
+                            <button
+                                className={`px-6 py-2 w-full rounded-2xl font-semibold ${!isLogin ? "bg-[#3BC85221] text-[#3BC852] " : "bg-[#F3F5F7] text-gray-700 "
+                                    }`}
+                                onClick={() => setIsLogin(false)}
+                                disabled={!isLogin}
+                            >
+                                Register
+                            </button>
+                            <button
+                                className={`px-6 py-2 w-full rounded-2xl  font-semibold ${isLogin ? "bg-[#3BC85221] text-[#3BC852] " : "bg-[#F3F5F7] text-gray-700 "
+                                    }`}
+                                onClick={() => setIsLogin(true)}
+                                disabled={isLogin}
+                            >
+                                Login
+                            </button>
+                        </div>
+
+                        {/* ======= Form ======= */}
+                        {isLogin ? (
+                            <Formik
+                                initialValues={loginInitialValues}
+                                validationSchema={loginValidationSchema}
+                                onSubmit={handleLoginSubmit}
+                            >
+                                <Form className="space-y-6 w-full">
+                                    {/* Email */}
+                                    <div>
+                                        <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+                                            Email ID <span className="text-[#E33629]">*</span>
+                                        </label>
+                                        <Field
+                                            name="email"
+                                            type="email"
+                                            autoComplete="username"
+                                            placeholder="Enter your email Id"
+                                            className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
+                                    </div>
+
+                                    {/* Password */}
+                                    <div>
+                                        <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
+                                            Password <span className="text-[#E33629]">*</span>
+                                        </label>
+                                        <Field
+                                            name="password"
+                                            type="password"
+                                            autoComplete="current-password"
+                                            placeholder="*******"
+                                            className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="flex items-center gap-2">
+                                            <input type="checkbox" name="rememberMe" className="ancent-[#0000]" />
+                                            <label htmlFor="rememberMe" className="subtext !text-sm text-gray-700">
+                                                Remember Me
+                                            </label>
+                                        </span>
+                                        <button onClick={()=>setShowForgotPassword(true)} className="text-sm subtext hover:underline ml-auto">
+                                            Forgot Password?
+                                        </button>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="w-full py-3 bg-[#3BC852] text-white font-semibold rounded-4xl  transition"
+                                    >
+                                        Submit
+                                    </button>
+                                </Form>
+                            </Formik>
+                        ) : (
+                            <Formik
+                                initialValues={signupInitialValues}
+                                validationSchema={signupValidationSchema}
+                                onSubmit={handleSignupSubmit}
+                            >
+                                <Form className="space-y-6">
+                                    {/* First Name */}
+                                    <div className="flex gap-3">
+                                        <div className="">
+                                            <label htmlFor="firstName" className="block mb-1 font-medium text-gray-700">
+                                                First Name <span className="text-[#E33629]">*</span>
+                                            </label>
+                                            <Field
+                                                name="firstName"
+                                                type="text"
+                                                autoComplete="given-name"
+                                                    placeholder="First Name"
+                                                className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
+                                            <ErrorMessage name="firstName" component="div" className="mt-1 text-red-600 text-sm" />
+                                        </div>
+
+                                        {/* Last Name */}
+                                        <div className="">
+                                            <label htmlFor="lastName" className="block mb-1 font-medium text-gray-700">
+                                                Last Name <span className="text-[#E33629]">*</span>
+                                            </label>
+                                            <Field
+                                                name="lastName"
+                                                type="text"
+                                                placeholder="Last Name"
+                                                autoComplete="family-name"
+                                                className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
+                                            <ErrorMessage name="lastName" component="div" className="mt-1 text-red-600 text-sm" />
+                                        </div>
+                                    </div>
+                                    {/* Email */}
+                                    <div>
+                                        <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+                                            Email ID <span className="text-[#E33629]">*</span>
+                                        </label>
+                                        <Field
+                                            name="email"
+                                            type="email"
+                                            autoComplete="email"
+                                            placeholder="Enter your email Id"
+                                            className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
+                                    </div>
+
+                                    {/* Password */}
+                                    <div>
+                                        <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
+                                            Password <span className="text-[#E33629]">*</span>
+                                        </label>
+                                        <Field
+                                            name="password"
+                                            type="password"
+                                            autoComplete="new-password"
+                                            placeholder="*******"
+                                            className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
+                                    </div>
+
+
+
+                                    <button
+                                        type="submit"
+                                        className="w-full py-3 bg-[#3BC852] text-white font-semibold rounded-4xl  transition"
+                                    >
+                                        Submit
+                                    </button>
+                                </Form>
+                            </Formik>
+                        )}
                     </div>
-
-                    {/* ======= Form ======= */}
-                    {isLogin ? (
-                        <Formik
-                            initialValues={loginInitialValues}
-                            validationSchema={loginValidationSchema}
-                            onSubmit={handleLoginSubmit}
-                        >
-                            <Form className="space-y-6">
-                                {/* Email */}
-                                <div>
-                                    <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
-                                        Email
-                                    </label>
-                                    <Field
-                                        name="email"
-                                        type="email"
-                                        autoComplete="username"
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
-                                </div>
-
-                                {/* Password */}
-                                <div>
-                                    <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
-                                        Password
-                                    </label>
-                                    <Field
-                                        name="password"
-                                        type="password"
-                                        autoComplete="current-password"
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="w-full py-3 bg-[#3BC852] text-white font-semibold rounded-md  transition"
-                                >
-                                    Submit
-                                </button>
-                            </Form>
-                        </Formik>
                     ) : (
-                        <Formik
-                            initialValues={signupInitialValues}
-                            validationSchema={signupValidationSchema}
-                            onSubmit={handleSignupSubmit}
-                        >
-                            <Form className="space-y-6">
-                                {/* First Name */}
-                                <div className="flex gap-3">
-                                    <div className="">
-                                        <label htmlFor="firstName" className="block mb-1 font-medium text-gray-700">
-                                            First Name
-                                        </label>
-                                        <Field
-                                            name="firstName"
-                                            type="text"
-                                            autoComplete="given-name"
-                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        />
-                                        <ErrorMessage name="firstName" component="div" className="mt-1 text-red-600 text-sm" />
-                                    </div>
-
-                                    {/* Last Name */}
-                                    <div className="">
-                                        <label htmlFor="lastName" className="block mb-1 font-medium text-gray-700">
-                                            Last Name
-                                        </label>
-                                        <Field
-                                            name="lastName"
-                                            type="text"
-                                            autoComplete="family-name"
-                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        />
-                                        <ErrorMessage name="lastName" component="div" className="mt-1 text-red-600 text-sm" />
-                                    </div>
-                                </div>
-                                {/* Email */}
-                                <div>
-                                    <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
-                                        Email
-                                    </label>
-                                    <Field
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
-                                </div>
-
-                                {/* Password */}
-                                <div>
-                                    <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
-                                        Password
-                                    </label>
-                                    <Field
-                                        name="password"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
-                                </div>
-
-                                <div>
-                                    <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
-                                        Referral Coupon
-                                    </label>
-                                    <Field
-                                        name="password"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="w-full py-3 bg-[#3BC852] text-white font-semibold rounded-md hover:bg-blue-700 transition"
-                                >
-                                    Submit
-                                </button>
-                            </Form>
+                    <div className="forgot w-full mt-5">
+                       <button onClick={()=>setShowForgotPassword(false)} className="mb-6 flex items-center gap-2 text-gray-700 ">
+                        <span className="material-symbols-outlined rotate-180">east</span>
+                      <span className="text-sm subtext">Back</span>
+                        </button>
+                        <h2 className="h2 text-start w-full">
+                            Forgot Your Password?
+                        </h2>
+                        <p className="subtext text-start my-8 whitespace-nowrap">Don’t worry—we’ll help you reset it in just a few steps</p>
+                          <Formik
+                                initialValues={loginInitialValues}
+                                validationSchema={loginValidationSchema}
+                                onSubmit={handleLoginSubmit}
+                            >
+                        <Form>
+                            <div>
+                                <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+                                    Email ID <span className="text-[#E33629]">*</span>
+                                </label>
+                                <Field
+                                    name="email"
+                                    type="email"
+                                    autoComplete="username"
+                                    placeholder="Enter your email Id"
+                                    className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                                <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
+                            </div>
+                            <button  type="submit"
+                                        className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl  transition" >
+                                Submit
+                            </button>
+                        </Form>
                         </Formik>
+                    </div>
                     )}
                 </div>
             </div>

@@ -2,9 +2,10 @@
 'use client';
 import { useState } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
-
+import AuthModal from './modals/AuthModal';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showlogin, setShowlogin] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -30,7 +31,7 @@ export default function Navbar() {
 
         {/* Desktop Button */}
         <div className="hidden md:block">
-          <button className="bg-[#133365] text-[#FFFFFF] px-6 py-4 rounded-full hover:bg-blue-900 transition cursor-pointer">
+          <button onClick={()=>{setShowlogin(true)}} className="bg-[#133365] text-[#FFFFFF] px-6 py-4 rounded-full hover:bg-blue-900 transition cursor-pointer">
             Get eSIM Card
           </button>
         </div>
@@ -54,13 +55,14 @@ export default function Navbar() {
             <li className="hover:text-green-500 cursor-pointer transition">Support</li>
             <li className="hover:text-green-500 cursor-pointer transition">Partner Program</li>
             <li>
-              <button className="bg-[#133365] text-[#FFFFFF] px-6 py-2 rounded-full hover:bg-blue-900 transition">
+              <button onClick={()=>{setShowlogin(true)}} className="bg-[#133365] text-[#FFFFFF] px-6 py-2 rounded-full hover:bg-blue-900 transition">
                 Get eSIM Card
               </button>
             </li>
           </ul>
         </div>
       </div>
+      <AuthModal isOpen={showlogin} onClose={()=>setShowlogin(false)} />
     </nav>
   );
 }
