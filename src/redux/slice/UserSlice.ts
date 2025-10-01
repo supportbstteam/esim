@@ -59,7 +59,7 @@ export const signupUser = createAsyncThunk<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await api({
       method: "POST",
-      url: "/user/signup",
+      url: "/user/verify-otp",
       data: payload
     });
 
@@ -100,16 +100,39 @@ export const fetchUserDetails = createAsyncThunk<User, void>(
       const token = Cookies.get("token");
       if (!token) throw new Error("No token found");
 
-      const res = await axios.get("/api/user/details", {
-        headers: { Authorization: `Bearer ${token}` },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: any = await api({
+        url: "user/details",
+        method: "GET"
       });
-      return res.data;
+
+      return res;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
+
+// Verify OTP
+export const verifyOtp = createAsyncThunk<
+  { user: User; token: string },
+  { email: string; otp: string }
+>("user/verifyOtp", async (payload, { rejectWithValue }) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const res: any = await api({
+      method: "POST",
+      url: "/user/signup",
+      data: payload,
+    });
+
+    return { user: res.data, token: res.data.token }; // make sure backend returns token after verification
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
 
 // =====================
 // Slice
@@ -174,6 +197,24 @@ const userSlice = createSlice({
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     builder.addCase(fetchUserDetails.rejected, (state, action: PayloadAction<any>) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Verify OTP
+    builder.addCase(verifyOtp.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(verifyOtp.fulfilled, (state, action: PayloadAction<{ user: User; token: string }>) => {
+      state.loading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isAuth = true;
+      Cookies.set("token", action.payload.token);
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    builder.addCase(verifyOtp.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false;
       state.error = action.payload;
     });

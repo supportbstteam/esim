@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useEffect } from "react";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { fetchPlans } from "@/redux/thunk/planThunk";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
@@ -18,15 +19,17 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchCountries());
+      await dispatch(fetchUserDetails());
       await dispatch(fetchPlans({ countryId: "all" }));
     }
     fetchData();
   }, [dispatch]);
 
   const { countries } = useAppSelector((state) => state?.country);
-  const {plans} = useAppSelector((state) => state?.plan);
+  const { plans } = useAppSelector((state) => state?.plan);
+  const { user } = useAppSelector((state) => state?.user);
 
-  console.log("--- plans ----", plans);
+  console.log("--- user ----", user);
 
   return (
     <>
