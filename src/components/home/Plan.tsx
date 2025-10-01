@@ -10,11 +10,12 @@ export const Plan = () => {
   const { plans } = useAppSelector((state) => state?.plan);
   const { user, isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const router = useRouter();
 
-  // Handler for adding to cart
-  const handleAddToCart = (plan) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleAddToCart = (plan:any) => {
     if (!isAuth) {
       setSelectedPlan(plan);      // Save selected plan to state
       setIsAuthModal(true);       // Open auth modal

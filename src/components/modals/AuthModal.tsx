@@ -10,6 +10,7 @@ import Success from "./Success";
 type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
+    onAuthSuccess: () => void;
 };
 
 const otpValidationSchema = Yup.object({
@@ -18,7 +19,7 @@ const otpValidationSchema = Yup.object({
         .matches(/^\d{4,6}$/, "OTP must be 4 to 6 digits"), // adjust length if needed
 });
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess }) => {
     const dispatch = useAppDispatch();
     const [isLogin, setIsLogin] = useState(true);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -53,6 +54,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             if (response?.type === 'user/login/fulfilled') {
                 toast.success("Login successful");
                 onClose(); // Close modal on success
+                onAuthSuccess();
             }
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,6 +103,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 setLoading(false);
                 setShowVerifyOtp(false);
                 onClose();
+                onAuthSuccess();
             }
             console.log("--- OTP verify response ----", response);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
