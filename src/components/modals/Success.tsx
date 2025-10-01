@@ -3,10 +3,10 @@ import Image from 'next/image'
 function Success() {
     return (
         <div>
-            <h2 className="h1">
+            <h2 className="h2">
                 Your account has been successfully created.
             </h2>
-            <Image src="/succes.gif" alt="success" width={200} height={200} className="mx-auto my-4 rounded-full" />
+            <Image src="/succes.gif" alt="success" width={200} height={200} className="mx-auto my-6 rounded-full" />
 
           
         </div>

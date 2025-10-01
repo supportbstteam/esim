@@ -50,6 +50,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     };
 
     const handleSignupSubmit = async (values: typeof signupInitialValues) => {
+       setShowVerifyOtp(true);
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const response: any = await dispatch(
@@ -71,7 +72,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         }
     };
 
-    const[ showForgotPassword, setShowForgotPassword ] = useState(false);
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const[showVerifyOtp, setShowVerifyOtp] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     if (!isOpen) return null;
 
@@ -80,17 +83,62 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 "
             onClick={onClose}
         >
-          
+
             <div className="flex bg-white w-full px-4 md:px-0  md:!w-[835px] md:h-[624px]">
                 <div className="w-[40%]  bg-[#D0DFF4]">
                     <Image src="/new_esim1.png" alt="main login" className="h-full object-cover object-left" width={700} height={700} />
                 </div>
                 <div
-                    className={`w-[60%] px-14 py-5 bg-white flex items-start flex-col ${!showForgotPassword ? 'justify-center pt-6' : 'justify-start' }`}
+                    className={`w-[60%] px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Toggle Buttons */}
-                    { !showForgotPassword  ? (
+                    {showSuccess ? (
+                        <Success />
+                    ) : showVerifyOtp ? (
+                    
+                    <div className="otp-verification w-full mt-5">
+                        <button onClick={() => setShowVerifyOtp(false)} className="mb-6 flex items-center gap-2 text-gray-700">
+                            <span className="material-symbols-outlined rotate-180">east</span>
+                            <span className="text-sm subtext">Back</span>
+                        </button>
+                        <h2 className="h2 text-start">Verify Your Identity</h2>
+                        <p className="subtext text-start my-4">We’ve sent a 6-digit verification code to your registered email address.</p>
+
+                        <Formik
+                            initialValues={{ otp: "" }}
+                            onSubmit={(values) => {
+                                console.log("OTP Submitted:", values.otp);
+                                setShowVerifyOtp(false);
+                                setShowSuccess(true); // ✅ move to success screen
+                            }}
+                        >
+                            <Form className="space-y-6">
+                                <div>
+                                    <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+                                            Enter Verification Code <span className="text-[#E33629]">*</span>
+                                        </label>
+                                    <Field
+                                        name="otp"
+                                        type="text"
+                                        placeholder="Verification Code"
+                                        className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <ErrorMessage name="otp" component="div" className="mt-1 text-red-600 text-sm" />
+                                </div>
+
+                                <p className="subtext">
+                                    Didn’t receive the code? <button className="text-[#3BC852]">Resend Code</button>
+                                </p>
+                                <button
+                                    type="submit"
+                                    className="w-full py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition"
+                                >
+                                    Submit
+                                </button>
+                            </Form>
+                        </Formik>
+                    </div>) :  !showForgotPassword  ? (
                     //   <Success />
                     <div className="account_log w-full">
                         <h2 className="h2 text-start">
@@ -160,7 +208,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                                                 Remember Me
                                             </label>
                                         </span>
-                                        <button onClick={()=>setShowForgotPassword(true)} className="text-sm subtext hover:underline ml-auto">
+                                        <button onClick={() => setShowForgotPassword(true)} className="text-sm subtext hover:underline ml-auto">
                                             Forgot Password?
                                         </button>
                                     </div>
@@ -189,7 +237,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                                                 name="firstName"
                                                 type="text"
                                                 autoComplete="given-name"
-                                                    placeholder="First Name"
+                                                placeholder="First Name"
                                                 className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             />
                                             <ErrorMessage name="firstName" component="div" className="mt-1 text-red-600 text-sm" />
@@ -243,6 +291,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
 
                                     <button
+                                        onSubmit={handleSignupSubmit}
+
                                         type="submit"
                                         className="w-full py-3 bg-[#3BC852] text-white font-semibold rounded-4xl  transition"
                                     >
@@ -254,38 +304,38 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     </div>
                     ) : (
                     <div className="forgot w-full mt-5">
-                       <button onClick={()=>setShowForgotPassword(false)} className="mb-6 flex items-center gap-2 text-gray-700 ">
-                        <span className="material-symbols-outlined rotate-180">east</span>
-                      <span className="text-sm subtext">Back</span>
+                        <button onClick={() => setShowForgotPassword(false)} className="mb-6 flex items-center gap-2 text-gray-700 ">
+                            <span className="material-symbols-outlined rotate-180">east</span>
+                            <span className="text-sm subtext">Back</span>
                         </button>
                         <h2 className="h2 text-start w-full">
                             Forgot Your Password?
                         </h2>
                         <p className="subtext text-start my-8 whitespace-nowrap">Don’t worry—we’ll help you reset it in just a few steps</p>
-                          <Formik
-                                initialValues={loginInitialValues}
-                                validationSchema={loginValidationSchema}
-                                onSubmit={handleLoginSubmit}
-                            >
-                        <Form>
-                            <div>
-                                <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
-                                    Email ID <span className="text-[#E33629]">*</span>
-                                </label>
-                                <Field
-                                    name="email"
-                                    type="email"
-                                    autoComplete="username"
-                                    placeholder="Enter your email Id"
-                                    className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
-                            </div>
-                            <button  type="submit"
-                                        className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl  transition" >
-                                Submit
-                            </button>
-                        </Form>
+                        <Formik
+                            initialValues={loginInitialValues}
+                            validationSchema={loginValidationSchema}
+                            onSubmit={handleLoginSubmit}
+                        >
+                            <Form>
+                                <div>
+                                    <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+                                        Email ID <span className="text-[#E33629]">*</span>
+                                    </label>
+                                    <Field
+                                        name="email"
+                                        type="email"
+                                        autoComplete="username"
+                                        placeholder="Enter your email Id"
+                                        className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <ErrorMessage name="email" component="div" className="mt-1 text-red-600 text-sm" />
+                                </div>
+                                <button type="submit"
+                                    className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl  transition" >
+                                    Submit
+                                </button>
+                            </Form>
                         </Formik>
                     </div>
                     )}
