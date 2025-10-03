@@ -3,19 +3,19 @@ import React, { useState } from "react";
 import Pagetitle from "@/components/ui/PageTitle";
 import { useAppSelector } from "@/redux/store";
 import AuthModal from "../modals/AuthModal";
-import { useRouter } from "next/navigation"; // Next.js 13+ router
-import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export const Plan = () => {
-  const { plans } = useAppSelector((state) => state?.plan);
-  const { user, isAuth } = useAppSelector((state) => state?.user);
+  const { featured } = useAppSelector((state) => state?.plan);
+  const { isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleAddToCart = (plan:any) => {
+  const handleAddToCart = (plan: any) => {
     if (!isAuth) {
       setSelectedPlan(plan);      // Save selected plan to state
       setIsAuthModal(true);       // Open auth modal
@@ -35,6 +35,10 @@ export const Plan = () => {
     }
   };
 
+  const handleNavigate = (id: string) => {
+    router.push(`/country/${id}`);
+  };
+
   // Optional: Show popup if user tries to visit details page without auth
   // (This could be handled in the details page itself or a wrapper)
   // Example toast if needed elsewhere:
@@ -51,8 +55,9 @@ export const Plan = () => {
       <h2 className="text-xl sm:text-2xl text-[#1A0F33] md:text-3xl mt-6 mb-12 font-semibold text-center">Our Popular Plans</h2>
 
       <div className="mt-8 space-y-5">
-        {plans?.slice(0, 5).map((plan) => (
+        {featured?.slice(0, 5).map((plan) => (
           <div
+            onClick={() => handleNavigate(plan.country.id)}
             key={plan.id}
             className="w-full border border-gray-200 rounded-2xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300"
           >
