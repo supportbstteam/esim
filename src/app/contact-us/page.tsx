@@ -99,10 +99,10 @@ function Contact() {
 
 
     return (
-        <div className='flex flex-col md:flex-row container border-2 border-[#4e4e4e] w-full h-full m-10 py-10 px-5 gap-10'>
+        <div className='flex flex-col md:flex-row container border-2 border-[#4e4e4e] w-full h-full m-10 py-10 p-5 gap-10'>
 
             {/* Left Column - About & Contacts */}
-            <div className='flex-1'>
+            <div className='flex-1 ml-5'>
                 <h1 className='text-3xl font-bold mb-5'>Get in Touch with Us</h1>
 
                 {!loading && !error && content && (
