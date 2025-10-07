@@ -1,0 +1,153 @@
+"use client";
+
+import ContactForm from '@/components/form/ContactForm';
+import { api } from '@/lib/api';
+import { FormikHelpers } from 'formik';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
+
+interface ContactItem {
+    id: string;
+    position: string;
+    type: string;
+    value: string;
+}
+
+interface ContactFormValues {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    message: string;
+}
+
+function Contact() {
+    const [contacts, setContacts] = useState<ContactItem[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string>('');
+    const [content, setContent] = useState<string>('');
+
+    const fetchContact = async () => {
+        try {
+            const response: ContactItem[] = await api({
+                url: "user/cms/contacts",
+                method: "GET",
+            });
+
+            if (response.length > 0) setContacts(response);
+        } catch (err) {
+            console.error("Error fetching contacts:", err);
+            setError("Failed to load contacts");
+        }
+    };
+
+    const fetchData = async () => {
+        setLoading(true);
+        setError('');
+        try {
+            const response = await api<{ html: string }>({
+                url: `/user/cms/content/contact`,
+                method: "GET",
+            });
+            setContent(response.html || "");
+        } catch (err) {
+            console.error(err);
+            setError("Failed to load content");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchContact();
+        fetchData();
+    }, []);
+
+    // Filter contacts by type
+    const address = contacts.find(c => c.type === "Address");
+    const emails = contacts.filter(c => c.type === "Email");
+    const phones = contacts.filter(c => c.type === "Phone");
+
+
+    const handleSave = async (
+        values: ContactFormValues,
+        { setSubmitting, resetForm }: FormikHelpers<ContactFormValues>
+    ) => {
+        try {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const response: any = await api({
+                url: "/user/query/create-query",
+                method: "POST",
+                data: values
+            });
+
+            if (response?.status) {
+                console.log("---- response in the query questions ----", response);
+                toast.success(response?.message || "Message sent successfully!");
+                resetForm(); // ✅ reset the form after success
+            } else {
+                toast.error(response?.message || "Something went wrong");
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error("Something went wrong");
+        } finally {
+            setSubmitting(false); // ✅ stop loading spinner
+        }
+    };
+
+
+    return (
+        <div className='flex flex-col md:flex-row container border-2 border-[#4e4e4e] w-full h-full m-10 py-10 px-5 gap-10'>
+
+            {/* Left Column - About & Contacts */}
+            <div className='flex-1'>
+                <h1 className='text-3xl font-bold mb-5'>Get in Touch with Us</h1>
+
+                {!loading && !error && content && (
+                    <div className="prose max-w-none mb-8" dangerouslySetInnerHTML={{ __html: content }} />
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    {/* Phones */}
+                    {phones.map(phone => (
+                        <div key={phone.id} className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
+                            <FiPhone className="text-2xl text-gray-500" />
+                            <p className='font-semibold text-xl mt-4' >Call Us  <span className='text-sm' >({phone?.position})</span></p>
+                            <span>{phone.value}</span>
+                        </div>
+                    ))}
+
+                    {/* Address */}
+                    {address && (
+                        <div className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
+                            <FiMapPin className="text-2xl text-gray-500" />
+                            <p className='font-semibold text-xl mt-4' >Our Location <span className='text-sm' >({address?.position})</span></p>
+                            <span>{address.value}</span>
+                        </div>
+                    )}
+
+                    {/* Emails */}
+                    {emails.map(email => (
+                        <div key={email.id} className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
+                            <FiMail className="text-2xl text-gray-500" />
+                            <p className='font-semibold text-xl mt-4' >Email Us <span className='text-sm' >({email?.position})</span></p>
+                            <span>{email.value}</span>
+                        </div>
+                    ))}
+
+
+                </div>
+            </div>
+
+            {/* Right Column - Contact Form (Placeholder) */}
+            <div className='flex-1'>
+                <ContactForm handleSave={handleSave} />
+            </div>
+        </div>
+    );
+}
+
+export default Contact;

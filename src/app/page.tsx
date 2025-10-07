@@ -12,19 +12,24 @@ import { useEffect } from "react";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { fetchPlans, featurePlans } from "@/redux/thunk/planThunk";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { fetchFaqs } from "@/redux/slice/FaqSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
-
+  const { list } = useAppSelector((state) => state?.faq);
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchCountries());
       await dispatch(fetchUserDetails());
+      await dispatch(fetchFaqs());
       await dispatch(featurePlans());
       await dispatch(fetchPlans({ countryId: "all" }));
     }
     fetchData();
   }, [dispatch]);
+
+
+  // console.log("----- list in the app/page.tsx ----", list);
   return (
     <>
       <div className="min-h-screen bg-white">
@@ -49,7 +54,7 @@ export default function Home() {
         <TravelPlans />
         <EasyStep />
         <TrustedTravel />
-        <FAQ />
+        <FAQ faqs={list} />
 
       </div>
     </>

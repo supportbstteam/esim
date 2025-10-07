@@ -29,7 +29,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     console.log("---- selected plan ----", selectedPlan);
 
     return (
-        <div className="flex w-full p-6 gap-6">
+        <div className="flex w-full container p-6 gap-6">
             {/* Left side (maybe country details later) */}
             <div className="flex-[2] border-r border-gray-300 pr-4">
                 <h2 className="text-xl font-semibold">Country Info</h2>

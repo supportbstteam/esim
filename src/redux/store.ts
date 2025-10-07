@@ -4,11 +4,13 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import countrySlice from "./slice/CountrySlice"
 import planSlice from "./slice/PlanSlice"
 import userSlice from "./slice/UserSlice"
+import faqSlice from "./slice/FaqSlice"
 export const store = configureStore({
     reducer: {
         country: countrySlice,
         plan: planSlice,
-        user: userSlice
+        user: userSlice,
+        faq: faqSlice
     },
 });
 

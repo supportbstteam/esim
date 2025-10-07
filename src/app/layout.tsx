@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import ReduxProvider from "@/providers/reduxProvider";
+import { Toaster } from "react-hot-toast"; // ✅ import Toaster
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* You no longer need these links because next/font will automatically handle font loading */}
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
           rel="stylesheet"
@@ -48,8 +48,17 @@ export default function RootLayout({
       </head>
       <ReduxProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`} // Apply all fonts here
+          className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
         >
+          {/* Global toast container */}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: { fontFamily: "inherit" },
+            }}
+          />
+
           <Navbar />
           {children}
           <Footer />

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Country() {
   return (
-    <div>Country</div>
+    <div className='container' >Country</div>
   )
 }
 
