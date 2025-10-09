@@ -1,28 +1,31 @@
 "use client";
+
 import { api } from "@/lib/api";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CheckoutPage() {
   const searchParams = useSearchParams();
+  const plan = searchParams.get("plan") as string | null;
+  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
-  const plan = searchParams.get("plan") as string | null;
 
   const fetchPlanById = async () => {
+    if (!plan) return;
     try {
-      const response = await api({
-        url: `/user/plans/${plan}`,
-      });
+      const response = await api({ url: `/user/plans/${plan}` });
       setData(response);
     } catch (err) {
-      console.error("Error in the fetch plan by Id", err);
+      console.error("Error fetching plan:", err);
     }
   };
 
   useEffect(() => {
     fetchPlanById();
-  }, []);
+  }, [plan]);
+
+  if (!data) return <div className="container my-10">Loading...</div>;
 
   return (
     <div className="container my-10">
