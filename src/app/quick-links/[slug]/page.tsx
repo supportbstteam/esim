@@ -1,10 +1,8 @@
 import DynamicPageClient from "@/components/DynamicPageClient";
 
 // Server component
-export default async function QuickieLinks({ params }: { params: { slug: string } }) {
-
-  // For now, direct access is fine; Next.js warns for migration
-  const pageSlug = params.slug;
+export default function QuickieLinks({ params }: { params: { slug: string } }) {
+  const pageSlug = params.slug; // NO await needed
 
   // console.log("---- page slug ----", pageSlug);
 
