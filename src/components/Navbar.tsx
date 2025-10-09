@@ -14,14 +14,14 @@ export default function Navbar() {
   return (
     <nav className="  bg-white shadow-md ">
       {/* Logo */}
-      <div className="container relative flex items-center justify-between px-6 md:px-[10%] py-4">
+      <div className="container relative flex items-center justify-between px-6 md:px-[10%] py-2">
         <div className="flex items-center">
           <img src="/FullLogo1.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
           <img src="/FullLogo2.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-10 lg:space-x-20 text-[#1A0F33] font-medium">
+        <ul className="hidden text-[18px] md:flex space-x-[32px] text-[#1A0F33] font-medium">
           <li className="hover:text-green-500 cursor-pointer transition">View Plans</li>
           <li className="hover:text-green-500 cursor-pointer transition">How It Works</li>
           <li className="hover:text-green-500 cursor-pointer transition">Features</li>
@@ -55,7 +55,7 @@ export default function Navbar() {
             <li className="hover:text-green-500 cursor-pointer transition">Support</li>
             <li className="hover:text-green-500 cursor-pointer transition">Partner Program</li>
             <li>
-              <button onClick={() => { setShowlogin(true) }} className="bg-[#133365] text-[#FFFFFF] px-6 py-2 rounded-full hover:bg-blue-900 transition">
+              <button onClick={() => { setShowlogin(true) }} className="bg-[#133365] text-[#FFFFFF] px-[25x] py-2 rounded-full hover:bg-blue-900 transition">
                 Get eSIM Card
               </button>
             </li>

@@ -10,7 +10,7 @@ interface PageTitleProps {
 
 function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitleProps) {
   return (
-    <div className="flex items-center justify-center relative py-6 container">
+    <div className="flex items-center justify-center relative py-3 container">
       {/* Left Logo */}
       {leftLogo && (
         <img
@@ -21,7 +21,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
       )}
 
       <div className="text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-[#1A0F33]">
+        <h1 className="text-3xl md:text-[42px] font-bold text-[#1A0F33]">
           {title}
         </h1>
         <p className="text-[#64748B] text-[20px] max-w-xl mx-auto mt-3 leading-8">

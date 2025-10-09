@@ -49,16 +49,16 @@ export const Plan = () => {
       <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
 
       <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." />
-      <h2 className="text-xl sm:text-2xl text-[#1A0F33] md:text-3xl mt-6 mb-12 font-semibold text-center">Our Popular Plans</h2>
+      <h2 className="text-xl sm:text-2xl text-[#1A0F33] md:text-3xl mt-9 mb-12 font-semibold text-center">Our Popular Plans</h2>
 
       <div className="mt-8 space-y-5">
         {featured?.slice(0, 5).map((plan) => (
           <div
             onClick={() => handleNavigate(plan.country.id)}
             key={plan.id}
-            className="w-full border border-gray-200 rounded-2xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300"
+            className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300"
           >
-            <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="p-[18px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               {/* Plan details here: country, data, price */}
 
               <div className="flex items-center gap-3 w-[260px]">
@@ -68,18 +68,18 @@ export const Plan = () => {
               {plan?.data && plan?.validityDays && (
                 <div className="text-sm sm:text-base text-center sm:text-left text-gray-700 ">
                   <span className="text-[#64748B94]">Starter:</span>{" "}
-                  <span className="text-lg sm:text-xl font-semibold text-center sm:text-left text-gray-800">
+                  <span className="text-lg sm:text-xl font-medium text-center sm:text-left text-gray-800">
                     {plan.data}GB / {plan.validityDays} days
                   </span>
                 </div>
               )}
 
-              <div className="text-sm sm:text-base md:text-lg bg-[#F3F5F7] rounded-2xl px-4 sm:px-6 py-2 font-bold">${plan.price}</div>
+              <div className="text-sm sm:text-base md:text-lg bg-[#F3F5F7] rounded-full px-4 sm:px-6 py-2 font-bold">${plan.price}</div>
 
               <div>
                 <button
                   onClick={() => handleAddToCart(plan)}
-                  className="cursor-pointer w-full sm:w-auto px-6 sm:px-8 py-2 text-sm sm:text-base bg-[#3BC852] text-white rounded-2xl hover:bg-green-600 transition"
+                  className="cursor-pointer w-full sm:w-auto px-6 sm:px-8 py-2 text-sm sm:text-base bg-[#3BC852] text-white rounded-full hover:bg-green-600 transition"
                 >
                   Add to Cart
                 </button>
