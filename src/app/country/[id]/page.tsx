@@ -1,32 +1,55 @@
 "use client";
+import { useNavigate } from "@/components/hooks/navigation";
+import AuthModal from "@/components/modals/AuthModal";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchPlans } from "@/redux/thunk/planThunk";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaFire } from "react-icons/fa";
 
 type CountryDetailsProps = {
-    params: {
-        id: string;
-    };
+    params: Promise<{ id: string }>; // 👈 params is now a Promise
 };
 
 export default function CountryDetails({ params }: CountryDetailsProps) {
-    const { id } = params;
+    const navigation = useNavigate();
+    const { id } = React.use(params);
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state?.user);
+    const { user, isAuth } = useAppSelector((state) => state?.user);
     const { plans } = useAppSelector((state) => state?.plan);
 
     // keep track of selected plan
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+    const [isAuthModal, setIsAuthModal] = useState(false);
 
     useEffect(() => {
         const fetchPlanDetails = async () => {
             await dispatch(fetchPlans({ countryId: id }));
+            await dispatch(fetchUserDetails());
         };
         fetchPlanDetails();
     }, [user?.id]);
 
-    console.log("---- selected plan ----", selectedPlan);
+    // console.log("---- is auth ----", isAuth);
+    const handleAddToCart = async () => {
+        if (!isAuth) {
+            setIsAuthModal(true);
+        } else {
+
+            // console.log("---- selected plan ---", selectedPlan)
+            if (!selectedPlan) toast.error("Please select a plan first.");
+
+            // navigate to checkout page with query params
+            navigation(`/country/checkout?plan=${selectedPlan}&country=${id}`);
+        }
+    };
+
+
+    const handleAuthSuccess = async () => {
+        toast.success("Login Successful");
+        await dispatch(fetchUserDetails());
+    };
 
     return (
         <div className="flex w-full container p-6 gap-6">
@@ -87,10 +110,11 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                 ) : (
                     <p className="text-gray-500">No plans available for this country.</p>
                 )}
-                <button className="w-full bg-green-400 p-4 rounded-2xl mt-5 " >
+                <button onClick={handleAddToCart} className="w-full bg-green-400 p-4 rounded-2xl mt-5 " >
                     <h3 className="text-xl" >Add to cart</h3>
                 </button>
             </div>
+            <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
         </div>
     );
 }

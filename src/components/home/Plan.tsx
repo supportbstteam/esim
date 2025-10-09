@@ -16,13 +16,7 @@ export const Plan = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddToCart = (plan: any) => {
-    if (!isAuth) {
-      setSelectedPlan(plan);      // Save selected plan to state
-      setIsAuthModal(true);       // Open auth modal
-    } else {
-      // If already authenticated, navigate directly to details page
-      router.push(`/details/${plan.id}`);
-    }
+    router.push(`/details/${plan.id}`);
   };
 
   // Called from AuthModal on successful login/signup
@@ -45,6 +39,9 @@ export const Plan = () => {
   // if (!isAuth) {
   //   toast.error("Please login first to know more about the plan.");
   // }
+
+
+  
 
   return (
     <section className="container bg-white px-4 sm:px-6 md:px-[10%] py-8 md:py-12 mt-10">
