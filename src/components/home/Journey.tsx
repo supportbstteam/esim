@@ -25,7 +25,7 @@ export const Journey = () => {
 
     {/* Left Content */}
     <div className="order-2 md:order-1  pb-[95px]">
-      <h2 className="h1 leading-tight">
+      <h2 className="h1 text-3xl md:text-[42px] tracking-[-2px] font-bold text-[#1A0F33]">
         One eSIM, Unlimited Journeys
       </h2>
       <h4 className="text-[#64748B] text-lg sm:text-xl mt-4">
