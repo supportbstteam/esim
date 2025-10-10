@@ -1,10 +1,12 @@
 // components/Navbar.jsx
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 import AuthModal from './modals/AuthModal';
 import { useAppSelector } from '@/redux/store';
 export default function Navbar() {
+
+  // const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [showlogin, setShowlogin] = useState(false);
   const {user, isAuth} = useAppSelector(state=>state?.user);
@@ -12,6 +14,10 @@ console.log(isAuth , user + 'hwlllllkkjhg');
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // const { user } = useAppSelector(state => state?.user);
+
+  // console.log("---- user in nav bar-----", user);
 
   return (
     <nav className="  bg-white shadow-md ">

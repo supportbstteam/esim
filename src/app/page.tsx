@@ -16,7 +16,7 @@ import { fetchFaqs } from "@/redux/slice/FaqSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
-  const { list } = useAppSelector((state) => state?.faq);
+  
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchCountries());
@@ -24,11 +24,16 @@ export default function Home() {
       await dispatch(fetchFaqs());
       await dispatch(featurePlans());
       await dispatch(fetchPlans({ countryId: "all" }));
+
+      // const token = Cookies.get("token");
     }
     fetchData();
   }, [dispatch]);
-
-
+  
+  const { list } = useAppSelector((state) => state?.faq);
+  // const {user} = useAppSelector(state => state?.user);
+  
+  // console.log("---- user -----", user);
   // console.log("----- list in the app/page.tsx ----", list);
   return (
     <>

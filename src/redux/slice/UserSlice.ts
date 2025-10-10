@@ -83,9 +83,9 @@ export const loginUser = createAsyncThunk<
       data: payload
     })
 
-    console.log("---- response in the sign up ----", res);
+    // console.log("---- response in the  login ----", res);
 
-    return { user: res.data, token: res.data.token };
+    return { user: res?.data, token: res?.token };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || err.message);
@@ -98,6 +98,8 @@ export const fetchUserDetails = createAsyncThunk<User, void>(
   async (_, { rejectWithValue }) => {
     try {
       const token = Cookies.get("token");
+
+      // console.log("---- token ----", token);
       if (!token) throw new Error("No token found");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
