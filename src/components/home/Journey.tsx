@@ -8,8 +8,8 @@ import { TbBrandWhatsapp } from "react-icons/tb";
 
 export const Journey = () => {
     return (
-       <div className="bg-[#E5EFF780] px-6 md:px-[10%] py-12 mt-10 ">
-  <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+       <div className="bg-[#E5EFF780]  pt-[88px] mt-[66px] ">
+  <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
 
     {/* Right Image - Mobile first */}
     <div className="order-1 md:order-2 flex justify-center md:justify-end">
@@ -17,22 +17,22 @@ export const Journey = () => {
         <img
           src="/journey.png"
           alt="Phone with eSIM"
-          className="w-full h-auto object-contain"
+          className="w-full h-full object-contain object-bottom"
         />
       </div>
     </div>
 
     {/* Left Content */}
-    <div className="order-2 md:order-1">
-      <h1 className="h1 leading-tight">
+    <div className="order-2 md:order-1  pb-[95px]">
+      <h2 className="h1 leading-tight">
         One eSIM, Unlimited Journeys
-      </h1>
+      </h2>
       <h4 className="text-[#64748B] text-lg sm:text-xl mt-4">
         Fast setup, reliable coverage, and no hidden fees—so you can focus on
         your trip, not your SIM.
       </h4>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-18">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8  gap-y-10 mt-18">
         <div>
           <span className="material-symbols-outlined">sim_card</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold">

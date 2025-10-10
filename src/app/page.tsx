@@ -45,7 +45,7 @@ export default function Home() {
               "Secure & Reliable",
               "24/7 Support",
             ]}
-            speed={2}
+            speed={1}
           />
         </div>
 

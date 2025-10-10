@@ -4,26 +4,27 @@ import Pagetitle from "@/components/ui/PageTitle";
 import { useAppSelector } from "@/redux/store";
 import AuthModal from "../modals/AuthModal";
 import { useRouter } from "next/navigation";
+import Flag from "@/components/ui/Flag";
 
 export const Plan = () => {
   const { featured } = useAppSelector((state) => state?.plan);
   const { isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const router = useRouter();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddToCart = (plan: any) => {
+    if (!isAuth) {
+      setSelectedPlan(plan);
+      setIsAuthModal(true);
+      return;
+    }
     router.push(`/details/${plan.id}`);
   };
 
-  // Called from AuthModal on successful login/signup
   const handleAuthSuccess = () => {
     setIsAuthModal(false);
     if (selectedPlan) {
-      // Navigate to details page with saved plan after login
       router.push(`/details/${selectedPlan.id}`);
       setSelectedPlan(null);
     }
@@ -33,19 +34,8 @@ export const Plan = () => {
     router.push(`/country/${id}`);
   };
 
-  // Optional: Show popup if user tries to visit details page without auth
-  // (This could be handled in the details page itself or a wrapper)
-  // Example toast if needed elsewhere:
-  // if (!isAuth) {
-  //   toast.error("Please login first to know more about the plan.");
-  // }
-
-
-  
-
   return (
     <section className="container bg-white px-4 sm:px-6 md:px-[10%] py-8 md:py-12 mt-10">
-      {/* AuthModal with success callback */}
       <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
 
       <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." />
@@ -56,30 +46,40 @@ export const Plan = () => {
           <div
             onClick={() => handleNavigate(plan.country.id)}
             key={plan.id}
-            className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300"
+            className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300 mb-6"
           >
-            <div className="p-[18px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              {/* Plan details here: country, data, price */}
-
+            <div className="px-[24px] py-[18px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              {/* Country + Flag */}
               <div className="flex items-center gap-3 w-[260px]">
-                <p className="text-base  sm:text-lg text-[#1A0F33] font-medium">{plan?.country?.name}</p>
+                <Flag
+                  countryName={plan?.country?.name}
+                  size={36}
+                  className="h-[36px] w-[36px]"
+                />
+                <p className="text-base sm:text-lg text-[#1A0F33] font-[700]">{plan?.country?.name}</p>
               </div>
 
+              {/* Data / Validity */}
               {plan?.data && plan?.validityDays && (
-                <div className="text-sm sm:text-base text-center sm:text-left text-gray-700 ">
+                <div className="text-lg sm:text-xl  text-center sm:text-left text-gray-700 ">
                   <span className="text-[#64748B94]">Starter:</span>{" "}
-                  <span className="text-lg sm:text-xl font-medium text-center sm:text-left text-gray-800">
+                  <span className="font-medium text-center sm:text-left text-gray-800">
                     {plan.data}GB / {plan.validityDays} days
                   </span>
                 </div>
               )}
 
-              <div className="text-sm sm:text-base md:text-lg bg-[#F3F5F7] rounded-full px-4 sm:px-6 py-2 font-bold">${plan.price}</div>
+              {/* Price */}
+              <div className="text-[16px]  bg-[#F3F5F7] rounded-full px-4  py-1 leading-6.4 font-bold">${plan.price}</div>
 
+              {/* Add to Cart */}
               <div>
                 <button
-                  onClick={() => handleAddToCart(plan)}
-                  className="cursor-pointer w-full sm:w-auto px-6 sm:px-8 py-2 text-sm sm:text-base bg-[#3BC852] text-white rounded-full hover:bg-green-600 transition"
+                  onClick={(e) => {
+                    e.stopPropagation(); // prevent parent div navigation
+                    handleAddToCart(plan);
+                  }}
+                  className="cursor-pointer w-full sm:w-auto px-6 sm:px-6 py-[11px] text-sm sm:text-base bg-[#3BC852] text-white rounded-full hover:bg-green-600 transition leading-[21px]"
                 >
                   Add to Cart
                 </button>

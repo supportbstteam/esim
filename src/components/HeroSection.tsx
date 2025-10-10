@@ -32,7 +32,7 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative bg-white  pt-7 pb-26 bg_wrap">
+        <section className="relative bg-white  pt-7 pb-5 bg_wrap">
             <div className="container flex gap-[64px] flex-col-reverse md:flex-row items-start">
                 {/* LEFT CONTENT */}
                 <div className="md:w-[646px] space-y-6 flex flex-col justify-center text-center md:text-left">
@@ -44,7 +44,7 @@ export default function HeroSection() {
                     </span>
 
                     {/* Heading */}
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
+                    <h1 className="tracking-[-4px] text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
                         Affordable <span className="text-[#3BC852]">eSIM</span> Data for
                         International Travel
                     </h1>
@@ -139,7 +139,7 @@ export default function HeroSection() {
                         <img
                             src="/glob_new.png"
                             alt="Phone with eSIM"
-                            className="w-full h-auto object-contain relative top-[-50px]"
+                            className="w-full h-auto object-contain relative top-[-50px] left-[18px]"
                         />
                     </div>
                 </div>

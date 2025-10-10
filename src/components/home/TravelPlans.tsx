@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { IoIosArrowForward } from "react-icons/io";
 import PageTitle from '../ui/PageTitle';
 import { useAppSelector } from '@/redux/store';
+import Flag from '@/components/ui/Flag'
 const TravelPlans = () => {
 
   const { countries } = useAppSelector((state) => state?.country);
@@ -14,21 +15,21 @@ const TravelPlans = () => {
 
 
       {/* Cards */}
-      <div className="mt-8 sm:mt-10 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-12 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           countries.map((item: any, i: number) => (
             <div
               key={i}
-              className="border border-gray-200 rounded-2xl hover:bg-green-50 hover:border-green-500 transition duration-300"
+              className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300"
             >
-              <div className="p-4 flex items-center justify-between gap-4">
+              <div className="p-6 flex items-center justify-between gap-4">
                 {/* Flag + Name */}
                 <div className="flex items-center gap-4">
-                  <img
-                    src={`/flag/country/${item.flag}`}
-                    alt={item.name}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
+                  <Flag
+                    countryName={item.name}
+                    size={36}
+                    className="h-[36px] w-[36px]"
                   />
                   <p className="text-sm sm:text-base md:text-lg font-medium">
                     {item.name}
@@ -45,7 +46,7 @@ const TravelPlans = () => {
       </div>
 
       {/* Explore Button */}
-      <div className="flex justify-center mt-12 sm:mt-8 text-gray-600 hover:text-green-600 transition">
+      <div className="flex justify-center mt-12 text-gray-600 hover:text-green-600 transition">
         <Link
           href="#"
           className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium"

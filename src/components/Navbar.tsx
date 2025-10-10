@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 import AuthModal from './modals/AuthModal';
+import { useAppSelector } from '@/redux/store';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showlogin, setShowlogin] = useState(false);
-
+  const {user, isAuth} = useAppSelector(state=>state?.user);
+console.log(isAuth , user + 'hwlllllkkjhg');
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -15,10 +17,10 @@ export default function Navbar() {
     <nav className="  bg-white shadow-md ">
       {/* Logo */}
       <div className="container relative flex items-center justify-between px-6 md:px-[10%] py-2">
-        <div className="flex items-center">
+        <a href="/" className="flex items-center">
           <img src="/FullLogo1.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
           <img src="/FullLogo2.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
-        </div>
+        </a>
 
         {/* Desktop Menu */}
         <ul className="hidden text-[18px] md:flex space-x-[32px] text-[#1A0F33] font-medium">
@@ -32,7 +34,7 @@ export default function Navbar() {
         {/* Desktop Button */}
         <div className="hidden md:block">
           <button onClick={() => { setShowlogin(true) }} className="bg-[#133365] text-[#FFFFFF] px-6 py-4 rounded-full hover:bg-blue-900 transition cursor-pointer">
-            Get eSIM Card
+             Login/Signup
           </button>
         </div>
 
@@ -56,7 +58,7 @@ export default function Navbar() {
             <li className="hover:text-green-500 cursor-pointer transition">Partner Program</li>
             <li>
               <button onClick={() => { setShowlogin(true) }} className="bg-[#133365] text-[#FFFFFF] px-[25x] py-2 rounded-full hover:bg-blue-900 transition">
-                Get eSIM Card
+                Login/Signup
               </button>
             </li>
           </ul>

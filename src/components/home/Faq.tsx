@@ -7,6 +7,7 @@ import { Plus, Minus, ChevronRight } from "lucide-react";
 interface FAQItemProps {
   question: string;
   answer: string;
+  initiallyOpen?: boolean;
 }
 
 interface FAQProps {
@@ -14,8 +15,8 @@ interface FAQProps {
 }
 
 /* Single FAQ Item */
-const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(initiallyOpen);
   const toggleAnswer = () => setIsOpen((prev) => !prev);
 
   return (
@@ -45,7 +46,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
   return (
     <section className="faq-container bg-[#E5EFF780] py-20">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
-        <div className="flex flex-col md:flex-row items-center gap-16">
+        <div className="flex flex-col md:flex-row items-start gap-16">
           {/* Left Illustration */}
           <div className="md:w-1/2">
             <img
@@ -57,11 +58,11 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
 
           {/* Right Content */}
           <div className="md:w-1/2">
-            <header className="faq-header mb-6">
-              <h2 className="text-4xl font-bold text-[#1A0F33] mb-3">
+            <header className="faq-header mb-12">
+              <h2 className="h1 text-[#1A0F33] mb-3">
                 Frequently Asked Questions
               </h2>
-              <p className="text-[#1A0F33] text-lg leading-snug max-w-xl">
+              <p className="subtext !text-xl font-medium">
                 Everything you need to know about eSIM, setup, and staying connected abroad.
               </p>
             </header>
@@ -69,17 +70,22 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             {/* FAQ List */}
             <div className="faq-list mt-10">
               {faqs.map((faq, index) => (
-                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+                <FAQItem
+                  key={index}
+                  question={faq.question}
+                  answer={faq.answer}
+                  initiallyOpen={index === 0} // ✅ First FAQ open by default
+                />
               ))}
             </div>
 
             {/* View All Link using Next.js Link */}
             <Link
               href="/faq"
-              className="text-[#1A0F33] text-lg font-medium flex items-center gap-2 mt-8 hover:underline transition-all"
+              className="text-[#64748B] text-xl font-medium flex items-center gap-2 mt-12 hover:underline transition-all"
             >
               View All FAQs
-              <ChevronRight className="w-5 h-5 text-[#1A0F33]" />
+              <ChevronRight className="w-5 h-5 text-[#64748B]" />
             </Link>
           </div>
         </div>

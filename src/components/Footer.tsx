@@ -49,9 +49,9 @@ const getHref = (section: string, item: string) => {
 export const Footer = () => {
     return (
         <footer className="bg-[#052766] text-white md:px-[10%] py-12">
-            <div className="max-w-[1380px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-10">
+            <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
                 {/* Logo & About */}
-                <div className="md:col-span-2">
+                <div className="md:col-span-1">
                     <img src="/footerLogo.png" alt="footerLogo" className="w-[115px]" />
                     <p className="mt-4 text-gray-300">
                         We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless connectivity in 200+ countries.

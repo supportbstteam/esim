@@ -27,11 +27,11 @@ export function QuoteSlider(): JSX.Element {
   const [paused, setPaused] = useState(false);
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden space-y-4 container">
+    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-12 container">
       {/* First row scrolls left */}
       <Marquee
         pauseOnHover={true} // handled via container
-        className="[--duration:30s]"
+        className="[--duration:50s] gap-[25px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -49,7 +49,7 @@ export function QuoteSlider(): JSX.Element {
       <Marquee
         reverse
         pauseOnHover={true}
-        className="[--duration:30s]"
+        className="[--duration:50s] gap-[25px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >

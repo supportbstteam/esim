@@ -3,7 +3,7 @@ import PageTitle from '../ui/PageTitle'
 import {QuoteSlider} from '@/components/ui/QuoteSlider';
 function TrustedTravel() {
   return (
-    <div>
+    <div className='container mb-24'>
         <PageTitle 
         title="Trusted by Travelers Worldwide" 
         subtitle="Your travel experience, made seamless."
