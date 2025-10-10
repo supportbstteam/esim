@@ -251,12 +251,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                                                 <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
                                             </div>
                                             <div className="flex items-center justify-between">
-                                                <span className="flex items-center gap-2">
+                                                {/* <span className="flex items-center gap-2">
                                                     <input type="checkbox" name="rememberMe" className="ancent-[#0000]" />
                                                     <label htmlFor="rememberMe" className="subtext !text-sm text-gray-700">
                                                         Remember Me
                                                     </label>
-                                                </span>
+                                                </span> */}
                                                 <button onClick={() => setShowForgotPassword(true)} className="text-sm subtext hover:underline ml-auto">
                                                     Forgot Password?
                                                 </button>
