@@ -49,11 +49,11 @@ const getHref = (section: string, item: string) => {
 export const Footer = () => {
     return (
         <footer className="bg-[#052766] text-white  py-12">
-            <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+            <div className="container flex justify-between items-start gap-15">
                 {/* Logo & About */}
-                <div className="md:col-span-1">
+                <div className="w-[330px]">
                     <img src="/footerLogo.png" alt="footerLogo" className="w-[115px]" />
-                    <p className="mt-4 text-gray-300">
+                    <p className="mt-10 text-gray-300 text-[16px]">
                         We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless connectivity in 200+ countries.
                     </p>
                 </div>
@@ -67,7 +67,7 @@ export const Footer = () => {
                                 <li key={i}>
                                     <Link
                                         href={getHref(title, item)}
-                                        className="text-gray-300 hover:text-white transition-colors"
+                                        className="text-gray-300 hover:text-white transition-colors text-[14px]"
                                     >
                                         {item}
                                     </Link>
@@ -82,8 +82,8 @@ export const Footer = () => {
                     <h4 className="text-lg mb-4">Connect With Us</h4>
                     <div className="flex gap-5 text-2xl">
                         {socials.map(({ icon: Icon, href }, idx) => (
-                            <Link key={idx} href={href} className="h-8 w-8 p-2 border-1 bg-[#d5d7dc73] flex items-center rounded-full">
-                                <Icon className="h-6 w-6" />
+                            <Link key={idx} href={href} className="group h-7 w-7 p-[6px] border bg-[#d5d7dc73] flex items-center rounded-full hover:bg-green-50 cursor-pointer">
+                                <Icon className="h-10 w-10 transition-colors group-hover:text-blue-950" />
                             </Link>
                         ))}
                     </div>

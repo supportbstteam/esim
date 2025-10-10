@@ -50,6 +50,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
           {/* Left Illustration */}
           <div className="md:w-1/2">
             <Image
+            height={100} width={100}
               src="/faq.png"
               alt="FAQ Illustration"
               className="w-full h-auto object-contain"

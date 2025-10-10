@@ -14,6 +14,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
       {/* Left Logo */}
       {leftLogo && (
         <Image
+        height={100} width={100}
           src={leftLogo}
           alt="Left Logo"
           className="absolute left-0 "
@@ -33,6 +34,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
       {/* Right Logo */}
       {rightLogo && (
         <Image
+        height={100} width={100}
           src={rightLogo}
           alt="Right Logo"
           className="absolute right-0"
