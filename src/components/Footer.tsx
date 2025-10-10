@@ -91,7 +91,7 @@ export const Footer = () => {
             </div>
 
             {/* Divider */}
-            <div className="border-t mt-20 border-white pt-6 text-center text-sm text-white">
+            <div className="border-t mt-20 container border-white pt-6 text-center text-sm text-white">
                 © {new Date().getFullYear()} Your Company. All rights reserved.
             </div>
         </footer>
