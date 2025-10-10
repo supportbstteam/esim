@@ -28,7 +28,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
         <p className="text-[#64748B] text-[20px] max-w-xl mx-auto mt-4 leading-6">
           {subtitle}
         </p>
-       { desk && (<p className="text-[#64748B] text-[20px] max-w-xl mx-auto m-0 leading-2.5">{desk}</p> )}
+       { desk && (<p className="text-[#64748B] text-[20px] max-w-xl mx-auto m-0 leading-6">{desk}</p> )}
       </div>
 
       {/* Right Logo */}
