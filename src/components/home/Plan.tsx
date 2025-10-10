@@ -63,7 +63,7 @@ export const Plan = () => {
 
               {/* Data / Validity */}
               {plan?.data && plan?.validityDays && (
-                <div className="text-lg sm:text-xl  text-center sm:text-left text-gray-700 ">
+                <div className="text-lg sm:text-xl w-[300px] text-center sm:text-left text-gray-700 ">
                   <span className="text-[#64748B94]">Starter:</span>{" "}
                   <span className="font-medium text-center sm:text-left text-gray-800">
                     {plan.data}GB / {plan.validityDays} days
