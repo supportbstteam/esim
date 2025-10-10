@@ -131,7 +131,7 @@ useEffect(() => {
                   Account
                 </Link>
                 <Link
-                  href="/my-plan"
+                  href="/order"
                   onClick={() => setIsUserMenuOpen(false)}
                   className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b"
                   role="menuitem"
