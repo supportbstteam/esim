@@ -21,7 +21,7 @@ const TravelPlans = () => {
           countries.map((item: any, i: number) => (
             <div
               key={i}
-              className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300"
+              className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300 cursor-pointer"
             >
               <div className="p-6 flex items-center justify-between gap-4">
                 {/* Flag + Name */}
