@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState  ,useEffect} from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch } from "@/redux/store";
@@ -7,6 +7,7 @@ import { loginUser, signupUser, verifyOtp } from "@/redux/slice/UserSlice";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Success from "./Success";
+import {X} from "lucide-react";
 type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -114,14 +115,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
         }
     };
 
+ useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    if (isOpen) document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
 
+  if (!isOpen) return null;
 
     if (!isOpen) return null;
 
     return (
         <div
             className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 "
-            onClick={onClose}
+             onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose?.();
+        }
+      }}
         >
 
             <div className="flex bg-white w-full px-4 md:px-0  md:!w-[835px] md:h-[624px]">
@@ -129,9 +142,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                     <Image src="/new_esim1.png" alt="main login" className="h-full object-cover object-left" width={700} height={700} />
                 </div>
                 <div
-                    className={`w-[60%] px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
+                    className={`w-[60%] relative px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
+                   <a onClick={onClose}>   <X className="absolute right-2 top-2" /></a>
                     {/* Toggle Buttons */}
                     {showSuccess ? (
                         <Success />
