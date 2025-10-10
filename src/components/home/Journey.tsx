@@ -40,8 +40,9 @@ export const Journey = () => {
             Instant Activation
           </h5>
           <p className="text-[#64748B] text-base mt-2">
-            Choose from flexible local, regional, or global data packs that fit
-            your budget.
+             No waiting, no SIM cards—just scan the QR code and connect in
+            minutes.
+           
           </p>
         </div>
         <div>
@@ -50,7 +51,8 @@ export const Journey = () => {
             Affordable Plans
           </h5>
           <p className="text-[#64748B] text-base mt-2">
-            Enjoy safe browsing with encrypted connections wherever you go.
+             Choose from flexible local, regional, or global data packs that fit
+            your budget.
           </p>
         </div>
         <div>
@@ -59,8 +61,8 @@ export const Journey = () => {
             Secure & Private
           </h5>
           <p className="text-[#64748B] text-base mt-2">
-            No waiting, no SIM cards—just scan the QR code and connect in
-            minutes.
+            Enjoy safe browsing with encrypted connections wherever you go.
+           
           </p>
         </div>
         <div>

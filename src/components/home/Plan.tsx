@@ -72,7 +72,7 @@ export const Plan = () => {
               )}
 
               {/* Price */}
-              <div className="text-[16px]  bg-[#F3F5F7] rounded-full px-4  py-1 leading-6.4 font-bold">${plan.price}</div>
+              <div className="text-[16px] w-[90px] bg-[#F3F5F7] rounded-full px-4  py-1 leading-6.4 font-bold">${plan.price}</div>
 
               {/* Add to Cart */}
               <div>
