@@ -3,11 +3,14 @@ import Link from 'next/link';
 import { IoIosArrowForward } from "react-icons/io";
 import PageTitle from '../ui/PageTitle';
 import { useAppSelector } from '@/redux/store';
-import Flag from '@/components/ui/Flag'
+import Flag from '@/components/ui/Flag';
+import { useRouter } from "next/navigation";
 const TravelPlans = () => {
-
+   const router = useRouter();
   const { countries } = useAppSelector((state) => state?.country);
-
+  const handleNavigate = (id: string) => {
+    router.push(`/country/${id}`);
+  };
   return (
     <section className="bg-white px-0  mt-25 container">
       {/* Section Heading */}
@@ -21,9 +24,11 @@ const TravelPlans = () => {
           countries.map((item: any, i: number) => (
             <div
               key={i}
+              onClick={() => handleNavigate(item.id)}
               className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300 cursor-pointer"
             >
-              <div className="p-6 flex items-center justify-between gap-4">
+              <div className="p-6 flex items-center justify-between gap-4"
+              >
                 {/* Flag + Name */}
                 <div className="flex items-center gap-4">
                   <Flag
