@@ -25,7 +25,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "esim Next App",
+  title: "esim",
   description: "esim",
 };
 
@@ -37,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/faviocn.webp" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
           rel="stylesheet"
