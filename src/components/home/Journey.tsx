@@ -15,7 +15,7 @@ export const Journey = () => {
     <div className="order-1 md:order-2 flex justify-center md:justify-end">
       <div className="relative w-full ">
         <Image
-        height={100} width={100}
+        height={700} width={700}
           src="/journey.png"
           alt="Phone with eSIM"
           className="w-full h-full object-contain object-bottom"

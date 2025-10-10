@@ -5,7 +5,7 @@ import { useAppSelector } from "@/redux/store";
 import { Country } from "@/types";
 import { useRouter } from "next/navigation";
 import { useNavigate } from "./hooks/navigation";
-
+import Image from "next/image";
 
 export default function HeroSection() {
     const navigation = useNavigate();
@@ -136,7 +136,9 @@ export default function HeroSection() {
                 {/* RIGHT CONTENT */}
                 <div className="w-full md:w-[534px] flex justify-center md:justify-end mb-6 md:mb-0">
                     <div className="relative w-full ">
-                        <img
+                        <Image
+                        height={700}
+                        width={700}
                             src="/glob_new.png"
                             alt="Phone with eSIM"
                             className="w-full h-auto object-contain relative top-[-50px] left-[18px]"
