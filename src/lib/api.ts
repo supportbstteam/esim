@@ -53,29 +53,6 @@ export async function api<T = unknown, P = unknown>({
         return res.data;
     } catch (err) {
         const error = err as AxiosError<{ message?: string }>;
-        // console.log("")
-
-        // switch (status) {
-        //   case 400:
-        //     toast.error("Bad Request ❌");
-        //     break;
-        //   case 401:
-        //     toast.error("Unauthorized. Please login again ❌");
-        //     break;
-        //   case 403:
-        //     toast.error("Forbidden ❌");
-        //     break;
-        //   case 404:
-        //     toast.error("Not Found ❌");
-        //     break;
-        //   case 500:
-        //     toast.error("Internal Server Error ❌");
-        //     break;
-        //   default:
-        //     toast.error(message);
-        //     break;
-        // }
-
         throw error;
     }
 }
