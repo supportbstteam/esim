@@ -53,7 +53,7 @@ useEffect(() => {
 
   return (
     <nav className="bg-white shadow-md">
-      <div className="container relative flex items-center justify-between px-6 md:px-[10%] py-2">
+      <div className="container relative flex items-center justify-between px-6 md:px-[10%] py-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <Image height={100} width={100} src="/FullLogo1.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />

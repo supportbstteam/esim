@@ -32,7 +32,7 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative bg-white  pt-7 pb-5 bg_wrap">
+        <section className="relative bg-white  pt-20 pb-5 bg_wrap">
             <div className="container flex gap-[64px] flex-col-reverse md:flex-row items-start">
                 {/* LEFT CONTENT */}
                 <div className="md:w-[646px] space-y-6 flex flex-col justify-center text-center md:text-left">
