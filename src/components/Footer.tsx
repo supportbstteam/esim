@@ -80,7 +80,7 @@ export const Footer = () => {
                 {/* Socials */}
                 <div>
                     <h4 className="text-lg mb-4">Connect With Us</h4>
-                    <div className="flex gap-5 text-2xl">
+                    <div className="flex gap-2 text-2xl">
                         {socials.map(({ icon: Icon, href }, idx) => (
                             <Link key={idx} href={href} className="group h-7 w-7 p-[6px] border bg-[#d5d7dc73] flex items-center rounded-full hover:bg-green-50 cursor-pointer">
                                 <Icon className="h-10 w-10 transition-colors group-hover:text-blue-950" />
@@ -92,7 +92,7 @@ export const Footer = () => {
 
             {/* Divider */}
             <div className="border-t mt-20 container border-white pt-6 text-center text-sm text-white">
-                © {new Date().getFullYear()} Your Company. All rights reserved.
+                © {new Date().getFullYear()} Esim. All rights reserved.
             </div>
         </footer>
     );
