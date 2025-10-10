@@ -25,7 +25,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "esim",
+  title: "E-SIM AERO WORLD'S NO.1 E-SIM",
   description: "esim",
 };
 
