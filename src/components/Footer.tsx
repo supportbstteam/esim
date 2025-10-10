@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { LuFacebook } from "react-icons/lu";
+import { RiFacebookFill } from "react-icons/ri";
 import { RiTwitterXFill } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
-import { CiLinkedin } from "react-icons/ci";
-import { TbBrandWhatsapp } from "react-icons/tb";
+import { FaLinkedinIn } from "react-icons/fa6";
+import { BiLogoWhatsapp } from "react-icons/bi";
 
 const linkSections = [
     {
@@ -22,11 +22,11 @@ const linkSections = [
 ];
 
 const socials = [
-    { icon: LuFacebook, href: "#" },
+    { icon: RiFacebookFill, href: "#" },
     { icon: RiTwitterXFill, href: "#" },
     { icon: MdOutlineEmail, href: "mailto:info@example.com" },
-    { icon: CiLinkedin, href: "#" },
-    { icon: TbBrandWhatsapp, href: "#" },
+    { icon: FaLinkedinIn, href: "#" },
+    { icon: BiLogoWhatsapp, href: "#" },
 ];
 
 // Convert text to URL-friendly slug
@@ -48,7 +48,7 @@ const getHref = (section: string, item: string) => {
 
 export const Footer = () => {
     return (
-        <footer className="bg-[#052766] text-white md:px-[10%] py-12">
+        <footer className="bg-[#052766] text-white  py-12">
             <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
                 {/* Logo & About */}
                 <div className="md:col-span-1">
@@ -82,8 +82,8 @@ export const Footer = () => {
                     <h4 className="text-lg mb-4">Connect With Us</h4>
                     <div className="flex gap-5 text-2xl">
                         {socials.map(({ icon: Icon, href }, idx) => (
-                            <Link key={idx} href={href} className="h-10 w-10">
-                                <Icon className="h-10 w-10" />
+                            <Link key={idx} href={href} className="h-8 w-8 p-2 border-1 bg-[#d5d7dc73] flex items-center rounded-full">
+                                <Icon className="h-6 w-6" />
                             </Link>
                         ))}
                     </div>

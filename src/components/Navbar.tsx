@@ -6,6 +6,7 @@ import { HiMenu, HiX, HiChevronDown } from 'react-icons/hi';
 import AuthModal from './modals/AuthModal';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { fetchUserDetails, logout } from '@/redux/slice/UserSlice';
+import Link from 'next/link'
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -54,10 +55,10 @@ useEffect(() => {
     <nav className="bg-white shadow-md">
       <div className="container relative flex items-center justify-between px-6 md:px-[10%] py-2">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-3">
-          <img src="/FullLogo1.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
-          <img src="/FullLogo2.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
-        </a>
+        <Link href="/" className="flex items-center gap-3">
+          <Image src="/FullLogo1.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
+          <Image src="/FullLogo2.png" alt="E-SIM AERO" className="h-10 w-auto md:h-12" />
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden text-[18px] md:flex space-x-[32px] text-[#1A0F33] font-medium">
@@ -121,22 +122,22 @@ useEffect(() => {
                   }`}
                 role="menu"
               >
-                <a
+                <Link
                   href="/account"
                   onClick={() => setIsUserMenuOpen(false)}
                   className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b"
                   role="menuitem"
                 >
                   Account
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/my-plan"
                   onClick={() => setIsUserMenuOpen(false)}
                   className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b"
                   role="menuitem"
                 >
                   My Plan
-                </a>
+                </Link>
                 <button
                   onClick={() => {
                     handleLogout();
@@ -196,22 +197,22 @@ useEffect(() => {
                   <span className="text-[#1A0F33] font-medium">Admin</span>
                 </li>
                 <li className="w-full">
-                  <a
+                  <Link
                     href="/account"
                     onClick={() => setIsOpen(false)}
                     className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b rounded"
                   >
                     Account
-                  </a>
+                  </Link>
                 </li>
                 <li className="w-full">
-                  <a
+                  <Link
                     href="/my-plan"
                     onClick={() => setIsOpen(false)}
                     className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b rounded"
                   >
                     My Plan
-                  </a>
+                  </Link>
                 </li>
                 <li className="w-full">
                   <button

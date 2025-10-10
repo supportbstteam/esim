@@ -1,7 +1,7 @@
 // components/Flag.tsx
 "use client";
 import React, { useEffect, useState } from "react";
-
+import  Image  from "next/image";
 type FlagProps = {
   countryName?: string;
   iso2?: string; // optional if you already have 2-letter code like "IN", "US"
@@ -165,7 +165,7 @@ export default function Flag({ countryName, iso2, className = "", size = 18 }: F
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <div className={` rounded-full overflow-hidden ${className}`}>
-    <img
+    <Image
       src={svgUrl}
       alt={`${countryName || "country"} flag`}
       width={size}

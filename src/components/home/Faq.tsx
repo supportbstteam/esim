@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Plus, Minus, ChevronRight } from "lucide-react";
-
+import Image from 'next/image'
 interface FAQItemProps {
   question: string;
   answer: string;
@@ -49,7 +49,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
         <div className="flex flex-col md:flex-row items-start gap-16">
           {/* Left Illustration */}
           <div className="md:w-1/2">
-            <img
+            <Image
               src="/faq.png"
               alt="FAQ Illustration"
               className="w-full h-auto object-contain"

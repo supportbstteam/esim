@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from 'next/image'
 interface PageTitleProps {
   title: string;
   subtitle: string;
@@ -13,7 +13,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
     <div className="flex items-center justify-center relative p-0 container">
       {/* Left Logo */}
       {leftLogo && (
-        <img
+        <Image
           src={leftLogo}
           alt="Left Logo"
           className="absolute left-0 "
@@ -32,7 +32,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
 
       {/* Right Logo */}
       {rightLogo && (
-        <img
+        <Image
           src={rightLogo}
           alt="Right Logo"
           className="absolute right-0"

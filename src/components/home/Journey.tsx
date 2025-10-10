@@ -5,7 +5,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
 import { CiLinkedin } from "react-icons/ci";
 import { TbBrandWhatsapp } from "react-icons/tb";
-
+import Image from 'next/image'
 export const Journey = () => {
     return (
        <div className="bg-[#E5EFF780]  pt-[88px] mt-[66px] ">
@@ -14,7 +14,7 @@ export const Journey = () => {
     {/* Right Image - Mobile first */}
     <div className="order-1 md:order-2 flex justify-center md:justify-end">
       <div className="relative w-full ">
-        <img
+        <Image
           src="/journey.png"
           alt="Phone with eSIM"
           className="w-full h-full object-contain object-bottom"

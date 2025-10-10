@@ -10,9 +10,11 @@ export const Plan = () => {
   const { featured } = useAppSelector((state) => state?.plan);
   const { isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const router = useRouter();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddToCart = (plan: any) => {
     if (!isAuth) {
       setSelectedPlan(plan);
