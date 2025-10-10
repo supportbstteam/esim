@@ -5,23 +5,28 @@ import { useAppSelector } from "@/redux/store";
 import AuthModal from "../modals/AuthModal";
 import { useRouter } from "next/navigation";
 import Flag from "@/components/ui/Flag";
+import { useNavigate } from "../hooks/navigation";
 
 export const Plan = () => {
   const { featured } = useAppSelector((state) => state?.plan);
   const { isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const router = useRouter();
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const navigation = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddToCart = (plan: any) => {
+    // console.log("----- plan ----", plan);
+    // return;
     if (!isAuth) {
       setSelectedPlan(plan);
       setIsAuthModal(true);
       return;
     }
-    router.push(`/details/${plan.id}`);
+    // router.push(`/details/${plan.id}`);
+    if (isAuth)
+      navigation(`/country/checkout?plan=${plan.id}&country=${plan?.country?.id}`);
   };
 
   const handleAuthSuccess = () => {

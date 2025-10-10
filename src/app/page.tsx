@@ -29,6 +29,8 @@ export default function Home() {
     }
     fetchData();
   }, [dispatch]);
+
+  
   
   const { list } = useAppSelector((state) => state?.faq);
   // const {user} = useAppSelector(state => state?.user);
