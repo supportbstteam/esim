@@ -44,6 +44,8 @@ export const fetchOrderDetailsByUser = createAsyncThunk(
     "orders/fetchOrderDetailsByUser",
     async (orderId: string, { rejectWithValue }) => {
         try {
+
+            console.log("---- order id in the details ----", orderId);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const data = await api<{ message: string; status: string; data: any }>({
                 url: `/user/order-details/${orderId}`, // replace with your backend route
