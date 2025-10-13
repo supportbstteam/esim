@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#133366] text-white py-10">
+    <footer className="bg-[#001637] text-white py-10">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-4 gap-6 items-start">
           {/* Logo & About */}
@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
                   <Link
                     key={idx}
                     href={href}
-                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-[#233756] hover:bg-white/20 transition"
                     aria-label={`Visit our social ${idx}`}
                   >
                     <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
