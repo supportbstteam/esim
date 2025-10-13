@@ -32,10 +32,10 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative bg-white pt-5 md:pt-20 pb-10 bg_wrap">
+        <section className="relative bg-white pt-2.5 md:pt-20 pb-10 bg_wrap">
             <div className="container flex gap-[64px] flex-col md:flex-row items-start">
                 {/* LEFT CONTENT */}
-                <div className="w-full md:w-[646px] space-y-6 flex flex-col justify-center text-center md:text-left">
+                <div className="w-full md:w-[646px] space-y-3 md:space-y-6 flex flex-col justify-center text-center md:text-left">
                     {/* Badge */}
                     <span className="flex items-center w-fit mx-auto md:mx-0 bg-[#DBE6F966] px-4 py-3 rounded-full text-[#1A0F33] text-xs sm:text-sm md:text-base whitespace-nowrap ">
                         <img src="/airplane.svg" className="h-[19px] mr-2" />
@@ -50,7 +50,7 @@ export default function HeroSection() {
                     </h1>
 
                     {/* Description */}
-                    <p className="text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl mt-5 !mb-18">
+                    <p className="text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl mt-5 mb-5 md:!mb-18">
                         Stay connected in 200+ countries with easy, roaming-free data.
                     </p>
 
