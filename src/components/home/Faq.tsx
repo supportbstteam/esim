@@ -83,7 +83,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             {/* View All Link using Next.js Link */}
             <Link
               href="/faq"
-              className="text-[#64748B] text-xl font-medium flex items-center gap-2 mt-12 hover:underline transition-all"
+              className="text-[#64748B] text-[16px] md:text-xl font-medium flex items-center gap-2 mt-12 hover:underline transition-all"
             >
               View All FAQs
               <ChevronRight className="w-5 h-5 text-[#64748B]" />
