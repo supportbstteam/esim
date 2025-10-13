@@ -137,7 +137,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
       }}
         >
 
-            <div className="flex bg-white w-[80%] h-auto px-4 md:px-0  md:!w-[835px] ">
+            <div className="flex bg-white w-[95%] h-auto px-4 md:px-0  md:!w-[835px] ">
                 <div className="w-[40%]  bg-[#D0DFF4] max-md:hidden">
                     <Image src="/new_esim1.png" alt="main login" className="h-full object-cover object-left" width={700} height={700} />
                 </div>
