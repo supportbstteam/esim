@@ -90,32 +90,25 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white ">
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container">
         <div className="flex items-center justify-between h-16">
          
           <div className="flex-shrink-0 flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <span className="sr-only">E-SIM AERO</span>
               <Image
-                src="/FullLogo1.png"
+                src="/Print.svg"
                 alt="E-SIM AERO"
-                width={160}
-                height={40}
+                width={100}
+                height={100}
                 className="h-8 w-auto sm:h-10 object-contain"
                 priority
-              />
-              <Image
-                src="/FullLogo2.png"
-                alt="E-SIM AERO secondary"
-                width={160}
-                height={40}
-                className="hidden sm:block h-8 w-auto object-contain"
               />
             </Link>
           </div>
 
          
-          <div className="hidden md:flex md:items-center md:space-x-8">
+          <div className="hidden min-[950px]:flex  md:items-center md:space-x-8">
             <ul className="flex items-center space-x-8 text-[16px] text-[#1A0F33] font-medium">
               <li className="hover:text-green-500 transition cursor-pointer">View Plans</li>
               <li className="hover:text-green-500 transition cursor-pointer">How It Works</li>
@@ -128,7 +121,7 @@ export default function Navbar() {
           {/* Right controls */}
           <div className="flex items-center gap-4">
             {/* Desktop right */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden min-[950px]:flex items-center space-x-4">
               {!isAuth ? (
                 <button
                   onClick={() => setShowlogin(true)}
@@ -182,7 +175,7 @@ export default function Navbar() {
             </div>
 
            
-            <div className="md:hidden flex items-center">
+            <div className="min-[950px]:hidden flex items-center">
               <button
                 onClick={toggleMenu}
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}

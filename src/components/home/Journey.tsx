@@ -12,11 +12,11 @@ export const Journey = () => {
   <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
 
     {/* Right Image - Mobile first */}
-    <div className="order-1 md:order-2 flex justify-center md:justify-end">
+    <div className="order-2 md:order-2 flex justify-center md:justify-end">
       <div className="relative w-full ">
         <Image
         height={700} width={700}
-          src="/journey.png"
+          src="/WCU.webp"
           alt="Phone with eSIM"
           className="w-full h-full object-contain object-bottom"
         />
@@ -24,7 +24,7 @@ export const Journey = () => {
     </div>
 
     {/* Left Content */}
-    <div className="order-2 md:order-1  pb-[95px]">
+    <div className="order-1 md:order-1  pb-[95px]">
       <h2 className="h1 text-3xl md:text-[42px] tracking-[-2px] font-bold text-[#1A0F33]">
         One eSIM, Unlimited Journeys
       </h2>

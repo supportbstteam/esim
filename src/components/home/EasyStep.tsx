@@ -19,7 +19,7 @@ export const EasyStep = () => {
             Choose your travel destination and select a eSIM plan that matches your trip
           </p>
 
-          <div className="space-y-3 max-h-[304px] overflow-y-auto scrollbar-hide">
+          <div className="space-y-3 max-h-[304px] overflow-y-hidden scrollbar-hide">
             <div className="rounded-[12px] py-5 px-7 flex justify-between items-center bg-white cursor-pointer hover:border-green-500 mb-5">
               <div className="flex"><input type="radio" name="plan" className="mr-3 h-5 w-5 accent-[#64748B] checked:accent-[#1A0F33]" />
                 <span className="font-medium bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span></div>
@@ -51,7 +51,7 @@ export const EasyStep = () => {
             Get your QR code instantly by email. Scan it on your phone and your eSIM is ready to go.
           </p>
 
-          <div className="flex bg-white rounded-xl flex-col items-center p-7 max-h-[304px] overflow-y-auto scrollbar-hide">
+          <div className="flex bg-white rounded-xl flex-col items-center p-7 max-h-[304px] overflow-y-hidden scrollbar-hide">
 
             <div className="flex flex-col gap-2  text-sm text-[#64748B] subtext w-full">
               <label className="flex items-center gap-2 cursor-pointer mb-5">
@@ -78,7 +78,7 @@ export const EasyStep = () => {
           <p className="subtext mb-10">
             Your plan starts, Track your usage in real-time and never worry about roaming fees
           </p>
-             <div className="max-h-[304px] overflow-y-auto scrollbar-hide">
+             <div className="max-h-[304px] overflow-y-hidden scrollbar-hide">
           <div className="border-[#3BC852] border rounded-xl py-4 px-7 bg-[#F5FCF6] flex flex-col gap-2">
             <div className="flex items-center justify-between">
 

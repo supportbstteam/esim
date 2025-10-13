@@ -32,13 +32,13 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative bg-white pt-5 md:pt-20 pb-5 bg_wrap">
+        <section className="relative bg-white pt-5 md:pt-20 pb-10 md:bg_wrap">
             <div className="container flex gap-[64px] flex-col md:flex-row items-start">
                 {/* LEFT CONTENT */}
                 <div className="w-full md:w-[646px] space-y-6 flex flex-col justify-center text-center md:text-left">
                     {/* Badge */}
                     <span className="flex items-center w-fit mx-auto md:mx-0 bg-[#DBE6F966] px-4 py-3 rounded-full text-[#1A0F33] text-xs sm:text-sm md:text-base">
-                        <img src="/Vector_best.png" className="h-[19px] mr-2" />
+                        <img src="/airplane.svg" className="h-[19px] mr-2" />
                         <span className="font-semibold text-[#1A0F33]">E-Sim Aero:</span>{" "}
                         World’s No. 1 E-Sim Provider
                     </span>
@@ -56,7 +56,7 @@ export default function HeroSection() {
 
                     {/* 🔍 Search / Destination Selector */}
 
-                    <div className="w-full md:w-[541px] flex flex-col gap-7">
+                    <div className="w-full lg:w-[541px] flex flex-col gap-7">
                         <div className="relative mt-0 w-full  mx-auto md:mx-0">
                             <div className="flex items-center pr-1 py-0 rounded-full border border-[#3BC852] hover:bg-green-50 transition !pl-6   bg-white h-auto md:h-[72px]">
                                 <input
@@ -68,11 +68,11 @@ export default function HeroSection() {
                                     }}
                                     onFocus={() => setShowDropdown(true)}
                                     placeholder="Choose Your Destination"
-                                    className="flex-1 bg-transparent text-[22px] text-[#006110] placeholder-[#006110]  focus:outline-none "
+                                    className="flex-1  bg-transparent text-[16px] md:text-[22px] text-[#006110] placeholder-[#006110]  focus:outline-none "
                                 />
                                 <button
                                     type="button"
-                                    className="bg-[#3BC852] h-[57px] w-[57px] text-white px-3 py-2 sm:py-3 rounded-full flex items-center justify-center ml-2 sm:ml-3"
+                                    className="bg-[#3BC852] h-10 md:h-[57px] w-10 my-2 mx-1 md:m-0 md:w-[57px] text-white px-3 py-2 sm:py-3 rounded-full flex items-center justify-center ml-2 sm:ml-3"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +139,7 @@ export default function HeroSection() {
                         <Image
                         height={700}
                         width={700}
-                            src="/glob_new.png"
+                            src="/HeroSection_16K.png"
                             alt="Phone with eSIM"
                             className="w-full h-auto object-contain relative top-[-50px] left-[18px]"
                         />

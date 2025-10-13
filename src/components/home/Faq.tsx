@@ -48,22 +48,22 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="flex flex-col md:flex-row items-start gap-16">
           {/* Left Illustration */}
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 w-full">
             <Image
             height={700} width={700}
-              src="/faq.png"
+              src="/Foooter.jpg"
               alt="FAQ Illustration"
-              className="w-full h-auto object-contain"
+              className="w-full h-auto object-contain rounded-xl"
             />
           </div>
 
           {/* Right Content */}
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 w-full max-sm:text-center">
             <header className="faq-header mb-12">
               <h2 className="h1 text-[#1A0F33] mb-3">
                 Frequently Asked Questions
               </h2>
-              <p className="subtext !text-xl font-medium">
+              <p className="subtext md:!text-xl font-medium">
                 Everything you need to know about eSIM, setup, and staying connected abroad.
               </p>
             </header>

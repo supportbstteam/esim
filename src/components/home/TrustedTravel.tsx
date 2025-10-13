@@ -10,6 +10,7 @@ function TrustedTravel() {
         desk="Don’t just take our word for it."
         leftLogo="/bas_stam.png"
         rightLogo="/roun_stamp.png"
+        subclass=""
         />
 
         <div className="mt-18">

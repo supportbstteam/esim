@@ -56,8 +56,8 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#052766] text-white py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+      <div className="container">
+        <div className="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-4 gap-6 items-start">
           {/* Logo & About */}
           <div className="space-y-4 md:col-span-1">
             <Link href="/" className="inline-block">
@@ -68,8 +68,8 @@ export const Footer: React.FC = () => {
               connectivity in 200+ countries.
             </p>
 
-            <div className="mt-2">
-              <h4 className="text-sm text-gray-200 mb-2">Connect With Us</h4>
+            <div className="mt-2 md:hidden">
+              <h4 className="text-sm text-gray-200 mb-3">Connect With Us</h4>
               <div className="flex gap-2 items-center">
                 {socials.map(({ icon: Icon, href }, idx) => (
                   <Link
@@ -124,6 +124,21 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
           ))}
+           <div className=" max-md:hidden ">
+              <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">Connect With Us</h4>
+              <div className="flex gap-2 items-center">
+                {socials.map(({ icon: Icon, href }, idx) => (
+                  <Link
+                    key={idx}
+                    href={href}
+                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                    aria-label={`Visit our social ${idx}`}
+                  >
+                    <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
+                  </Link>
+                ))}
+              </div>
+            </div>
         </div>
 
         {/* Divider & copyright */}
