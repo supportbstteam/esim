@@ -18,7 +18,9 @@ const TravelPlans = () => {
 
 
       {/* Cards */}
-      <div className="mt-12 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div  className={`mt-12 flex flex-wrap gap-4 sm:gap-6 ${
+    countries.length === 1 ? "justify-center" : "justify-start"
+  }`}>
         {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           countries.map((item: any, i: number) => {
@@ -27,7 +29,7 @@ const TravelPlans = () => {
               <div
                 key={i}
                 onClick={() => handleNavigate(item.id)}
-                className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300 cursor-pointer"
+              className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300 cursor-pointer w-full sm:w-[48%] lg:w-[31%] xl:w-[23%]"
               >
                 <div className="p-6 flex items-center justify-between gap-4"
                 >
