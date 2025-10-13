@@ -51,7 +51,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
           <div className="md:w-1/2 w-full">
             <Image
             height={700} width={700}
-              src="/Foooter.jpg"
+              src="/Foooter.webp"
               alt="FAQ Illustration"
               className="w-full h-auto object-contain rounded-xl"
             />
