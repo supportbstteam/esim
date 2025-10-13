@@ -15,7 +15,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk, subclass }: Pa
       {/* Left Logo */}
       {leftLogo && (
         <Image
-        height={100} width={100}
+        height={121} width={96}
           src={leftLogo}
           alt="Left Logo"
           className="absolute left-0 max-[800px]:hidden"
@@ -35,7 +35,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk, subclass }: Pa
       {/* Right Logo */}
       {rightLogo && (
         <Image
-        height={100} width={100}
+        height={135} width={135}
           src={rightLogo}
           alt="Right Logo"
           className="absolute right-0 max-[800px]:hidden"

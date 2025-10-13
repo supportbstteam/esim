@@ -139,9 +139,9 @@ export default function HeroSection() {
                         <Image
                         height={700}
                         width={700}
-                            src="/HeroSection_16K.png"
+                            src="/HeroSection_16K.webp"
                             alt="Phone with eSIM"
-                            className="w-full h-auto object-contain relative top-[0px] md:top-[-50px] md:left-[18px]"
+                            className="w-full h-auto object-contain relative top-[0px] md:top-[-50px] md:left-[0px]"
                         />
                     </div>
                 </div>
