@@ -1,7 +1,8 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { HiMenu, HiX, HiChevronDown } from 'react-icons/hi';
+import {  HiX, HiChevronDown } from 'react-icons/hi';
+import { RxHamburgerMenu } from "react-icons/rx";
 import AuthModal from './modals/AuthModal';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { fetchUserDetails, logout } from '@/redux/slice/UserSlice';
@@ -94,14 +95,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 py-10">
          
           <div className="flex-shrink-0 flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="sr-only">E-SIM AERO</span>
+            <Link href="/" className="flex items-center justify-start gap-2">
+              {/* <span className="sr-only">E-SIM AERO</span> */}
               <Image
                 src="/Print.svg"
                 alt="E-SIM AERO"
                 width={300}
-                height={100}
-                className="h-11 w-[288px]  object-contain"
+                height={44}
+                className="h-auto md:h-11 w-[288px]  max-md:w-[180px] object-contain"
                 priority
               />
             </Link>
@@ -182,7 +183,7 @@ export default function Navbar() {
                 aria-expanded={isOpen}
                 className="p-2 rounded-md focus:ring-2 focus:ring-offset-2 "
               >
-                {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+                {isOpen ? <HiX size={26} /> : <RxHamburgerMenu size={26} />}
               </button>
             </div>
           </div>
