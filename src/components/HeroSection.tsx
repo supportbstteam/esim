@@ -129,6 +129,34 @@ export default function HeroSection() {
                                         {country.name}
                                     </span>
                                 ))}
+                                 <span
+                                        key={2}
+                                        
+                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                                    >
+                                        Spain
+                                    </span>
+                                    <span
+                                        key={2}
+                                        
+                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                                    >
+                                        USA
+                                    </span>
+                                    <span
+                                        key={2}
+                                        
+                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                                    >
+                                        Italy
+                                    </span>
+                                     <span
+                                        key={2}
+                                        
+                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                                    >
+                                        Japan
+                                    </span>
                         </div>
                     </div>
                 </div>
