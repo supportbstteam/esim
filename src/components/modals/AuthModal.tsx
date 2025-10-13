@@ -145,7 +145,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                     className={`w-full md:w-[60%] relative px-0 md:px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                   <a onClick={onClose}>   <X className="absolute md:right-2 md:top-2 top-[2px] right-[2px]" /></a>
+                   <a onClick={onClose}>   <X className="absolute md:right-2 md:top-2 top-[2px] right-[-10px]" /></a>
                     {/* Toggle Buttons */}
                     {showSuccess ? (
                         <Success />
