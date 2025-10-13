@@ -205,9 +205,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                             //   <Success />
                             <div className="account_log w-full">
                                 <h2 className="h2 text-start">
-                                    {isLogin ? "Welcome Back" : "Create Your Account"}
+                                    {isLogin ? "Log In to Your Journey" : "Let’s Get You Connected"}
 
                                 </h2>
+                                <p className="subtext">
+                                 {isLogin ? "Access your account to manage your eSIM plans and stay connected wherever you go." : "Create your account and unlock instant access to global data, flexible plans, and hassle-free activation."}
+                                </p>
                                 <div className="flex justify-center items-center mb-6  mt-6 bg-[#F3F5F7] rounded-2xl  w-full">
                                     <button
                                         className={`px-6 py-2 w-full rounded-2xl font-semibold ${!isLogin ? "bg-[#3BC85221] text-[#3BC852] " : "bg-[#F3F5F7] text-gray-700 "
