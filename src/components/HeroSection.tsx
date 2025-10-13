@@ -128,35 +128,35 @@ export default function HeroSection() {
                                     >
                                         {country.name}
                                     </span>
-                                ))}
-                                 <span
-                                        key={2}
-                                        
-                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                                    >
-                                        Spain
-                                    </span>
-                                    <span
-                                        key={2}
-                                        
-                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                                    >
-                                        USA
-                                    </span>
-                                    <span
-                                        key={2}
-                                        
-                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                                    >
-                                        Italy
-                                    </span>
-                                     <span
-                                        key={2}
-                                        
-                                        className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                                    >
-                                        Japan
-                                    </span>
+                                ))
+                            }
+         <span
+
+
+                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                            >
+                                Spain
+                            </span>
+                            <span
+
+
+                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                            >
+                                USA
+                            </span>
+                            <span
+
+
+                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                            >
+                                Italy
+                            </span>
+                            <span
+
+                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
+                            >
+                                Japan
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -165,8 +165,8 @@ export default function HeroSection() {
                 <div className="w-full md:w-[534px] flex justify-center md:justify-end mb-6 md:mb-0">
                     <div className="relative w-full ">
                         <Image
-                        height={700}
-                        width={700}
+                            height={700}
+                            width={700}
                             src="/HeroSection_16K.webp"
                             alt="Phone with eSIM"
                             className="w-full h-auto object-contain relative top-[0px] md:top-[-50px] md:left-[0px]"
