@@ -137,12 +137,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
       }}
         >
 
-            <div className="flex bg-white w-[95%] h-auto px-4 md:px-0  md:!w-[835px] ">
+            <div className="flex bg-white w-[100%] h-auto px-4 md:px-0  md:!w-[835px] ">
                 <div className="w-[40%]  bg-[#D0DFF4] max-md:hidden">
                     <Image src="/new_esim1.png" alt="main login" className="h-full object-cover object-left" width={700} height={700} />
                 </div>
                 <div
-                    className={`w-full md:w-[60%] relative px-5 md:px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
+                    className={`w-full md:w-[60%] relative px-0 md:px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                    <a onClick={onClose}>   <X className="absolute right-2 top-2" /></a>
