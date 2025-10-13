@@ -32,10 +32,10 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative bg-white  pt-20 pb-5 bg_wrap">
-            <div className="container flex gap-[64px] flex-col-reverse md:flex-row items-start">
+        <section className="relative bg-white pt-5 md:pt-20 pb-5 bg_wrap">
+            <div className="container flex gap-[64px] flex-col md:flex-row items-start">
                 {/* LEFT CONTENT */}
-                <div className="md:w-[646px] space-y-6 flex flex-col justify-center text-center md:text-left">
+                <div className="w-full md:w-[646px] space-y-6 flex flex-col justify-center text-center md:text-left">
                     {/* Badge */}
                     <span className="flex items-center w-fit mx-auto md:mx-0 bg-[#DBE6F966] px-4 py-3 rounded-full text-[#1A0F33] text-xs sm:text-sm md:text-base">
                         <img src="/Vector_best.png" className="h-[19px] mr-2" />
@@ -44,7 +44,7 @@ export default function HeroSection() {
                     </span>
 
                     {/* Heading */}
-                    <h1 className="tracking-[-4px] text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
+                    <h1 className="tracking-[-2px] text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
                         Affordable <span className="text-[#3BC852]">eSIM</span> Data for
                         International Travel
                     </h1>

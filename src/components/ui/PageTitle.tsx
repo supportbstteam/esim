@@ -22,7 +22,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk }: PageTitlePro
       )}
 
       <div className="text-center">
-        <h2 className="text-3xl md:text-[42px] tracking-[-2px] font-bold text-[#1A0F33]">
+        <h2 className="text-3xl md:text-[42px] tracking-normal md:tracking-[-2px] font-bold text-[#1A0F33]">
           {title}
         </h2>
         <p className="text-[#64748B] text-[20px] max-w-xl mx-auto mt-4 leading-6">

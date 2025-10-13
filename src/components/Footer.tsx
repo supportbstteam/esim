@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { RiFacebookFill } from "react-icons/ri";
 import { RiTwitterXFill } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
@@ -7,93 +9,130 @@ import { FaLinkedinIn } from "react-icons/fa6";
 import { BiLogoWhatsapp } from "react-icons/bi";
 
 const linkSections = [
-    {
-        title: "Quick Links",
-        items: ["Home", "Plan & Pricing", "Why Choose Us", "How It Works", "FAQs", "Contact Us"],
-    },
-    {
-        title: "Support",
-        items: ["Help Center", "Device Compatibility", "Setup Guide", "Troubleshooting", "Refund Policy"],
-    },
-    {
-        title: "Legal",
-        items: ["Terms & Conditions", "Privacy Policy", "Cookie Policy"],
-    },
+  {
+    title: "Quick Links",
+    items: ["Home", "Plan & Pricing", "Why Choose Us", "How It Works", "FAQs", "Contact Us"],
+  },
+  {
+    title: "Support",
+    items: ["Help Center", "Device Compatibility", "Setup Guide", "Troubleshooting", "Refund Policy"],
+  },
+  {
+    title: "Legal",
+    items: ["Terms & Conditions", "Privacy Policy", "Cookie Policy"],
+  },
 ];
 
 const socials = [
-    { icon: RiFacebookFill, href: "#" },
-    { icon: RiTwitterXFill, href: "#" },
-    { icon: MdOutlineEmail, href: "mailto:info@example.com" },
-    { icon: FaLinkedinIn, href: "#" },
-    { icon: BiLogoWhatsapp, href: "#" },
+  { icon: RiFacebookFill, href: "#" },
+  { icon: RiTwitterXFill, href: "#" },
+  { icon: MdOutlineEmail, href: "mailto:info@example.com" },
+  { icon: FaLinkedinIn, href: "#" },
+  { icon: BiLogoWhatsapp, href: "#" },
 ];
 
-// Convert text to URL-friendly slug
 const toSlug = (text: string) =>
-    text.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+  text.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 
-// Determine the correct URL for each item
 const getHref = (section: string, item: string) => {
-    if (section === "Quick Links") {
-        if (item === "Home") return "/";
-        if (item === "Contact Us") return "/contact-us";
-        if (item === "FAQs") return "/faq";
-        return `/quick-links/${toSlug(item)}`;
-    }
-    if (section === "Support") return `/supports/${toSlug(item)}`;
-    if (section === "Legal") return `/${toSlug(item)}`;
-    return "#";
+  if (section === "Quick Links") {
+    if (item === "Home") return "/";
+    if (item === "Contact Us") return "/contact-us";
+    if (item === "FAQs") return "/faq";
+    return `/quick-links/${toSlug(item)}`;
+  }
+  if (section === "Support") return `/supports/${toSlug(item)}`;
+  if (section === "Legal") return `/${toSlug(item)}`;
+  return "#";
 };
 
-export const Footer = () => {
-    return (
-        <footer className="bg-[#052766] text-white  py-12">
-            <div className="container flex justify-between items-start gap-15">
-                {/* Logo & About */}
-                <div className="w-[330px]">
-                    <img src="/footerLogo.png" alt="footerLogo" className="w-[115px]" />
-                    <p className="mt-10 text-gray-300 text-[16px]">
-                        We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless connectivity in 200+ countries.
-                    </p>
-                </div>
+export const Footer: React.FC = () => {
+  // track open sections on mobile (by index)
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
-                {/* Link Sections */}
-                {linkSections.map(({ title, items }, idx) => (
-                    <div key={idx}>
-                        <h4 className="text-lg mb-4">{title}</h4>
-                        <ul className="space-y-2">
-                            {items.map((item, i) => (
-                                <li key={i}>
-                                    <Link
-                                        href={getHref(title, item)}
-                                        className="text-gray-300 hover:text-white transition-colors text-[14px]"
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+  const toggleSection = (i: number) => {
+    setOpenIdx((prev) => (prev === i ? null : i));
+  };
+
+  return (
+    <footer className="bg-[#052766] text-white py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+          {/* Logo & About */}
+          <div className="space-y-4 md:col-span-1">
+            <Link href="/" className="inline-block">
+              <img src="/footerLogo.png" alt="footerLogo" className="w-[115px] h-auto" />
+            </Link>
+            <p className="text-gray-300 text-sm sm:text-[15px] md:text-[16px]">
+              We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless
+              connectivity in 200+ countries.
+            </p>
+
+            <div className="mt-2">
+              <h4 className="text-sm text-gray-200 mb-2">Connect With Us</h4>
+              <div className="flex gap-2 items-center">
+                {socials.map(({ icon: Icon, href }, idx) => (
+                  <Link
+                    key={idx}
+                    href={href}
+                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                    aria-label={`Visit our social ${idx}`}
+                  >
+                    <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
+                  </Link>
                 ))}
-
-                {/* Socials */}
-                <div>
-                    <h4 className="text-lg mb-4">Connect With Us</h4>
-                    <div className="flex gap-2 text-2xl">
-                        {socials.map(({ icon: Icon, href }, idx) => (
-                            <Link key={idx} href={href} className="group h-7 w-7 p-[6px] border bg-[#d5d7dc73] flex items-center rounded-full hover:bg-green-50 cursor-pointer">
-                                <Icon className="h-10 w-10 transition-colors group-hover:text-blue-950" />
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
 
-            {/* Divider */}
-            <div className="border-t mt-20 container border-white pt-6 text-center text-sm text-white">
-                © {new Date().getFullYear()} Esim. All rights reserved.
+          {/* Link Sections (collapsible on small screens) */}
+          {linkSections.map(({ title, items }, idx) => (
+            <div key={idx}>
+              {/* Mobile: collapsible header */}
+              <button
+                type="button"
+                onClick={() => toggleSection(idx)}
+                className="w-full flex items-center justify-between md:justify-start md:gap-0 md:mb-4 md:cursor-default"
+                aria-expanded={openIdx === idx}
+              >
+                <h4 className="text-lg md:text-base mb-2 md:mb-0 md:mr-0">{title}</h4>
+                {/* chevron only visible on mobile */}
+                <span className="md:hidden ml-2 text-gray-300">
+                  <svg
+                    className={`w-4 h-4 transform transition-transform ${openIdx === idx ? "rotate-180" : "rotate-0"}`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.939l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+
+              <ul
+                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${
+                  openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
+                } md:max-h-full`}
+              >
+                {items.map((item, i) => (
+                  <li key={i} className="mb-2">
+                    <Link href={getHref(title, item)} className="text-gray-300 hover:text-white transition-colors text-sm">
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-        </footer>
-    );
+          ))}
+        </div>
+
+        {/* Divider & copyright */}
+        <div className="border-t border-white/20 mt-8 pt-6 text-center text-sm text-white/80">
+          © {new Date().getFullYear()} Esim. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  );
 };
+
+export default Footer;
