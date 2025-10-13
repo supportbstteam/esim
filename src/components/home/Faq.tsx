@@ -20,18 +20,18 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
   const toggleAnswer = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="faq-item mb-6 bg-white p-5 rounded-xl shadow-md transition-all duration-300">
+    <div className="faq-item !text-left mb-6 bg-white p-5 rounded-xl shadow-md transition-all duration-300">
       <button
         onClick={toggleAnswer}
-        className="faq-question text-[20px] font-semibold text-[#1A0F33] w-full flex items-center justify-between focus:outline-none"
+        className="faq-question text-[20px] font-semibold text-[#1A0F33] w-full flex items-start justify-between focus:outline-none"
         aria-expanded={isOpen}
       >
-        <span>{question}</span>
+        <span className="text-start">{question}</span>
         {isOpen ? <Minus className="w-5 h-5 text-[#1A0F33]" /> : <Plus className="w-5 h-5 text-[#1A0F33]" />}
       </button>
 
       <div
-        className={`faq-answer text-[#1A0F33] text-[16px] leading-relaxed transition-all duration-300 ease-in-out ${
+        className={` text-start faq-answer text-[#1A0F33] text-[16px] leading-relaxed transition-all duration-300 ease-in-out ${
           isOpen ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0 overflow-hidden"
         }`}
       >
@@ -69,7 +69,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             </header>
 
             {/* FAQ List */}
-            <div className="faq-list mt-10">
+            <div className="faq-list mt-10 ">
               {faqs.map((faq, index) => (
                 <FAQItem
                   key={index}

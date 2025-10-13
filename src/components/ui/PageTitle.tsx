@@ -18,7 +18,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk, subclass }: Pa
         height={100} width={100}
           src={leftLogo}
           alt="Left Logo"
-          className="absolute left-0 max-md:hidden"
+          className="absolute left-0 max-[800px]:hidden"
         />
       )}
 
@@ -38,7 +38,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk, subclass }: Pa
         height={100} width={100}
           src={rightLogo}
           alt="Right Logo"
-          className="absolute right-0 max-md:hidden"
+          className="absolute right-0 max-[800px]:hidden"
         />
       )}
     </div>

@@ -44,7 +44,7 @@ export default function HeroSection() {
                     </span>
 
                     {/* Heading */}
-                    <h1 className="tracking-[-2px] text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
+                    <h1 className="tracking-[-2px] text-[36px] lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
                         Affordable <span className="text-[#3BC852]">eSIM</span> Data for
                         International Travel
                     </h1>

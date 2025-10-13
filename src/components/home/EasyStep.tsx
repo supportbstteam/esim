@@ -9,7 +9,7 @@ export const EasyStep = () => {
       </div>
 
       {/* Steps */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-[19px]">
+      <div className="grid grid-cols-1 min-[800px]:grid-cols-3 gap-[19px]">
 
         {/* Step 1 */}
         <div className="bg-[#F3F5F7] p-8  rounded-2xl ">

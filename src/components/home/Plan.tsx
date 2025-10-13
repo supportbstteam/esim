@@ -48,7 +48,7 @@ export const Plan = () => {
       <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." />
       <h2 className="text-xl min-[700px]:text-2xl text-[#1A0F33] md:text-3xl mt-9 mb-12 font-semibold text-center">Our Popular Plans</h2>
 
-      <div className="mt-8 space-y-5">
+      <div className="mt-8 space-y-5 max-md:grid max-md:gap-x-4 max-md:grid-cols-2">
   {featured.length === 0  ? (
     <div className="flex justify-center items-center py-12">
       <svg
@@ -77,7 +77,7 @@ export const Plan = () => {
       <div
         onClick={() => handleNavigate(plan.country.id)}
         key={plan.id}
-        className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300 mb-6"
+        className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300 mb-6 "
       >
         <div className="px-[24px] py-[18px] flex flex-col min-[700px]:flex-row min-[700px]:items-center justify-center  min-[700px]:justify-between gap-4">
         
