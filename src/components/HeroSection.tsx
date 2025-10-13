@@ -40,7 +40,7 @@ export default function HeroSection() {
                     <span className="flex items-center w-fit mx-auto md:mx-0 bg-[#DBE6F966] px-4 py-3 rounded-full text-[#1A0F33] text-xs sm:text-sm md:text-base whitespace-nowrap ">
                         <img src="/airplane.svg" className="h-[19px] mr-2" />
                         <span className="font-semibold text-[#1A0F33]">E-Sim Aero:</span>{" "}
-                        World’s No. 1 E-Sim Provider
+                        <span className="max-md:ml-2">World’s No. 1 E-Sim Provider</span>
                     </span>
 
                     {/* Heading */}
