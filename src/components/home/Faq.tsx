@@ -23,7 +23,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
     <div className="faq-item !text-left mb-6 bg-white p-5 rounded-xl shadow-md transition-all duration-300">
       <button
         onClick={toggleAnswer}
-        className="faq-question text-[20px] font-semibold text-[#1A0F33] w-full flex items-start justify-between focus:outline-none"
+        className="faq-question text-[16px] leading-5 md:text-[20px] font-semibold text-[#1A0F33] w-full flex items-start justify-between focus:outline-none"
         aria-expanded={isOpen}
       >
         <span className="text-start">{question}</span>
@@ -31,7 +31,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
       </button>
 
       <div
-        className={` text-start faq-answer text-[#1A0F33] text-[16px] leading-relaxed transition-all duration-300 ease-in-out ${
+        className={` text-start faq-answer text-[#1A0F33] text-[14px] leading-4 md:text-[16px] md:leading-relaxed transition-all duration-300 ease-in-out ${
           isOpen ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0 overflow-hidden"
         }`}
       >
