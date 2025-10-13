@@ -85,7 +85,7 @@ export const Plan = () => {
             <Flag
               countryName={plan?.country?.name}
               size={36}
-              className="h-[36px] w-[36px]"
+              className="md:h-[36px] md:w-[36px] h-[24px] w-[24px]"
             />
             <p className="text-base min-[700px]:text-lg text-[#1A0F33] font-[700]">
               {plan?.country?.name}
@@ -94,7 +94,7 @@ export const Plan = () => {
 
        
           {plan?.data && plan?.validityDays && (
-            <div className="md:text-lg md:w-[300px] text-center max-min-[700px]:text-left text-gray-700">
+            <div className="md:text-lg md:w-[300px] text-center max-min-[700px]:text-left text-gray-700 max-md:flex max-md:flex-col">
               <span className="text-[#64748B94]">Starter:</span>{" "}
               <span className="font-medium  min-[700px]:text-left text-gray-800">
                 {plan.data}GB / {plan.validityDays} days
