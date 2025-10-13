@@ -102,7 +102,7 @@ export default function Navbar() {
                 alt="E-SIM AERO"
                 width={300}
                 height={44}
-                className="h-auto md:h-11 w-[288px]  max-md:w-[180px] object-contain"
+                className="h-auto md:h-auto w-[288px]  max-md:w-[180px] object-contain"
                 priority
               />
             </Link>
