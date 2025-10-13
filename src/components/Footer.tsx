@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#052766] text-white py-10">
+    <footer className="bg-[#133366] text-white py-10">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-4 gap-6 items-start">
           {/* Logo & About */}

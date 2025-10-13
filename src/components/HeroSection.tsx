@@ -58,7 +58,7 @@ export default function HeroSection() {
 
                     <div className="w-full lg:w-[541px] flex flex-col gap-7">
                         <div className="relative mt-0 w-full  mx-auto md:mx-0">
-                            <div className="flex items-center pr-1 py-0 rounded-full border border-[#3BC852] hover:bg-green-50 transition !pl-6   bg-white h-auto md:h-[72px]">
+                            <div className="flex items-center pr-1.5 py-0 rounded-full border border-[#3BC852] hover:bg-green-50 transition !pl-6   bg-white h-auto md:h-[72px]">
                                 <input
                                     type="text"
                                     value={searchTerm}
@@ -72,7 +72,7 @@ export default function HeroSection() {
                                 />
                                 <button
                                     type="button"
-                                    className="bg-[#3BC852] h-10 md:h-[57px] w-10 my-2 mx-1 md:m-0 md:w-[57px] text-white px-3 py-2 sm:py-3 rounded-full flex items-center justify-center ml-2 sm:ml-3"
+                                    className="bg-[#3BC852] h-10 md:h-[57px] w-10 my-2 mx-1 md:m-0 md:w-[57px] text-white px-3 py-2 sm:py-3 rounded-full flex items-center justify-center ml-3 sm:ml-3"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

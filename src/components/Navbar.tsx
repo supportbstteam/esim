@@ -99,9 +99,9 @@ export default function Navbar() {
               <Image
                 src="/Print.svg"
                 alt="E-SIM AERO"
-                width={100}
+                width={300}
                 height={100}
-                className="h-8 w-auto sm:h-10 object-contain"
+                className="h-11 w-[288px]  object-contain"
                 priority
               />
             </Link>
@@ -109,7 +109,7 @@ export default function Navbar() {
 
          
           <div className="hidden min-[950px]:flex  md:items-center md:space-x-8">
-            <ul className="flex items-center space-x-8 text-[16px] text-[#1A0F33] font-medium">
+            <ul className="flex items-center space-x-8 text-[18px] text-[#1A0F33] font-medium">
               <li className="hover:text-green-500 transition cursor-pointer">View Plans</li>
               <li className="hover:text-green-500 transition cursor-pointer">How It Works</li>
               <li className="hover:text-green-500 transition cursor-pointer">Features</li>
@@ -125,7 +125,7 @@ export default function Navbar() {
               {!isAuth ? (
                 <button
                   onClick={() => setShowlogin(true)}
-                  className="bg-[#133365] text-white px-4 py-2 md:h-[57px] rounded-full hover:bg-blue-900 transition text-sm"
+                  className="bg-[#133365] text-white px-6 py-3.5  rounded-full hover:bg-[#3BC852] transition text-[16px]"
                 >
                   Login/Signup
                 </button>
@@ -180,7 +180,7 @@ export default function Navbar() {
                 onClick={toggleMenu}
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={isOpen}
-                className="p-2 rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="p-2 rounded-md focus:ring-2 focus:ring-offset-2 "
               >
                 {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
               </button>
