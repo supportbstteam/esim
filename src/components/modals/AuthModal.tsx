@@ -393,7 +393,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                             <h2 className="h2 text-start w-full">
                                 Forgot Your Password?
                             </h2>
-                            <p className="subtext text-start my-8 whitespace-nowrap">Don’t worry—we’ll help you reset it in just a few steps</p>
+                            <p className="subtext text-start my-8 whitespace-normal md:whitespace-nowrap">Don’t worry—we’ll help you reset it in just a few steps</p>
                             <Formik
                                 initialValues={loginInitialValues}
                                 validationSchema={loginValidationSchema}
