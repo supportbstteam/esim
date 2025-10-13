@@ -44,7 +44,7 @@ export default function HeroSection() {
                     </span>
 
                     {/* Heading */}
-                    <h1 className="tracking-[-2px] text-[36px] lg:text-[56px] font-extrabold text-[#1A0F33] leading-snug md:leading-tight m-0">
+                    <h1 className="tracking-[-2px] text-[26px] lg:text-[56px] font-extrabold text-[#1A0F33] leading-8 md:leading-tight m-0">
                         Affordable <span className="text-[#3BC852]">eSIM</span> Data for
                         International Travel
                     </h1>
@@ -56,7 +56,7 @@ export default function HeroSection() {
 
                     {/* 🔍 Search / Destination Selector */}
 
-                    <div className="w-full lg:w-[541px] flex flex-col gap-7">
+                    <div className="w-full lg:w-[541px] flex flex-col gap-3 md:gap-7">
                         <div className="relative mt-0 w-full  mx-auto md:mx-0">
                             <div className="flex items-center pr-1.5 py-0 rounded-full border border-[#3BC852] hover:bg-green-50 transition !pl-6   bg-white h-auto md:h-[72px]">
                                 <input
@@ -117,7 +117,7 @@ export default function HeroSection() {
                         </div>
 
                         {/* 🌍 Popular Countries */}
-                        <div className="flex flex-wrap gap-2 justify-center md:justify-start mt-1">
+                        <div className="flex flex-wrap gap-2 justify-center md:justify-start mt-0 md:mt-1 ">
                             {countries &&
                                 countries.length > 0 &&
                                 countries.slice(0, 6).map((country: Country) => (
