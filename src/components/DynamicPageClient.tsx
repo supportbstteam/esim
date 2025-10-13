@@ -37,7 +37,7 @@ export default function DynamicPageClient({ page }: Props) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
                 console.error(err);
-                setError("Failed to load content");
+                setError("Comming Soon");
             } finally {
                 setLoading(false);
             }
@@ -49,7 +49,7 @@ export default function DynamicPageClient({ page }: Props) {
         <div className="p-4 container ">
             <h1 className="text-2xl font-bold mb-4">{title}</h1>
             {loading && <p>Loading...</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            {error && <p className="subtext">{error}</p>}
             {!loading && !error && (
                 <div
                     className="prose max-w-none"

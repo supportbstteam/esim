@@ -53,7 +53,7 @@ function Contact() {
             setContent(response.html || "");
         } catch (err) {
             console.error(err);
-            setError("Failed to load content");
+            setError("Comming Soon");
         } finally {
             setLoading(false);
         }
