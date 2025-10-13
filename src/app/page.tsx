@@ -42,7 +42,7 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <HeroSection />
 
-        <div className="bg-[#133365] p-5 text-[#FFFFFF]">
+        <div className="bg-[#133365] p-3 md:p-5 text-[#FFFFFF]">
           <Marquee
             items={[
               "Global Coverage",
