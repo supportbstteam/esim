@@ -109,7 +109,7 @@ export default function Navbar() {
           </div>
 
          
-          <div className="hidden min-[950px]:flex  md:items-center md:space-x-8">
+          <div className="hidden min-[1100px]:flex  md:items-center md:space-x-8">
             <ul className="flex items-center space-x-8 text-[18px] text-[#1A0F33] font-medium">
               <li className="hover:text-green-500 transition cursor-pointer">View Plans</li>
               <li className="hover:text-green-500 transition cursor-pointer">How It Works</li>
@@ -122,7 +122,7 @@ export default function Navbar() {
           {/* Right controls */}
           <div className="flex items-center gap-4">
             {/* Desktop right */}
-            <div className="hidden min-[950px]:flex items-center space-x-4">
+            <div className="hidden min-[1100px]:flex items-center space-x-4">
               {!isAuth ? (
                 <button
                   onClick={() => setShowlogin(true)}
@@ -176,7 +176,7 @@ export default function Navbar() {
             </div>
 
            
-            <div className="min-[950px]:hidden flex items-center">
+            <div className="min-[1100px]:hidden flex items-center">
               <button
                 onClick={toggleMenu}
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}
@@ -193,7 +193,7 @@ export default function Navbar() {
      
       <div
         ref={mobileMenuRef}
-        className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+        className={`fixed inset-0 z-50 min-[1100px]:hidden transition-transform duration-300 ease-in-out ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
         aria-hidden={!isOpen}
       >
        
