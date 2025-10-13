@@ -13,7 +13,7 @@
         @apply text-[26px] md:text-[42px] font-semibold md:leading-[56px] text-[#1A0F33];
     }
     .h2 {
-        @apply text-[22px] md:text-[32px] font-semibold leading-[44px] text-[#1A0F33];
+        @apply text-[22px]  md:text-[32px] font-semibold md:leading-[44px] text-[#1A0F33];
     }
     .h3 {
         @apply  text-2xl font-semibold leading-[32px] text-[#1A0F33];
@@ -22,7 +22,7 @@
         @apply  text-[20px] font-semibold leading-[32px] text-[#1A0F33];
     }
     .subtext {
-        @apply  text-[#64748B] text-[16px] leading-6;
+        @apply  text-[#64748B] text-[16px] md:leading-6;
     }
     .container {
         @apply  max-w-[1320px] px-5 mx-auto min-[1400px]:px-0 ;
