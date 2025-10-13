@@ -79,7 +79,7 @@ export const Plan = () => {
         key={plan.id}
         className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300 mb-6 "
       >
-        <div className="px-[24px] py-[18px] flex flex-col min-[700px]:flex-row min-[700px]:items-center justify-center  min-[700px]:justify-between gap-4">
+        <div className="px-2 md:px-[24px] py-[18px] flex flex-col min-[700px]:flex-row min-[700px]:items-center justify-center  min-[700px]:justify-between gap-4">
         
           <div className="flex items-center gap-3 min-[900px]:w-[260px] max-md:justify-center">
             <Flag
@@ -114,7 +114,7 @@ export const Plan = () => {
                 e.stopPropagation();
                 handleAddToCart(plan);
               }}
-              className="cursor-pointer w-full min-[700px]:w-auto px-6 min-[700px]:px-6 py-[11px] text-sm min-[700px]:text-base bg-[#3BC852] text-white rounded-full hover:bg-[#133365] transition leading-[21px]"
+              className="cursor-pointer w-[100%] min-[700px]:w-auto px-6 min-[700px]:px-6 py-1 md:py-[11px] text-sm min-[700px]:text-base bg-[#3BC852] text-white rounded-full hover:bg-[#133365] transition leading-normal md:leading-[21px]"
             >
               Add to Cart
             </button>
