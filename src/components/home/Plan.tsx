@@ -48,7 +48,7 @@ export const Plan = () => {
       <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." />
       <h2 className="text-xl min-[700px]:text-2xl text-[#1A0F33] md:text-3xl mt-9 mb-12 font-semibold text-center">Our Popular Plans</h2>
 
-      <div className="mt-8 space-y-5 max-md:grid max-md:gap-x-4 max-md:grid-cols-2">
+      <div className="mt-8 space-y-5 max-md:grid max-[700px]:gap-x-4  max-[700px]:grid-cols-2">
   {featured.length === 0  ? (
     <div className="flex justify-center items-center py-12">
       <svg
