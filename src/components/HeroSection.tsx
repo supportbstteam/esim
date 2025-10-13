@@ -32,8 +32,8 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative bg-white pt-2.5 md:pt-20 pb-10 bg_wrap">
-            <div className="container flex gap-[64px] flex-col md:flex-row items-start">
+        <section className="relative bg-white pt-2.5 md:pt-20 pb-0 md:pb-10 bg_wrap">
+            <div className="container flex gap-[20px] md:gap-[64px] flex-col md:flex-row items-start">
                 {/* LEFT CONTENT */}
                 <div className="w-full md:w-[646px] space-y-3 md:space-y-6 flex flex-col justify-center text-center md:text-left">
                     {/* Badge */}
@@ -141,7 +141,7 @@ export default function HeroSection() {
                         width={700}
                             src="/HeroSection_16K.png"
                             alt="Phone with eSIM"
-                            className="w-full h-auto object-contain relative top-[-50px] left-[18px]"
+                            className="w-full h-auto object-contain relative top-[0px] md:top-[-50px] md:left-[18px]"
                         />
                     </div>
                 </div>
