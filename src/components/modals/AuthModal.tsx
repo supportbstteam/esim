@@ -129,7 +129,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
 
     return (
         <div
-            className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 "
+            className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 max-md:p-8"
              onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose?.();
@@ -137,12 +137,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
       }}
         >
 
-            <div className="flex bg-white w-full px-4 md:px-0  md:!w-[835px] md:h-[624px]">
-                <div className="w-[40%]  bg-[#D0DFF4]">
+            <div className="flex bg-white w-[80%] h-auto px-4 md:px-0  md:!w-[835px] ">
+                <div className="w-[40%]  bg-[#D0DFF4] max-md:hidden">
                     <Image src="/new_esim1.png" alt="main login" className="h-full object-cover object-left" width={700} height={700} />
                 </div>
                 <div
-                    className={`w-[60%] relative px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
+                    className={`w-full md:w-[60%] relative px-5 md:px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                    <a onClick={onClose}>   <X className="absolute right-2 top-2" /></a>
@@ -300,9 +300,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                                     >
                                         <Form className="space-y-6">
                                             {/* First Name */}
-                                            <div className="flex gap-3">
-                                                <div className="">
-                                                    <label htmlFor="firstName" className="block mb-1 font-medium text-gray-700">
+                                            <div className="flex gap-2 md:gap-3 max-md:flex-col max-md:mb-2">
+                                                <div className="max-md:w-full">
+                                                    <label htmlFor="firstName" className="block mb-0 md:mb-1 font-medium text-gray-700">
                                                         First Name <span className="text-[#E33629]">*</span>
                                                     </label>
                                                     <Field
@@ -316,8 +316,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                                                 </div>
 
                                                 {/* Last Name */}
-                                                <div className="">
-                                                    <label htmlFor="lastName" className="block mb-1 font-medium text-gray-700">
+                                                <div className="max-md:w-full max-md:mb-0">
+                                                    <label htmlFor="lastName" className="block  mb-0 md:mb-1  font-medium text-gray-700">
                                                         Last Name <span className="text-[#E33629]">*</span>
                                                     </label>
                                                     <Field
@@ -332,7 +332,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                                             </div>
                                             {/* Email */}
                                             <div>
-                                                <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+                                                <label htmlFor="email" className="block  mb-0 md:mb-1  font-medium text-gray-700">
                                                     Email ID <span className="text-[#E33629]">*</span>
                                                 </label>
                                                 <Field
@@ -347,7 +347,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
 
                                             {/* Password */}
                                             <div>
-                                                <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
+                                                <label htmlFor="password" className="block  mb-0 md:mb-1  font-medium text-gray-700">
                                                     Password <span className="text-[#E33629]">*</span>
                                                 </label>
                                                 <Field
