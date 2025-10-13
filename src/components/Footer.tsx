@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
           {/* Logo & About */}
           <div className="space-y-4 md:col-span-1">
             <Link href="/" className="inline-block">
-              <img src="/footerLogo.png" alt="footerLogo" className="w-[115px] h-auto" />
+              <img src="/footer_main.png" alt="footerLogo" className="w-[115px] h-auto" />
             </Link>
             <p className="text-gray-300 text-sm sm:text-[15px] md:text-[16px]">
               We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless

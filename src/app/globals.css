@@ -263,7 +263,7 @@ button , a{
 }
 @media (max-width:767px) {
   .bg_wrap {
-  position: absolute;
+  position: relative;
   background: url('/bg_ring.png');
   background-repeat: no-repeat;
   background-size: 200px !important;
