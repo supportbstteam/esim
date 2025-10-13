@@ -33,7 +33,7 @@ export default function HeroSection() {
 
     return (
         <section className="relative bg-white pt-2.5 md:pt-20 pb-0 md:pb-10 bg_wrap">
-            <div className="container flex gap-[20px] md:gap-[64px] flex-col md:flex-row items-start">
+            <div className="container flex gap-[20px] md:gap-[64px] flex-col md:flex-row items-start justify-between">
                 {/* LEFT CONTENT */}
                 <div className="w-full md:w-[646px] space-y-3 md:space-y-6 flex flex-col justify-center text-center md:text-left">
                     {/* Badge */}
