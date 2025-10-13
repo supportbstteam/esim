@@ -7,7 +7,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { BiLogoWhatsapp } from "react-icons/bi";
-
+import Image from "next/image";
 const linkSections = [
   {
     title: "Quick Links",
@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
           {/* Logo & About */}
           <div className="space-y-4 md:col-span-1">
             <Link href="/" className="inline-block">
-              <img src="/footer_main.png" alt="footerLogo" className="w-[115px] h-auto" />
+              <Image height={100} width={100} src="/footer_main.png" alt="footerLogo" className="w-[115px] h-auto" />
             </Link>
             <p className="text-gray-300 text-sm sm:text-[15px] md:text-[16px]">
               We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless
