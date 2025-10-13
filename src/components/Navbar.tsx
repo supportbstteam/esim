@@ -91,7 +91,7 @@ export default function Navbar() {
   return (
     <nav className="bg-white ">
       <div className="container">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 py-10">
          
           <div className="flex-shrink-0 flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export default function Navbar() {
               {!isAuth ? (
                 <button
                   onClick={() => setShowlogin(true)}
-                  className="bg-[#133365] text-white px-4 py-2 rounded-full hover:bg-blue-900 transition text-sm"
+                  className="bg-[#133365] text-white px-4 py-2 md:h-[57px] rounded-full hover:bg-blue-900 transition text-sm"
                 >
                   Login/Signup
                 </button>
