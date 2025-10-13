@@ -261,3 +261,12 @@
 button , a{
   cursor: pointer;
 }
+@media (max-width:767px) {
+  .bg_wrap {
+  position: absolute;
+  background: url('/bg_ring.png');
+  background-repeat: no-repeat;
+  background-size: 200px !important;
+  background-position: bottom right;
+}
+}
