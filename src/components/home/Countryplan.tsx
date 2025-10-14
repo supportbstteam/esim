@@ -230,7 +230,7 @@ export default function CountryplanTabs() {
                                 {plan?.country?.name}
                               </p>
                             </div>
-                            <div className="text-[20px] w-[90px] flex items-center justify-center bg-[#F3F5F7] rounded-full px-4 py-1 leading-6.4 font-bold max-md:mx-auto">
+                            <div className="text-[20px] w-[90px] flex items-center justify-center bg-[#F3F5F7] rounded-full px-4 py-1 leading-6.4 font-bold ">
                               ${plan.price}
                             </div>
                           </div>
