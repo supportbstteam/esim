@@ -214,7 +214,7 @@ export default function CountryplanTabs() {
                   ) : (
                     featured.slice(0, 6).map((plan) => (
                       <div
-                        // onClick={() => handleNavigate(plan.country.id)}
+                        onClick={() => handleNavigate(plan.country.id)}
                         key={plan.id}
                         className="max-[670px]:w-full max-[1080px]:w-[48%] lg:w-[32%]
   bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-6 "
