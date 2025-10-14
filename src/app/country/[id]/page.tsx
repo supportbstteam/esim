@@ -7,7 +7,7 @@ import { fetchPlans } from "@/redux/thunk/planThunk";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaFire } from "react-icons/fa";
-
+import Flag from "@/components/ui/Flag";
 type CountryDetailsProps = {
     params: Promise<{ id: string }>; // 👈 params is now a Promise
 };
@@ -54,18 +54,24 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     // console.log("---- plans in the e sim ----", plans);
 
     return (
-        <div className="flex w-full container p-6 gap-6">
+        <div className="flex w-full container mt-12 pb-6 gap-6">
             {/* Left side (maybe country details later) */}
-            <div className="flex-[2] border-r border-gray-300 pr-4">
-                <h2 className="text-xl font-semibold">Country Info</h2>
-                <span>
-
-                </span>
-                <h3 className="text-3xl font-bold " >{plans && plans.length > 0 && plans[0]?.country?.name}</h3>
+            <div className="flex flex-col md:w-[40%]  border-gray-300 pr-4">
+                <div className="flex gap-2">
+                    <Flag
+                        countryName={plans[0]?.country?.name}
+                        size={36}
+                        className="h-[36px] w-[36px]"
+                    />
+                    <h3 className="text-3xl font-bold " >{plans && plans.length > 0 && plans[0]?.country?.name}</h3>
+                </div>
+                <div className="subtext !text-[16px] mt-8">
+                    Get a single global eSIM and enjoy seamless, reliable coverage with flexible data plans to stay connected anytime, anywhere.
+                </div>
             </div>
 
             {/* Plans Section */}
-            <div className="flex-[3]">
+            <div className="flex flex-col border-2 px-8 py-6 rounded-xl md:w-[60%]">
                 {plans && plans.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {plans.map((item) => {
