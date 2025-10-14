@@ -1,15 +1,21 @@
 "use client";
+import { useNavigate } from "@/components/hooks/navigation";
+import AuthModal from "@/components/modals/AuthModal";
 import OrderModal from "@/components/modals/orderModal";
 import { api } from "@/lib/api";
 import { userOrder } from "@/lib/pageFunction";
-import { useSearchParams } from "next/navigation";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function CheckoutDetailPage() {
+  const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan") as string | null;
-
+  const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -17,6 +23,11 @@ export default function CheckoutDetailPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [esimData, setEsimData] = useState<any>(null);
   const [errorState, setErrorState] = useState<string | null>(null);
+  const { user, isAuth } = useAppSelector((state) => state?.user);
+
+
+  // user is logged in
+  const [showlogin, setShowlogin] = useState(false);
 
   // Fetch plan info
   const fetchPlanById = async () => {
@@ -24,6 +35,7 @@ export default function CheckoutDetailPage() {
       const response = await api({
         url: `/user/plans/${plan}`,
       });
+      await dispatch(fetchUserDetails());
       setData(response);
     } catch (err) {
       console.error("Error fetching plan by Id", err);
@@ -32,6 +44,12 @@ export default function CheckoutDetailPage() {
 
   // Handle payment click
   const handlePaymentClick = async (method: string) => {
+
+    if (!isAuth) {
+      setShowlogin(true);
+      return;
+    }
+
     setModalOpen(true);
     setErrorState(null);
     setEsimData(null);
@@ -133,6 +151,10 @@ export default function CheckoutDetailPage() {
     },
   ];
 
+  const handleBack = () => {
+    router.back();
+  }
+
   return (
     <div className="container my-10">
       <div className="flex flex-col md:flex-row w-full gap-6">
@@ -181,8 +203,9 @@ export default function CheckoutDetailPage() {
 
         {/* Payment Method */}
         <div className="flex-2/3 bg-white rounded-xl shadow p-6">
-          <button className="mb-3 text-sm text-gray-500 hover:text-gray-700 flex items-center">
-            &larr; Back
+          <button onClick={handleBack} className="mb-3 text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
+            <FaArrowLeft />
+            Back
           </button>
           <h3 className="font-semibold text-lg mb-4">Choose Payment Method</h3>
           <p className="text-gray-500 mb-6 text-sm">
@@ -214,6 +237,12 @@ export default function CheckoutDetailPage() {
         isLoading={loading}
         errorState={errorState}
       />
+
+      {
+        showlogin && (
+          <AuthModal isOpen={showlogin} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
+        )
+      }
     </div>
   );
 }

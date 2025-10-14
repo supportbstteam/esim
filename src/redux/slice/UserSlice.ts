@@ -42,7 +42,7 @@ const initialState: UserState = {
   user: null,
   isAuth: false,
   token: Cookies.get("token") || null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -147,6 +147,7 @@ const userSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
+      state.isAuth = false;
       Cookies.remove("token");
     },
   },
