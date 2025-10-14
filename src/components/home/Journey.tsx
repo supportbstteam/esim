@@ -8,7 +8,7 @@ import { TbBrandWhatsapp } from "react-icons/tb";
 import Image from 'next/image'
 export const Journey = () => {
     return (
-       <div className="bg-[#E5EFF780]  pt-[88px] mt-[66px] ">
+       <div className="bg-[#E5EFF780]  pt-[88px] mt-[0px] ">
   <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
 
     {/* Right Image - Mobile first */}

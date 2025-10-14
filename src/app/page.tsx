@@ -13,6 +13,7 @@ import { fetchCountries } from "@/redux/thunk/thunk";
 import { fetchPlans, featurePlans } from "@/redux/thunk/planThunk";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
+import Countryplan from "@/components/home/Countryplan"
 export default function Home() {
 
   const dispatch = useAppDispatch();
@@ -56,10 +57,11 @@ export default function Home() {
           />
         </div>
 
-        <Plan />
+        {/* <Plan /> */}
         <Journey />
-        <TravelPlans />
+        {/* <TravelPlans /> */}
         <EasyStep />
+        <Countryplan />
         <TrustedTravel />
         <FAQ faqs={list} />
 

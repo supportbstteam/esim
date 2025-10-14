@@ -6,8 +6,10 @@ import AuthModal from "../modals/AuthModal";
 import { useRouter } from "next/navigation";
 import Flag from "@/components/ui/Flag";
 import { useNavigate } from "../hooks/navigation";
-
-export const Plan = () => {
+type PlanProps = {
+  classed?: string; 
+}
+export const Plan = ({ classed }: PlanProps ) => {
   const { featured } = useAppSelector((state) => state?.plan);
   const { isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);
@@ -44,8 +46,8 @@ export const Plan = () => {
     <section className="container bg-white px-4 min-[700px]:px-6 md:px-[10%] py-8 md:py-12 mt-10">
       <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
 
-      <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." />
-      <h2 className="text-xl min-[700px]:text-2xl text-[#1A0F33] md:text-3xl mt-9 mb-12 font-semibold text-center">Our Popular Plans</h2>
+      <Pagetitle subclass={classed} title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." />
+      <h2 className={`${classed} text-xl min-[700px]:text-2xl text-[#1A0F33] md:text-3xl mt-9 mb-12 font-semibold text-center`}>Our Popular Plans</h2>
 
       <div className={`mt-8 space-y-5 ${featured.length !== 0 ? 'max-md:grid max-[700px]:gap-x-4  max-[700px]:grid-cols-2' : ''}`}>
         {featured.length === 0 ? (

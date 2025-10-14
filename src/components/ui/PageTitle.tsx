@@ -26,7 +26,7 @@ function PageTitle({ title, subtitle, leftLogo, rightLogo , desk, subclass }: Pa
         <h2 className={`${subclass} text-[26px] leading-normal md:text-[42px] tracking-tight  md:tracking-[-2px] font-bold text-[#1A0F33]`}>
           {title}
         </h2>
-        <p className="text-[#64748B] text-[16px] md:text-[20px] max-w-xl mx-auto mt-4 leading-6">
+        <p className={`text-[#64748B] ${subclass} text-[16px] md:text-[20px] max-w-xl mx-auto mt-4 leading-6`}>
           {subtitle}
         </p>
        { desk && (<p className="text-[#64748B]  text-[16px] md:text-[20px] max-w-xl mx-auto m-0 leading-6">{desk}</p> )}

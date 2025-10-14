@@ -5,16 +5,20 @@ import PageTitle from '../ui/PageTitle';
 import { useAppSelector } from '@/redux/store';
 import Flag from '@/components/ui/Flag';
 import { useRouter } from "next/navigation";
-const TravelPlans = () => {
+type travelprops = {
+  classed?: string; 
+  maincontaiuner?: string; 
+};
+const TravelPlans = ({ classed , maincontaiuner }: travelprops) => {
   const router = useRouter();
   const { countries } = useAppSelector((state) => state?.country);
   const handleNavigate = (id: string) => {
     router.push(`/country/${id}`);
   };
   return (
-    <section className="bg-white px-0  mt-25 container">
+    <section className={`${maincontaiuner} bg-white px-0  mt-25 container`}>
       {/* Section Heading */}
-      <PageTitle title="Country-Specific Travel Plan" subtitle="Choose a plan that works in each country you travel to" />
+      <PageTitle subclass={classed} title="Country-Specific Travel Plan" subtitle="Choose a plan that works in each country you travel to" />
 
 
       {/* Cards */}
