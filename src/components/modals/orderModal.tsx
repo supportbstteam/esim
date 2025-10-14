@@ -60,7 +60,7 @@ export default function OrderModal({
       ctx?.drawImage(img, 0, 0);
       const pngFile = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `${esimData?.esim?.simNumber || "esim"}.png`;
+      link.download = `${esimData?.esim?.qrCodeUrl || "esim"}.png`;
       link.href = pngFile;
       link.click();
     };
@@ -68,6 +68,7 @@ export default function OrderModal({
   };
 
   console.log("---- esim data   -----", esimData);
+  console.log("---- esim data QR -----", esimData?.esim?.qrCodeUrl);
 
   if (!isOpen) return null;
 
@@ -109,10 +110,16 @@ export default function OrderModal({
                 </div>
                 <p className="text-gray-600 mb-6">You can now activate your e-sim</p>
                 <div className="space-y-5 bg-gray-50 rounded-xl p-6">
+                  
                   <div className="flex items-center gap-3">
                     <FaSimCard className="text-blue-600" />
-                    <p><strong>SIM Number:</strong> {esimData.esim?.simNumber}</p>
+                    <p><strong>SIM Number:</strong> {esimData.esim?.iccid}</p>
                   </div>
+
+                  {/* <div className="flex items-center gap-3">
+                    <FaSimCard className="text-blue-600" />
+                    <p><strong>SIM Number QR:</strong> {esimData.esim?.qrCodeUrl}</p>
+                  </div> */}
                   <div className="flex items-center gap-3">
                     <FaGlobe className="text-purple-600" />
                     <p><strong>Country:</strong> {esimData?.esim?.country?.name}</p>
@@ -146,7 +153,7 @@ export default function OrderModal({
                 <h3 className="text-gray-700 mb-3 font-medium">Scan this QR to Configure</h3>
                 <div ref={qrRef} className="bg-gray-100 p-4 rounded-lg">
                   <QRCode
-                    value={esimData.esim?.simNumber || "No-SIM"}
+                    value={esimData?.esim?.qrCodeUrl || "No-SIM"}
                     size={180}
                     bgColor="#ffffff"
                     fgColor="#000000"
