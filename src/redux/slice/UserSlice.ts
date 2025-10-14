@@ -20,6 +20,7 @@ export interface User {
   sims?: any[];
   createdAt?: string;
   updatedAt?: string;
+  profilePic?: string
 }
 
 interface UserState {

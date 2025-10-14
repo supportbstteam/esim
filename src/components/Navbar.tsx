@@ -9,6 +9,15 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { fetchUserDetails, logout } from '@/redux/slice/UserSlice';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import toast from 'react-hot-toast';
+
+const navItems = [
+  { label: "View Plans", href: "/plans" },
+  { label: "How It Works", href: "quick-links/how-it-works" },
+  { label: "Features", href: "/features" },
+  { label: "Support", href: "/support" },
+  // { label: "Partner Program", href: "/partner-program" },
+];
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -27,6 +36,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     // setIsUserMenuOpen(false);
     await dispatch(logout());
+    toast.success("Log out");
     // await dispatch(fetchUserDetails());
   };
 
@@ -88,7 +98,7 @@ export default function Navbar() {
   };
 
 
-  console.log("----- isAuth ----", isAuth);
+  // console.log("----- isAuth ----", isAuth);
 
   return (
     <nav className="bg-white ">
@@ -111,11 +121,13 @@ export default function Navbar() {
 
           <div className="hidden min-[1100px]:flex md:items-center md:space-x-8">
             <ul className="flex items-center space-x-8 text-[18px] text-[#1A0F33] font-medium">
-              <li className="hover:text-green-500 transition cursor-pointer">View Plans</li>
-              <li className="hover:text-green-500 transition cursor-pointer">How It Works</li>
-              <li className="hover:text-green-500 transition cursor-pointer">Features</li>
-              <li className="hover:text-green-500 transition cursor-pointer">Support</li>
-              <li className="hover:text-green-500 transition cursor-pointer">Partner Program</li>
+              {navItems.map(({ label, href }) => (
+                <li key={href}>
+                  <Link href={href} className="hover:text-green-500 transition cursor-pointer">
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -175,7 +187,7 @@ export default function Navbar() {
                       ${isUserMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto scale-100' : 'opacity-0 -translate-y-1 pointer-events-none scale-[0.995]'}`}
                     role="menu"
                   >
-                    <Link href="/account" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                    <Link href="/profile" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
                       Account
                     </Link>
                     <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">

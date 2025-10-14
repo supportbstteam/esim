@@ -1,13 +1,13 @@
 "use client";
-import React, { useState  ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch } from "@/redux/store";
-import { loginUser, signupUser, verifyOtp } from "@/redux/slice/UserSlice";
+import { fetchUserDetails, loginUser, signupUser, verifyOtp } from "@/redux/slice/UserSlice";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Success from "./Success";
-import {X} from "lucide-react";
+import { X } from "lucide-react";
 type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -103,6 +103,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
             if (response?.type === "user/verifyOtp/fulfilled") {
                 setLoading(false);
                 setShowVerifyOtp(false);
+                await dispatch(fetchUserDetails());
                 onClose();
                 onAuthSuccess();
             }
@@ -115,26 +116,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
         }
     };
 
- useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-    if (isOpen) document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [isOpen, onClose]);
+    useEffect(() => {
+        function onKey(e: KeyboardEvent) {
+            if (e.key === "Escape") onClose();
+        }
+        if (isOpen) document.addEventListener("keydown", onKey);
+        return () => document.removeEventListener("keydown", onKey);
+    }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+    if (!isOpen) return null;
 
     if (!isOpen) return null;
 
     return (
         <div
             className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 max-md:p-8"
-             onClick={(e) => {
-        if (e.target === e.currentTarget) {
-          onClose?.();
-        }
-      }}
+            onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                    onClose?.();
+                }
+            }}
         >
 
             <div className="flex bg-white w-[100%] h-auto px-4 md:px-0  md:!w-[835px] md:!h-[624px] ">
@@ -145,7 +146,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
                     className={`w-full md:w-[60%] relative px-0 md:px-14 py-5 bg-white flex items-start flex-col ${showSuccess ? 'justify-center' : showVerifyOtp ? 'justify-start pt-8' : showForgotPassword ? 'justify-start' : 'justify-center pt-6'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                   <a onClick={onClose}>   <X className="absolute md:right-2 md:top-2 top-[2px] right-[-10px]" /></a>
+                    <a onClick={onClose}>   <X className="absolute md:right-2 md:top-2 top-[2px] right-[-10px]" /></a>
                     {/* Toggle Buttons */}
                     {showSuccess ? (
                         <Success />
@@ -209,7 +210,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
 
                                 </h2>
                                 <p className="subtext">
-                                 {isLogin ? "Access your account to manage your eSIM plans and stay connected wherever you go." : "Create your account and unlock instant access to global data, flexible plans, and hassle-free activation."}
+                                    {isLogin ? "Access your account to manage your eSIM plans and stay connected wherever you go." : "Create your account and unlock instant access to global data, flexible plans, and hassle-free activation."}
                                 </p>
                                 <div className="flex justify-center items-center mb-6  mt-6 bg-[#F3F5F7] rounded-2xl  w-full">
                                     <button
