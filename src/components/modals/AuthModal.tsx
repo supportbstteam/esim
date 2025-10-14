@@ -12,6 +12,7 @@ type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
     onAuthSuccess: () => void;
+      initialTab?: 'login' | 'signup';
 };
 
 const otpValidationSchema = Yup.object({
@@ -20,7 +21,7 @@ const otpValidationSchema = Yup.object({
         .matches(/^\d{4,6}$/, "OTP must be 4 to 6 digits"), // adjust length if needed
 });
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess }) => {
+const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess ,initialTab}) => {
     const dispatch = useAppDispatch();
     const [isLogin, setIsLogin] = useState(true);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -28,6 +29,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
     const [showSuccess, setShowSuccess] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState('');
     const [loading, setLoading] = useState(false);
+useEffect(() => {
+  // when modal opens, honour initialTab if provided
+  if (isOpen && initialTab) {
+    setIsLogin(initialTab === 'login');
+    // Reset other flows when switching externally
+    setShowForgotPassword(false);
+    setShowVerifyOtp(false);
+    setShowSuccess(false);
+  }
+}, [isOpen, initialTab]);
 
     // ======= Initial Values =======
     const loginInitialValues = { email: "", password: "" };

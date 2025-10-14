@@ -26,6 +26,7 @@ export default function Navbar() {
   const [isUserSubOpen, setIsUserSubOpen] = useState(false);
   const { user, isAuth, loading } = useAppSelector((state) => state?.user || {});
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
 
   const userMenuRef = useRef<HTMLDivElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
@@ -151,12 +152,25 @@ export default function Navbar() {
                   {/* <div className="h-10 rounded bg-gray-300 w-full" /> */}
                 </div>
               ) : !isAuth ? (
+                <div className="flex gap-2">
                 <button
-                  onClick={() => setShowlogin(true)}
-                  className="bg-[#133365] text-white px-6 py-3.5 rounded-full hover:bg-[#3BC852] transition text-[16px]"
+                 onClick={() =>  {setAuthModalTab('login'); 
+                    setShowlogin(true);
+                  }}
+                  
+                  className="border-[#133365] text-[#133365] border-1 px-6 py-2 rounded-full hover:bg-[#3BC852] hover:text-white hover:border-[#3BC852] transition text-[16px]"
                 >
-                  Login/Signup
+                  Login
                 </button>
+                 <button
+                  onClick={() =>  {setAuthModalTab('signup'); 
+                    setShowlogin(true);
+                  }}
+                  className="bg-[#133365] text-white px-6 py-2 rounded-full hover:bg-[#3BC852] transition text-[16px]"
+                >
+                  Signup
+                </button>
+                </div>
               ) : (
                 <div
                   className="relative inline-block"
@@ -318,7 +332,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      <AuthModal isOpen={showlogin} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
+      <AuthModal 
+      isOpen={showlogin}  initialTab={authModalTab} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
     </nav>
   );
 }
