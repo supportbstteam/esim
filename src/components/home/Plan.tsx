@@ -116,7 +116,7 @@ export const Plan = () => {
               }}
               className="cursor-pointer w-[100%] min-[700px]:w-auto px-6 min-[700px]:px-6 py-1 md:py-[11px] text-sm min-[700px]:text-base bg-[#3BC852] text-white rounded-full hover:bg-[#133365] transition leading-normal md:leading-[21px]"
             >
-              Add to Cart
+              Buy now
             </button>
           </div>
         </div>

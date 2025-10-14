@@ -51,11 +51,17 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         await dispatch(fetchUserDetails());
     };
 
+    // console.log("---- plans in the e sim ----", plans);
+
     return (
         <div className="flex w-full container p-6 gap-6">
             {/* Left side (maybe country details later) */}
             <div className="flex-[2] border-r border-gray-300 pr-4">
                 <h2 className="text-xl font-semibold">Country Info</h2>
+                <span>
+
+                </span>
+                <h3 className="text-3xl font-bold " >{plans && plans.length > 0 && plans[0]?.country?.name}</h3>
             </div>
 
             {/* Plans Section */}
@@ -111,7 +117,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                     <p className="text-gray-500">No plans available for this country.</p>
                 )}
                 <button onClick={handleAddToCart} className="w-full bg-green-400 p-4 rounded-2xl mt-5 " >
-                    <h3 className="text-xl" >Add to cart</h3>
+                    <h3 className="text-xl" >Buy Now</h3>
                 </button>
             </div>
             <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />

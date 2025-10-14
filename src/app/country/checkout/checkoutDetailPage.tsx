@@ -4,6 +4,7 @@ import { api } from "@/lib/api";
 import { userOrder } from "@/lib/pageFunction";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function CheckoutDetailPage() {
   const searchParams = useSearchParams();
@@ -55,11 +56,12 @@ export default function CheckoutDetailPage() {
         return;
       }
 
+      toast.success("Congratulations for Esim");
       // Simulate eSIM creation success
-      setTimeout(() => {
-        setEsimData(response?.data);
-        setLoading(false);
-      }, 7000);
+      setEsimData(response?.data);
+      setLoading(false);
+      // setTimeout(() => {
+      // }, 7000);
     } catch (err) {
       console.error("Payment failed:", err);
       setErrorState(
@@ -68,6 +70,8 @@ export default function CheckoutDetailPage() {
       setLoading(false);
     }
   };
+
+  // console.log("---- data ----", data);
 
   useEffect(() => {
     fetchPlanById();
