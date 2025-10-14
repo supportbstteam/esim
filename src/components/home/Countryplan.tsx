@@ -71,7 +71,7 @@ export default function CountryplanTabs() {
   };
 
   return (
-    <section className="w-full   bg-blue-900 mb-10 md:mb-25 mt-10 md:mt-25">
+    <section className="w-full   bg-blue-900 mb-6 md:mb-25 mt-6 md:mt-25">
       <div className="container pt-20 pb-10">
         <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
         <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." subclass='text-white' />
@@ -94,7 +94,7 @@ export default function CountryplanTabs() {
               aria-selected={active === 'popular'}
               role="tab"
               onClick={() => setActive('popular')}
-              className={`p-0 md:px-4 md:py-2  text-[16px] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
+              className={`px-4 py-2 text-[16px] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
                 ? 'border-b-4'
                 : 'hover:'
                 }`}
