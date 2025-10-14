@@ -71,7 +71,7 @@ export default function CountryplanTabs() {
   };
 
   return (
-    <section className="w-full   bg-blue-900 mb-6 md:mb-25 mt-6 md:mt-25">
+    <section className="w-full   bg-[#133365] mb-6 md:mb-25 mt-6 md:mt-25">
       <div className="container pt-20 pb-10">
         <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
         <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." subclass='text-white' />
@@ -82,8 +82,8 @@ export default function CountryplanTabs() {
               aria-selected={active === 'country'}
               role="tab"
               onClick={() => setActive('country')}
-              className={`px-4 py-2 text-[16px] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'country'
-                ? 'border-b-4'
+              className={`px-0 md:px-4 py-2 text-[16px] md:text-[21px] border-b-4 border-[#133365] text-white font-medium transition-all focus:outline-none ${active === 'country'
+                ? 'border-white'
                 : 'hover:'
                 }`}
             >
@@ -94,8 +94,8 @@ export default function CountryplanTabs() {
               aria-selected={active === 'popular'}
               role="tab"
               onClick={() => setActive('popular')}
-              className={`px-4 py-2 text-[16px] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
-                ? 'border-b-4'
+              className={`px-0 md:px-4 py-2 text-[16px] border-b-4 border-[#133365] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
+                ? 'border-white'
                 : 'hover:'
                 }`}
             >
@@ -145,7 +145,7 @@ export default function CountryplanTabs() {
                           <div
                             key={i}
                             onClick={() => handleNavigate(item.id)}
-                            className="border bg-white border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300 cursor-pointer w-full sm:w-[48%] lg:w-[31%] xl:w-[23%]"
+                            className=" bg-white border-gray-200 rounded-[8px] hover:bg-green-50  hover:border-[#3BC852] border-2 transition duration-300 cursor-pointer w-full sm:w-[48%] lg:w-[31%] xl:w-[23%]"
                           >
                             <div className="p-4 flex items-center justify-between gap-4"
                             >
@@ -214,9 +214,9 @@ export default function CountryplanTabs() {
                   ) : (
                     featured.slice(0, 6).map((plan) => (
                       <div
-                        onClick={() => handleNavigate(plan.country.id)}
+                        // onClick={() => handleNavigate(plan.country.id)}
                         key={plan.id}
-                        className="md:w-[32%] max-md:w-[48%] max-sm:w-[100%] border bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300 mb-6 "
+                        className="md:w-[32%] max-md:w-[48%] max-sm:w-[100%]  bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-6 "
                       >
                         <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4">
                           <div className="flex w-full justify-between">
