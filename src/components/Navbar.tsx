@@ -126,7 +126,18 @@ export default function Navbar() {
             <div className="hidden min-[1100px]:flex items-center space-x-4">
 
               {(loading && !isAuth) ? (
-                <ImSpinner2 size={24} className="text-gray-500 animate-spin" />
+                <div className="space-y-3 animate-pulse">
+                  {/* Skeleton avatar and text */}
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-full bg-gray-300" />
+                    <div className="flex flex-col gap-1 flex-1">
+                      <div className="h-4 w-24 rounded bg-gray-300" />
+                      <div className="h-3 w-32 rounded bg-gray-200" />
+                    </div>
+                  </div>
+                  {/* Skeleton button */}
+                  {/* <div className="h-10 rounded bg-gray-300 w-full" /> */}
+                </div>
               ) : !isAuth ? (
                 <button
                   onClick={() => setShowlogin(true)}

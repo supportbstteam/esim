@@ -36,11 +36,16 @@ export default function CheckoutDetailPage() {
         url: `/user/plans/${plan}`,
       });
       await dispatch(fetchUserDetails());
+
+      console.log(` -----/user/plans/${plan} ------`, response)
       setData(response);
     } catch (err) {
       console.error("Error fetching plan by Id", err);
     }
   };
+
+  console.log("---- data in the checkout ----", data);
+  console.log("---- esim data in the checkout ----", esimData);
 
   // Handle payment click
   const handlePaymentClick = async (method: string) => {

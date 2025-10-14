@@ -1,7 +1,8 @@
-// DynamicPageClient.tsx
 "use client";
 
 import { api } from "@/lib/api";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { useAppDispatch } from "@/redux/store";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -9,27 +10,24 @@ interface Props {
 }
 
 export default function DynamicPageClient({ page }: Props) {
-
-    // console.log("---- page dynamic client ----", page);
     const [content, setContent] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
+    const dispatch = useAppDispatch();
     const title = page
         .split(/[-_]/)
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" ");
 
-        // console.log("url",`/user/cms/content/${page.split(/[-_]/)[0].toLowerCase()}`)
-
     useEffect(() => {
+        dispatch(fetchUserDetails());
         const fetchData = async () => {
+            // await dispatch(fetchUserDetails());
             setLoading(true);
             setError(null);
             try {
                 const response = await api<{ html: string }>({
                     url: `/user/cms/content/${page.split(/[-_]/)[0].toLowerCase()}`,
-                    // url: `/user/cms/content/${page.split(/[-_]/)[0].toLowerCase()}`,
                     method: "GET",
                 });
 
@@ -37,7 +35,7 @@ export default function DynamicPageClient({ page }: Props) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
                 console.error(err);
-                setError("Comming Soon");
+                setError("Coming Soon");
             } finally {
                 setLoading(false);
             }
@@ -46,10 +44,21 @@ export default function DynamicPageClient({ page }: Props) {
     }, [page]);
 
     return (
-        <div className="p-4 container ">
+        <div className="p-4 container">
             <h1 className="text-2xl font-bold mb-4">{title}</h1>
-            {loading && <p>Loading...</p>}
+
+            {loading && (
+                <div className="space-y-3 animate-pulse">
+                    <div className="h-6 w-3/4 bg-gray-300 rounded"></div>
+                    <div className="h-4 w-full bg-gray-300 rounded"></div>
+                    <div className="h-4 w-full bg-gray-300 rounded"></div>
+                    <div className="h-4 w-5/6 bg-gray-300 rounded"></div>
+                    <div className="h-4 w-2/3 bg-gray-300 rounded"></div>
+                </div>
+            )}
+
             {error && <p className="subtext">{error}</p>}
+
             {!loading && !error && (
                 <div
                     className="prose max-w-none"
