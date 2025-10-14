@@ -56,7 +56,7 @@ export default function CheckoutDetailPage() {
         return;
       }
 
-      toast.success("Congratulations for Esim");
+      // toast.success("Congratulations for Esim");
       // Simulate eSIM creation success
       setEsimData(response?.data);
       setLoading(false);
