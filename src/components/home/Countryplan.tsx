@@ -5,7 +5,6 @@ import Flag from "@/components/ui/Flag";
 type TabKey = 'country' | 'popular';
 import { useRouter } from "next/navigation";
 import { useNavigate } from "../hooks/navigation";
-import { IoIosArrowForward } from "react-icons/io";
 
 import Pagetitle from "@/components/ui/PageTitle";
 
@@ -17,13 +16,15 @@ export default function CountryplanTabs() {
   const navigation = useNavigate();
   const { countries = [] } = useAppSelector((state) => state?.country ?? {});
   const [active, setActive] = useState<TabKey>('country');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
-  // build a map of countryId -> cheapest (basic) plan for that country
+ 
   const basicPlanByCountry = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const map: Record<string, any> = {};
     if (!Array.isArray(featured)) return map;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     featured.forEach((plan: any) => {
       const countryId = plan?.country?.id;
       if (!countryId) return;
