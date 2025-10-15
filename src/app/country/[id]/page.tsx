@@ -202,7 +202,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
           {content.plansSection.subtext}
         </div>
 
-        <div className="bg-[#133365]  py-8 md:py-15 rounded-xl w-full md:w-[60%] mx-auto px-10 md:px-20">
+        <div className="bg-[#133365]  py-8 md:py-15 rounded-xl w-full md:w-[60%] mx-auto px-5 md:px-20">
         <div className="mb-8 flex items-center justify-center max-w-2xl mx-auto  gap-2 border-b-[0.1px] p-1 pb-0 ">
           <button
             onClick={() => setActiveTab("standard")}
@@ -286,7 +286,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                                 <div className="font-semibold flex-3 text-gray-900">
                                   {item.title}
                                 </div>
-                                <div className=" flex-1 font-bold text-gray-800 text-end text-2xl">
+                                <div className=" flex-1 font-bold text-gray-800 text-end text-xl md:text-2xl">
                                   {item.price}{" "}
                                   {item.currency === "USD" ? "$" : item?.currency}
                                 </div>
@@ -355,7 +355,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                                 <div className="font-semibold flex-3 text-gray-900">
                                   {item.title}
                                 </div>
-                                <div className=" flex-1 font-bold text-gray-800 text-end text-2xl">
+                                <div className=" flex-1 font-bold text-gray-800 text-end text-xl md:text-2xl">
                                   {item.price}{" "}
                                   {item.currency === "USD"
                                     ? "$"
