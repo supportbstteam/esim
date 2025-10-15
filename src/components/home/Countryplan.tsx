@@ -76,13 +76,13 @@ export default function CountryplanTabs() {
         <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
         <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." subclass='text-white' />
 
-        <div className="mx-auto p-4 mt-6 md:mt-10 rounded-4xl">
+        <div className="mx-auto p-4 max-[360px]:px-0 mt-6 md:mt-10 rounded-4xl">
           <div className="flex items-center justify-center max-w-2xl mx-auto  gap-5  p-1 pb-0 ">
             <button
               aria-selected={active === 'country'}
               role="tab"
               onClick={() => setActive('country')}
-              className={`relative   px-3 max-[360px]:px-1 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'country'
+              className={`relative   px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'country'
                 ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
                 : 'hover:'
                 }`}
@@ -94,7 +94,7 @@ export default function CountryplanTabs() {
               aria-selected={active === 'popular'}
               role="tab"
               onClick={() => setActive('popular')}
-              className={`relative  px-3 max-[360px]:px-1 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff]  md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
+              className={`relative  px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff]  md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
                 ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
                 : 'hover:'
                 }`}
