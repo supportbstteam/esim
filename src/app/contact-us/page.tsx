@@ -101,8 +101,8 @@ const { list } = useAppSelector((state) => state?.faq);
 
 
     return (
-        <div>
-        <div className='flex flex-col md:flex-row container border-2 border-[#F3F5F7] rounded-[8px] w-full h-full m-10  p-5 md:!p-10 gap-10'>
+        <div className='mb-0 md:mb-25'>
+        <div className='flex flex-col md:flex-row container border-2 border-[#F3F5F7] rounded-[8px] w-full h-full my-15 md:my-25  p-5 md:!p-10 gap-10'>
 
             {/* Left Column - About & Contacts */}
             <div className='flex w-full md:w-[58%] flex-col justify-between'>
@@ -112,7 +112,7 @@ const { list } = useAppSelector((state) => state?.faq);
                     <div className="prose max-w-none mb-8" dangerouslySetInnerHTML={{ __html: content }} />
                 )}</p>  
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid  max-sm:grid-col-1 max-md:grid-cols-1 md:grid-cols-2 gap-6">
 
                     {/* Phones */}
                     {phones.map(phone => (

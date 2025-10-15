@@ -32,7 +32,7 @@ interface ContactFormProps {
 
 const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
     return (
-        <div className=" p-6 bg-white rounded-[8px]  border-[#F3F5F7] border-1 ">
+        <div className="w-full p-6 bg-white rounded-[8px]  border-[#F3F5F7] border-1 ">
             <h2 className="h2 mb-6 ">Send Us a Message</h2>
             <Formik
                 initialValues={{ firstName: '', lastName: '', email: '', phone: '', message: '' }}
@@ -42,7 +42,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                 {({ isSubmitting }) => (
                     <Form>
                         {/* First name and last name in one row */}
-                        <div className="flex gap-4 mb-4">
+                        <div className="flex gap-4 mb-6">
                             <div className="flex-1">
                                 <label htmlFor="firstName" className="block text-[#181818]  mb-2">
                                     First Name<span className='text-[#E33629]'>*</span>
@@ -52,7 +52,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                     id="firstName"
                                     name="firstName"
                                     placeholder="John"
-                                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                                    className="w-full px-3 py-2 border rounded-md  border-[#959595] "
                                 />
                                 <ErrorMessage
                                     name="firstName"
@@ -61,14 +61,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 />
                             </div>
                             <div className="flex-1">
-                                <label htmlFor="lastName" className="block text-[#181818] ">
+                                <label htmlFor="lastName" className="block text-[#181818] mb-2">
                                     Last Name<span className='text-[#E33629]'>*</span>
                                 </label>
                                 <Field
                                     id="lastName"
                                     name="lastName"
                                     placeholder="Doe"
-                                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                                    className="w-full px-3 py-2 border rounded-md  border-[#959595] "
                                 />
                                 <ErrorMessage
                                     name="lastName"
@@ -79,7 +79,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         </div>
 
                         {/* Email row */}
-                        <div className="mb-4">
+                        <div className="mb-6">
                             <label htmlFor="email" className="block text-[#181818] ">
                                 <label htmlFor="phone" className="block text-[#181818]  mb-2 flex items-center gap-2">
                                  
@@ -91,7 +91,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 name="email"
                                 type="email"
                                 placeholder="john.doe@example.com"
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                                className="w-full px-3 py-2 border rounded-md  border-[#959595] "
                             />
                             <ErrorMessage
                                 name="email"
@@ -101,7 +101,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         </div>
 
                         {/* Phone row */}
-                        <div className="mb-4">
+                        <div className="mb-6">
                             <label htmlFor="phone" className="block text-[#181818]  mb-2 flex items-center gap-2">
                                 
                              Phone<span className='text-[#E33629]'>*</span>
@@ -111,7 +111,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 name="phone"
                                 type="tel"
                                 placeholder="+1234567890"
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 "
+                                className="w-full px-3 py-2 border rounded-md  border-[#959595]focus:outline-none focus:ring-2 focus:ring-green-500 "
                             />
                             <ErrorMessage
                                 name="phone"
@@ -131,7 +131,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 name="message"
                                 rows={4}
                                 placeholder="Your message..."
-                                className="w-full px-3 py-2 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-600 "
+                                className="w-full px-3 py-2 border rounded-md  border-[#959595]resize-none focus:outline-none focus:ring-2 focus:ring-blue-600 "
                             />
                             <ErrorMessage
                                 name="message"
@@ -143,7 +143,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full bg-green-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+                            className="w-full bg-[#3BC852] text-white font-semibold py-3 rounded-full hover:bg-[#133365] transition disabled:opacity-50"
                         >
                             Send Message
                         </button>
