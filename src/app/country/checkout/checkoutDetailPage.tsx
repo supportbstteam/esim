@@ -72,7 +72,7 @@ export default function CheckoutDetailPage() {
         setLoading
       );
 
-      console.log("----- response in the order ----", response);
+      // console.log("----- response in the order ----", response);
 
       // Handle null or failed response
       if (!response || response.status !== "success") {
