@@ -64,7 +64,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isAuthModal, setIsAuthModal] = useState(false);
 
-  // TAB state: 'standard' or 'unlimited'
+ 
   const [activeTab, setActiveTab] = useState<"standard" | "unlimited">(
     "standard"
   );

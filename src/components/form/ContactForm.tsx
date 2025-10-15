@@ -81,7 +81,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         {/* Email row */}
                         <div className="mb-6">
                             <label htmlFor="email" className="block text-[#181818] ">
-                                <label htmlFor="phone" className="block text-[#181818]  mb-2 flex items-center gap-2">
+                                <label htmlFor="phone" className=" text-[#181818]  mb-2 flex items-center gap-2">
                                  
                                     Email<span className='text-[#E33629]'>*</span>
                                 </label>
@@ -102,7 +102,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
 
                         {/* Phone row */}
                         <div className="mb-6">
-                            <label htmlFor="phone" className="block text-[#181818]  mb-2 flex items-center gap-2">
+                            <label htmlFor="phone" className=" text-[#181818]  mb-2 flex items-center gap-2">
                                 
                              Phone<span className='text-[#E33629]'>*</span>
                             </label>
