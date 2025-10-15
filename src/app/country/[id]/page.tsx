@@ -98,8 +98,9 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     await dispatch(fetchUserDetails());
   };
 
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const groupByvalidityDays = (list: any[]) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const map = new Map<string, any[]>();
     list.forEach((item) => {
      
@@ -127,8 +128,10 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
 
   // Partition plans into standard and unlimited based on title
   const standardPlans = (plans || []).filter(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (p: any) => !/unlimited/i.test(String(p?.title || ""))
   );
+//   eslint-disable-next-line @typescript-eslint/no-explicit-any
   const unlimitedPlans = (plans || []).filter((p: any) =>
     /unlimited/i.test(String(p?.title || ""))
   );
@@ -236,6 +239,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
               ) : (
                 // group and render
                 groupByvalidityDays(standardPlans).map(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   ([validityDaysKey, plansForvalidityDays]: any[], idx: number) => (
                     <div key={String(validityDaysKey) + idx} className="w-full mb-6">
                       <h3 className="mt-2 text-xl font-semibold mb-4 text-white">
@@ -245,6 +249,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                       </h3>
 
                       <div className="grid grid-cols-1 gap-6 ">
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {plansForvalidityDays.map((item: any) => {
                           const isSelected = selectedPlan === item.id;
                           return (
@@ -303,6 +308,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                 </p>
               ) : (
                 groupByvalidityDays(unlimitedPlans).map(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   ([validityDaysKey, plansForvalidityDays]: any[], idx: number) => (
                     <div key={String(validityDaysKey) + idx} className="w-full mb-6">
                       <h3 className="mt-2 text-xl font-semibold mb-4 text-white">
@@ -312,6 +318,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                       </h3>
 
                       <div className="grid grid-cols-1 gap-6 ">
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {plansForvalidityDays.map((item: any) => {
                           const isSelected = selectedPlan === item.id;
                           return (
