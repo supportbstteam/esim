@@ -87,7 +87,7 @@ function About() {
             <div className="mb-10 md:mb-25">
                 <Image src="/globabou.jpg" height={540} width={1248} alt='' className='w-full object-cover rounded-2xl  md:max-h-[540px]' />
             </div>
-            <div className="about-layout mb-42.5">
+            <div className="about-layout mb-10 lg:mb-42.5">
                 <div className=" mx-auto gap-6 lg:gap-[57px] pb-12  flex flex-col items-start justify-between">
 
                     <div className='flex'>
