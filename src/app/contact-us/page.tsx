@@ -106,7 +106,7 @@ const { list } = useAppSelector((state) => state?.faq);
 
             {/* Left Column - About & Contacts */}
             <div className='flex w-full md:w-[58%] flex-col justify-between'>
-                <h1 className='h1'>Get in Touch with Us</h1>
+                <h1 className='h1 mb-2 md:mb-1'>Get in Touch with Us</h1>
 
               <p className='subtext !leading-8 !text-[20px]'>{!loading && !error && content && (
                     <div className="prose max-w-none mb-8" dangerouslySetInnerHTML={{ __html: content }} />
