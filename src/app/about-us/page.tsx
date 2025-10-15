@@ -54,6 +54,7 @@ function About() {
     const { list } = useAppSelector((state) => state?.faq);
 
     return (
+        <div>
         <div className='container mb-10 md:mb-25'>
             <div className="about-layout">
                 <div className=" mx-auto  py-16 flex max-lg:flex-col justify-between">
@@ -175,6 +176,7 @@ function About() {
                     />
                 </div>
             </div>
+        </div>
             <TrustedTravel />
             <FAQ faqs={list} />
         </div>
