@@ -286,7 +286,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                                 <div className="font-semibold flex-3 text-gray-900">
                                   {item.title}
                                 </div>
-                                <div className=" flex-1 font-bold text-gray-800 text-end text-xl md:text-2xl">
+                                <div className=" flex md:flex-1 font-bold justify-end text-gray-800 text-end text-xl md:text-2xl">
                                   {item.price}{" "}
                                   {item.currency === "USD" ? "$" : item?.currency}
                                 </div>
@@ -355,7 +355,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                                 <div className="font-semibold flex-3 text-gray-900">
                                   {item.title}
                                 </div>
-                                <div className=" flex-1 font-bold text-gray-800 text-end text-xl md:text-2xl">
+                                <div className=" flex md:flex-1 font-bold justify-end text-gray-800 text-end text-xl md:text-2xl">
                                   {item.price}{" "}
                                   {item.currency === "USD"
                                     ? "$"
