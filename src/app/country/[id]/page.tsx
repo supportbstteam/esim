@@ -275,7 +275,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
 
                               {/* featured label */}
                               {item.isFeatured && (
-                                <span className="absolute top-3 right-3 text-l flex items-center bg-black text-white px-2 py-0.5 rounded-full">
+                                <span className="absolute top-[-12px] right-[-3px] text-l flex items-center bg-black text-white px-2 py-0.5 rounded-full">
                                   <FaFire className=" text-[#eebe3c] mr-1" />
                                   Popular
                                 </span>
@@ -344,7 +344,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
 
                               {/* featured label */}
                               {item.isFeatured && (
-                                <span className="absolute top-3 right-3 text-l flex items-center bg-black text-white px-2 py-0.5 rounded-full">
+                                <span className="absolute top-[-12px] right-[-3px] text-l flex items-center bg-black text-white px-2 py-0.5 rounded-full">
                                   <FaFire className=" text-[#eebe3c] mr-1" />
                                   Popular
                                 </span>
