@@ -10,6 +10,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa6";
+import { IoIosArrowForward } from "react-icons/io";
+
+import Flag from "@/components/ui/Flag";
 
 export default function CheckoutDetailPage() {
   const dispatch = useAppDispatch();
@@ -163,37 +166,31 @@ export default function CheckoutDetailPage() {
 
   return (
     <div className="container my-10">
-      <div className="flex flex-col md:flex-row w-full gap-6">
+      <div className="flex flex-col lg:flex-row w-full gap-6">
         {/* Order Summary */}
-        <div className="flex-1/3 bg-[#f8fafc] rounded-xl shadow p-6">
-          <h2 className="font-semibold text-lg mb-4">Your Order</h2>
-          <div className="flex items-center mb-5">
-            <span className="mr-3">
-              <img
-                src={`https://flagcdn.com/48x36/${data?.country?.isoCode?.toLowerCase()}.png`}
-                alt={data?.country?.name}
-                className="rounded shadow border w-7 h-7 object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
-            </span>
-            <span className="font-medium text-base">
-              {data?.country?.name || "Country"}
+        <div className="flex-1/3 bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6">
+          <h2 className="h2 font-semibold !text-[20px] mb-4">Your Order</h2>
+          <div className="flex items-center mb-4">
+            <span className="font-medium text-base flex items-center">
+               <Flag
+                            countryName={data?.country?.name || "Country"}
+                            size={36}
+                            className="h-[36px] w-[36px] mr-2"
+                          />{data?.country?.name || "Country"}
             </span>
           </div>
           <div className="space-y-4 text-[15px] text-gray-700">
             <div className="flex justify-between">
-              <span>Data Allowance</span>
-              <span>{data?.title || data?.data || "—"}</span>
+              <span className="subtext !text-[16px]">Data Allowance</span>
+              <span className=" text-[16px] text-[#1A0F33]">{data?.title || data?.data || "—"}</span>
             </div>
             <div className="flex justify-between">
-              <span>Validity</span>
-              <span>{data?.validityDays || "—"} Days</span>
+              <span  className="subtext !text-[16px]">Validity</span>
+              <span className=" text-[16px] text-[#1A0F33] ">{data?.validityDays || "—"} Days</span>
             </div>
             <div className="flex justify-between">
-              <span>Starting Date</span>
-              <span>
+              <span className="subtext !text-[16px]">Starting Date</span>
+              <span className=" text-[16px] text-[#1A0F33]"> 
                 {new Date().toLocaleString("en-US", {
                   month: "short",
                   day: "2-digit",
@@ -201,20 +198,20 @@ export default function CheckoutDetailPage() {
               </span>
             </div>
           </div>
-          <div className="mt-6 border-t pt-4 flex justify-between font-semibold text-[#1e293b]">
-            <span>Total</span>
-            <span>${data?.price || "--"}</span>
+          <div className="mt-6 border-t-2 border-white flex justify-between font-semibold text-[#1e293b]">
+            <span  className="subtext !text-[20px] mt-6">Total</span>
+            <span  className=" text-[20px] text-[#1A0F33] mt-6">${data?.price || "--"}</span>
           </div>
         </div>
 
         {/* Payment Method */}
-        <div className="flex-2/3 bg-white rounded-xl shadow p-6">
-          <button onClick={handleBack} className="mb-3 text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
+        <div className="flex-2/3 bg-white rounded-xl shadow px-5 md:px-8 py-6">
+          <button onClick={handleBack} className="mb-3 text-sm subtext hover:text-gray-700 flex items-center gap-2">
             <FaArrowLeft />
-            Back
+           <span className="subtext"> Back</span>
           </button>
-          <h3 className="font-semibold text-lg mb-4">Choose Payment Method</h3>
-          <p className="text-gray-500 mb-6 text-sm">
+          <h3 className="font-semibold text-[#1A0F33]  text-lg mb-6">Choose Payment Method</h3>
+          <p className="subtext mb-6 text-sm">
             Select your preferred payment option
           </p>
           <div className="space-y-4">
@@ -222,13 +219,17 @@ export default function CheckoutDetailPage() {
               <button
                 key={method.id}
                 onClick={() => handlePaymentClick(method.id)}
-                className="w-full flex items-center justify-between border rounded-lg p-4 hover:bg-gray-50 focus:outline-none"
+                className="w-full flex items-center justify-between border rounded-[8px] p-6 hover:bg-gray-50 focus:outline-none"
               >
-                <span className="flex items-center">
-                  {method.icon}
-                  {method.name}
-                </span>
-                <span className="text-gray-400">&rarr;</span>
+                <p className="flex items-center gap-3">
+                 <span className=""> {method.icon}</span>
+                 <p className="flex flex-col items-start"> <span className="text-[#1A0F33] text-[16px] font-bold">{method.name}</span>
+                 <span className="subtext !text-[16px]">
+                  Pay Using COD
+                 </span>
+                 </p>
+                </p>
+                <IoIosArrowForward />
               </button>
             ))}
           </div>

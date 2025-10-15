@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { MdEmail, MdPhone } from 'react-icons/md';
+import {  MdPhone } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { api } from '@/lib/api';
 
@@ -32,8 +32,8 @@ interface ContactFormProps {
 
 const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
     return (
-        <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md border-[#808080] ">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800 ">Contact Us</h2>
+        <div className=" p-6 bg-white rounded-[8px]  border-[#F3F5F7] border-1 ">
+            <h2 className="h2 mb-6 ">Send Us a Message</h2>
             <Formik
                 initialValues={{ firstName: '', lastName: '', email: '', phone: '', message: '' }}
                 validationSchema={validationSchema}
@@ -44,9 +44,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         {/* First name and last name in one row */}
                         <div className="flex gap-4 mb-4">
                             <div className="flex-1">
-                                <label htmlFor="firstName" className="block text-gray-700  mb-1">
-                                    *First Name
+                                <label htmlFor="firstName" className="block text-[#181818]  mb-2">
+                                    First Name<span className='text-[#E33629]'>*</span>
                                 </label>
+                                
                                 <Field
                                     id="firstName"
                                     name="firstName"
@@ -60,8 +61,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 />
                             </div>
                             <div className="flex-1">
-                                <label htmlFor="lastName" className="block text-gray-700 ">
-                                    *Last Name
+                                <label htmlFor="lastName" className="block text-[#181818] ">
+                                    Last Name<span className='text-[#E33629]'>*</span>
                                 </label>
                                 <Field
                                     id="lastName"
@@ -79,10 +80,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
 
                         {/* Email row */}
                         <div className="mb-4">
-                            <label htmlFor="email" className="block text-gray-700 ">
-                                <label htmlFor="phone" className="block text-gray-700  mb-1 flex items-center gap-2">
-                                    <MdEmail className="text-gray-500" />
-                                    *Email
+                            <label htmlFor="email" className="block text-[#181818] ">
+                                <label htmlFor="phone" className="block text-[#181818]  mb-2 flex items-center gap-2">
+                                 
+                                    Email<span className='text-[#E33629]'>*</span>
                                 </label>
                             </label>
                             <Field
@@ -101,9 +102,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
 
                         {/* Phone row */}
                         <div className="mb-4">
-                            <label htmlFor="phone" className="block text-gray-700  mb-1 flex items-center gap-2">
-                                <MdPhone className="text-gray-500" />
-                                *Phone
+                            <label htmlFor="phone" className="block text-[#181818]  mb-2 flex items-center gap-2">
+                                
+                             Phone<span className='text-[#E33629]'>*</span>
                             </label>
                             <Field
                                 id="phone"
@@ -121,7 +122,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
 
                         {/* Message row */}
                         <div className="mb-6">
-                            <label htmlFor="message" className="block text-gray-700  mb-1">
+                            <label htmlFor="message" className="block text-[#181818]  mb-2">
                                 Message
                             </label>
                             <Field

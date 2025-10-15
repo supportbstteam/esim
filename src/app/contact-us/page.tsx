@@ -6,7 +6,9 @@ import { FormikHelpers } from 'formik';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
-
+import TrustedTravel from '@/components/home/TrustedTravel';
+import FAQ from "@/components/home/Faq";
+import {  useAppSelector } from "@/redux/store";
 interface ContactItem {
     id: string;
     position: string;
@@ -27,7 +29,7 @@ function Contact() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string>('');
     const [content, setContent] = useState<string>('');
-
+const { list } = useAppSelector((state) => state?.faq);
     const fetchContact = async () => {
         try {
             const response: ContactItem[] = await api({
@@ -99,23 +101,24 @@ function Contact() {
 
 
     return (
-        <div className='flex flex-col md:flex-row container border-2 border-[#4e4e4e] w-full h-full m-10 py-10 p-5 gap-10'>
+        <div>
+        <div className='flex flex-col md:flex-row container border-2 border-[#F3F5F7] rounded-[8px] w-full h-full m-10  p-5 md:!p-10 gap-10'>
 
             {/* Left Column - About & Contacts */}
-            <div className='flex-1 ml-5'>
-                <h1 className='text-3xl font-bold mb-5'>Get in Touch with Us</h1>
+            <div className='flex w-full md:w-[58%] flex-col justify-between'>
+                <h1 className='h1'>Get in Touch with Us</h1>
 
-                {!loading && !error && content && (
+              <p className='subtext !leading-8 !text-[20px]'>{!loading && !error && content && (
                     <div className="prose max-w-none mb-8" dangerouslySetInnerHTML={{ __html: content }} />
-                )}
+                )}</p>  
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     {/* Phones */}
                     {phones.map(phone => (
                         <div key={phone.id} className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
-                            <FiPhone className="text-2xl text-gray-500" />
-                            <p className='font-semibold text-xl mt-4' >Call Us  <span className='text-sm' >({phone?.position})</span></p>
+                            <FiPhone className="text-2xl text-black-700" />
+                            <p className='font-semibold text-xl mt-4 text-[#1A0F33] mb-2' >Call Us  <span className='text-sm' >({phone?.position})</span></p>
                             <span>{phone.value}</span>
                         </div>
                     ))}
@@ -123,8 +126,8 @@ function Contact() {
                     {/* Address */}
                     {address && (
                         <div className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
-                            <FiMapPin className="text-2xl text-gray-500" />
-                            <p className='font-semibold text-xl mt-4' >Our Location <span className='text-sm' >({address?.position})</span></p>
+                            <FiMapPin className="text-2xl text-black-700" />
+                            <p className='font-semibold text-xl mt-4 text-[#1A0F33] mb-2' >Our Location <span className='text-sm' >({address?.position})</span></p>
                             <span>{address.value}</span>
                         </div>
                     )}
@@ -132,8 +135,8 @@ function Contact() {
                     {/* Emails */}
                     {emails.map(email => (
                         <div key={email.id} className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
-                            <FiMail className="text-2xl text-gray-500" />
-                            <p className='font-semibold text-xl mt-4' >Email Us <span className='text-sm' >({email?.position})</span></p>
+                            <FiMail className="text-2xl text-black-700" />
+                            <p className='font-semibold text-xl mt-4 text-[#1A0F33] mb-2' >Email Us <span className='text-sm' >({email?.position})</span></p>
                             <span>{email.value}</span>
                         </div>
                     ))}
@@ -143,9 +146,12 @@ function Contact() {
             </div>
 
             {/* Right Column - Contact Form (Placeholder) */}
-            <div className='flex-1'>
+            <div className='flex w-full md:w-[42%]'>
                 <ContactForm handleSave={handleSave} />
             </div>
+        </div>
+         <TrustedTravel />
+        <FAQ faqs={list} />
         </div>
     );
 }
