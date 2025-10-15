@@ -45,7 +45,7 @@ export default function DynamicPageClient({ page }: Props) {
 
     return (
         <div className="p-4 container">
-            <h1 className="text-2xl font-bold mb-4">{title}</h1>
+            <h1 className="h1 font-bold mb-4 mt-5 md:mt-12">{title}</h1>
 
             {loading && (
                 <div className="space-y-3 animate-pulse">
