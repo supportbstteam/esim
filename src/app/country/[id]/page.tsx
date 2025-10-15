@@ -203,7 +203,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         </div>
 
         <div className="bg-[#133365]  py-8 md:py-15 rounded-xl w-full md:w-[60%] mx-auto px-5 md:px-20">
-        <div className="mb-8 flex items-center justify-center max-w-2xl mx-auto  gap-2 border-b-[0.1px] p-1 pb-0 ">
+        <div className="mb-8 flex items-center justify-center max-w-2xl mx-auto gap-6 md:gap-2 border-b-[0.1px] p-1 pb-0 ">
           <button
             onClick={() => setActiveTab("standard")}
             className={`px-0 md:px-4 py-2 text-[16px] md:text-[21px] border-b-4 border-[#133365] text-white font-medium transition-all focus:outline-none ${
