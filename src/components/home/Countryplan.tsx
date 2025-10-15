@@ -77,13 +77,13 @@ export default function CountryplanTabs() {
         <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." subclass='text-white' />
 
         <div className="mx-auto p-4 mt-6 md:mt-10 rounded-4xl">
-          <div className="flex items-center justify-center max-w-2xl mx-auto  gap-2 border-b-[0.1px] p-1 pb-0 ">
+          <div className="flex items-center justify-center max-w-2xl mx-auto  gap-5  p-1 pb-0 ">
             <button
               aria-selected={active === 'country'}
               role="tab"
               onClick={() => setActive('country')}
-              className={`px-0 md:px-4 py-2 text-[16px] md:text-[21px] border-b-4 border-[#133365] text-white font-medium transition-all focus:outline-none ${active === 'country'
-                ? 'border-white'
+              className={`relative px-4 md:px-10 py-2 text-[16px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'country'
+                ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
                 : 'hover:'
                 }`}
             >
@@ -94,8 +94,8 @@ export default function CountryplanTabs() {
               aria-selected={active === 'popular'}
               role="tab"
               onClick={() => setActive('popular')}
-              className={`px-0 md:px-4 py-2 text-[16px] border-b-4 border-[#133365] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
-                ? 'border-white'
+              className={`relative px-4 md:px-10 py-2 text-[16px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === 'popular'
+                ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
                 : 'hover:'
                 }`}
             >
