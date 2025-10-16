@@ -145,7 +145,7 @@ export default function CountryplanTabs() {
                           <div
                             key={i}
                             onClick={() => handleNavigate(item.id)}
-                            className=" bg-white border-gray-200 rounded-[8px] hover:bg-green-50  hover:border-[#3BC852] border-2 transition duration-300 cursor-pointer w-full sm:w-[48%] lg:w-[31%] xl:w-[23%]"
+                            className=" bg-white cursor-pointer border-gray-200 rounded-[8px] hover:bg-green-50  hover:border-[#3BC852] border-2 transition duration-300  w-full sm:w-[48%] lg:w-[31%] xl:w-[23%]"
                           >
                             <div className="p-4 flex items-center justify-between gap-4"
                             >
@@ -219,7 +219,7 @@ export default function CountryplanTabs() {
                         className="max-[670px]:w-full max-[1080px]:w-[48%] lg:w-[32%]
   bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-6 "
                       >
-                        <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4">
+                        <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4 cursor-pointer">
                           <div className="flex w-full justify-between">
                             <div className="flex items-center justify-between gap-3 ">
                               <Flag

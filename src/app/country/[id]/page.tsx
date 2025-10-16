@@ -376,7 +376,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
 
         <button
           onClick={handleAddToCart}
-          className="max-w-full  mx-auto w-full bg-[#3BC852] hover:bg-[#133365] p-4 rounded-full mt-5 text-white "
+          className="max-w-full  mx-auto w-full bg-[#3BC852] hover:bg-green-500 p-4 rounded-full mt-5 text-white "
         >
           <h3 className="text-xl">{content.plansSection.buyButton}</h3>
         </button>
