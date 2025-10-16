@@ -11,7 +11,7 @@ import Image from "next/image";
 const linkSections = [
   {
     title: "Quick Links",
-    items: ["Home", "Plan & Pricing", "Why Choose Us", "How It Works", "FAQs", "Contact Us"],
+    items: ["Home", "About Us", "Plan & Pricing", "How It Works", "FAQs", "Contact Us"],
   },
   {
     title: "Support",
@@ -38,6 +38,7 @@ const getHref = (section: string, item: string) => {
   if (section === "Quick Links") {
     if (item === "Home") return "/";
     if (item === "Contact Us") return "/contact-us";
+     if (item === "About Us") return "/about-us";
     if (item === "FAQs") return "/faq";
     return `/quick-links/${toSlug(item)}`;
   }

@@ -8,6 +8,7 @@ import TrustedTravel from '@/components/home/TrustedTravel';
 import FAQ from "@/components/home/Faq";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import { useAppSelector } from "@/redux/store";
+import { EasyStep } from "./home/EasyStep";
 interface Props {
     page: string;
 }
@@ -45,14 +46,16 @@ export default function DynamicPageClient({ page }: Props) {
         };
         fetchData();
     }, [page]);
- useEffect(() => {
+    useEffect(() => {
         dispatch(fetchFaqs());
     }, [dispatch]);
     const { list } = useAppSelector((state) => state?.faq);
     return (
         <div>
             <div className="p-4 container">
-                <h1 className="h1 font-bold mb-4 mt-5 md:mt-12">{title}</h1>
+                <h1 className={`${title === 'How It Works' || title === 'Help Center' ? 'text-center' : 'text-start'} h1 font-bold mb-4 mt-5 md:mt-12`}>
+                    {title === 'Help Center' ? '' : title}
+                </h1>
 
                 {loading && (
                     <div className="space-y-3 animate-pulse">
@@ -73,13 +76,14 @@ export default function DynamicPageClient({ page }: Props) {
                     />
                 )}
             </div>
-            {title === 'Terms And Conditions' || 'Privacy Policy' 
-            ?
-            (<div className="mt-8 md:mt-15">
-                 <TrustedTravel />
-        <FAQ faqs={list} />
-            </div>): (<div></div>)
-             }
+            {title === 'How It Works' ? <EasyStep /> : ''}
+            {title === 'Terms And Conditions' || 'Privacy Policy'
+                ?
+                (<div className="mt-8 md:mt-15">
+                    <TrustedTravel />
+                    <FAQ faqs={list} />
+                </div>) : (<div></div>)
+            }
 
         </div>
     );
