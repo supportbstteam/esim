@@ -227,7 +227,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                             <FaFire className="text-[#eebe3c] mr-1" />
                             Popular
                           </span>
-                        )}
+                        )}  
                         <div className="flex justify-between items-center ">
                           <h3 className="font-semibold">{plan.title}</h3>
                           <span className="font-bold text-gray-800 text-xl ">
