@@ -14,6 +14,7 @@ import { fetchPlans, featurePlans } from "@/redux/thunk/planThunk";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import Countryplan from "@/components/home/Countryplan"
+import { fetchCart } from "@/redux/slice/CartSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ export default function Home() {
       await dispatch(fetchFaqs());
       await dispatch(featurePlans());
       await dispatch(fetchPlans({ countryId: "all" }));
-
+   await dispatch(fetchCart());
       // const token = Cookies.get("token");
     }
     fetchData();

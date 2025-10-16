@@ -270,3 +270,12 @@ button , a{
   background-position: bottom right;
 }
 }
+.bg_sectioned{
+  position: relative;
+  /* background: url('/plan_bg.webp');
+  background-repeat: repeat; */
+  background-size: cover;
+  position: relative;
+  /* background-position: ; */
+  z-index: 1;
+}

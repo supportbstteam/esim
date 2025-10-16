@@ -11,7 +11,7 @@ import { FaFire, FaPlus, FaMinus } from "react-icons/fa";
 import Flag from "@/components/ui/Flag";
 import Image from "next/image";
 import { addToCart } from "@/redux/slice/CartSlice";
-
+import Link from "next/link";
 type CountryDetailsProps = {
   params: Promise<{ id: string }>;
 };
@@ -90,7 +90,14 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
       return { ...prev, [planId]: newQty };
     });
   };
-
+  const groupPlansByDays = (plans: any[]) => {
+    return plans.reduce((acc: Record<string, any[]>, plan) => {
+      const days = plan.validityDays || "Other";
+      if (!acc[days]) acc[days] = [];
+      acc[days].push(plan);
+      return acc;
+    }, {});
+  };
   const handleCheckout = async () => {
     if (!isAuth) {
       setIsAuthModal(true);
@@ -122,7 +129,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     toast.success(content.plansSection.loginSuccessToast);
     await dispatch(fetchUserDetails());
   };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const standardPlans = (plans || []).filter((p: any) => !/unlimited/i.test(p?.title || ""));
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const unlimitedPlans = (plans || []).filter((p: any) => /unlimited/i.test(p?.title || ""));
@@ -134,12 +141,13 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     const plan: any = plans.find((p: any) => p.id === planId);
     return acc + (plan ? Number(plan.price) * qty : 0);
   }, 0);
-
+  const groupedPlans = groupPlansByDays(displayedPlans);
+ 
   return (
     <>
       <div>
         {/* Country & Hero */}
-        <div className="bg-[#E5EFF780] mb-10 flex w-full flex-col gap-8">
+        <div className="bg-[#E5EFF780]  flex w-full flex-col gap-8 ">
           <div className="container py-10 md:py-20 flex items-center max-lg:flex-col gap-8 w-full border-gray-300">
             <div className="flex-col">
               <div className="flex items-center gap-2">
@@ -179,60 +187,70 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         </div>
 
         {/* Plans Section */}
-        <div className="flex flex-col px-8 py-6 rounded-xl w-full">
-          <h2 className="text-2xl text-center md:text-[36px] font-bold">{content.plansSection.heading}</h2>
-          <div className="subtext text-center !text-[16px] mt-4 mb-6">{content.plansSection.subtext}</div>
+        <div className="flex flex-col px-8 py-4 md:py-12 rounded-xl w-full bg_sectioned ">
 
-          <div className="bg-[#133365] py-8 md:py-15 rounded-xl w-full md:w-[60%] mx-auto px-5 md:px-20">
-            <div className="mb-8 flex items-center justify-center max-w-2xl mx-auto gap-6 md:gap-2 border-b-[0.1px] p-1 pb-0">
+          <div className="bg-[#133365]/90 py-8 md:py-10 rounded-xl w-full md:w-[60%] mx-auto px-5 md:px-20">
+          <h2 className="text-2xl text-white text-center md:text-[32px] font-bold">{content.plansSection.heading}</h2>
+          <div className="  mb-8 text-white  text-center !text-[16px] mt-2 ">{content.plansSection.subtext}</div>
+            <div className="mb-12 flex items-center justify-between max-w-2xl mx-auto  bg-[#133365] rounded-lg p-2 ">
               <button
                 onClick={() => setActiveTab("standard")}
-                className={`px-0 md:px-4 py-2 text-[16px] md:text-[21px] border-b-4 border-[#133365] text-white font-medium transition-all focus:outline-none ${activeTab === "standard" ? "border-white" : ""}`}
+                className={` w-1/2 px-0 md:px-4 py-1 text-[16px] md:text-[21px]  border-[#133365] text-white rounded-lg font-medium transition-all focus:outline-none ${activeTab === "standard" ? "bg-white !text-[#133365]" : ""}`}
               >
                 Standard
               </button>
               <button
                 onClick={() => setActiveTab("unlimited")}
-                className={`px-0 md:px-4 py-2 text-[16px] md:text-[21px] border-b-4 border-[#133365] text-white font-medium transition-all focus:outline-none ${activeTab === "unlimited" ? "border-white" : ""}`}
+                className={`w-1/2 px-0 md:px-4 py-1 text-[16px] md:text-[21px] border-[#133365] text-white rounded-lg font-medium transition-all focus:outline-none ${activeTab === "unlimited" ? "bg-white !text-[#133365]" : ""}`}
               >
                 Unlimited
               </button>
             </div>
 
-            {displayedPlans.length === 0 ? (
+            {Object.keys(groupedPlans).length === 0 ? (
               <p className="text-gray-500 text-center mt-6">No {activeTab} plans available for this country.</p>
             ) : (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              displayedPlans.map((plan: any) => {
-                const qty = selectedPlans[plan.id] || 0;
-                return (
-                  <div
-                    key={plan.id}
-                    className={`relative cursor-pointer rounded-xl p-4 mb-4 transition-all duration-300 ${qty > 0 ? "border-green-500 bg-green-50" : "border-gray-300 bg-white hover:border-green-500"}`}
-                    onClick={() => handleTogglePlan(plan.id)}
-                  >
-                    {plan.isFeatured && (
-                      <span className="absolute top-[-12px] right-[-3px] flex items-center bg-black text-white px-2 py-0.5 rounded-full">
-                        <FaFire className="text-[#eebe3c] mr-1" />
-                        Popular
-                      </span>
-                    )}
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="font-semibold">{plan.title}</h3>
-                      <span className="font-bold text-gray-800 text-xl md:text-2xl">
-                        {plan.currency === "USD" ? "$" : plan.currency} {plan.price}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })
+              Object.entries(groupedPlans).map(([days, plans]) => (
+                <div key={days} className="mb-8">
+                  <h4 className="text-white font-bold text-lg mb-4">{days} Day{days > "1" ? "s" : ""}</h4>
+                  {plans.map((plan: any) => {
+                    const qty = selectedPlans[plan.id] || 0;
+                    return (
+                      <div
+                        key={plan.id}
+                        className={`relative border-2 cursor-pointer rounded-xl py-[5px] px-5 mb-3 transition-all duration-300 ${qty > 0 ? "border-green-500 bg-green-50 border-2" : "border-gray-300 bg-white hover:border-green-500"}`}
+                        onClick={() => handleTogglePlan(plan.id)}
+                      >
+                        {plan.isFeatured && (
+                          <span className="absolute !text-[12px] top-[-15px] right-[-2px] flex items-center bg-black text-white px-2 py-0.5 rounded-full">
+                            <FaFire className="text-[#eebe3c] mr-1" />
+                            Popular
+                          </span>
+                        )}
+                        <div className="flex justify-between items-center ">
+                          <h3 className="font-semibold">{plan.title}</h3>
+                          <span className="font-bold text-gray-800 text-xl ">
+                            {plan.currency === "USD" ? "$" : plan.currency} {plan.price}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))
+
             )}
           </div>
         </div>
 
         {/* Floating Checkout */}
         {totalPlansSelected > 0 && (
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-lg p-4 w-[90%] max-w-lg flex justify-between items-center gap-4 animate-slide-up z-50">
+          <div className="fixed border-t bottom-0 z-[9999999999999999999999999] left-1/2 transform -translate-x-1/2 bg-white   p-5 w-full flex justify-between items-center gap-4 animate-slide-up ">
+            <div className="container flex items-center justify-between">
+            <Link href="/" className="inline-block">
+              <Image height={100} width={100} src="/Print.svg" alt="footerLogo" className="w-[115px] h-auto" />
+            </Link>
             <div>
               <p className="font-semibold">
                 {totalPlansSelected} Plan{totalPlansSelected > 1 ? "s" : ""} Total: ${totalPrice.toFixed(2)}
@@ -241,6 +259,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
             <button onClick={handleCheckout} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
               {content.plansSection.checkoutButton}
             </button>
+            </div>
           </div>
         )}
       </div>

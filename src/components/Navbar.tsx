@@ -10,7 +10,7 @@ import { fetchUserDetails, logout } from '@/redux/slice/UserSlice';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import toast from 'react-hot-toast';
-
+import {fetchCart} from '@/redux/slice/CartSlice';
 const navItems = [
   { label: "View Plans", href: "/plans" },
   { label: "How It Works", href: "quick-links/how-it-works" },
@@ -25,7 +25,10 @@ export default function Navbar() {
   const [showlogin, setShowlogin] = useState(false); // auth modal
   const [isUserSubOpen, setIsUserSubOpen] = useState(false);
   const { user, isAuth, loading } = useAppSelector((state) => state?.user || {});
+   const { cart } = useAppSelector((state) => state?.cart || {});
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    const [selectedPlans, setSelectedPlans] = useState<{ [key: string]: number }>({});
 const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
 
   const userMenuRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +45,7 @@ const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
   };
 
   const toggleMenu = () => setIsOpen((v) => !v);
-
+ const plansArray = Object.entries(selectedPlans).map(([planId, quantity]) => ({ planId, quantity }));
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
@@ -99,7 +102,7 @@ const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
   };
 
 
-  // console.log("----- isAuth ----", isAuth);
+  // console.log("----- isAuth ----", cart?.items.length);
 
   return (
     <nav className="bg-white ">
@@ -172,6 +175,12 @@ const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
                 </button>
                 </div>
               ) : (
+                <div className="flex items-center gap-2">
+                <div className='relative'> <span className='absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]'>{cart?.items?.length || 0}</span>
+               <Link href={`/country/checkout`}> <span className="material-symbols-outlined">
+shopping_bag
+</span></Link>  </div> 
+               
                 <div
                   className="relative inline-block"
                   ref={userMenuRef}
@@ -212,6 +221,7 @@ const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
                     </button>
                   </div>
                 </div>
+                 </div>
               )}
             </div>
 

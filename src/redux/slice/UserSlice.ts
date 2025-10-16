@@ -104,15 +104,10 @@ export const fetchUserDetails = createAsyncThunk(
       if (!token) throw new Error("No token found");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const res: any = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/details`, // replace with your URL
+        `${process.env.NEXT_PUBLIC_API_URL || "https://esim-backend-three.vercel.app/api"}/user/details`, // replace with your URL
         {
           headers: {
             Authorization: `Bearer ${token}`, // or whatever header you want
-          },
-          params: {
-            // optional query params
-            key1: "value1",
-            key2: "value2",
           },
           timeout: 5000, // optional
         }

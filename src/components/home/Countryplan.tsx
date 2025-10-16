@@ -69,6 +69,7 @@ export default function CountryplanTabs() {
       navigation(`/country/checkout?plan=${selectedPlan.id}&country=${selectedPlan?.country?.id}`);
     }
   };
+  console.log(countries+'yuwkwoidsj');
 
   return (
     <section className="w-full   bg-[#133365] mb-6 md:mb-25 mt-6 md:mt-25">
@@ -137,7 +138,7 @@ export default function CountryplanTabs() {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       countries.map((item: any, i: number) => {
                         const basicPlan = basicPlanByCountry[item.id];
-                        const basicPriceText = formatPrice(basicPlan?.price);
+                        const basicPriceText = basicPlan?.price;
                         const basicData = basicPlan?.data;
                         const basicValidity = basicPlan?.validityDays;
 
