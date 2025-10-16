@@ -9,6 +9,8 @@ import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
 import TrustedTravel from '@/components/home/TrustedTravel';
 import FAQ from "@/components/home/Faq";
 import {  useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
+import { fetchFaqs } from "@/redux/slice/FaqSlice";
 interface ContactItem {
     id: string;
     position: string;
@@ -29,7 +31,11 @@ function Contact() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string>('');
     const [content, setContent] = useState<string>('');
-const { list } = useAppSelector((state) => state?.faq);
+const dispatch = useAppDispatch();
+     useEffect(() => {
+            dispatch(fetchFaqs());
+        }, [dispatch]);
+    const { list } = useAppSelector((state) => state?.faq);
     const fetchContact = async () => {
         try {
             const response: ContactItem[] = await api({

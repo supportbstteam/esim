@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/redux/store";
 import React, { useEffect, useState } from "react";
 import TrustedTravel from '@/components/home/TrustedTravel';
 import FAQ from "@/components/home/Faq";
+import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import { useAppSelector } from "@/redux/store";
 interface Props {
     page: string;
@@ -14,7 +15,6 @@ interface Props {
 export default function DynamicPageClient({ page }: Props) {
     const [content, setContent] = useState<string>("");
     const [loading, setLoading] = useState(false);
-    const { list } = useAppSelector((state) => state?.faq);
     const [error, setError] = useState<string | null>(null);
     const dispatch = useAppDispatch();
     const title = page
@@ -45,7 +45,10 @@ export default function DynamicPageClient({ page }: Props) {
         };
         fetchData();
     }, [page]);
-
+ useEffect(() => {
+        dispatch(fetchFaqs());
+    }, [dispatch]);
+    const { list } = useAppSelector((state) => state?.faq);
     return (
         <div>
             <div className="p-4 container">

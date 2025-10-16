@@ -3,8 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import TrustedTravel from '@/components/home/TrustedTravel';
 import FAQ from "@/components/home/Faq";
+import { useAppDispatch } from "@/redux/store";
 import { useAppSelector } from "@/redux/store";
 import Image from 'next/image';
+import { fetchFaqs } from "@/redux/slice/FaqSlice";
 const features = [
     {
         id: "coverage",
@@ -51,6 +53,10 @@ const journeyData = {
     ],
 };
 function About() {
+     const dispatch = useAppDispatch();
+     useEffect(() => {
+            dispatch(fetchFaqs());
+        }, [dispatch]);
     const { list } = useAppSelector((state) => state?.faq);
 
     return (
