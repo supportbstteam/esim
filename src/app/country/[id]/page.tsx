@@ -90,7 +90,9 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
       return { ...prev, [planId]: newQty };
     });
   };
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const groupPlansByDays = (plans: any[]) => {
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return plans.reduce((acc: Record<string, any[]>, plan) => {
       const days = plan.validityDays || "Other";
       if (!acc[days]) acc[days] = [];
@@ -214,6 +216,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
               Object.entries(groupedPlans).map(([days, plans]) => (
                 <div key={days} className="mb-8">
                   <h4 className="text-white font-bold text-lg mb-4">{days} Day{days > "1" ? "s" : ""}</h4>
+                   {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {plans.map((plan: any) => {
                     const qty = selectedPlans[plan.id] || 0;
                     return (

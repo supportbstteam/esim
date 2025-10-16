@@ -41,13 +41,13 @@ export default function CountryplanTabs() {
     return map;
   }, [featured]);
 
-  const formatPrice = (p?: number | string | null) => {
-    if (p === undefined || p === null) return null;
-    const num = Number(p);
-    if (Number.isNaN(num)) return null;
-    // show no decimals for whole numbers, else two decimals
-    return Number.isInteger(num) ? `$${num}` : `$${num.toFixed(2)}`;
-  };
+  // const formatPrice = (p?: number | string | null) => {
+  //   if (p === undefined || p === null) return null;
+  //   const num = Number(p);
+  //   if (Number.isNaN(num)) return null;
+  //   // show no decimals for whole numbers, else two decimals
+  //   return Number.isInteger(num) ? `$${num}` : `$${num.toFixed(2)}`;
+  // };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddToCart = (plan: any) => {
