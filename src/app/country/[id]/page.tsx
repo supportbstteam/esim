@@ -219,7 +219,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                     return (
                       <div
                         key={plan.id}
-                        className={`relative border-2 cursor-pointer rounded-xl py-[5px] px-5 mb-3 transition-all duration-300 ${qty > 0 ? "border-green-500 bg-green-50 border-2" : "border-gray-300 bg-white hover:border-green-500"}`}
+                        className={`relative border-2 border-white cursor-pointer rounded-xl py-[5px] px-5 mb-3 transition-all duration-300 ${qty > 0 ? "!border-green-500 bg-green-50 border-2" : " bg-white hover:border-green-50 hover:bg-green-50"}`}
                         onClick={() => handleTogglePlan(plan.id)}
                       >
                         {plan.isFeatured && (

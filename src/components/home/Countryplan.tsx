@@ -69,7 +69,7 @@ export default function CountryplanTabs() {
       navigation(`/country/checkout?plan=${selectedPlan.id}&country=${selectedPlan?.country?.id}`);
     }
   };
-  console.log(countries+'yuwkwoidsj');
+  // console.log(countries+'yuwkwoidsj');
 
   return (
     <section className="w-full   bg-[#133365] mb-6 md:mb-25 mt-6 md:mt-25">
@@ -213,7 +213,7 @@ export default function CountryplanTabs() {
                       </svg>
                     </div>
                   ) : (
-                    featured.slice(0, 6).map((plan) => (
+                    featured.map((plan) => (
                       <div
                         onClick={() => handleNavigate(plan.country.id)}
                         key={plan.id}
