@@ -94,24 +94,36 @@ export const loginUser = createAsyncThunk<
 });
 
 // Fetch user details
-export const fetchUserDetails = createAsyncThunk<User, void>(
+export const fetchUserDetails = createAsyncThunk(
   "user/fetchDetails",
   async (_, { rejectWithValue }) => {
+
+    console.log("---- fetch user details ------");
     try {
       const token = Cookies.get("token");
-
-      // console.log("---- token ----", token);
       if (!token) throw new Error("No token found");
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res: any = await api({
-        url: "user/details",
-        method: "GET"
-      });
+      const res: any = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/details`, // replace with your URL
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // or whatever header you want
+          },
+          params: {
+            // optional query params
+            key1: "value1",
+            key2: "value2",
+          },
+          timeout: 5000, // optional
+        }
+      );
 
-      return res;
+      console.log("----- res in the user details ----", res);
+
+      return res?.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      console.error("--- error in the user details ----", err);
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }

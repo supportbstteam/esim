@@ -8,14 +8,22 @@ import {
   FaWifi,
   FaCalendarAlt,
   FaDownload,
-  FaExclamationTriangle
+  FaExclamationTriangle,
 } from "react-icons/fa";
+
+interface EsimInfo {
+  iccid: string;
+  qrCodeUrl: string;
+  country: { name: string };
+  plans: { data: number; validityDays: number; name: string }[];
+  startDate: string | Date;
+  endDate: string | Date;
+}
 
 interface OrderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  esimData?: any;
+  esimData?: EsimInfo[]; // now an array
   isLoading: boolean;
   errorState?: string | null;
 }
@@ -28,16 +36,17 @@ export default function OrderModal({
   errorState,
 }: OrderModalProps) {
   const [message, setMessage] = useState("Processing your eSIM...");
-  const qrRef = useRef<HTMLDivElement>(null);
+  const qrRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Animate steps
   useEffect(() => {
     if (!isOpen || errorState) return;
     const steps = [
       "Connecting to eSIM provider...",
       "Verifying your plan details...",
-      "Creating your eSIM profile...",
+      "Creating your eSIM profiles...",
       "Almost done — finalizing setup...",
-      "Activating your eSIM...",
+      "Activating your eSIMs...",
     ];
     let i = 0;
     const interval = setInterval(() => {
@@ -47,8 +56,9 @@ export default function OrderModal({
     return () => clearInterval(interval);
   }, [isOpen, errorState]);
 
-  const handleDownloadQR = () => {
-    const svg = qrRef.current?.querySelector("svg");
+  // Download QR for specific index
+  const handleDownloadQR = (index: number) => {
+    const svg = qrRefs.current[index]?.querySelector("svg");
     if (!svg) return;
     const svgData = new XMLSerializer().serializeToString(svg);
     const canvas = document.createElement("canvas");
@@ -60,21 +70,18 @@ export default function OrderModal({
       ctx?.drawImage(img, 0, 0);
       const pngFile = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `${esimData?.esim?.qrCodeUrl || "esim"}.png`;
+      link.download = `${esimData?.[index]?.iccid || "esim"}.png`;
       link.href = pngFile;
       link.click();
     };
     img.src = "data:image/svg+xml;base64," + btoa(svgData);
   };
 
-  console.log("---- esim data   -----", esimData);
-  console.log("---- esim data QR -----", esimData?.esim?.qrCodeUrl);
-
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 overflow-y-auto">
-      <div className="bg-white text-gray-800 rounded-2xl w-full max-w-4xl mx-4 shadow-lg relative h-auto max-h-[90vh] overflow-y-auto transition-all">
+      <div className="bg-white text-gray-800 rounded-2xl w-full max-w-5xl mx-4 shadow-lg relative h-auto max-h-[90vh] overflow-y-auto transition-all">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl"
@@ -86,7 +93,7 @@ export default function OrderModal({
             <div className="flex flex-col items-center gap-4 py-10">
               <div className="animate-spin h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full"></div>
               <p className="font-medium">{message}</p>
-              <p className="text-sm text-gray-500">Setting up your eSIM securely...</p>
+              <p className="text-sm text-gray-500">Setting up your eSIMs securely...</p>
             </div>
           ) : errorState ? (
             <div className="py-6 text-center">
@@ -100,46 +107,50 @@ export default function OrderModal({
                 Close
               </button>
             </div>
-          ) : esimData ? (
+          ) : esimData && esimData.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch min-h-[380px]">
-              {/* Left column */}
-              <div className="flex flex-col justify-start">
+              {/* Left column: eSIM info list */}
+              <div className="flex flex-col justify-start space-y-6">
                 <div className="flex items-center gap-2 mb-4">
                   <FaCheckCircle className="text-green-600 text-2xl" />
                   <h2 className="text-2xl font-bold text-green-700">Thanks for Purchasing</h2>
                 </div>
-                <p className="text-gray-600 mb-6">You can now activate your e-sim</p>
-                <div className="space-y-5 bg-gray-50 rounded-xl p-6">
-                  
-                  <div className="flex items-center gap-3">
-                    <FaSimCard className="text-blue-600" />
-                    <p><strong>SIM Number:</strong> {esimData.esim?.iccid}</p>
-                  </div>
+                <p className="text-gray-600">You can now activate your eSIMs</p>
 
-                  {/* <div className="flex items-center gap-3">
-                    <FaSimCard className="text-blue-600" />
-                    <p><strong>SIM Number QR:</strong> {esimData.esim?.qrCodeUrl}</p>
-                  </div> */}
-                  <div className="flex items-center gap-3">
-                    <FaGlobe className="text-purple-600" />
-                    <p><strong>Country:</strong> {esimData?.esim?.country?.name}</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <FaWifi className="text-teal-600" />
-                    <p><strong>Data:</strong> {esimData?.esim?.plans[0]?.data} GB</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <FaCalendarAlt className="text-amber-600" />
-                    <p><strong>Validity:</strong> {esimData?.esim?.plans[0]?.validityDays} Days</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <FaCalendarAlt className="text-green-600" />
-                    <p><strong>Start:</strong> {new Date(esimData.esim?.startDate).toLocaleString()}</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <FaCalendarAlt className="text-red-600" />
-                    <p><strong>End:</strong> {new Date(esimData.esim?.endDate).toLocaleString()}</p>
-                  </div>
+                <div className="space-y-5 bg-gray-50 rounded-xl p-6 max-h-[500px] overflow-y-auto">
+                  {esimData.map((esim, idx) => (
+                    <div key={idx} className="p-4 border rounded-lg bg-white">
+                      <h3 className="font-semibold mb-2">
+                        eSIM {idx + 1} - {esim.plans[0]?.name}
+                      </h3>
+                      <div className="flex flex-col gap-2">
+                        <p>
+                          <FaSimCard className="inline mr-2 text-blue-600" />
+                          <strong>SIM Number:</strong> {esim.iccid}
+                        </p>
+                        <p>
+                          <FaGlobe className="inline mr-2 text-purple-600" />
+                          <strong>Country:</strong> {esim.country.name}
+                        </p>
+                        <p>
+                          <FaWifi className="inline mr-2 text-teal-600" />
+                          <strong>Data:</strong> {esim.plans[0]?.data} GB
+                        </p>
+                        <p>
+                          <FaCalendarAlt className="inline mr-2 text-amber-600" />
+                          <strong>Validity:</strong> {esim.plans[0]?.validityDays} Days
+                        </p>
+                        <p>
+                          <FaCalendarAlt className="inline mr-2 text-green-600" />
+                          <strong>Start:</strong> {new Date(esim.startDate).toLocaleString()}
+                        </p>
+                        <p>
+                          <FaCalendarAlt className="inline mr-2 text-red-600" />
+                          <strong>End:</strong> {new Date(esim.endDate).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
                 <button
                   onClick={onClose}
@@ -148,23 +159,30 @@ export default function OrderModal({
                   Close
                 </button>
               </div>
-              {/* QR code right column */}
-              <div className="flex flex-col justify-center items-center h-full">
-                <h3 className="text-gray-700 mb-3 font-medium">Scan this QR to Configure</h3>
-                <div ref={qrRef} className="bg-gray-100 p-4 rounded-lg">
-                  <QRCode
-                    value={esimData?.esim?.qrCodeUrl || "No-SIM"}
-                    size={180}
-                    bgColor="#ffffff"
-                    fgColor="#000000"
-                  />
-                </div>
-                <button
-                  onClick={handleDownloadQR}
-                  className="mt-6 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                >
-                  <FaDownload /> Download QR Code
-                </button>
+
+              {/* Right column: QR codes */}
+              <div className="flex flex-col justify-start items-center h-full space-y-6">
+                <h3 className="text-gray-700 mb-3 font-medium">Scan QR to Configure</h3>
+                {esimData.map((esim, idx) => (
+                  <div key={idx} className="flex flex-col items-center gap-3">
+                    <div ref={el => {
+                      qrRefs.current[idx] = el ?? null; // assign null if el is null
+                    }} className="bg-gray-100 p-4 rounded-lg">
+                      <QRCode
+                        value={esim.qrCodeUrl || "No-SIM"}
+                        size={180}
+                        bgColor="#ffffff"
+                        fgColor="#000000"
+                      />
+                    </div>
+                    <button
+                      onClick={() => handleDownloadQR(idx)}
+                      className="mt-2 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                    >
+                      <FaDownload /> Download QR
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           ) : (

@@ -6,13 +6,15 @@ import planSlice from "./slice/PlanSlice"
 import userSlice from "./slice/UserSlice"
 import faqSlice from "./slice/FaqSlice"
 import orderSlice from "./slice/OrderSlice"
+import CartSlice from "./slice/CartSlice"
 export const store = configureStore({
     reducer: {
         country: countrySlice,
         plan: planSlice,
         user: userSlice,
         faq: faqSlice,
-        order: orderSlice
+        order: orderSlice,
+        cart: CartSlice
     },
 });
 
