@@ -251,10 +251,10 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         {totalPlansSelected > 0 && (
           <div className="fixed border-t bottom-0 z-[9999999999999999999999999] left-1/2 transform -translate-x-1/2 bg-white   p-5 w-full flex justify-between items-center gap-4 animate-slide-up ">
             <div className="container flex items-center justify-between">
-            <Link href="/" className="inline-block">
+            <Link href="/" className="inline-block max-md:hidden">
               <Image height={100} width={100} src="/Print.svg" alt="footerLogo" className="w-[115px] h-auto" />
             </Link>
-            <div>
+            <div className="max-md:col-span-1/2">
               <p className="font-semibold">
                 {totalPlansSelected} Plan{totalPlansSelected > 1 ? "s" : ""} Total: ${totalPrice.toFixed(2)}
               </p>
