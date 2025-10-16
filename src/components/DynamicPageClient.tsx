@@ -75,7 +75,7 @@ export default function DynamicPageClient({ page }: Props) {
             </div>
             {title === 'Terms And Conditions' || 'Privacy Policy' 
             ?
-            (<div>
+            (<div className="mt-8 md:mt-15">
                  <TrustedTravel />
         <FAQ faqs={list} />
             </div>): (<div></div>)
