@@ -55,7 +55,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   onSelect,
   defaultMethodId,
 }) => {
-  const [selected, setSelected] = useState(defaultMethodId || "");
+  const [selected, setSelected] = useState("");
 
   const handleSelect = (method: PaymentMethod) => {
     setSelected(method.id);
@@ -79,11 +79,10 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             </div>
           </div>
           <div
-            className={`w-4 h-4 rounded-full border-2 ${
-              selected === method.id
-                ? "border-blue-600 bg-blue-600"
-                : "border-gray-400"
-            }`}
+            className={`w-4 h-4 rounded-full border-2 ${selected === method.id
+              ? "border-blue-600 bg-blue-600"
+              : "border-gray-400"
+              }`}
           />
         </div>
       ))}

@@ -56,7 +56,11 @@ export async function api<T = unknown, P = unknown>({
             toast.error("This account has been deleted. Please contact support.");
         } else if (error.response?.status === 403) {
             toast.error("Your account is blocked or forbidden.");
-        } else if (error.response?.data?.message) {
+        } 
+        else if (error?.response?.status === 404){
+            // break;
+        }
+        else if (error.response?.data?.message) {
             toast.error(error.response.data.message);
         } else {
             toast.error("Something went wrong. Please try again.");

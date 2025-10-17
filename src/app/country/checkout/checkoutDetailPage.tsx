@@ -167,6 +167,8 @@ const handleDeleteItem = async (cartItemId: string) => {
         }
       });
 
+
+
       if (response?.status) {
         toast.success("Order Place successfully");
         setEsimData(response);
@@ -184,6 +186,8 @@ const handleDeleteItem = async (cartItemId: string) => {
     }
   }
 
+  console.log("----- esim data -----", esimData);
+
   return (
     <div className="container my-10">
       <div className="flex flex-col lg:flex-row w-full gap-6">
@@ -195,7 +199,7 @@ const handleDeleteItem = async (cartItemId: string) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             cart.items.map((item: any, index: number) => {
 
-              console.log("----- item ----", item);
+              // console.log("----- item ----", item);
               return(
               <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
                 <div className="flex items-center mb-3 justify-between">

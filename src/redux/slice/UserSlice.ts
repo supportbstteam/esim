@@ -98,7 +98,7 @@ export const fetchUserDetails = createAsyncThunk(
   "user/fetchDetails",
   async (_, { rejectWithValue }) => {
 
-    console.log("---- fetch user details ------");
+    // console.log("---- fetch user details ------");
     try {
       const token = Cookies.get("token");
       if (!token) throw new Error("No token found");
@@ -113,7 +113,7 @@ export const fetchUserDetails = createAsyncThunk(
         }
       );
 
-      console.log("----- res in the user details ----", res);
+      // console.log("----- res in the user details ----", res);
 
       return res?.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
