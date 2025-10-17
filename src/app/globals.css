@@ -261,15 +261,7 @@
 button , a{
   cursor: pointer;
 }
-@media (max-width:767px) {
-  .bg_wrap {
-  position: relative;
-  background: url('/bg_ring.png');
-  background-repeat: no-repeat;
-  background-size: 200px !important;
-  background-position: bottom right;
-}
-}
+
 .bg_sectioned:before {
     z-index: -1;
     content: "";
@@ -280,9 +272,26 @@ button , a{
     left: 0;
     top: 0;
     opacity: .4;
-    background-repeat: repeat;
-    background-size: cover;
+       width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-repeat: repeat-y;
+    background-size: 100%;
 }
 .bg_sectioned{
   position: relative;
+}
+@media (max-width:767px) {
+  .bg_wrap {
+  position: relative;
+  background: url('/bg_ring.png');
+  background-repeat: no-repeat;
+  background-size: 200px !important;
+  background-position: bottom right;
+}
+.bg_sectioned:before{
+   background-size: contain;
+}
 }

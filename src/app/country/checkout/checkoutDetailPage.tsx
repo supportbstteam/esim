@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addToCart, fetchCart, updateCartItem } from "@/redux/slice/CartSlice";
+import { addToCart ,removeCartItem, fetchCart, updateCartItem } from "@/redux/slice/CartSlice";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { api } from "@/lib/api";
 import debounce from "lodash/debounce";
@@ -13,7 +13,7 @@ import Flag from "@/components/ui/Flag";
 import AuthModal from "@/components/modals/AuthModal";
 import OrderModal from "@/components/modals/orderModal";
 import PaymentMethods, { PaymentMethod } from "@/components/common/PaymentMethods";
-
+import { RiDeleteBinLine } from "react-icons/ri";
 // Stripe
 import { Elements, useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -45,6 +45,7 @@ export default function CheckoutDetailPage() {
     try {
       await dispatch(fetchCart());
       await dispatch(fetchUserDetails());
+      // await dispatch(removeCartItem());
     } catch (err) {
       console.error("Error fetching cart:", err);
     }
@@ -66,6 +67,19 @@ export default function CheckoutDetailPage() {
     }, 400),
     [dispatch]
   );
+// Handle deleting a cart item
+const handleDeleteItem = async (cartItemId: string) => {
+  try {
+    setLoading(true); // optional, show loading state
+    await dispatch(removeCartItem(cartItemId))
+    toast.success("Item removed from cart");
+  } catch (err) {
+    console.error("Failed to delete cart item:", err);
+    toast.error("Failed to remove item");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleQuantityChange = (itemId: string, newQty: number) => {
     if (newQty < 1) return;
@@ -184,7 +198,8 @@ export default function CheckoutDetailPage() {
               console.log("----- item ----", item);
               return(
               <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
-                <div className="flex items-center mb-3">
+                <div className="flex items-center mb-3 justify-between">
+                <div className="flex items-center ">
                   <Flag
                     countryName={item?.plan?.country?.name || "Country"}
                     size={36}
@@ -192,6 +207,8 @@ export default function CheckoutDetailPage() {
                   />
                   <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
                 </div>
+                <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
+</div>
 
                 <div className="space-y-2 text-[15px] text-gray-700">
                   <div className="flex justify-between">

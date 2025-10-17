@@ -138,7 +138,7 @@ export default function CountryplanTabs() {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       countries.map((item: any, i: number) => {
                         const basicPlan = basicPlanByCountry[item.id];
-                        const basicPriceText = basicPlan?.price;
+                        const basicPriceText = (item?.price ? '$'+Number(item.price).toFixed(2) : "—")
                         const basicData = basicPlan?.data;
                         const basicValidity = basicPlan?.validityDays;
 
