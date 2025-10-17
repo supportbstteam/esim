@@ -283,6 +283,15 @@ button , a{
 .bg_sectioned{
   position: relative;
 }
+.subgrid_content{
+  grid-template-columns: auto auto auto;
+  gap: 20px;
+}
+@media (max-width:1080px) {
+  .subgrid_content{
+  grid-template-columns: auto auto;
+}
+}
 @media (max-width:767px) {
   .bg_wrap {
   position: relative;
@@ -290,6 +299,9 @@ button , a{
   background-repeat: no-repeat;
   background-size: 200px !important;
   background-position: bottom right;
+}
+.subgrid_content{
+  grid-template-columns: auto;
 }
 .bg_sectioned:before{
    background-size: contain;

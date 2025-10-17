@@ -63,7 +63,7 @@ function About() {
         <div>
         <div className='container mb-10 md:mb-25'>
             <div className="about-layout">
-                <div className=" mx-auto  py-16 flex max-lg:flex-col justify-between">
+                <div className=" mx-auto  pt-16 mb-10 md:mb-25 flex max-lg:flex-col justify-between">
 
                     <div className='flex flex-col gap-6 lg:gap-[57px]'>
                         <p className="text-[16px] font-semibold text-[#1A0F33] tracking-wide ">
@@ -93,7 +93,7 @@ function About() {
             <div className="mb-10 md:mb-25">
                 <Image src="/globabou.jpg" height={540} width={1248} alt='' className='w-full object-cover rounded-2xl  md:max-h-[540px]' />
             </div>
-            <div className="about-layout mb-10 lg:mb-42.5">
+            <div className="about-layout mb-10 lg:mb-25">
                 <div className=" mx-auto gap-6 lg:gap-[57px] pb-12  flex flex-col items-start justify-between">
 
                     <div className='flex'>
@@ -148,7 +148,7 @@ function About() {
                     ))}
                 </div>
             </div>
-            <div className="flex mb-10 lg:mb-25 justify-between flex-col md:flex-row gap-8 md:gap-16  py-10">
+            <div className="flex mb-10 lg:mb-25 justify-between flex-col md:flex-row gap-8 md:gap-16  pb-10">
                 {/* Left content */}
                 <div className="flex flex-col lg:max-w-[50%]">
                     <h3 className="text-[16px] font-semibold text-[#1A0F33] tracking-wide uppercase mb-12">OUR JOURNEY</h3>

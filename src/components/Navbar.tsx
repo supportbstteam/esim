@@ -13,9 +13,9 @@ import toast from 'react-hot-toast';
 import {fetchCart} from '@/redux/slice/CartSlice';
 const navItems = [
   { label: "View Plans", href: "/plans" },
-  { label: "How It Works", href: "quick-links/how-it-works" },
+  { label: "How It Works", href: "/how-it-works" },
   { label: "Features", href: "/features" },
-  { label: "Support", href: "/support" },
+  { label: "Support", href: "/help-center" },
   // { label: "Partner Program", href: "/partner-program" },
 ];
 
