@@ -35,10 +35,10 @@ export default function Home() {
   
   
   const { list } = useAppSelector((state) => state?.faq);
-  // const {user} = useAppSelector(state => state?.user);
+  const {cart} = useAppSelector(state => state?.cart);
   
   // console.log("---- user -----", user);
-  // console.log("----- list in the app/page.tsx ----", list);
+  console.log("----- list in the app/page.tsx ----", cart);
   return (
     <>
       <div className="min-h-screen bg-white">

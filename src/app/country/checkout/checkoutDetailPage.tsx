@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addToCart ,removeCartItem, fetchCart, updateCartItem } from "@/redux/slice/CartSlice";
+import { addToCart, removeCartItem, fetchCart, updateCartItem } from "@/redux/slice/CartSlice";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { api } from "@/lib/api";
 import debounce from "lodash/debounce";
@@ -33,12 +33,14 @@ export default function CheckoutDetailPage() {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [esimData, setEsimData] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [transactionData, setTransactionData] = useState<any>(null);
   const [errorState, setErrorState] = useState<string | null>(null);
   const [showlogin, setShowlogin] = useState(false);
   const [transactionId, setTransactionId] = useState<string>("")
   // const params = useSearchParams();
 
-  // console.log("---- oarams ----", params);
+  console.log("---- cart----", cart);
 
   // ✅ Fetch cart & user details
   const fetchCartData = async () => {
@@ -53,7 +55,7 @@ export default function CheckoutDetailPage() {
 
   useEffect(() => {
     fetchCartData();
-  }, []);
+  }, [dispatch]);
 
   // ✅ Debounced cart quantity update
   const debouncedUpdateCart = useCallback(
@@ -67,19 +69,19 @@ export default function CheckoutDetailPage() {
     }, 400),
     [dispatch]
   );
-// Handle deleting a cart item
-const handleDeleteItem = async (cartItemId: string) => {
-  try {
-    setLoading(true); // optional, show loading state
-    await dispatch(removeCartItem(cartItemId))
-    toast.success("Item removed from cart");
-  } catch (err) {
-    console.error("Failed to delete cart item:", err);
-    toast.error("Failed to remove item");
-  } finally {
-    setLoading(false);
-  }
-};
+  // Handle deleting a cart item
+  const handleDeleteItem = async (cartItemId: string) => {
+    try {
+      setLoading(true); // optional, show loading state
+      await dispatch(removeCartItem(cartItemId))
+      toast.success("Item removed from cart");
+    } catch (err) {
+      console.error("Failed to delete cart item:", err);
+      toast.error("Failed to remove item");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleQuantityChange = (itemId: string, newQty: number) => {
     if (newQty < 1) return;
@@ -156,7 +158,7 @@ const handleDeleteItem = async (cartItemId: string) => {
   };
 
   const handleOnSuccess = async () => {
-    console.log("-- succes --");
+    // console.log("-- succes --");
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await api({
@@ -167,11 +169,12 @@ const handleDeleteItem = async (cartItemId: string) => {
         }
       });
 
+      console.log("---- response in the place order -----", response);
 
-
-      if (response?.status) {
-        toast.success("Order Place successfully");
-        setEsimData(response);
+      if (response?.message === "Order completed successfully") {
+        toast.success(response?.message);
+        setEsimData(response?.orders);
+        setTransactionData(response?.transaction);
         setModalOpen(true);
       }
       else {
@@ -200,62 +203,63 @@ const handleDeleteItem = async (cartItemId: string) => {
             cart.items.map((item: any, index: number) => {
 
               // console.log("----- item ----", item);
-              return(
-              <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
-                <div className="flex items-center mb-3 justify-between">
-                <div className="flex items-center ">
-                  <Flag
-                    countryName={item?.plan?.country?.name || "Country"}
-                    size={36}
-                    className="h-[36px] w-[36px] mr-2"
-                  />
-                  <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
-                </div>
-                <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
-</div>
-
-                <div className="space-y-2 text-[15px] text-gray-700">
-                  <div className="flex justify-between">
-                    <span>Plan Name</span>
-                    <span className="font-medium">{item?.plan?.title || item?.plan?.name}</span>
+              return (
+                <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
+                  <div className="flex items-center mb-3 justify-between">
+                    <div className="flex items-center ">
+                      <Flag
+                        countryName={item?.plan?.country?.name || "Country"}
+                        size={36}
+                        className="h-[36px] w-[36px] mr-2"
+                      />
+                      <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
+                    </div>
+                    <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
                   </div>
 
-                  <div className="flex justify-between">
-                    <span>Data Allowance</span>
-                    <span>{item?.plan?.data || "—"} GB</span>
-                  </div>
+                  <div className="space-y-2 text-[15px] text-gray-700">
+                    <div className="flex justify-between">
+                      <span>Plan Name</span>
+                      <span className="font-medium">{item?.plan?.title || item?.plan?.name}</span>
+                    </div>
 
-                  <div className="flex justify-between">
-                    <span>Validity</span>
-                    <span>{item?.plan?.validityDays || "—"} Days</span>
-                  </div>
+                    <div className="flex justify-between">
+                      <span>Data Allowance</span>
+                      <span>{item?.plan?.data || "—"} GB</span>
+                    </div>
 
-                  <div className="flex justify-between items-center mt-2">
-                    <span>Quantity</span>
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                        className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
-                      >
-                        −
-                      </button>
-                      <span className="w-6 text-center">{item?.quantity || 1}</span>
-                      <button
-                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                        className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
-                      >
-                        +
-                      </button>
+                    <div className="flex justify-between">
+                      <span>Validity</span>
+                      <span>{item?.plan?.validityDays || "—"} Days</span>
+                    </div>
+
+                    <div className="flex justify-between items-center mt-2">
+                      <span>Quantity</span>
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                          className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
+                        >
+                          −
+                        </button>
+                        <span className="w-6 text-center">{item?.quantity || 1}</span>
+                        <button
+                          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                          className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                      <span>Subtotal</span>
+                      <span>${(parseFloat(item?.plan?.price || "0") * (item?.quantity || 1)).toFixed(2)}</span>
                     </div>
                   </div>
-
-                  <div className="flex justify-between font-semibold border-t pt-2 mt-2">
-                    <span>Subtotal</span>
-                    <span>${(parseFloat(item?.plan?.price || "0") * (item?.quantity || 1)).toFixed(2)}</span>
-                  </div>
                 </div>
-              </div>
-            )})
+              )
+            })
           ) : (
             <p className="text-gray-500">No items in cart</p>
           )}
@@ -269,36 +273,38 @@ const handleDeleteItem = async (cartItemId: string) => {
         </div>
 
         {/* 💳 PAYMENT SECTION */}
-        <div className="flex-2/3 bg-white rounded-xl shadow px-5 md:px-8 py-6">
-          <button
-            onClick={handleBack}
-            className="mb-3 text-sm subtext hover:text-gray-700 flex items-center gap-2"
-          >
-            <FaArrowLeft />
-            <span>Back</span>
-          </button>
-
-          <h3 className="font-semibold text-lg mb-6">Choose Payment Method</h3>
-          <PaymentMethods onSelect={handlePaymentSelect} defaultMethodId="stripe" />
-
-          <div className="my-6">
+        {
+          cart && cart?.items?.length > 0 &&
+          <div className="flex-2/3 bg-white rounded-xl shadow px-5 md:px-8 py-6">
             <button
-              onClick={handleProceed}
-              disabled={loading}
-              className="bg-black text-white px-6 py-3 rounded-md w-full hover:bg-gray-800 transition"
+              onClick={handleBack}
+              className="mb-3 text-sm subtext hover:text-gray-700 flex items-center gap-2"
             >
-              {loading ? "Processing..." : "Proceed to Pay"}
+              <FaArrowLeft />
+              <span>Back</span>
             </button>
+
+            <h3 className="font-semibold text-lg mb-6">Choose Payment Method</h3>
+            <PaymentMethods onSelect={handlePaymentSelect} defaultMethodId="stripe" />
+
+            <div className="my-6">
+              <button
+                onClick={handleProceed}
+                disabled={loading}
+                className="bg-black text-white px-6 py-3 rounded-md w-full hover:bg-gray-800 transition"
+              >
+                {loading ? "Processing..." : "Proceed to Pay"}
+              </button>
+            </div>
+
+            {/* Stripe Form */}
+            {selectedMethod?.id === "stripe" && clientSecret && transactionId && (
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <StripeForm clientSecret={clientSecret} transactionId={transactionId} onSuccess={handleOnSuccess} />
+              </Elements>
+            )}
           </div>
-
-          {/* Stripe Form */}
-          {selectedMethod?.id === "stripe" && clientSecret && transactionId && (
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <StripeForm clientSecret={clientSecret} transactionId={transactionId} onSuccess={handleOnSuccess} />
-            </Elements>
-          )}
-
-        </div>
+        }
       </div>
 
       {/* Modals */}
@@ -306,6 +312,7 @@ const handleDeleteItem = async (cartItemId: string) => {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         esimData={esimData}
+        transactionData={transactionData}
         isLoading={loading}
         errorState={errorState}
       />

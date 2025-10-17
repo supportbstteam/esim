@@ -90,9 +90,9 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
       return { ...prev, [planId]: newQty };
     });
   };
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const groupPlansByDays = (plans: any[]) => {
-     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return plans.reduce((acc: Record<string, any[]>, plan) => {
       const days = plan.validityDays || "Other";
       if (!acc[days]) acc[days] = [];
@@ -116,11 +116,13 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     try {
       const response = await dispatch(addToCart(plansArray));
 
+      console.log("---- response in teh add to cart ----", response?.payload);
+
       if (response?.type === "cart/addToCart/fulfilled") {
         toast.success("Added to cart successfully!");
       }
 
-      navigation(`/country/checkout?plans=${plansArray.map(p => `${p.planId}:${p.quantity}`).join(",")}&country=${id}`);
+      navigation(`/country/checkout`);
     } catch (err) {
       console.error("Checkout error", err);
       toast.error("Failed to add plans to cart");
@@ -144,7 +146,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     return acc + (plan ? Number(plan.price) * qty : 0);
   }, 0);
   const groupedPlans = groupPlansByDays(displayedPlans);
- 
+
   return (
     <>
       <div>
@@ -192,8 +194,8 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         <div className="flex flex-col px-8 py-4 md:py-12 rounded-xl w-full bg_sectioned ">
 
           <div className="bg-[#133365]/90 py-8 md:py-10 rounded-xl w-full md:w-[60%] mx-auto px-5 md:px-20">
-          <h2 className="text-2xl text-white text-center md:text-[32px] font-bold">{content.plansSection.heading}</h2>
-          <div className="  mb-8 text-white  text-center !text-[16px] mt-2 ">{content.plansSection.subtext}</div>
+            <h2 className="text-2xl text-white text-center md:text-[32px] font-bold">{content.plansSection.heading}</h2>
+            <div className="  mb-8 text-white  text-center !text-[16px] mt-2 ">{content.plansSection.subtext}</div>
             <div className="mb-12 flex items-center justify-between max-w-2xl mx-auto  bg-[#133365] rounded-lg p-2 ">
               <button
                 onClick={() => setActiveTab("standard")}
@@ -216,7 +218,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
               Object.entries(groupedPlans).map(([days, plans]) => (
                 <div key={days} className="mb-8">
                   <h4 className="text-white font-bold text-lg mb-4">{days} Day{days > "1" ? "s" : ""}</h4>
-                   {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {plans.map((plan: any) => {
                     const qty = selectedPlans[plan.id] || 0;
                     return (
@@ -230,7 +232,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                             <FaFire className="text-[#eebe3c] mr-1" />
                             Popular
                           </span>
-                        )}  
+                        )}
                         <div className="flex justify-between items-center ">
                           <h3 className="font-semibold">{plan.title}</h3>
                           <span className="font-bold text-gray-800 text-xl ">
@@ -251,17 +253,17 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         {totalPlansSelected > 0 && (
           <div className="fixed border-t bottom-0 z-[9999999999999999999999999] left-1/2 transform -translate-x-1/2 bg-white   p-5 w-full flex justify-between items-center gap-4 animate-slide-up ">
             <div className="container flex items-center justify-between">
-            <Link href="/" className="inline-block max-md:hidden">
-              <Image height={100} width={100} src="/Print.svg" alt="footerLogo" className="w-[115px] h-auto" />
-            </Link>
-            <div className="max-md:col-span-1/2">
-              <p className="font-semibold">
-                {totalPlansSelected} Plan{totalPlansSelected > 1 ? "s" : ""} Total: ${totalPrice.toFixed(2)}
-              </p>
-            </div>
-            <button onClick={handleCheckout} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
-              {content.plansSection.checkoutButton}
-            </button>
+              <Link href="/" className="inline-block max-md:hidden">
+                <Image height={100} width={100} src="/Print.svg" alt="footerLogo" className="w-[115px] h-auto" />
+              </Link>
+              <div className="max-md:col-span-1/2">
+                <p className="font-semibold">
+                  {totalPlansSelected} Plan{totalPlansSelected > 1 ? "s" : ""} Total: ${totalPrice.toFixed(2)}
+                </p>
+              </div>
+              <button onClick={handleCheckout} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                {content.plansSection.checkoutButton}
+              </button>
             </div>
           </div>
         )}

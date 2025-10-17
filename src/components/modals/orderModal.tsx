@@ -9,21 +9,24 @@ import {
   FaCalendarAlt,
   FaDownload,
   FaExclamationTriangle,
+  FaDollarSign,
 } from "react-icons/fa";
 
-interface EsimInfo {
-  iccid: string;
-  qrCodeUrl: string;
-  country: { name: string };
-  plans: { data: number; validityDays: number; name: string }[];
-  startDate: string | Date;
-  endDate: string | Date;
+
+interface TransactionInfo {
+  transactionId: string;
+  paymentGateway: string;
+  amount: number | string;
+  status: string;
+  createdAt: string;
 }
 
 interface OrderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  esimData?: EsimInfo[]; // now an array
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  esimData?: any;
+  transactionData?: TransactionInfo;
   isLoading: boolean;
   errorState?: string | null;
 }
@@ -32,20 +35,21 @@ export default function OrderModal({
   isOpen,
   onClose,
   esimData,
+  transactionData,
   isLoading,
   errorState,
 }: OrderModalProps) {
   const [message, setMessage] = useState("Processing your eSIM...");
   const qrRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Animate steps
+  // Animate loading steps
   useEffect(() => {
     if (!isOpen || errorState) return;
     const steps = [
       "Connecting to eSIM provider...",
       "Verifying your plan details...",
       "Creating your eSIM profiles...",
-      "Almost done — finalizing setup...",
+      "Finalizing setup...",
       "Activating your eSIMs...",
     ];
     let i = 0;
@@ -56,7 +60,7 @@ export default function OrderModal({
     return () => clearInterval(interval);
   }, [isOpen, errorState]);
 
-  // Download QR for specific index
+  // Download QR
   const handleDownloadQR = (index: number) => {
     const svg = qrRefs.current[index]?.querySelector("svg");
     if (!svg) return;
@@ -70,7 +74,7 @@ export default function OrderModal({
       ctx?.drawImage(img, 0, 0);
       const pngFile = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `${esimData?.[index]?.iccid || "esim"}.png`;
+      link.download = `${esimData?.[index]?.esim.iccid || "esim"}.png`;
       link.href = pngFile;
       link.click();
     };
@@ -81,7 +85,7 @@ export default function OrderModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 overflow-y-auto">
-      <div className="bg-white text-gray-800 rounded-2xl w-full max-w-5xl mx-4 shadow-lg relative h-auto max-h-[90vh] overflow-y-auto transition-all">
+      <div className="bg-white text-gray-800 rounded-2xl w-full max-w-6xl mx-4 shadow-lg relative h-auto max-h-[90vh] overflow-y-auto transition-all">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl"
@@ -109,49 +113,48 @@ export default function OrderModal({
             </div>
           ) : esimData && esimData.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch min-h-[380px]">
-              {/* Left column: eSIM info list */}
+              {/* Left column: Orders & eSIM info */}
               <div className="flex flex-col justify-start space-y-6">
                 <div className="flex items-center gap-2 mb-4">
                   <FaCheckCircle className="text-green-600 text-2xl" />
-                  <h2 className="text-2xl font-bold text-green-700">Thanks for Purchasing</h2>
+                  <h2 className="text-2xl font-bold text-green-700">Thank you for your purchase!</h2>
                 </div>
-                <p className="text-gray-600">You can now activate your eSIMs</p>
+
+                {transactionData && (
+                  <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                    <p><strong>Transaction ID:</strong> {transactionData.transactionId}</p>
+                    <p><strong>Payment Method:</strong> {transactionData.paymentGateway}</p>
+                    <p><strong>Amount:</strong> ${transactionData.amount}</p>
+                    <p><strong>Status:</strong> {transactionData.status}</p>
+                  </div>
+                )}
 
                 <div className="space-y-5 bg-gray-50 rounded-xl p-6 max-h-[500px] overflow-y-auto">
-                  {esimData.map((esim, idx) => (
-                    <div key={idx} className="p-4 border rounded-lg bg-white">
-                      <h3 className="font-semibold mb-2">
-                        eSIM {idx + 1} - {esim.plans[0]?.name}
-                      </h3>
-                      <div className="flex flex-col gap-2">
-                        <p>
-                          <FaSimCard className="inline mr-2 text-blue-600" />
-                          <strong>SIM Number:</strong> {esim.iccid}
-                        </p>
-                        <p>
-                          <FaGlobe className="inline mr-2 text-purple-600" />
-                          <strong>Country:</strong> {esim.country.name}
-                        </p>
-                        <p>
-                          <FaWifi className="inline mr-2 text-teal-600" />
-                          <strong>Data:</strong> {esim.plans[0]?.data} GB
-                        </p>
-                        <p>
-                          <FaCalendarAlt className="inline mr-2 text-amber-600" />
-                          <strong>Validity:</strong> {esim.plans[0]?.validityDays} Days
-                        </p>
-                        <p>
-                          <FaCalendarAlt className="inline mr-2 text-green-600" />
-                          <strong>Start:</strong> {new Date(esim.startDate).toLocaleString()}
-                        </p>
-                        <p>
-                          <FaCalendarAlt className="inline mr-2 text-red-600" />
-                          <strong>End:</strong> {new Date(esim.endDate).toLocaleString()}
-                        </p>
+                  {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  esimData.map((order:any, idx:number) => {
+                    const esim = order.esim;
+                    const plan = order.plan; // use order.plan instead of esim.plans[0]
+                    return (
+                      <div key={idx} className="p-4 border rounded-lg bg-white">
+                        <h3 className="font-semibold mb-2">
+                          eSIM {idx + 1} - {plan?.name}
+                        </h3>
+                        <div className="flex flex-col gap-2">
+                          <p><FaSimCard className="inline mr-2 text-blue-600" /> <strong>SIM Number:</strong> {esim.iccid}</p>
+                          <p><FaGlobe className="inline mr-2 text-purple-600" /> <strong>Country:</strong> {order.country.name}</p>
+                          <p><FaWifi className="inline mr-2 text-teal-600" /> <strong>Data:</strong> {esim.dataAmount} GB</p>
+                          {/* <p><FaCalendarAlt className="inline mr-2 text-amber-600" /> <strong>Validity:</strong> {esim.validityDays} Days</p>
+                          <p><FaCalendarAlt className="inline mr-2 text-green-600" /> <strong>Start:</strong> {new Date(esim.startDate).toLocaleString()}</p> */}
+                          <p><FaCalendarAlt className="inline mr-2 text-red-600" /> <strong>End:</strong> {new Date(esim.endDate).toLocaleString()}</p>
+                          <p><FaDollarSign className="inline mr-2 text-gray-700" /> <strong>Price:</strong> ${order.totalAmount}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
+
                 </div>
+
                 <button
                   onClick={onClose}
                   className="mt-8 px-6 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition"
@@ -163,13 +166,13 @@ export default function OrderModal({
               {/* Right column: QR codes */}
               <div className="flex flex-col justify-start items-center h-full space-y-6">
                 <h3 className="text-gray-700 mb-3 font-medium">Scan QR to Configure</h3>
-                {esimData.map((esim, idx) => (
+                {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                esimData.map((order:any, idx:number) => (
                   <div key={idx} className="flex flex-col items-center gap-3">
-                    <div ref={el => {
-                      qrRefs.current[idx] = el ?? null; // assign null if el is null
-                    }} className="bg-gray-100 p-4 rounded-lg">
+                    <div ref={el => { qrRefs.current[idx] = el ?? null; }} className="bg-gray-100 p-4 rounded-lg">
                       <QRCode
-                        value={esim.qrCodeUrl || "No-SIM"}
+                        value={order.esim.qrCodeUrl || "No-SIM"}
                         size={180}
                         bgColor="#ffffff"
                         fgColor="#000000"
