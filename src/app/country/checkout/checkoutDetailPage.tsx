@@ -161,6 +161,8 @@ export default function CheckoutDetailPage() {
 
   const handleOnSuccess = async () => {
     // console.log("-- succes --");
+    setLoading(true);
+    setModalOpen(true);
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await api({
@@ -188,6 +190,9 @@ export default function CheckoutDetailPage() {
     catch (err: any) {
       console.error("Erorr in the place order after stripe success", err);
       setErrorState(err);
+    }
+    finally {
+      setLoading(false);
     }
   }
 

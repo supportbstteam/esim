@@ -106,12 +106,15 @@ export default function OrderModal({
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 overflow-y-auto">
       <div className="bg-white text-gray-800 rounded-2xl w-full max-w-6xl mx-4 shadow-lg relative h-auto max-h-[90vh] overflow-y-auto transition-all">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl"
-        >
-          ✕
-        </button>
+        {
+          !isLoading && <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl"
+          >
+            ✕
+          </button>
+        }
+
 
         <div className="p-8">
           {isLoading ? (
