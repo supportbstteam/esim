@@ -31,18 +31,7 @@ const OrdersPage = () => {
                                 return (
                                     <OrderCard
                                         key={order.id}
-                                        id={order.id}
-                                        title={order.title || order.plan?.title || ""}
-                                        planName={order.planName || ""}
-                                        data={order?.data || ""}
-                                        validityDays={order?.validityDays || 0}
-                                        price={order.price || ""}
-                                        country={order.country || ""}
-                                        isoCode={order.country?.isoCode || ""}
-                                        phoneCode={order.country?.phoneCode || ""}
-                                        isActive={order.isActive}
-                                        status={order.status}
-                                        errorMessage={order.errorMessage}
+                                        order={order}
                                     />
                                 )
                             })}

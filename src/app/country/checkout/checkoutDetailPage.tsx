@@ -190,9 +190,12 @@ export default function CheckoutDetailPage() {
     catch (err: any) {
       console.error("Erorr in the place order after stripe success", err);
       setErrorState(err);
+      toast.error(err?.response?.data?.message);
+      setModalOpen(false);
     }
     finally {
       setLoading(false);
+      // setModalOpen(true);
     }
   }
 
