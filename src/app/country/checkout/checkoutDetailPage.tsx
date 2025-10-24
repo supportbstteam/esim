@@ -18,10 +18,12 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { Elements, useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import StripeForm from "@/components/form/StripeForm";
+import { useNavigate } from "@/components/hooks/navigation";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function CheckoutDetailPage() {
+  const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -310,7 +312,10 @@ export default function CheckoutDetailPage() {
       {/* Modals */}
       <OrderModal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => {
+          setModalOpen(false);
+          navigation("/");
+        }}
         esimData={esimData}
         transactionData={transactionData}
         isLoading={loading}

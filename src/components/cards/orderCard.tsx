@@ -31,11 +31,11 @@ export const OrderCard: React.FC<EsimOrderCardProps> = ({
     errorMessage,
 }) => {
 
-    console.log("--- order card item ---", id);
+    // console.log("--- order card item ---", id);
     return (
         <Link href={`/order/${id}`} className="block">
             <div
-                className={`${status === "failed" ? "bg-red-50" : "bg-white"} border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow
+                className={`${status === "failed" ? "bg-red-50" : "bg-white"} position-relative  border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow
          p-5 w-full cursor-pointer`}
             >
                 <div className="flex justify-between items-center mb-4">
@@ -64,7 +64,7 @@ export const OrderCard: React.FC<EsimOrderCardProps> = ({
                 <div className="flex justify-between items-center mt-4">
                     <span className="text-xl font-bold text-gray-900">${price}</span>
                     <span
-                        className={`text-md rounded px-2 py-1 font-semibold ${status === "failed"
+                        className={`text-md position-absolute top-2 right-3 rounded px-2 py-1 font-semibold ${status === "failed"
                             ? "bg-red-700 text-white"
                             : "bg-blue-700 text-white"
                             }`}

@@ -38,7 +38,7 @@ export default function Home() {
   const {cart} = useAppSelector(state => state?.cart);
   
   // console.log("---- user -----", user);
-  console.log("----- list in the app/page.tsx ----", cart);
+  // console.log("----- list in the app/page.tsx ----", cart);
   return (
     <>
       <div className="min-h-screen bg-white">

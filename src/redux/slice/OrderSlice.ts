@@ -31,8 +31,8 @@ export const fetchOrdersByUser = createAsyncThunk(
                 url: "/user/order-list", // replace with your backend route
                 method: "GET",
             });
-            console.log("---- data in the order List ----", data);
-            return data.data;
+            // console.log("---- data in the order List ----", data);
+            return data?.status === "success" ? data.data : [];
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.message || err.message);

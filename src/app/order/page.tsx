@@ -15,6 +15,8 @@ const OrdersPage = () => {
         }
     }, [dispatch, orders]);
 
+    // console.log("---- order ---", orders);
+
     return (
         <div className="min-h-screen bg-gray-50 py-8">
             <div className="max-w-3xl mx-auto px-4">
@@ -23,23 +25,27 @@ const OrdersPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            orders.map((order: any) => (
-                                <OrderCard
-                                    key={order.id}
-                                    id={order.id}
-                                    title={order.title || order.plan?.title || ""}
-                                    planName={order.plan?.name || ""}
-                                    data={order.plan?.data || ""}
-                                    validityDays={order.plan?.validityDays || 0}
-                                    price={order.price || ""}
-                                    country={order.country?.name || ""}
-                                    isoCode={order.country?.isoCode || ""}
-                                    phoneCode={order.country?.phoneCode || ""}
-                                    isActive={order.isActive}
-                                    status={order.status}
-                                    errorMessage={order.errorMessage}
-                                />
-                            ))}
+                            orders.map((order: any) => {
+
+                                console.log("---- order in the map ----", order);
+                                return (
+                                    <OrderCard
+                                        key={order.id}
+                                        id={order.id}
+                                        title={order.title || order.plan?.title || ""}
+                                        planName={order.planName || ""}
+                                        data={order?.data || ""}
+                                        validityDays={order?.validityDays || 0}
+                                        price={order.price || ""}
+                                        country={order.country || ""}
+                                        isoCode={order.country?.isoCode || ""}
+                                        phoneCode={order.country?.phoneCode || ""}
+                                        isActive={order.isActive}
+                                        status={order.status}
+                                        errorMessage={order.errorMessage}
+                                    />
+                                )
+                            })}
                     </div>
                 ) : (
                     <p className="text-center text-gray-600">No orders found.</p>
