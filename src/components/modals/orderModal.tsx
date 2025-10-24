@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState, useRef } from "react";
 import QRCode from "react-qr-code";
 import {
@@ -12,21 +13,42 @@ import {
   FaDollarSign,
 } from "react-icons/fa";
 
+interface EsimType {
+  id: string;
+  iccid: string;
+  productName: string;
+  price: number;
+  startDate: string;
+  endDate: string;
+  validityDays: number;
+  qrCodeUrl: string;
+  isActive: boolean;
+  externalId?: string;
+  dataAmount?: number;
+  callAmount?: number;
+  smsAmount?: number;
+}
 
-interface TransactionInfo {
-  transactionId: string;
-  paymentGateway: string;
-  amount: number | string;
+interface OrderType {
+  id: string;
   status: string;
-  createdAt: string;
+  totalAmount: number;
+  country: { id: string; name: string };
+  transaction: {
+    id: string;
+    status: string;
+    paymentGateway: string;
+    amount: number | string;
+    createdAt: string;
+  };
+  esims: EsimType[];
+  activated: boolean;
 }
 
 interface OrderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  esimData?: any;
-  transactionData?: TransactionInfo;
+  esimData?: OrderType;
   isLoading: boolean;
   errorState?: string | null;
 }
@@ -35,7 +57,6 @@ export default function OrderModal({
   isOpen,
   onClose,
   esimData,
-  transactionData,
   isLoading,
   errorState,
 }: OrderModalProps) {
@@ -60,7 +81,6 @@ export default function OrderModal({
     return () => clearInterval(interval);
   }, [isOpen, errorState]);
 
-  // Download QR
   const handleDownloadQR = (index: number) => {
     const svg = qrRefs.current[index]?.querySelector("svg");
     if (!svg) return;
@@ -74,7 +94,7 @@ export default function OrderModal({
       ctx?.drawImage(img, 0, 0);
       const pngFile = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `${esimData?.[index]?.esim.iccid || "esim"}.png`;
+      link.download = `${esimData?.esims[index].iccid || "esim"}.png`;
       link.href = pngFile;
       link.click();
     };
@@ -92,6 +112,7 @@ export default function OrderModal({
         >
           ✕
         </button>
+
         <div className="p-8">
           {isLoading ? (
             <div className="flex flex-col items-center gap-4 py-10">
@@ -111,48 +132,40 @@ export default function OrderModal({
                 Close
               </button>
             </div>
-          ) : esimData && esimData.length > 0 ? (
+          ) : esimData ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch min-h-[380px]">
               {/* Left column: Orders & eSIM info */}
               <div className="flex flex-col justify-start space-y-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <FaCheckCircle className="text-green-600 text-2xl" />
-                  <h2 className="text-2xl font-bold text-green-700">Thank you for your purchase!</h2>
-                </div>
-
-                {transactionData && (
-                  <div className="bg-gray-50 rounded-xl p-4 mb-4">
-                    <p><strong>Transaction ID:</strong> {transactionData.transactionId}</p>
-                    <p><strong>Payment Method:</strong> {transactionData.paymentGateway}</p>
-                    <p><strong>Amount:</strong> ${transactionData.amount}</p>
-                    <p><strong>Status:</strong> {transactionData.status}</p>
-                  </div>
-                )}
-
                 <div className="space-y-5 bg-gray-50 rounded-xl p-6 max-h-[500px] overflow-y-auto">
-                  {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  esimData.map((order:any, idx:number) => {
-                    const esim = order.esim;
-                    const plan = order.plan; // use order.plan instead of esim.plans[0]
-                    return (
-                      <div key={idx} className="p-4 border rounded-lg bg-white">
-                        <h3 className="font-semibold mb-2">
-                          eSIM {idx + 1} - {plan?.name}
-                        </h3>
-                        <div className="flex flex-col gap-2">
-                          <p><FaSimCard className="inline mr-2 text-blue-600" /> <strong>SIM Number:</strong> {esim.iccid}</p>
-                          <p><FaGlobe className="inline mr-2 text-purple-600" /> <strong>Country:</strong> {order.country.name}</p>
-                          <p><FaWifi className="inline mr-2 text-teal-600" /> <strong>Data:</strong> {esim.dataAmount} GB</p>
-                          {/* <p><FaCalendarAlt className="inline mr-2 text-amber-600" /> <strong>Validity:</strong> {esim.validityDays} Days</p>
-                          <p><FaCalendarAlt className="inline mr-2 text-green-600" /> <strong>Start:</strong> {new Date(esim.startDate).toLocaleString()}</p> */}
-                          <p><FaCalendarAlt className="inline mr-2 text-red-600" /> <strong>End:</strong> {new Date(esim.endDate).toLocaleString()}</p>
-                          <p><FaDollarSign className="inline mr-2 text-gray-700" /> <strong>Price:</strong> ${order.totalAmount}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <div className="flex items-center gap-2 mb-4">
+                    <FaCheckCircle className="text-green-600 text-2xl" />
+                    <h2 className="text-2xl font-bold text-green-700">Thank you for your purchase!</h2>
+                  </div>
 
+                  <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                    <p><strong>Transaction ID:</strong> {esimData.transaction.id}</p>
+                    <p><strong>Payment Method:</strong> {esimData.transaction.paymentGateway}</p>
+                    <p><strong>Amount:</strong> ${esimData.transaction.amount}</p>
+                    <p><strong>Status:</strong> {esimData.transaction.status}</p>
+                  </div>
+
+                  {esimData.esims.map((esim) => (
+                    <div key={esim.id} className="p-4 border rounded-lg bg-white">
+                      <h3 className="font-semibold mb-2">{esim.productName}</h3>
+                      <div className="flex flex-col gap-2">
+                        <p><FaSimCard className="inline mr-2 text-blue-600" /> <strong>SIM Number:</strong> {esim.iccid}</p>
+                        <p><FaGlobe className="inline mr-2 text-purple-600" /> <strong>Country:</strong> {esimData.country.name}</p>
+                        <p><FaWifi className="inline mr-2 text-teal-600" /> <strong>Data:</strong> {esim.dataAmount || 0} GB</p>
+                        <p><FaCalendarAlt className="inline mr-2 text-amber-600" /> <strong>Validity:</strong> {esim.validityDays} Days</p>
+                        {/* <p><FaCalendarAlt className="inline mr-2 text-green-600" /> <strong>Start:</strong> {new Date(esim.startDate).toLocaleString()}</p>
+                        <p><FaCalendarAlt className="inline mr-2 text-red-600" /> <strong>End:</strong> {new Date(esim.endDate).toLocaleString()}</p> */}
+                        <p><FaDollarSign className="inline mr-2 text-gray-700" /> <strong>Price:</strong> ${esim.price}</p>
+                        <p><strong>Call:</strong> {esim.callAmount || 0}</p>
+                        <p><strong>SMS:</strong> {esim.smsAmount || 0}</p>
+                        {/* <p><strong>External ID:</strong> {esim.externalId || "-"}</p> */}
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <button
@@ -166,20 +179,20 @@ export default function OrderModal({
               {/* Right column: QR codes */}
               <div className="flex flex-col justify-start items-center h-full space-y-6">
                 <h3 className="text-gray-700 mb-3 font-medium">Scan QR to Configure</h3>
-                {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                esimData.map((order:any, idx:number) => (
-                  <div key={idx} className="flex flex-col items-center gap-3">
-                    <div ref={el => { qrRefs.current[idx] = el ?? null; }} className="bg-gray-100 p-4 rounded-lg">
+                {esimData.esims.map((esim, eIdx) => (
+                  <div key={esim.id} className="flex flex-col items-center gap-3">
+                    <div ref={(el) => {
+                      qrRefs.current[eIdx] = el; // assign to ref
+                    }} className="bg-gray-100 p-4 rounded-lg">
                       <QRCode
-                        value={order.esim.qrCodeUrl || "No-SIM"}
+                        value={esim.qrCodeUrl || "No-SIM"}
                         size={180}
                         bgColor="#ffffff"
                         fgColor="#000000"
                       />
                     </div>
                     <button
-                      onClick={() => handleDownloadQR(idx)}
+                      onClick={() => handleDownloadQR(eIdx)}
                       className="mt-2 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
                     >
                       <FaDownload /> Download QR

@@ -175,8 +175,8 @@ export default function CheckoutDetailPage() {
 
       if (response?.message === "Order completed successfully") {
         toast.success(response?.message);
-        setEsimData(response?.orders);
-        setTransactionData(response?.transaction);
+        setEsimData(response?.order);
+        setTransactionData(response?.order?.transaction);
         setModalOpen(true);
       }
       else {
@@ -317,7 +317,7 @@ export default function CheckoutDetailPage() {
           navigation("/");
         }}
         esimData={esimData}
-        transactionData={transactionData}
+        // transactionData={transactionData}
         isLoading={loading}
         errorState={errorState}
       />
