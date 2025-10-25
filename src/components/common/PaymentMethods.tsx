@@ -16,22 +16,22 @@ interface PaymentMethodsProps {
 }
 
 const defaultPaymentMethods: PaymentMethod[] = [
-  {
-    id: "cod",
-    name: "Cash On Delivery",
-    subHead: "Pay using COD",
-    icon: (
-      <svg
-        className="w-5 h-5 mr-2 text-gray-600"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <rect width="18" height="12" x="3" y="6" rx="2" strokeWidth="2"></rect>
-        <path d="M3 10h18" strokeWidth="2"></path>
-      </svg>
-    ),
-  },
+  // {
+  //   id: "cod",
+  //   name: "Cash On Delivery",
+  //   subHead: "Pay using COD",
+  //   icon: (
+  //     <svg
+  //       className="w-5 h-5 mr-2 text-gray-600"
+  //       fill="none"
+  //       stroke="currentColor"
+  //       viewBox="0 0 24 24"
+  //     >
+  //       <rect width="18" height="12" x="3" y="6" rx="2" strokeWidth="2"></rect>
+  //       <path d="M3 10h18" strokeWidth="2"></path>
+  //     </svg>
+  //   ),
+  // },
   {
     id: "stripe",
     name: "Pay Online",

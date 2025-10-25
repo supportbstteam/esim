@@ -15,28 +15,30 @@ import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import Countryplan from "@/components/home/Countryplan"
 import { fetchCart } from "@/redux/slice/CartSlice";
+import { fetchSimsByUser } from "@/redux/slice/ESimSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchCountries());
       await dispatch(fetchUserDetails());
+      await dispatch(fetchSimsByUser());
       await dispatch(fetchFaqs());
       await dispatch(featurePlans());
       await dispatch(fetchPlans({ countryId: "all" }));
-   await dispatch(fetchCart());
+      await dispatch(fetchCart());
       // const token = Cookies.get("token");
     }
     fetchData();
   }, [dispatch]);
 
-  
-  
+
+
   const { list } = useAppSelector((state) => state?.faq);
-  const {cart} = useAppSelector(state => state?.cart);
-  
+  const { cart } = useAppSelector(state => state?.cart);
+
   // console.log("---- user -----", user);
   // console.log("----- list in the app/page.tsx ----", cart);
   return (

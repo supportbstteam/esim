@@ -7,6 +7,7 @@ import userSlice from "./slice/UserSlice"
 import faqSlice from "./slice/FaqSlice"
 import orderSlice from "./slice/OrderSlice"
 import CartSlice from "./slice/CartSlice"
+import ESimSlice from "./slice/ESimSlice"
 export const store = configureStore({
     reducer: {
         country: countrySlice,
@@ -14,7 +15,8 @@ export const store = configureStore({
         user: userSlice,
         faq: faqSlice,
         order: orderSlice,
-        cart: CartSlice
+        cart: CartSlice,
+        esims: ESimSlice,
     },
 });
 

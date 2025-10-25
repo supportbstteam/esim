@@ -213,8 +213,13 @@ shopping_bag
                     <Link href="/profile" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
                       Account
                     </Link>
-                    <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                    
+                    <Link href="/e-sim" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
                       My Plan
+                    </Link>
+                    
+                    <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                      My Order
                     </Link>
                     <button onClick={handleLogout} className="w-full text-start px-4 py-2 hover:bg-gray-100" role="menuitem">
                       Logout

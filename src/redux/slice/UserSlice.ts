@@ -167,10 +167,9 @@ const userSlice = createSlice({
     });
     builder.addCase(signupUser.fulfilled, (state, action: PayloadAction<{ user: User; token: string }>) => {
       state.loading = false;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isAuth = true;
-      Cookies.set("token", action.payload.token, { expires: 7 }); // expires in 7 days
+      state.user = null;
+      state.token = ""
+      state.isAuth = false;
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     builder.addCase(signupUser.rejected, (state, action: PayloadAction<any>) => {

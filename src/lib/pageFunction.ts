@@ -40,3 +40,46 @@ export const userOrder = async (
         setIsLoading(false);
     }
 };
+
+
+// Define the type for transaction data (adjust as needed)
+interface TransactionData {
+    id?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+}
+
+interface InitiateStripePaymentProps {
+    setLoading: (loading: boolean) => void;
+    setClientSecret: (clientSecret: string) => void;
+    setTransactionId: (transactionId: string) => void;
+}
+
+export const initiateStripePayment = async ({
+    setLoading,
+    setClientSecret,
+    setTransactionId,
+}: InitiateStripePaymentProps) => {
+    setLoading(true);
+
+    try {
+        const res = await api<{ clientSecret: string; transaction: TransactionData }>({
+            url: "/user/transactions/stripe/initiate",
+            method: "POST",
+        });
+
+        if (!res.clientSecret) {
+            toast.error("Failed to get client secret");
+            return;
+        }
+
+        setClientSecret(res.clientSecret);
+        setTransactionId(res.transaction?.id || "");
+        toast.success("Proceed with Stripe payment below");
+    } catch (error) {
+        console.error("Stripe initiation failed:", error);
+        toast.error("Stripe initiation failed");
+    } finally {
+        setLoading(false);
+    }
+};

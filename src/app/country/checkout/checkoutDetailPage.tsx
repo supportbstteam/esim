@@ -140,6 +140,7 @@ export default function CheckoutDetailPage() {
       toast.success("Proceed with Stripe payment below");
     } catch (error) {
       console.error("Stripe initiation failed:", error);
+
     } finally {
       setLoading(false);
     }
@@ -195,6 +196,7 @@ export default function CheckoutDetailPage() {
     }
     finally {
       setLoading(false);
+      router.push("/");
       // setModalOpen(true);
     }
   }

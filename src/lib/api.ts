@@ -60,6 +60,9 @@ export async function api<T = unknown, P = unknown>({
         else if (error?.response?.status === 404){
             // break;
         }
+        else if(url.includes("details")){
+            // skip
+        }
         else if (error.response?.data?.message) {
             toast.error(error.response.data.message);
         } else {
