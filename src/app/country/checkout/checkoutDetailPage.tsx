@@ -193,10 +193,10 @@ export default function CheckoutDetailPage() {
       setErrorState(err);
       toast.error(err?.response?.data?.message);
       setModalOpen(false);
+      router.push("/");
     }
     finally {
       setLoading(false);
-      router.push("/");
       // setModalOpen(true);
     }
   }
