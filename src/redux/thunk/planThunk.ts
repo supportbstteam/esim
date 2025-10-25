@@ -16,6 +16,7 @@ export const fetchPlans = createAsyncThunk(
                 params: { countryId: countryId || "all" }, // ✅ pass as object
             });
 
+            console.log("---- response in the fetching plans ----", res);
             return res?.data;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {

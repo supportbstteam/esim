@@ -12,6 +12,7 @@ import Flag from "@/components/ui/Flag";
 import Image from "next/image";
 import { addToCart } from "@/redux/slice/CartSlice";
 import Link from "next/link";
+import { clearPlans } from "@/redux/slice/PlanSlice";
 type CountryDetailsProps = {
   params: Promise<{ id: string }>;
 };
@@ -64,6 +65,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
 
   useEffect(() => {
     const fetchPlanDetails = async () => {
+      await dispatch(clearPlans());
       await dispatch(fetchPlans({ countryId: id }));
       await dispatch(fetchUserDetails());
     };
@@ -83,13 +85,10 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     });
   };
 
-  const updateQuantity = (planId: string, newQty: number) => {
-    setSelectedPlans((prev) => {
-      if (!(planId in prev)) return prev;
-      if (newQty < 1) newQty = 1;
-      return { ...prev, [planId]: newQty };
-    });
-  };
+
+  console.log("----- plans ----", plans);
+
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const groupPlansByDays = (plans: any[]) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Country } from "@/types";
 import { useRouter } from "next/navigation";
 import { useNavigate } from "./hooks/navigation";
 import Image from "next/image";
+import { fetchPlans } from "@/redux/thunk/planThunk";
 
 export default function HeroSection() {
+    const dispatch = useAppDispatch();
     const navigation = useNavigate();
     const router = useRouter();
     const { countries } = useAppSelector((state) => state.country);
@@ -25,8 +27,9 @@ export default function HeroSection() {
     }, [searchTerm, countries]);
 
     // Handle selection
-    const handleSelectCountry = (country: Country) => {
+    const handleSelectCountry = async (country: Country) => {
         setSearchTerm(country?.name);
+        await dispatch(fetchPlans({ countryId: country?.id }));
         navigation(`/country/${country?.id}`)
         setShowDropdown(false);
     };
@@ -130,7 +133,7 @@ export default function HeroSection() {
                                     </span>
                                 ))
                             }
-         <span
+                            <span
 
 
                                 className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
