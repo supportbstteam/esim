@@ -218,16 +218,16 @@ export default function Navbar() {
                       role="menu"
                     >
                       <Link href="/profile" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
-                        My Profile
+                        My Account
                       </Link>
 
                       <Link href="/e-sim" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
                         My Plan
                       </Link>
 
-                      <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                      {/* <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
                         My Order
-                      </Link>
+                      </Link> */}
                       <button onClick={handleLogout} className="w-full text-start px-4 py-2 hover:bg-gray-100" role="menuitem">
                         Logout
                       </button>
@@ -330,23 +330,23 @@ export default function Navbar() {
                         onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
                         className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
                       >
-                        My Profile
+                        My Account
                       </Link>
 
-                      <Link
+                      {/* <Link
                         href="/order"
                         onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
                         className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
                       >
                         My Order
-                      </Link>
+                      </Link> */}
 
                       <Link
                         href="/e-sim"
                         onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
                         className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
                       >
-                        My Order
+                        My Plans
                       </Link>
                       <button
                         onClick={() => { handleLogout(); setIsOpen(false); setIsUserSubOpen(false); }}

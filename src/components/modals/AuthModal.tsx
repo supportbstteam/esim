@@ -71,7 +71,8 @@ useEffect(() => {
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catch (err: any) {
-            console.error("Login error:", err);
+            console.log("--- Login error ----", err);
+            // console.error("Login error:", err);
         } finally {
             setLoading(false);
         }

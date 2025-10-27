@@ -3,6 +3,7 @@ import { api } from "@/lib/api";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 // =====================
 // Types
@@ -14,6 +15,8 @@ export interface User {
   email: string;
   dob?: string | null;
   role: "admin" | "user";
+  phone: string;
+  country: string;
   isBlocked?: boolean;
   isDeleted?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,6 +70,7 @@ export const signupUser = createAsyncThunk<
     return { user: res.data, token: res.token };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    toast.error(err.response?.data?.message || err.message);
     return rejectWithValue(err.response?.data?.message || err.message);
   }
 });
@@ -89,6 +93,7 @@ export const loginUser = createAsyncThunk<
     return { user: res?.data, token: res?.token };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    toast.error(err.response?.data?.message || err.message);
     return rejectWithValue(err.response?.data?.message || err.message);
   }
 });
@@ -140,6 +145,7 @@ export const verifyOtp = createAsyncThunk<
     return { user: res.data, token: res.data.token }; // make sure backend returns token after verification
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    toast.error(err.response?.data?.message || err.message);
     return rejectWithValue(err.response?.data?.message || err.message);
   }
 });

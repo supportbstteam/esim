@@ -1,255 +1,198 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { fetchUserDetails, logout } from "@/redux/slice/UserSlice";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { fetchOrdersByUser } from "@/redux/slice/OrderSlice";
 import Image from "next/image";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { FaEdit, FaSave, FaTrash, FaTimesCircle, FaUpload, FaUserCircle } from "react-icons/fa";
-import { api } from "@/lib/api";
-import toast from "react-hot-toast";
-import { useNavigate } from "@/components/hooks/navigation";
+import dayjs from "dayjs";
+import { FaCheckCircle, FaInfoCircle, FaTimes, FaTimesCircle } from "react-icons/fa";
+import { FiSearch, FiFilter } from "react-icons/fi";
 
-const ValidationSchema = Yup.object().shape({
-    firstName: Yup.string().required("Required"),
-    lastName: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
-});
+const statusStyles: Record<string, string> = {
+  success: "text-green-600",
+  processing: "text-yellow-500",
+  failed: "text-red-600",
+  canceled: "text-gray-400",
+  refunded: "text-blue-600",
+};
+
+const statusIcon = (status: string) => {
+  switch (status?.toLowerCase()) {
+    case "success":
+      return <FaCheckCircle className="inline mr-1 text-green-500" />;
+    case "processing":
+      return <FaInfoCircle className="inline mr-1 text-yellow-500" />;
+    case "failed":
+      return <FaTimes className="inline mr-1 text-red-500" />;
+    case "canceled":
+      return <FaTimesCircle className="inline mr-1 text-gray-400" />;
+    case "refunded":
+      return <FaInfoCircle className="inline mr-1 text-blue-500" />;
+    default:
+      return null;
+  }
+};
 
 function Profile() {
-    const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state?.user || {});
-    const navigation = useNavigate();
-    const [profilePic, setProfilePic] = useState<string | null>(null);
-    const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
-    const [showUploadOptions, setShowUploadOptions] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user || {});
+  const { orders } = useAppSelector((state) => state.order);
 
-    useEffect(() => {
-        // Fetch user details on mount
-        const fetchUser = async () => {
-            await dispatch(fetchUserDetails());
-        };
-        fetchUser();
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchUserDetails());
+    dispatch(fetchOrdersByUser());
+  }, [dispatch]);
 
-    useEffect(() => {
-        if (user?.profilePic) {
-            setProfilePic(user.profilePic);
-        }
-    }, [user]);
+  return (
+    <div className="max-w-5xl mx-auto py-10 px-4">
+      {/* Header */}
+      <div className="mb-10">
+        <h1 className="text-2xl font-semibold text-gray-900">My Account</h1>
+        <p className="text-sm text-gray-500">
+          Your eSIMs, personal details, and subscription settings — all in one place.
+        </p>
+      </div>
 
-    const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            setProfilePicFile(file);
-            const reader = new FileReader();
-            reader.onload = () => setProfilePic(reader.result as string);
-            reader.readAsDataURL(file);
-            setShowUploadOptions(false);
-        }
-    };
-
-    const handleRemoveProfilePic = () => {
-        setProfilePic(null);
-        setProfilePicFile(null);
-        setShowUploadOptions(false);
-        // TODO: Add backend call to remove profile pic
-    };
-
-    const handleDeleteAccount = () => setShowDeleteModal(true);
-
-    const confirmDeleteAccount = async () => {
-        // TODO: Implement delete account API call and logout user here
-        try {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const response: any = await api({
-                url: "/user/delete",
-                method: "DELETE",
-            });
-
-            if (response?.status === "success") {
-                toast.success("Account Deleted Successfully");
-                dispatch(logout());
-                navigation("/");
-            }
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        catch (err: any) {
-            toast.error(err?.response?.data?.message || "Something went wrong")
-            console.error("Error in the account delete:", err);
-        }
-        setShowDeleteModal(false);
-    };
-
-    return (
-        <div className="max-w-3xl mx-auto p-4">
-            {/* Profile Picture Section */}
-            <div className="flex flex-col items-center mb-6 relative">
-                <div
-                    className="w-24 h-24 rounded-full border-4 border-gray-300 flex items-center justify-center overflow-hidden cursor-pointer"
-                    onClick={() => setShowUploadOptions((v) => !v)}
-                >
-                    {profilePic ? (
-                        <Image src={profilePic} alt="Profile Picture" width={96} height={96} className="object-cover" />
-                    ) : (
-                        <FaUserCircle size={96} className="text-gray-400" />
-                    )}
-                </div>
-
-                {showUploadOptions && (
-                    <div className="absolute top-full mt-2 bg-white shadow rounded p-3 space-y-3 z-10 w-48 text-center">
-                        <label htmlFor="upload_profile_pic" className="flex items-center justify-center gap-2 cursor-pointer text-blue-600 hover:underline">
-                            <FaUpload /> Upload New Photo
-                            <input
-                                type="file"
-                                id="upload_profile_pic"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={handleProfilePicChange}
-                            />
-                        </label>
-                        {profilePic && (
-                            <button
-                                onClick={handleRemoveProfilePic}
-                                className="text-red-600 hover:underline flex justify-center gap-2"
-                            >
-                                <FaTimesCircle /> Remove Profile
-                            </button>
-                        )}
-                    </div>
-                )}
+      {/* Profile Info Card */}
+      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-full overflow-hidden border border-gray-200">
+            {user?.profilePic ? (
+              <Image
+                src={user.profilePic}
+                alt="Profile"
+                width={56}
+                height={56}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-3xl font-bold">
+                {user?.firstName?.[0] || "U"}
+              </div>
+            )}
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900 text-lg">
+              {user?.firstName} {user?.lastName}
             </div>
-
-            {/* Formik form */}
-            {user && (
-                <Formik
-                    initialValues={{
-                        firstName: user.firstName || "",
-                        lastName: user.lastName || "",
-                        email: user.email || "",
-                    }}
-                    validationSchema={ValidationSchema}
-                    onSubmit={async (values, actions) => {
-                        // TODO: Dispatch update API here with values and profilePicFile if any
-                        // console.log("Saved values:", values);
-                        // if (profilePicFile) {
-                        //     console.log("Profile picture file exists", profilePicFile);
-                        //     // Upload pic logic here
-                        // }
-                        try {
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            const response: any = await api({
-                                url: "/user/update",
-                                data: values,
-                                method: "PUT"
-                            });
-
-                            if (response?.status === "success") {
-                                toast.success("Profile update successfully");
-                                await dispatch(fetchUserDetails());
-                            }
-
-                            console.log("----- update in the response ----", response);
-                        }
-                        catch (err) {
-
-                        }
-                        actions.setSubmitting(false);
-                    }}
-                >
-                    {({ isSubmitting, isValid, dirty, setSubmitting }) => (
-                        <Form className="space-y-6">
-                            {/* First Name */}
-                            <div>
-                                <label htmlFor="firstName" className="block text-sm font-semibold mb-1">
-                                    First Name
-                                </label>
-                                <Field
-                                    id="firstName"
-                                    name="firstName"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <ErrorMessage name="firstName" component="div" className="text-red-600 text-sm mt-1" />
-                            </div>
-
-                            {/* Last Name */}
-                            <div>
-                                <label htmlFor="lastName" className="block text-sm font-semibold mb-1">
-                                    Last Name
-                                </label>
-                                <Field
-                                    id="lastName"
-                                    name="lastName"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <ErrorMessage name="lastName" component="div" className="text-red-600 text-sm mt-1" />
-                            </div>
-
-                            {/* Email */}
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-semibold mb-1">
-                                    Email
-                                </label>
-                                <Field
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <ErrorMessage name="email" component="div" className="text-red-600 text-sm mt-1" />
-                            </div>
-
-                            {/* Submit button */}
-                            <div className="flex justify-between items-center">
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting || !isValid || !dirty}
-                                    className={`flex items-center gap-2 px-5 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed`}
-                                >
-                                    Save Changes
-                                </button>
-
-                                {/* Delete Account */}
-                                <button
-                                    type="button"
-                                    onClick={handleDeleteAccount}
-                                    className="flex items-center gap-2 px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition"
-                                >
-                                    Delete Account
-                                </button>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
-            )}
-
-            {/* Confirm Delete Modal */}
-            {showDeleteModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
-                    <div className="bg-white p-6 rounded max-w-sm w-full text-center">
-                        <h2 className="text-xl font-semibold mb-4">Confirm Delete</h2>
-                        <p className="mb-6">Are you sure you want to delete your account? This action cannot be undone.</p>
-                        <div className="flex justify-center gap-4">
-                            <button
-                                onClick={() => setShowDeleteModal(false)}
-                                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 transition"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={confirmDeleteAccount}
-                                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition"
-                            >
-                                Confirm
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <div className="text-gray-600 text-sm flex flex-wrap items-center gap-2">
+              <span>{user?.email}</span>
+              {user?.phone && (
+                <>
+                  <span>•</span>
+                  <span>{user?.phone}</span>
+                </>
+              )}
+              {user?.country && (
+                <>
+                  <span>•</span>
+                  <span>{user?.country}</span>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-    );
+        <button className="text-sm text-gray-600 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-50">
+          Edit Profile
+        </button>
+      </div>
+
+      {/* Purchase History */}
+      <div>
+        <div className="flex flex-wrap items-center justify-between mb-4">
+          <h2 className="font-semibold text-gray-800 text-lg">Purchase History</h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative">
+              <FiSearch className="absolute left-3 top-2.5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by Order No"
+                className="pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
+              />
+            </div>
+            <select className="text-sm border border-gray-300 rounded-lg px-3 py-2 text-gray-600 focus:outline-none">
+              <option>All Status</option>
+              <option>Success</option>
+              <option>Processing</option>
+              <option>Failed</option>
+              <option>Canceled</option>
+              <option>Refunded</option>
+            </select>
+            <select className="text-sm border border-gray-300 rounded-lg px-3 py-2 text-gray-600 focus:outline-none">
+              <option>All Payment</option>
+              <option>Credit Card</option>
+              <option>Wallet</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Orders Table */}
+        <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <table className="min-w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Order No
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Total Sim
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Total Amount
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {orders?.length > 0 ? (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                orders.map((row: any, i: number) => (
+                  <tr key={i} className="hover:bg-gray-50">
+                    <td className="px-6 py-3 text-sm text-gray-800 font-medium">
+                      {row.id?.slice(0, 5).toUpperCase()}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-600">
+                      {dayjs(row.createdAt).format("MMM DD, YYYY")}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-600">{row.totalPlans}</td>
+                    <td className="px-6 py-3 text-sm text-gray-800 font-semibold">
+                      ${row.totalAmount?.toFixed(2)}
+                    </td>
+                    <td
+                      className={`px-6 py-3 text-sm font-medium flex items-center gap-1 ${statusStyles[row.status?.toLowerCase()]}`}
+                    >
+                      {statusIcon(row.status)} {row.status}
+                    </td>
+                    <td className="px-6 py-3 text-right">
+                      <button className="text-blue-600 text-sm font-medium hover:underline">
+                        View Detail
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="text-center text-gray-400 py-6">
+                    No orders found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Profile;

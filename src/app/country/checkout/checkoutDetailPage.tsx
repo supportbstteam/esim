@@ -139,6 +139,7 @@ export default function CheckoutDetailPage() {
       setTransactionId(res?.transaction?.id);
       toast.success("Proceed with Stripe payment below");
     } catch (error) {
+      toast.error("Stripe Error");
       console.error("Stripe initiation failed:", error);
 
     } finally {
