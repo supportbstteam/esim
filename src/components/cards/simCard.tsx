@@ -123,7 +123,7 @@ export const SimCard = ({ order }: any) => {
               />
             </svg>
             <div>
-              <span className="block">Start: {order?.endDate || "Dec 1,2024"}</span>
+              <span className="block">End: {order?.endDate || "Dec 1,2024"}</span>
             </div>
           </div>
         </div>
