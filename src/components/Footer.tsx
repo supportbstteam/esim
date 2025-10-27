@@ -38,11 +38,14 @@ const getHref = (section: string, item: string) => {
   if (section === "Quick Links") {
     if (item === "Home") return "/";
     if (item === "Contact Us") return "/contact-us";
-     if (item === "About Us") return "/about-us";
+    if (item === "About Us") return "/about-us";
     if (item === "FAQs") return "/faq";
     return `/quick-links/${toSlug(item)}`;
   }
-  if (section === "Support") return `/supports/${toSlug(item)}`;
+  if (section === "Support"){
+    if (item === "Setup Guide") return "/set-up";
+    return `/supports/${toSlug(item)}`
+  };
   if (section === "Legal") return `/${toSlug(item)}`;
   return "#";
 };
@@ -111,9 +114,8 @@ export const Footer: React.FC = () => {
               </button>
 
               <ul
-                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${
-                  openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
-                } md:max-h-full`}
+                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
+                  } md:max-h-full`}
               >
                 {items.map((item, i) => (
                   <li key={i} className="mb-2">
@@ -125,21 +127,21 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
           ))}
-           <div className=" max-md:hidden ">
-              <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">Connect With Us</h4>
-              <div className="flex gap-2 items-center">
-                {socials.map(({ icon: Icon, href }, idx) => (
-                  <Link
-                    key={idx}
-                    href={href}
-                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-[#233756] hover:bg-[#3BC852] transition"
-                    aria-label={`Visit our social ${idx}`}
-                  >
-                    <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
-                  </Link>
-                ))}
-              </div>
+          <div className=" max-md:hidden ">
+            <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">Connect With Us</h4>
+            <div className="flex gap-2 items-center">
+              {socials.map(({ icon: Icon, href }, idx) => (
+                <Link
+                  key={idx}
+                  href={href}
+                  className="group h-9 w-9 flex items-center justify-center rounded-full bg-[#233756] hover:bg-[#3BC852] transition"
+                  aria-label={`Visit our social ${idx}`}
+                >
+                  <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
+                </Link>
+              ))}
             </div>
+          </div>
         </div>
 
         {/* Divider & copyright */}
