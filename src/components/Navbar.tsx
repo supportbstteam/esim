@@ -10,7 +10,8 @@ import { fetchUserDetails, logout } from '@/redux/slice/UserSlice';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import toast from 'react-hot-toast';
-import {fetchCart} from '@/redux/slice/CartSlice';
+import { fetchCart } from '@/redux/slice/CartSlice';
+import { useNavigate } from './hooks/navigation';
 const navItems = [
   { label: "View Plans", href: "/plans" },
   { label: "How It Works", href: "/how-it-works" },
@@ -21,15 +22,18 @@ const navItems = [
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const navigation: any = useNavigate();
   const [isOpen, setIsOpen] = useState(false); // mobile menu
   const [showlogin, setShowlogin] = useState(false); // auth modal
   const [isUserSubOpen, setIsUserSubOpen] = useState(false);
   const { user, isAuth, loading } = useAppSelector((state) => state?.user || {});
-   const { cart } = useAppSelector((state) => state?.cart || {});
+  const { cart } = useAppSelector((state) => state?.cart || {});
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    const [selectedPlans, setSelectedPlans] = useState<{ [key: string]: number }>({});
-const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
+
+  const [selectedPlans, setSelectedPlans] = useState<{ [key: string]: number }>({});
+  const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
 
   const userMenuRef = useRef<HTMLDivElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
@@ -40,12 +44,13 @@ const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
   const handleLogout = async () => {
     // setIsUserMenuOpen(false);
     await dispatch(logout());
+    navigation('/');
     toast.success("Log out");
     // await dispatch(fetchUserDetails());
   };
 
   const toggleMenu = () => setIsOpen((v) => !v);
- const plansArray = Object.entries(selectedPlans).map(([planId, quantity]) => ({ planId, quantity }));
+  const plansArray = Object.entries(selectedPlans).map(([planId, quantity]) => ({ planId, quantity }));
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
@@ -156,77 +161,79 @@ const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
                 </div>
               ) : !isAuth ? (
                 <div className="flex gap-2">
-                <button
-                 onClick={() =>  {setAuthModalTab('login'); 
-                    setShowlogin(true);
-                  }}
-                  
-                  className="border-[#133365] text-[#133365] border-1 px-6 py-2 rounded-full hover:bg-[#3BC852] hover:text-white hover:border-[#3BC852] transition text-[16px]"
-                >
-                  Login
-                </button>
-                 <button
-                  onClick={() =>  {setAuthModalTab('signup'); 
-                    setShowlogin(true);
-                  }}
-                  className="bg-[#133365] text-white px-6 py-2 rounded-full hover:bg-[#3BC852] transition text-[16px]"
-                >
-                  Signup
-                </button>
+                  <button
+                    onClick={() => {
+                      setAuthModalTab('login');
+                      setShowlogin(true);
+                    }}
+
+                    className="border-[#133365] text-[#133365] border-1 px-6 py-2 rounded-full hover:bg-[#3BC852] hover:text-white hover:border-[#3BC852] transition text-[16px]"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => {
+                      setAuthModalTab('signup');
+                      setShowlogin(true);
+                    }}
+                    className="bg-[#133365] text-white px-6 py-2 rounded-full hover:bg-[#3BC852] transition text-[16px]"
+                  >
+                    Signup
+                  </button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                <div className='relative'> <span className='absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]'>{cart?.items?.length || 0}</span>
-               <Link href={`/country/checkout`}> <span className="material-symbols-outlined">
-shopping_bag
-</span></Link>  </div> 
-               
-                <div
-                  className="relative inline-block"
-                  ref={userMenuRef}
-                  onMouseEnter={handleUserEnter}
-                  onMouseLeave={handleUserLeave}
-                >
-                  <button
-                    onClick={() => setIsUserMenuOpen((v) => !v)}
-                    aria-haspopup="menu"
-                    aria-expanded={isUserMenuOpen}
-                    className="p-2 rounded-md hover:bg-gray-100 flex items-center"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
-                        <Image src={'/Frame_63.png'} alt="User avatar" width={40} height={40} className="object-cover" />
-                      </div>
-                      <span className="text-[#1A0F33] font-medium text-sm">{user?.firstName && user?.lastName && (user?.firstName + " " + user?.lastName)}</span>
-                    </div>
-                    <HiChevronDown
-                      className={`ml-2 w-5 h-5 transform transition-transform ${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`}
-                    />
-                  </button>
+                  <div className='relative'> <span className='absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]'>{cart?.items?.length || 0}</span>
+                    <Link href={`/country/checkout`}> <span className="material-symbols-outlined">
+                      shopping_bag
+                    </span></Link>  </div>
 
                   <div
-                    className={`absolute right-0 top-full mt-2 z-50 min-w-[200px] rounded-[8px] bg-white border border-[#e1e1e1] shadow-lg overflow-hidden
+                    className="relative inline-block"
+                    ref={userMenuRef}
+                    onMouseEnter={handleUserEnter}
+                    onMouseLeave={handleUserLeave}
+                  >
+                    <button
+                      onClick={() => setIsUserMenuOpen((v) => !v)}
+                      aria-haspopup="menu"
+                      aria-expanded={isUserMenuOpen}
+                      className="p-2 rounded-md hover:bg-gray-100 flex items-center"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
+                          <Image src={'/Frame_63.png'} alt="User avatar" width={40} height={40} className="object-cover" />
+                        </div>
+                        <span className="text-[#1A0F33] font-medium text-sm">{user?.firstName && user?.lastName && (user?.firstName + " " + user?.lastName)}</span>
+                      </div>
+                      <HiChevronDown
+                        className={`ml-2 w-5 h-5 transform transition-transform ${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`}
+                      />
+                    </button>
+
+                    <div
+                      className={`absolute right-0 top-full mt-2 z-50 min-w-[200px] rounded-[8px] bg-white border border-[#e1e1e1] shadow-lg overflow-hidden
                       transition-all duration-150 ease-out transform origin-top-right
                       ${isUserMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto scale-100' : 'opacity-0 -translate-y-1 pointer-events-none scale-[0.995]'}`}
-                    role="menu"
-                  >
-                    <Link href="/profile" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
-                      Account
-                    </Link>
-                    
-                    <Link href="/e-sim" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
-                      My Plan
-                    </Link>
-                    
-                    <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
-                      My Order
-                    </Link>
-                    <button onClick={handleLogout} className="w-full text-start px-4 py-2 hover:bg-gray-100" role="menuitem">
-                      Logout
-                    </button>
+                      role="menu"
+                    >
+                      <Link href="/profile" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                        My Profile
+                      </Link>
+
+                      <Link href="/e-sim" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                        My Plan
+                      </Link>
+
+                      <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
+                        My Order
+                      </Link>
+                      <button onClick={handleLogout} className="w-full text-start px-4 py-2 hover:bg-gray-100" role="menuitem">
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
-                 </div>
               )}
             </div>
 
@@ -319,18 +326,27 @@ shopping_bag
                   >
                     <div className="flex flex-col gap-2 px-2 mt-2">
                       <Link
-                        href="/account"
+                        href="/profile"
                         onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
                         className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
                       >
-                        Account
+                        My Profile
                       </Link>
+
                       <Link
-                        href="/my-plan"
+                        href="/order"
                         onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
                         className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
                       >
-                        My Plan
+                        My Order
+                      </Link>
+
+                      <Link
+                        href="/e-sim"
+                        onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
+                        className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
+                      >
+                        My Order
                       </Link>
                       <button
                         onClick={() => { handleLogout(); setIsOpen(false); setIsUserSubOpen(false); }}
@@ -347,8 +363,8 @@ shopping_bag
         </div>
       </div>
 
-      <AuthModal 
-      isOpen={showlogin}  initialTab={authModalTab} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
+      <AuthModal
+        isOpen={showlogin} initialTab={authModalTab} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
     </nav>
   );
 }

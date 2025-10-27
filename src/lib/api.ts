@@ -49,25 +49,28 @@ export async function api<T = unknown, P = unknown>({
 
         return res.data;
     } catch (err) {
+        // if (!url.includes("details")) {
+        //     console.error("--- API ERROR  ----", !url.includes("details"));
+        // }
+
+        // console.warn("------ error urls -----", url);
+
         const error = err as AxiosError<{ message?: string }>;
 
-        // Optional: handle deleted / blocked accounts gracefully
-        if (error.response?.status === 410) {
-            toast.error("This account has been deleted. Please contact support.");
-        } else if (error.response?.status === 403) {
-            toast.error("Your account is blocked or forbidden.");
-        } 
-        else if (error?.response?.status === 404){
-            // break;
-        }
-        else if(url.includes("details")){
-            // skip
-        }
-        else if (error.response?.data?.message) {
-            toast.error(error.response.data.message);
-        } else {
-            toast.error("Something went wrong. Please try again.");
-        }
+        // // Optional: handle deleted / blocked accounts gracefully
+        // if (error.response?.status === 410) {
+        //     toast.error("This account has been deleted. Please contact support.");
+        // } else if (error.response?.status === 403) {
+        //     toast.error("Your account is blocked or forbidden.");
+        // }
+        // else if (error?.response?.status === 404) {
+        //     // break;
+        // }
+        // else if (!url.includes("details") && error.response?.data?.message) {
+        //     // toast.error(error.response.data.message);
+        // } else {
+        //     toast.error("Something went wrong. Please try again.");
+        // }
 
         throw error; // re-throw for redux-thunk or other handlers
     }
