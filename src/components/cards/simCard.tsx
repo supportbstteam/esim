@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export const SimCard = ({ order }: any) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const router: any = useRouter();
-  console.log("---- order card ----", order);
+  // console.log("---- order card ----", order);
 
 
   const handleRecharge = () => {

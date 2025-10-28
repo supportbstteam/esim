@@ -8,10 +8,11 @@ import { api } from "@/lib/api";
 interface StripeFormProps {
   clientSecret: string;
   transactionId: string; // ID of the transaction created in your backend
+  transaction: string; // ID of the transaction created in your backend
   onSuccess?: () => void;
 }
 
-const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, onSuccess }) => {
+const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, transaction, onSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, on
         // Update transaction status in backend
         try {
           await api({
-            url: `/user/transactions/${transactionId}/success`,
+            url: `/user/transactions/${transaction}/success`,
             method: "POST",
           });
         } catch (err) {

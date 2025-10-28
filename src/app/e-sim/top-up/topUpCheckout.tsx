@@ -155,13 +155,14 @@ export default function TopUpCheckOut() {
             });
 
             console.log("Top-up purchase response:", response);
-            toast.success("eSIM Top-Up Successful!");
+
+            toast.success("E-SIM Top-Up Successful!");
 
         }
         catch (err) {
             console.error("Error completing top-up purchase:", err);
+            toast.error("Failed to complete top-up purchase");
             router.push("/");
-            // toast.error("Failed to complete top-up purchase");
         }
     }
 
@@ -241,6 +242,7 @@ export default function TopUpCheckOut() {
                                 <PaymentSection
                                     loading={payLoading}
                                     clientSecret={clientSecret}
+                                    transaction={transactionId?.id}
                                     transactionId={transactionId?.transactionId || null}
                                     onSuccess={handleSuccess}
                                     selectedMethod={selectedPaymentMethod}

@@ -39,6 +39,8 @@ export const OrderDetailModal: React.FC<Props> = ({
     if (orderNo) dispatch(fetchOrderDetailsByUser(orderNo));
   }, [dispatch, orderNo]);
 
+  console.log("----- order details -----",orderDetails);
+
   const transaction = orderDetails?.transaction;
   const esims: EsimItem[] = orderDetails?.esims || [];
   const totalSim = esims.length;
@@ -103,7 +105,7 @@ export const OrderDetailModal: React.FC<Props> = ({
             {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="font-medium text-sm text-gray-900 truncate">
-                {sim.iccid ? `+${sim.iccid.slice(-10)}` : "No eSIM Assigned"}
+                {sim.iccid ? `${sim.iccid.slice(-10)}...` : "No eSIM Assigned"}
               </div>
               <div className="text-xs text-gray-500 truncate">
                 {sim.country?.name || "—"}

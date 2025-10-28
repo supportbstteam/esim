@@ -313,7 +313,7 @@ export default function CheckoutDetailPage() {
             {/* Stripe Form */}
             {selectedMethod?.id === "stripe" && clientSecret && transactionId && (
               <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <StripeForm clientSecret={clientSecret} transactionId={transactionId} onSuccess={handleOnSuccess} />
+                <StripeForm transaction={transactionId} clientSecret={clientSecret} transactionId={transactionId} onSuccess={handleOnSuccess} />
               </Elements>
             )}
           </div>

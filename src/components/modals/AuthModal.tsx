@@ -8,11 +8,13 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import Success from "./Success";
 import { X } from "lucide-react";
+import { api } from "@/lib/api";
+import ForgotPassword from "../ui/ForgetPasswordComponent";
 type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
     onAuthSuccess: () => void;
-      initialTab?: 'login' | 'signup';
+    initialTab?: 'login' | 'signup';
 };
 
 const otpValidationSchema = Yup.object({
@@ -21,7 +23,7 @@ const otpValidationSchema = Yup.object({
         .matches(/^\d{4,6}$/, "OTP must be 4 to 6 digits"), // adjust length if needed
 });
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess ,initialTab}) => {
+const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, initialTab }) => {
     const dispatch = useAppDispatch();
     const [isLogin, setIsLogin] = useState(true);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -29,25 +31,31 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess ,i
     const [showSuccess, setShowSuccess] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState('');
     const [loading, setLoading] = useState(false);
-useEffect(() => {
-  // when modal opens, honour initialTab if provided
-  if (isOpen && initialTab) {
-    setIsLogin(initialTab === 'login');
-    // Reset other flows when switching externally
-    setShowForgotPassword(false);
-    setShowVerifyOtp(false);
-    setShowSuccess(false);
-  }
-}, [isOpen, initialTab]);
+    useEffect(() => {
+        // when modal opens, honour initialTab if provided
+        if (isOpen && initialTab) {
+            setIsLogin(initialTab === 'login');
+            // Reset other flows when switching externally
+            setShowForgotPassword(false);
+            setShowVerifyOtp(false);
+            setShowSuccess(false);
+        }
+    }, [isOpen, initialTab]);
 
     // ======= Initial Values =======
     const loginInitialValues = { email: "", password: "" };
+    const resetPasswordInitialsValues = { email: "" };
     const signupInitialValues = { firstName: "", lastName: "", email: "", password: "" };
 
     // ======= Validation Schemas =======
     const loginValidationSchema = Yup.object({
         email: Yup.string().email("Invalid email address").required("Required"),
         password: Yup.string().min(6, "Must be at least 6 characters").required("Required"),
+    });
+
+    // ======= Validation Schemas =======
+    const resetPasswordValidationSchema = Yup.object({
+        email: Yup.string().email("Invalid email address").required("Required"),
     });
 
     const signupValidationSchema = Yup.object({
@@ -139,6 +147,26 @@ useEffect(() => {
     if (!isOpen) return null;
 
     if (!isOpen) return null;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleSendPasswordOtp = async (values: any) => {
+        try {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const response: any = await api({
+                url: "/user/auth/forget-password",
+                data: {
+                    email: values?.email
+                },
+                method: "POST"
+            });
+
+            console.log("----- response in the reset otp password sender -----", response);
+        }
+        catch (err) {
+            console.error("Error in the sending OTP reset password", err);
+
+        }
+    }
 
     return (
         <div
@@ -403,14 +431,11 @@ useEffect(() => {
                                 <span className="material-symbols-outlined rotate-180">east</span>
                                 <span className="text-sm subtext">Back</span>
                             </button>
-                            <h2 className="h2 text-start w-full">
-                                Forgot Your Password?
-                            </h2>
-                            <p className="subtext text-start my-8 whitespace-normal md:whitespace-nowrap">Don’t worry—we’ll help you reset it in just a few steps</p>
-                            <Formik
-                                initialValues={loginInitialValues}
-                                validationSchema={loginValidationSchema}
-                                onSubmit={handleLoginSubmit}
+                            <ForgotPassword onClose={onClose} />
+                            {/* <Formik
+                                initialValues={resetPasswordInitialsValues}
+                                validationSchema={resetPasswordValidationSchema}
+                                onSubmit={handleSendPasswordOtp}
                             >
                                 <Form>
                                     <div>
@@ -431,7 +456,7 @@ useEffect(() => {
                                         Submit
                                     </button>
                                 </Form>
-                            </Formik>
+                            </Formik> */}
                         </div>
                     )}
                 </div>

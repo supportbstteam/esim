@@ -19,6 +19,7 @@ interface PaymentSectionProps {
     onSuccess: () => void;
     clientSecret?: string | null;
     transactionId?: string | null;
+    transaction?: string | null;
     onBack: () => void;
 }
 
@@ -29,6 +30,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
     onSelect,
     onProceed,
     clientSecret,
+    transaction,
     transactionId,
     onSuccess,
     onBack,
@@ -63,6 +65,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
                     <StripeForm
                         clientSecret={clientSecret}
                         transactionId={transactionId}
+                        transaction={transaction || ""}
                         onSuccess={onSuccess}
                     />
                 </Elements>
