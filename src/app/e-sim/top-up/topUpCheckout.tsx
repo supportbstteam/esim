@@ -6,6 +6,7 @@ import PaymentSection from "@/components/form/PaymentSection";
 import { useAppDispatch } from "@/redux/store";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import toast from "react-hot-toast";
+import ThankyouModal from "@/components/modals/ThankyouModal";
 
 export default function TopUpCheckOut() {
     const router = useRouter();
@@ -14,7 +15,11 @@ export default function TopUpCheckOut() {
     const simId = searchParams.get("simId");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [esimData, setEsimData] = useState<any>(null);
-    const [selectedValidity, setSelectedValidity] = useState<number>(5);
+    const [selectedValidity, setSelectedValidity] = useState<number>(esimData?.data[0]?.validityDays && esimData?.data[0]?.validityDays);
+    const [showModal, setShowModal] = useState(false);
+    // console.log("----- esimData.data[0]?.validityDays[0] - ------", esimData.data[0]?.validityDays);
+
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedPlan, setSelectedPlan] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -41,6 +46,7 @@ export default function TopUpCheckOut() {
             setLoading(true);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res: any = await api({ url: `/user/top-up?simId=${id}`, method: "GET" });
+            setSelectedValidity(res?.data[0]?.validityDays);
             setEsimData(res);
             // Auto-select first plan if available
             if (res?.data && res.data.length > 0) {
@@ -155,7 +161,7 @@ export default function TopUpCheckOut() {
             });
 
             console.log("Top-up purchase response:", response);
-
+            setShowModal(true);
             toast.success("E-SIM Top-Up Successful!");
 
         }
@@ -165,6 +171,8 @@ export default function TopUpCheckOut() {
             router.push("/");
         }
     }
+
+    // console.log("----- validation -----", validityOptions);
 
 
     return (
@@ -352,6 +360,16 @@ export default function TopUpCheckOut() {
                     }
                 </div>
             </div>
+
+            <ThankyouModal
+                isOpen={showModal}
+                onClose={() => {
+                    router.push("/");
+                }}
+                title={"Recharged Successfully"}
+                message={"Your eSIM has been recharged successfully. Enjoy uninterrupted connectivity and keep exploring without limits!"}
+
+            />
         </div>
     );
 }

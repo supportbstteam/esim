@@ -16,8 +16,8 @@ import { OrderDetailModal } from "@/components/modals/OrderDetailsModal";
 import { ClaimRefundModal } from "@/components/modals/ClaimFundModal";
 
 const statusStyles: Record<string, string> = {
-    success: "text-green-600",
-    processing: "text-yellow-500",
+    completed: "text-green-600",
+    pending: "text-yellow-500",
     failed: "text-red-600",
     canceled: "text-gray-400",
     refunded: "text-blue-600",
@@ -25,9 +25,9 @@ const statusStyles: Record<string, string> = {
 
 const statusIcon = (status: string) => {
     switch (status?.toLowerCase()) {
-        case "success":
+        case "completed":
             return <FaCheckCircle className="inline mr-1 text-green-500" />;
-        case "processing":
+        case "pending":
             return <FaInfoCircle className="inline mr-1 text-yellow-500" />;
         case "failed":
             return <FaTimes className="inline mr-1 text-red-500" />;
@@ -173,18 +173,17 @@ function Profile() {
                         </div>
                         <select className="text-sm border border-gray-300 rounded-lg px-3 py-2 text-gray-600 focus:outline-none">
                             <option>All Status</option>
-                            <option>Success</option>
-                            <option>Processing</option>
+                            <option>Completed</option>
                             <option>Failed</option>
                             <option>Canceled</option>
                             <option>Refunded</option>
                         </select>
-                        <select className="text-sm border border-gray-300 rounded-lg px-3 py-2 text-gray-600 focus:outline-none">
+                        {/* <select className="text-sm border border-gray-300 rounded-lg px-3 py-2 text-gray-600 focus:outline-none">
                             <option>All Payment</option>
                             <option>Credit Card</option>
                             <option>Wallet</option>
                             <option>Other</option>
-                        </select>
+                        </select> */}
                     </div>
                 </div>
 
@@ -216,40 +215,44 @@ function Profile() {
                         <tbody className="divide-y divide-gray-100">
                             {orders?.length > 0 ? (
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                orders.map((row: any, i: number) => (
-                                    <tr key={i} className="hover:bg-gray-50">
-                                        <td className="px-6 py-3 text-sm text-gray-800 font-medium">
-                                            {row.id?.slice(0, 7).toUpperCase()}...
-                                        </td>
-                                        <td className="px-6 py-3 text-sm text-gray-600">
-                                            {dayjs(row.createdAt).format("MMM DD, YYYY")}
-                                        </td>
-                                        <td className="px-6 py-3 text-sm text-gray-600">{row.totalPlans}</td>
-                                        <td className="px-6 py-3 text-sm text-gray-800 font-semibold">
-                                            ${row.totalAmount?.toFixed(2)}
-                                        </td>
-                                        <td
-                                            className={`px-6 py-3 text-sm font-medium flex items-center gap-1 ${statusStyles[row.status?.toLowerCase()]}`}
-                                        >
-                                            {statusIcon(row.status)} {row.status}
-                                        </td>
-                                        <td className="px-6 py-3 text-right">
-                                            <button onClick={() => {
+                                orders.map((row: any, i: number) => {
 
-                                                // console.log("---- row status -----",row?.status);
-                                                setSelectedOrder(row);
-                                                if (row?.status === "completed") {
-                                                    setOrderDetailModal(true);
-                                                }
-                                                else {
-                                                    setOrderErrorModal(true);
-                                                }
-                                            }} className="text-blue-600 text-sm font-medium hover:underline">
-                                                View Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
+                                    console.log("----- row -----", row);
+                                    return (
+                                        <tr key={i} className="hover:bg-gray-50">
+                                            <td className="px-6 py-3 text-sm text-gray-800 font-medium">
+                                                {row.id?.slice(0, 7).toUpperCase()}...
+                                            </td>
+                                            <td className="px-6 py-3 text-sm text-gray-600">
+                                                {dayjs(row.createdAt).format("MMM DD, YYYY")}
+                                            </td>
+                                            <td className="px-6 py-3 text-sm text-gray-600">{row.totalPlans}</td>
+                                            <td className="px-6 py-3 text-sm text-gray-800 font-semibold">
+                                                ${row.totalAmount?.toFixed(2)}
+                                            </td>
+                                            <td
+                                                className={`px-6 py-3 text-sm font-medium flex items-center gap-1 ${statusStyles[row.status?.toLowerCase()]}`}
+                                            >
+                                                {statusIcon(row.status)} {(row.status).toUpperCase()}
+                                            </td>
+                                            <td className="px-6 py-3 text-right">
+                                                <button onClick={() => {
+
+                                                    // console.log("---- row status -----",row?.status);
+                                                    setSelectedOrder(row);
+                                                    if ((row?.status).toLowerCase() === "completed") {
+                                                        setOrderDetailModal(true);
+                                                    }
+                                                    else {
+                                                        setOrderErrorModal(true);
+                                                    }
+                                                }} className="text-blue-600 text-sm font-medium hover:underline">
+                                                    View Detail
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
                             ) : (
                                 <tr>
                                     <td colSpan={6} className="text-center text-gray-400 py-6">
