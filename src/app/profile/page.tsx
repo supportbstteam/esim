@@ -221,7 +221,7 @@ function Profile() {
                                     return (
                                         <tr key={i} className="hover:bg-gray-50">
                                             <td className="px-6 py-3 text-sm text-gray-800 font-medium">
-                                                {row.id?.slice(0, 7).toUpperCase()}...
+                                                {row.id?.slice(0, 10).toUpperCase()}{row?.id.length>10 ? "...":""}
                                             </td>
                                             <td className="px-6 py-3 text-sm text-gray-600">
                                                 {dayjs(row.createdAt).format("MMM DD, YYYY")}
