@@ -228,7 +228,7 @@ function Profile() {
                                             </td>
                                             <td className="px-6 py-3 text-sm text-gray-600">{row.totalPlans}</td>
                                             <td className="px-6 py-3 text-sm text-gray-800 font-semibold">
-                                                ${row.totalAmount?.toFixed(2)}
+                                                ${(parseFloat(row.totalAmount)?.toFixed(2)).toString()}
                                             </td>
                                             <td
                                                 className={`px-6 py-3 text-sm font-medium flex items-center gap-1 ${statusStyles[row.status?.toLowerCase()]}`}
