@@ -51,7 +51,7 @@ export const fetchOrderDetailsByUser = createAsyncThunk(
                 url: `/user/order-details/${orderId}`, // replace with your backend route
                 method: "GET",
             });
-            console.log("---- data in the order details ----", data);
+            // console.log("---- data in the order details ----", data);
             return data.data;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {

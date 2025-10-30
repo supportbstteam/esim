@@ -1,91 +1,131 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchOrderDetailsByUser } from "@/redux/slice/OrderSlice";
+import EsimInfo from "@/components/cards/esimOrder/EsimInfo";
+import moment from "moment";
+import { ActivateCard } from "@/components/cards/esimOrder/EsimScannerCard";
+import OrderSummary from "@/components/cards/esimOrder/OrderSummaryCard";
+import RechargeHistory from "@/components/table/TopUpTable";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 const OrderDetails = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const { orderDetails } = useAppSelector((state) => state.order);
-  const loading = useAppSelector((state) => state.order.loading);
-  const error = useAppSelector((state) => state.order.error);
+  const { orderDetails, loading } = useAppSelector((state) => state.order);
+  const [activeSimIndex, setActiveSimIndex] = useState(0);
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchOrderDetailsByUser(id as string));
-    }
+    if (id) dispatch(fetchOrderDetailsByUser(id as string));
   }, [id, dispatch]);
 
+  if (loading) return <p className="text-center py-10">Loading...</p>;
+
+  const activeSim = orderDetails?.esims?.[activeSimIndex];
+
   return (
-    <div className="min-h-screen bg-white text-black p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Order Details</h1>
-
-      {loading && <p className="text-center text-gray-600">Loading...</p>}
-      {error && <p className="text-center text-red-500 mb-4">Error: {error}</p>}
-
-      {orderDetails ? (
-        <div className="space-y-6 max-w-full mx-auto">
-          <div>
-            <span className="block text-gray-600 text-sm mb-1">Order ID</span>
-            <p className="text-gray-900 font-semibold">{orderDetails.id}</p>
-          </div>
-          <div>
-            <span className="block text-gray-600 text-sm mb-1">Name</span>
-            <p className="text-gray-900 font-semibold">{orderDetails.name}</p>
-          </div>
-          <div>
-            <span className="block text-gray-600 text-sm mb-1">Status</span>
-            <p className="text-blue-700 font-semibold">{orderDetails.status}</p>
-          </div>
-          <div>
-            <span className="block text-gray-600 text-sm mb-1">Total Amount</span>
-            <p className="text-gray-900 font-semibold">{orderDetails.totalAmount}</p>
-          </div>
-          <div>
-            <span className="block text-gray-600 text-sm mb-1">Transaction ID</span>
-            <p className="text-gray-900 font-semibold">
-              {orderDetails.transaction?.transactionId || "-"}
-            </p>
-          </div>
-          <div>
-            <span className="block text-gray-600 text-sm mb-1">eSIMs</span>
-            <div className="space-y-4">
-              {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                orderDetails.esims.map((sim: any) => (
-                  <div
-                    key={sim.id}
-                    className="p-4 rounded-md border border-gray-300 bg-gray-50"
-                  >
-                    <p className="text-gray-700">
-                      <span className="font-semibold text-indigo-700">Product:</span>{" "}
-                      {sim.productName}
-                    </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold text-indigo-700">Price:</span>{" "}
-                      {sim.price}
-                    </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold text-indigo-700">Status:</span>{" "}
-                      {sim.statusText}
-                    </p>
-                    <p className="text-gray-700">
-                      <span className="font-semibold text-indigo-700">Valid Until:</span>{" "}
-                      {sim.endDate}
-                    </p>
+    <div className="max-w-full mx-auto px-4 md:px-10 py-6">
+      {/* ✅ eSIM Carousel Section */}
+      {orderDetails?.esims && orderDetails.esims.length > 0 && (
+        <div className="mb-10">
+          <Swiper
+            modules={[Navigation]}
+            navigation
+            spaceBetween={30}
+            slidesPerView={1}
+            onSlideChange={(swiper) => setActiveSimIndex(swiper.activeIndex)}
+            className="w-full text-green-700  "
+          >
+            {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              orderDetails.esims.map((esim: any, index: number) => (
+                <SwiperSlide key={index}>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 mt-8 items-start">
+                    <div className="md:col-span-2 mx-10">
+                      <EsimInfo
+                        countryName={orderDetails?.country?.name}
+                        countryFlagUrl="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags/svg/iq.svg"
+                        planType={esim?.productName?.replace(/-$/, "")}
+                        expired={false}
+                        simNo={esim?.iccid}
+                        purchasedOn={moment(esim?.createdAt).format("MMM Do YY")}
+                        activationDate=""
+                        validityDays={esim?.validityDays}
+                        dataUsed={0}
+                        dataTotal={esim?.dataAmount}
+                        price={
+                          (esim?.currency === "USD" ? "$" : esim?.currency) +
+                          " " +
+                          esim?.price
+                        }
+                        planStart="Dec 1, 2024"
+                        planEnd="Dec 5, 2024"
+                        onRecharge={() => alert("Recharge clicked!")}
+                      />
+                    </div>
+                    <div className="md:col-span-1 flex justify-center">
+                      <ActivateCard
+                        qrValue={esim?.qrCodeUrl}
+                        code={esim?.qrCodeUrl}
+                      />
+                    </div>
                   </div>
-                ))}
-            </div>
-          </div>
+                </SwiperSlide>
+              ))}
+          </Swiper>
+
         </div>
-      ) : (
-        !loading && (
-          <p className="text-center text-gray-500">No order details found.</p>
-        )
       )}
+
+      {/* ✅ Recharge History (Static) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 mt-8 items-start">
+        <div className="md:col-span-2 mx-10">
+          {activeSim &&
+            activeSim.topUps?.length > 0 &&
+            (() => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const rechargeRecords = activeSim.topUps.map((topupItem: any) => {
+                console.log("------ topupItem -----",topupItem);
+                return({
+                purchasedOn: new Date(topupItem.createdAt).toLocaleDateString("en-GB"),
+                plan: topupItem?.title || topupItem?.name || "Unknown Plan",
+                planStart: activeSim.startDate
+                  ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
+                  : "-",
+                planEnd: activeSim.endDate
+                  ? new Date(activeSim.endDate).toLocaleDateString("en-GB")
+                  : "-",
+                paymentMode: "Online",
+              })});
+              return <RechargeHistory records={rechargeRecords} rowsPerPage={5} />;
+            })()}
+        </div>
+
+        {/* ✅ Order Summary (Static) */}
+        <div className="md:col-span-1 flex justify-center">
+          {orderDetails && (
+            <OrderSummary
+              orderId={orderDetails?.orderCode}
+              transactionId={orderDetails?.transaction?.transactionId}
+              orderDate={moment(orderDetails?.esims[0]?.createdAt).format("MMM Do YY")}
+              totalAmount={
+                (orderDetails?.esims[0]?.currency === "USD"
+                  ? "$"
+                  : orderDetails?.esims[0]?.currency) +
+                " " +
+                orderDetails?.totalAmount
+              }
+              paymentMethod={orderDetails?.transaction?.paymentGateway?.toUpperCase()}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

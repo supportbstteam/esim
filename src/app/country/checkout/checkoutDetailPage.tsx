@@ -19,6 +19,7 @@ import { Elements, useStripe, useElements, PaymentElement } from "@stripe/react-
 import { loadStripe } from "@stripe/stripe-js";
 import StripeForm from "@/components/form/StripeForm";
 import { useNavigate } from "@/components/hooks/navigation";
+import LoadingModal from "@/components/cards/LoadingCard";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -175,13 +176,14 @@ export default function CheckoutDetailPage() {
         }
       });
 
-      console.log("---- response in the place order -----", response);
+      // console.log("---- response in the place order -----", response);
 
       if (response?.message === "Order completed successfully") {
         toast.success(response?.message);
-        setEsimData(response?.order);
+        // setEsimData(response?.order);
         setTransactionData(response?.order?.transaction);
-        setModalOpen(true);
+        router.push(`/thank-you?mode=esim&orderId=${response?.order?.id}`);
+        setModalOpen(false);
       }
       else {
         setErrorState(response?.message);
@@ -321,17 +323,7 @@ export default function CheckoutDetailPage() {
       </div>
 
       {/* Modals */}
-      <OrderModal
-        isOpen={modalOpen}
-        onClose={() => {
-          setModalOpen(false);
-          navigation("/");
-        }}
-        esimData={esimData}
-        // transactionData={transactionData}
-        isLoading={loading}
-        errorState={errorState}
-      />
+      <LoadingModal open={modalOpen} />
 
       {showlogin && (
         <AuthModal

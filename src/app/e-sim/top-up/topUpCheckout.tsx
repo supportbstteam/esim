@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/redux/store";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import toast from "react-hot-toast";
 import ThankyouModal from "@/components/modals/ThankyouModal";
+import LoadingModal from "@/components/cards/LoadingCard";
 
 export default function TopUpCheckOut() {
     const router = useRouter();
@@ -46,6 +47,7 @@ export default function TopUpCheckOut() {
             setLoading(true);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res: any = await api({ url: `/user/top-up?simId=${id}`, method: "GET" });
+            console.log("----- response in the top up -----", res);
             setSelectedValidity(res?.data[0]?.validityDays);
             setEsimData(res);
             // Auto-select first plan if available
@@ -89,6 +91,8 @@ export default function TopUpCheckOut() {
         (item: any) => item.id === selectedPlan
     );
 
+    // console.log("---- top up ----", esimData);
+
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -128,7 +132,7 @@ export default function TopUpCheckOut() {
                 }
             })
 
-            if (response?.message === "Stripe Top-Up initiated") {
+            if (response?.message === "Stripe top-up initiated") {
                 setClientSecret(response?.clientSecret);
                 setTransactionId({
                     id: response?.transaction?.id ?? "",
@@ -149,6 +153,7 @@ export default function TopUpCheckOut() {
     }
 
     const handleSuccess = async () => {
+        setShowModal(true);
         try {
             const response = await api({
                 method: "POST",
@@ -161,14 +166,18 @@ export default function TopUpCheckOut() {
             });
 
             console.log("Top-up purchase response:", response);
-            setShowModal(true);
+            // setShowModal(true);
             toast.success("E-SIM Top-Up Successful!");
-
+            setShowModal(false);
+            router.push(`/thank-you?mode=topup`);
         }
         catch (err) {
             console.error("Error completing top-up purchase:", err);
             toast.error("Failed to complete top-up purchase");
             router.push("/");
+        }
+        finally{
+            setShowModal(false);
         }
     }
 
@@ -361,14 +370,8 @@ export default function TopUpCheckOut() {
                 </div>
             </div>
 
-            <ThankyouModal
-                isOpen={showModal}
-                onClose={() => {
-                    router.push("/");
-                }}
-                title={"Recharged Successfully"}
-                message={"Your eSIM has been recharged successfully. Enjoy uninterrupted connectivity and keep exploring without limits!"}
-
+            <LoadingModal
+                open={showModal}
             />
         </div>
     );

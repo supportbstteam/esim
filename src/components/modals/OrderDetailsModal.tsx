@@ -39,7 +39,7 @@ export const OrderDetailModal: React.FC<Props> = ({
     if (orderNo) dispatch(fetchOrderDetailsByUser(orderNo));
   }, [dispatch, orderNo]);
 
-  console.log("----- order details -----",orderDetails);
+  // console.log("----- order details -----",orderDetails);
 
   const transaction = orderDetails?.transaction;
   const esims: EsimItem[] = orderDetails?.esims || [];

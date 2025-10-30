@@ -14,6 +14,7 @@ import { api } from "@/lib/api";
 import toast from "react-hot-toast";
 import { OrderDetailModal } from "@/components/modals/OrderDetailsModal";
 import { ClaimRefundModal } from "@/components/modals/ClaimFundModal";
+import { useRouter } from "next/navigation";
 
 const statusStyles: Record<string, string> = {
     completed: "text-green-600",
@@ -42,6 +43,7 @@ const statusIcon = (status: string) => {
 
 function Profile() {
     const dispatch = useAppDispatch();
+    const router = useRouter();
     const { user } = useAppSelector((state) => state.user || {});
     const { orders } = useAppSelector((state) => state.order);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -217,11 +219,12 @@ function Profile() {
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 orders.map((row: any, i: number) => {
 
-                                    console.log("----- row -----", row);
+                                    console.log("---- row ----", row);
+
                                     return (
                                         <tr key={i} className="hover:bg-gray-50">
                                             <td className="px-6 py-3 text-sm text-gray-800 font-medium">
-                                                {row.id?.slice(0, 10).toUpperCase()}{row?.id.length>10 ? "...":""}
+                                                {row?.code && row?.code?.slice(0, 10).toUpperCase()}{row?.code.length > 10 ? "..." : ""}
                                             </td>
                                             <td className="px-6 py-3 text-sm text-gray-600">
                                                 {dayjs(row.createdAt).format("MMM DD, YYYY")}
@@ -241,7 +244,7 @@ function Profile() {
                                                     // console.log("---- row status -----",row?.status);
                                                     setSelectedOrder(row);
                                                     if ((row?.status).toLowerCase() === "completed") {
-                                                        setOrderDetailModal(true);
+                                                        router.push(`/order/${row?.id}`);
                                                     }
                                                     else {
                                                         setOrderErrorModal(true);
