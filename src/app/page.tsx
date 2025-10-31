@@ -16,6 +16,7 @@ import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import Countryplan from "@/components/home/Countryplan"
 import { fetchCart } from "@/redux/slice/CartSlice";
 import { fetchSimsByUser } from "@/redux/slice/ESimSlice";
+import { getAllTestimonials } from "@/redux/slice/TestimonialSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ export default function Home() {
       await dispatch(fetchCountries());
       await dispatch(fetchUserDetails());
       await dispatch(fetchSimsByUser());
+      await dispatch(getAllTestimonials());
       await dispatch(fetchFaqs());
       await dispatch(featurePlans());
       await dispatch(fetchPlans({ countryId: "all" }));

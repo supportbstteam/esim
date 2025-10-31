@@ -8,6 +8,8 @@ import faqSlice from "./slice/FaqSlice"
 import orderSlice from "./slice/OrderSlice"
 import CartSlice from "./slice/CartSlice"
 import ESimSlice from "./slice/ESimSlice"
+import TestimonialSlice from "./slice/TestimonialSlice"
+
 export const store = configureStore({
     reducer: {
         country: countrySlice,
@@ -17,6 +19,7 @@ export const store = configureStore({
         order: orderSlice,
         cart: CartSlice,
         esims: ESimSlice,
+        testimonials: TestimonialSlice
     },
 });
 

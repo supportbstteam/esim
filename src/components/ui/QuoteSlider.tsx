@@ -3,7 +3,8 @@
 import React, { JSX, useState } from "react";
 import { Marquee } from "@/components/ui/marquee"; // path to your Marquee
 import QuoteCard from "./QuoteCard"; // import your QuoteCard
-import {ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { useAppSelector } from "@/redux/store";
 interface Quote {
   quote: string;
   name: string;
@@ -25,6 +26,9 @@ const secondRow = quotes.slice(quotes.length / 2);
 
 export function QuoteSlider(): JSX.Element {
   const [paused, setPaused] = useState(false);
+  const { testimonials } = useAppSelector(state => state?.testimonials);
+
+  console.log("----- testimonials-----", testimonials);
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-12 container">
@@ -35,7 +39,7 @@ export function QuoteSlider(): JSX.Element {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {firstRow.map((quote, idx) => (
+        {testimonials && testimonials.map((quote, idx) => (
           <div
             key={idx}
             style={{ animationPlayState: paused ? "paused" : "running" }}
@@ -53,7 +57,7 @@ export function QuoteSlider(): JSX.Element {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {secondRow.map((quote, idx) => (
+        {testimonials && testimonials.map((quote, idx) => (
           <div
             key={idx}
             style={{ animationPlayState: paused ? "paused" : "running" }}
@@ -64,10 +68,10 @@ export function QuoteSlider(): JSX.Element {
       </Marquee>
 
       {/* Gradient overlays */}
-    <a href-="/" className="subtext !text-xl flex items-center gap-2">
-      View All Testimonial <ChevronRight className="w-5 h-5 text-gray-500" />
+      <a href-="/" className="subtext !text-xl flex items-center gap-2">
+        View All Testimonial <ChevronRight className="w-5 h-5 text-gray-500" />
 
-    </a>
+      </a>
     </div>
   );
 }
