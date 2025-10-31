@@ -72,6 +72,8 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     fetchPlanDetails();
   }, [user?.id, dispatch, id]);
 
+  console.log("----- plans -----",plans);
+
   const handleTogglePlan = (planId: string) => {
     setSelectedPlans((prev) => {
       const isSelected = planId in prev;
@@ -159,7 +161,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                   {plans && plans.length > 0 && plans[0]?.country?.name}
                 </h3>
               </div>
-              <div className="subtext mt-4">{content.heroSubtext}</div>
+              <div className="subtext mt-4">{plans[0]?.country?.id?.description || content.heroSubtext}</div>
 
               <div className="mt-8">
                 <p className="text-[#1A0F33] text-[20px] font-bold">{content.whatsIncluded.title}</p>

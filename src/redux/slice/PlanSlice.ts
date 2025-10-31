@@ -15,10 +15,8 @@ export interface Plan {
   price: string;
   currency: string;
   planId: number;
-  country: {
-    id: string;
-    name: string;
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  country: any;
   createdAt: string;
   updatedAt: string;
 }
