@@ -9,6 +9,7 @@ import orderSlice from "./slice/OrderSlice"
 import CartSlice from "./slice/CartSlice"
 import ESimSlice from "./slice/ESimSlice"
 import TestimonialSlice from "./slice/TestimonialSlice"
+import LinkSlice from "./slice/SocialLinkSlice"
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
         order: orderSlice,
         cart: CartSlice,
         esims: ESimSlice,
-        testimonials: TestimonialSlice
+        testimonials: TestimonialSlice,
+        links: LinkSlice
     },
 });
 

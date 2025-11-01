@@ -17,6 +17,7 @@ import Countryplan from "@/components/home/Countryplan"
 import { fetchCart } from "@/redux/slice/CartSlice";
 import { fetchSimsByUser } from "@/redux/slice/ESimSlice";
 import { getAllTestimonials } from "@/redux/slice/TestimonialSlice";
+import { getAllLinks } from "@/redux/slice/SocialLinkSlice";
 export default function Home() {
 
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ export default function Home() {
       await dispatch(getAllTestimonials());
       await dispatch(fetchFaqs());
       await dispatch(featurePlans());
+      await dispatch(getAllLinks());
       await dispatch(fetchPlans({ countryId: "all" }));
       await dispatch(fetchCart());
       // const token = Cookies.get("token");
@@ -39,10 +41,11 @@ export default function Home() {
 
 
   const { list } = useAppSelector((state) => state?.faq);
+  const {links} = useAppSelector((state) => state?.links);
   const { cart } = useAppSelector(state => state?.cart);
 
   // console.log("---- user -----", user);
-  // console.log("----- list in the app/page.tsx ----", cart);
+  // console.log("----- links in the app/page.tsx ----", links);
   return (
     <>
       <div className="min-h-screen bg-white">

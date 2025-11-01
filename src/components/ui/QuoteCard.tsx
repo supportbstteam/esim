@@ -10,7 +10,7 @@ interface QuoteCardProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const QuoteCard = (quote: any) => {
 
-  console.log("----- quote in teh quote ----",quote);
+  // console.log("----- quote in teh quote ----",quote);
   return (
     <div className="flex items-center rounded-lg bg-[#F3F5F7] max-w-[403px] mx-auto">
       {/* Image */}

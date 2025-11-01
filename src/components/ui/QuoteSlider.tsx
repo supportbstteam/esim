@@ -28,7 +28,7 @@ export function QuoteSlider(): JSX.Element {
   const [paused, setPaused] = useState(false);
   const { testimonials } = useAppSelector(state => state?.testimonials);
 
-  console.log("----- testimonials-----", testimonials);
+  // console.log("----- testimonials-----", testimonials);
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-12 container">
