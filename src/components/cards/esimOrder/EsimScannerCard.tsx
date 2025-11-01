@@ -1,7 +1,9 @@
+"use client";
 import React, { useRef } from "react";
 import QRCode from "react-qr-code";
 import { FiCopy, FiDownload } from "react-icons/fi";
 import * as htmlToImage from 'html-to-image';
+import toast from "react-hot-toast";
 
 interface ActivateCardProps {
     qrValue: string;
@@ -11,8 +13,27 @@ interface ActivateCardProps {
 export const ActivateCard: React.FC<ActivateCardProps> = ({ qrValue, code }) => {
     const qrRef = useRef<HTMLDivElement>(null);
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(code);
+    const handleCopy = async () => {
+        try {
+            if (typeof navigator !== "undefined" && navigator.clipboard) {
+                await navigator.clipboard.writeText(code);
+                toast.success("Copied")
+                console.log("✅ Copied to clipboard:", code);
+            } else {
+                // Fallback for older browsers or SSR
+                const textarea = document.createElement("textarea");
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                toast.success("Copied")
+                console.log("✅ Copied (fallback):", code);
+            }
+        } catch (err) {
+            console.error("❌ Failed to copy:", err);
+            toast.success("Copied Failed")
+        }
     };
 
     const handleDownload = async () => {
