@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { OrderDetailModal } from "@/components/modals/OrderDetailsModal";
 import { ClaimRefundModal } from "@/components/modals/ClaimFundModal";
 import { useRouter } from "next/navigation";
+import { postUserClaimRefund } from "@/lib/pageFunction";
 
 const statusStyles: Record<string, string> = {
     completed: "text-green-600",
@@ -92,7 +93,7 @@ function Profile() {
     }
 
 
-    // console.log("----- seelected order -----", selectedOrder);
+    console.log("----- seelected order -----", selectedOrder);
 
     return (
         <div className="max-w-5xl mx-auto py-10 px-4">
@@ -243,7 +244,7 @@ function Profile() {
 
                                                     // console.log("---- row status -----",row?.status);
                                                     setSelectedOrder(row);
-                                                    if ((row?.status).toLowerCase() === "completed") {
+                                                    if ((row?.status).toLowerCase() === "completed" || (row?.status).toLowerCase() === "partial") {
                                                         router.push(`/order/${row?.id}`);
                                                     }
                                                     else {
@@ -284,9 +285,14 @@ function Profile() {
             <ClaimRefundModal
                 orderDate={selectedOrder?.createdAt}
                 onSubmit={async (values) => {
-                    console.log("----- values in the refund -----", values);
+                    postUserClaimRefund({
+                        id: selectedOrder?.id,
+                        message: values?.comment
+                    })
+                    setOrderErrorModal(false);
+                    // console.log("----- values in the refund -----", values);
                 }}
-                orderNo={selectedOrder?.id}
+                orderNo={selectedOrder?.code}
                 isOpen={orderErrorModal}
                 onClose={() => {
                     setOrderErrorModal(false)

@@ -11,6 +11,8 @@ function ESim() {
     const dispatch = useAppDispatch();
     const { esims, loading } = useAppSelector(state => state.esims);
 
+    console.log("---- esims array ----", esims)
+
     useEffect(() => {
         dispatch(fetchSimsByUser());
         dispatch(fetchUserDetails());
@@ -36,7 +38,10 @@ function ESim() {
                             .fill(null)
                             .map((_, i) => <SimCardSkeleton key={i} />)
                         : esims && esims.length > 0
-                            ? esims.map(esim => <SimCard key={esim.id} order={esim} />)
+                            ? esims.map(esim => { 
+                                // console.log("------ e sim ----", esim);
+                                return <SimCard key={esim.id} order={esim} /> 
+                            })
                             : <p>No orders found.</p>}
                 </div>
             </div>

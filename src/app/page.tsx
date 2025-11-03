@@ -41,8 +41,6 @@ export default function Home() {
 
 
   const { list } = useAppSelector((state) => state?.faq);
-  const {links} = useAppSelector((state) => state?.links);
-  const { cart } = useAppSelector(state => state?.cart);
 
   // console.log("---- user -----", user);
   // console.log("----- links in the app/page.tsx ----", links);

@@ -56,6 +56,7 @@ const getHref = (section: string, item: string) => {
 export const Footer: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const { links } = useAppSelector((state) => state?.links);
+  const { countries } = useAppSelector((state) => state.country);
 
   const toggleSection = (i: number) => {
     setOpenIdx((prev) => (prev === i ? null : i));
@@ -81,7 +82,19 @@ export const Footer: React.FC = () => {
             </Link>
             <p className="text-gray-300 text-sm sm:text-[15px] md:text-[16px]">
               We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless
-              connectivity in 200+ countries.
+              connectivity in {(() => {
+                const count = countries?.length || 0;
+
+                if (count < 10) return `${count} countries`;
+
+                // Get the first digit and convert rest to zeros
+                const digits = count.toString();
+                const firstDigit = digits[0];
+                const zeros = "0".repeat(digits.length - 1);
+                const display = `${firstDigit}${zeros}+`;
+
+                return `${display} countries`;
+              })()}.
             </p>
 
             {/* Mobile view */}
@@ -89,19 +102,19 @@ export const Footer: React.FC = () => {
               <h4 className="text-sm text-gray-200 mb-3">Connect With Us</h4>
               <div className="flex gap-2 items-center">
                 {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                dynamicSocials.map(({ icon: Icon, href, type }:any, idx) => (
-                  <Link
-                    key={idx}
-                    href={href || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
-                    aria-label={type}
-                  >
-                    <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
-                  </Link>
-                ))}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  dynamicSocials.map(({ icon: Icon, href, type }: any, idx) => (
+                    <Link
+                      key={idx}
+                      href={href || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                      aria-label={type}
+                    >
+                      <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
+                    </Link>
+                  ))}
               </div>
             </div>
           </div>

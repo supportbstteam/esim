@@ -12,7 +12,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { fetchSimDetailsByUser } from "@/redux/slice/ESimSlice";
+import { clearESimDetails, fetchSimDetailsByUser } from "@/redux/slice/ESimSlice";
+import { postUserClaimRefund } from "@/lib/pageFunction";
 function ESimDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -21,12 +22,15 @@ function ESimDetails() {
   const [activeSimIndex, setActiveSimIndex] = useState(0);
 
   useEffect(() => {
+    dispatch(clearESimDetails());
     if (id) dispatch(fetchSimDetailsByUser(id as string));
   }, [id, dispatch]);
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
 
   const activeSim = eSimDetails?.esims?.[activeSimIndex];
+
+  console.log("---- esim details ----", eSimDetails);
 
   return (
     <div className="max-w-full mx-auto px-4 md:px-10 py-6">
@@ -49,20 +53,21 @@ function ESimDetails() {
                     <div className="md:col-span-2 mx-10">
                       <EsimInfo
                         countryName={eSimDetails?.country?.name}
-                        countryFlagUrl="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags/svg/iq.svg"
+                        countryFlagUrl={`https://cdn.jsdelivr.net/gh/hjnilsson/country-flags/svg/${(eSimDetails?.country?.isoCode || "us").toLowerCase()}.svg`}
                         planType={esim?.productName?.replace(/-$/, "")}
                         expired={false}
-                        simNo={esim?.iccid}
+                        simNo={esim?.iccid || "No iccid no."}
                         purchasedOn={moment(esim?.createdAt).format("MMM Do YY")}
                         activationDate=""
-                        validityDays={esim?.validityDays}
+                        validityDays={esim?.validityDays || "0"}
                         dataUsed={0}
-                        dataTotal={esim?.dataAmount}
-                        price={
-                          (esim?.currency === "USD" ? "$" : esim?.currency) +
-                          " " +
-                          esim?.price
-                        }
+                        dataTotal={esim?.dataAmount || 0}
+                        price={((eSimDetails?.country?.currency === "USD" ? "$" : eSimDetails?.country?.currency) || "N/A") + " " + (eSimDetails?.totalAmount || "N/A")}
+                        // price={
+                        //   (esim?.currency === "USD" ? "$" : esim?.currency) +
+                        //   " " +
+                        //   esim?.price
+                        // }
                         planStart="Dec 1, 2024"
                         planEnd="Dec 5, 2024"
                         onRecharge={() => alert("Recharge clicked!")}
@@ -72,6 +77,12 @@ function ESimDetails() {
                       <ActivateCard
                         qrValue={esim?.qrCodeUrl}
                         code={esim?.qrCodeUrl}
+                        handleRefund={() => {
+                          postUserClaimRefund({
+                            id: eSimDetails?.id,
+                            message: `Customer ${eSimDetails?.name} asking for refund for the ORDER ID ${eSimDetails?.orderCode}`
+                          })
+                        }}
                       />
                     </div>
                   </div>
@@ -116,9 +127,9 @@ function ESimDetails() {
               transactionId={eSimDetails?.transaction?.transactionId}
               orderDate={moment(eSimDetails?.esims[0]?.createdAt).format("MMM Do YY")}
               totalAmount={
-                (eSimDetails?.esims[0]?.currency === "USD"
+                (eSimDetails?.esims[0]?.country?.currency === "USD"
                   ? "$"
-                  : eSimDetails?.esims[0]?.currency) +
+                  : eSimDetails?.esims[0]?.country?.currency) +
                 " " +
                 eSimDetails?.totalAmount
               }

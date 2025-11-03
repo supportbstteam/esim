@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import { postUserClaimRefund } from "@/lib/pageFunction";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -29,6 +30,9 @@ const OrderDetails = () => {
 
   const activeSim = orderDetails?.esims?.[activeSimIndex];
 
+
+  console.log("----- order details ----", orderDetails);
+
   return (
     <div className="max-w-full mx-auto px-4 md:px-10 py-6">
       {/* ✅ eSIM Carousel Section */}
@@ -44,40 +48,45 @@ const OrderDetails = () => {
           >
             {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              orderDetails.esims.map((esim: any, index: number) => (
-                <SwiperSlide key={index}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 mt-8 items-start">
-                    <div className="md:col-span-2 mx-10">
-                      <EsimInfo
-                        countryName={orderDetails?.country?.name}
-                        countryFlagUrl="https://cdn.jsdelivr.net/gh/hjnilsson/country-flags/svg/iq.svg"
-                        planType={esim?.productName?.replace(/-$/, "")}
-                        expired={false}
-                        simNo={esim?.iccid}
-                        purchasedOn={moment(esim?.createdAt).format("MMM Do YY")}
-                        activationDate=""
-                        validityDays={esim?.validityDays}
-                        dataUsed={0}
-                        dataTotal={esim?.dataAmount}
-                        price={
-                          (esim?.currency === "USD" ? "$" : esim?.currency) +
-                          " " +
-                          esim?.price
-                        }
-                        planStart="Dec 1, 2024"
-                        planEnd="Dec 5, 2024"
-                        onRecharge={() => alert("Recharge clicked!")}
-                      />
+              orderDetails.esims.map((esim: any, index: number) => {
+                // console.log("---- esim ----", esim);
+                return (
+                  <SwiperSlide key={index}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 mt-8 items-start">
+                      <div className="md:col-span-2 mx-10">
+                        <EsimInfo
+                          countryName={orderDetails?.country?.name}
+                          countryFlagUrl={`https://cdn.jsdelivr.net/gh/hjnilsson/country-flags/svg/${(orderDetails?.country?.isoCode || "us").toLowerCase()}.svg`}
+                          planType={esim?.productName?.replace(/-$/, "")}
+                          expired={false}
+                          simNo={esim?.iccid || "No iccid no."}
+                          purchasedOn={moment(esim?.createdAt).format("MMM Do YY") || "N/A"}
+                          activationDate=""
+                          validityDays={esim?.validityDays || "0"}
+                          dataUsed={0}
+                          dataTotal={esim?.dataAmount}
+                          price={((orderDetails?.country?.currency === "USD" ? "$" : orderDetails?.country?.currency) || "N/A") + " " + (orderDetails?.totalAmount || "N/A")}
+                          planStart="Dec 1, 2024"
+                          planEnd="Dec 5, 2024"
+                          onRecharge={() => alert("Recharge clicked!")}
+                        />
+                      </div>
+                      <div className="md:col-span-1 flex justify-center">
+                        <ActivateCard
+                          qrValue={esim?.qrCodeUrl || ""}
+                          code={esim?.qrCodeUrl || ""}
+                          handleRefund={() => {
+                            postUserClaimRefund({
+                              id: orderDetails?.id,
+                              message: `Customer ${orderDetails?.name} asking for refund for the ORDER ID ${orderDetails?.orderCode}`
+                            })
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="md:col-span-1 flex justify-center">
-                      <ActivateCard
-                        qrValue={esim?.qrCodeUrl}
-                        code={esim?.qrCodeUrl}
-                      />
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
+                  </SwiperSlide>
+                )
+              })}
           </Swiper>
 
         </div>
@@ -91,18 +100,19 @@ const OrderDetails = () => {
             (() => {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const rechargeRecords = activeSim.topUps.map((topupItem: any) => {
-                console.log("------ topupItem -----",topupItem);
-                return({
-                purchasedOn: new Date(topupItem.createdAt).toLocaleDateString("en-GB"),
-                plan: topupItem?.title || topupItem?.name || "Unknown Plan",
-                planStart: activeSim.startDate
-                  ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
-                  : "-",
-                planEnd: activeSim.endDate
-                  ? new Date(activeSim.endDate).toLocaleDateString("en-GB")
-                  : "-",
-                paymentMode: "Online",
-              })});
+                // console.log("------ topupItem -----", topupItem);
+                return ({
+                  purchasedOn: new Date(topupItem.createdAt).toLocaleDateString("en-GB"),
+                  plan: topupItem?.title || topupItem?.name || "Unknown Plan",
+                  planStart: activeSim.startDate
+                    ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
+                    : "-",
+                  planEnd: activeSim.endDate
+                    ? new Date(activeSim.endDate).toLocaleDateString("en-GB")
+                    : "-",
+                  paymentMode: "Online",
+                })
+              });
               return <RechargeHistory records={rechargeRecords} rowsPerPage={5} />;
             })()}
         </div>
@@ -115,9 +125,9 @@ const OrderDetails = () => {
               transactionId={orderDetails?.transaction?.transactionId}
               orderDate={moment(orderDetails?.esims[0]?.createdAt).format("MMM Do YY")}
               totalAmount={
-                (orderDetails?.esims[0]?.currency === "USD"
+                (orderDetails?.country?.currency === "USD"
                   ? "$"
-                  : orderDetails?.esims[0]?.currency) +
+                  : orderDetails?.country?.currency) +
                 " " +
                 orderDetails?.totalAmount
               }

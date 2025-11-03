@@ -27,7 +27,7 @@ const OrdersPage = () => {
                     orders && orders.length > 0 ? (
                         <div className=" grid-cols-3 gap-4 grid mt-3"  >
                             {orders.map((order) => (
-                                <OrderCard key={order.id} order={order} />
+                                order?.iccid && <OrderCard key={order?.id} order={order} />
                             ))}
                         </div>
                     ) : (

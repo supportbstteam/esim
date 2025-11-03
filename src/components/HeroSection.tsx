@@ -54,8 +54,23 @@ export default function HeroSection() {
 
                     {/* Description */}
                     <p className="text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl mt-5 mb-5 md:!mb-18">
-                        Stay connected in 200+ countries with easy, roaming-free data.
+                        Stay connected in{" "}
+                        {(() => {
+                            const count = countries?.length || 0;
+
+                            if (count < 10) return `${count} countries`;
+
+                            // Get the first digit and convert rest to zeros
+                            const digits = count.toString();
+                            const firstDigit = digits[0];
+                            const zeros = "0".repeat(digits.length - 1);
+                            const display = `${firstDigit}${zeros}+`;
+
+                            return `${display} countries`;
+                        })()}
+                        {" "}with easy, roaming-free data.
                     </p>
+
 
                     {/* 🔍 Search / Destination Selector */}
 
@@ -133,33 +148,6 @@ export default function HeroSection() {
                                     </span>
                                 ))
                             }
-                            <span
-
-
-                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                            >
-                                Spain
-                            </span>
-                            <span
-
-
-                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                            >
-                                USA
-                            </span>
-                            <span
-
-
-                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                            >
-                                Italy
-                            </span>
-                            <span
-
-                                className="bg-[#F3F5F7] text-[#64748B] px-3 py-1 rounded-full text-xs sm:text-[16px] hover:bg-green-100 hover:text-green-700 transition cursor-pointer"
-                            >
-                                Japan
-                            </span>
                         </div>
                     </div>
                 </div>

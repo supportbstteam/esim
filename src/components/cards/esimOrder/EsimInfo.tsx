@@ -47,7 +47,7 @@ const EsimInfo: React.FC<EsimInfoProps> = ({
                     <img
                         src={countryFlagUrl}
                         alt={countryName}
-                        className="w-10 h-10 object-cover rounded-full border border-neutral-300 mr-4"
+                        className="w-10 h-10 object-cover rounded-full border border-neutral-300"
                     />
                     <div>
                         <div className="font-semibold text-neutral-900">
@@ -85,7 +85,7 @@ const EsimInfo: React.FC<EsimInfoProps> = ({
             </div>
             <div className="h-2 w-full bg-neutral-100 rounded mb-2 overflow-hidden">
                 <div
-                    className="h-full bg-green-500 transition-all duration-200"
+                    className={`h-full ${simNo !== "No iccid no." ? "bg-green-500" : "bg-red-500"} transition-all duration-200`}
                     style={{ width: `${progressPercent}%` }}
                 />
             </div>

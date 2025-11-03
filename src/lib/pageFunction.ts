@@ -83,3 +83,30 @@ export const initiateStripePayment = async ({
         setLoading(false);
     }
 };
+
+export const postUserClaimRefund = async ({ id, message }: {
+    id: string,
+    message: string
+}) => {
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response: any = await api({
+            method: "POST",
+            data: {
+                orderId: id,
+                message
+            },
+            url: "/user/claim"
+        });
+
+        if (response?.status) {
+            toast.success("E-mail has been sent")
+        }
+
+        console.log("---- response in the claim refund ----", response);
+    }
+    catch (err) {
+        console.error("Error in the postUser Refund Claim", err);
+
+    }
+}
