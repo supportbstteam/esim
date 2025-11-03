@@ -6,6 +6,7 @@ interface PurchaseSuccessProps {
   emoji?: string;
   title?: string;
   description?: string;
+  buttonText?: string;
   isButton?: boolean;
   onViewQrCode?: () => void;
 }
@@ -14,6 +15,7 @@ const PurchaseSuccess: React.FC<PurchaseSuccessProps> = ({
   emoji = "🎉",
   isButton = false,
   title = "Purchase Successful",
+  buttonText = "Go Home",
   description = "Your eSIM has been purchased successfully and is ready for activation. Scan the QR code below or follow the setup guide to get started instantly.",
   onViewQrCode,
 }) => (
@@ -36,7 +38,7 @@ const PurchaseSuccess: React.FC<PurchaseSuccessProps> = ({
         className="px-6 py-2 rounded border border-neutral-200  bg-white  hover:bg-neutral-50  text-neutral-900 transition text-base font-medium"
         onClick={onViewQrCode}
       >
-        View QR Code
+        {buttonText}
       </button>
     }
 

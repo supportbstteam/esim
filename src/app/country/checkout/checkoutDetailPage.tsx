@@ -163,46 +163,46 @@ export default function CheckoutDetailPage() {
   };
 
   const handleOnSuccess = async () => {
-    // console.log("-- succes --");
     setLoading(true);
     setModalOpen(true);
+
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await api({
         method: "POST",
         url: "/user/order/",
-        data: {
-          transactionId
-        }
+        data: { transactionId },
       });
 
-      // console.log("---- response in the place order -----", response);
+      const orderId = response?.order?.id;
+      const message = response?.message || "Something went wrong";
 
-      if (response?.message === "Order completed successfully") {
-        toast.success(response?.message);
-        // setEsimData(response?.order);
-        setTransactionData(response?.order?.transaction);
-        router.push(`/thank-you?mode=esim&orderId=${response?.order?.id}`);
-        setModalOpen(false);
-      }
-      else {
-        setErrorState(response?.message);
+      if (message.includes("completed successfully")) {
+        toast.success(message);
+      } else if (message.includes("partially completed")) {
+        toast.error(message);
+      } else {
+        toast.error(message);
       }
 
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    catch (err: any) {
-      console.error("Erorr in the place order after stripe success", err);
-      setErrorState(err);
-      toast.error(err?.response?.data?.message);
-      setModalOpen(false);
-      router.push("/");
-    }
-    finally {
+      setTransactionData(response?.order?.transaction);
+
+      // ✅ Always navigate to thank-you page
+      router.push(`/thank-you?mode=esim&orderId=${orderId}`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error("Error in place order after stripe success", err);
+      const msg = err?.response?.data?.message || "Something went wrong";
+      toast.error(msg);
+
+      // ✅ Still navigate to thank-you, but mark as failed order
+      router.push(`/thank-you?mode=esim&orderId=failed`);
+    } finally {
       setLoading(false);
-      // setModalOpen(true);
+      setModalOpen(false);
     }
-  }
+  };
+
 
   console.log("----- esim data -----", esimData);
 
