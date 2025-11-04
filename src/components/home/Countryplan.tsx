@@ -1,14 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import AuthModal from "../modals/AuthModal";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Flag from "@/components/ui/Flag";
 type TabKey = 'country' | 'popular';
 import { useRouter } from "next/navigation";
 import { useNavigate } from "../hooks/navigation";
 
 import Pagetitle from "@/components/ui/PageTitle";
+import { addToCart } from '@/redux/slice/CartSlice';
+import toast from 'react-hot-toast';
 
 export default function CountryplanTabs() {
+  const dispatch = useAppDispatch();
   const { featured = [] } = useAppSelector((state) => state?.plan ?? {});
   const router = useRouter();
   const { isAuth } = useAppSelector((state) => state?.user ?? {});
@@ -19,12 +22,12 @@ export default function CountryplanTabs() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
- 
+
   const basicPlanByCountry = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const map: Record<string, any> = {};
     if (!Array.isArray(featured)) return map;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     featured.forEach((plan: any) => {
       const countryId = plan?.country?.id;
       if (!countryId) return;
@@ -50,14 +53,22 @@ export default function CountryplanTabs() {
   // };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleAddToCart = (plan: any) => {
+  const handleAddToCart = async (plan: any) => {
+    // console.log("---- auth  add to cart ---", plan);
+    // return;
     if (!isAuth) {
       setSelectedPlan(plan);
       setIsAuthModal(true);
       return;
     }
-    if (isAuth)
-      navigation(`/country/checkout?plan=${plan.id}&country=${plan?.country?.id}`);
+
+    if (isAuth) {
+      const response = await dispatch(addToCart([{ ...plan, planId: plan?.id, quantity: 1 }]));
+      if(response?.type === 'cart/addToCart/fulfilled'){
+        toast.success("Added to Cart")
+        navigation(`/country/checkout?plan=${plan.id}&country=${plan?.country?.id}`);
+      }
+    }
   };
 
   const handleNavigate = (id: string) => {
@@ -138,7 +149,7 @@ export default function CountryplanTabs() {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       countries.map((item: any, i: number) => {
                         const basicPlan = basicPlanByCountry[item.id];
-                        const basicPriceText = (item?.price ? '$'+Number(item.price).toFixed(2) : "—")
+                        const basicPriceText = (item?.price ? '$' + Number(item.price).toFixed(2) : "—")
                         const basicData = basicPlan?.data;
                         const basicValidity = basicPlan?.validityDays;
 
@@ -236,31 +247,26 @@ export default function CountryplanTabs() {
                               ${plan.price}
                             </div>
                           </div>
-                         <div className="flex justify-between items-end w-full">
-                          {plan?.data && plan?.validityDays && (
-                            <div className="md:text-lg  text-start  text-gray-700 flex flex-col">
-                              <span className="text-[#64748B94]">Starter:</span>{" "}
-                              <span className="font-medium max-md:text-[14px]  min-[700px]:text-left text-gray-800">
-                                {plan.data}GB / {plan.validityDays} days
-                              </span>
+                          <div className="flex justify-between items-end w-full">
+                            {plan?.data && plan?.validityDays && (
+                              <div className="md:text-lg  text-start  text-gray-700 flex flex-col">
+                                <span className="text-[#64748B94]">Starter: </span>{" "}
+                                <span className="font-medium max-md:text-[14px]  min-[700px]:text-left text-gray-800">
+                                  {plan.data}GB / {plan.validityDays} days
+                                </span>
+                              </div>
+                            )}
+                            <div>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleAddToCart(plan);
+                                }}
+                                className="cursor-pointer w-[100%]  px-5 py-[8px] text-sm min-[700px]:text-base bg-[#3BC852] text-white rounded-full hover:bg-[#133365] transition leading-normal md:leading-[21px]"
+                              >
+                                Buy now
+                              </button>
                             </div>
-                          )}
-
-
-
-
-
-                          <div>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleAddToCart(plan);
-                              }}
-                              className="cursor-pointer w-[100%]  px-5 py-[8px] text-sm min-[700px]:text-base bg-[#3BC852] text-white rounded-full hover:bg-[#133365] transition leading-normal md:leading-[21px]"
-                            >
-                              Buy now
-                            </button>
-                          </div>
                           </div>
                         </div>
                       </div>

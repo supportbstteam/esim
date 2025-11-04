@@ -3,20 +3,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { HiX, HiChevronDown } from 'react-icons/hi';
 import { RxHamburgerMenu } from "react-icons/rx";
-import { ImSpinner2 } from 'react-icons/im'; // Loader spinner icon
 import AuthModal from './modals/AuthModal';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { fetchUserDetails, logout } from '@/redux/slice/UserSlice';
+import { logout } from '@/redux/slice/UserSlice';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { fetchCart } from '@/redux/slice/CartSlice';
 import { useNavigate } from './hooks/navigation';
+import { AiOutlineUser } from "react-icons/ai";
 const navItems = [
-  { label: "View Plans", href: "/plans" },
+  // { label: "View Plans", href: "/plans" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Features", href: "/features" },
-  { label: "Support", href: "/help-center" },
+  { label: "Support", href: "/contact-us" },
   // { label: "Partner Program", href: "/partner-program" },
 ];
 
@@ -42,7 +41,6 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const handleLogout = async () => {
-    // setIsUserMenuOpen(false);
     await dispatch(logout());
     navigation('/');
     toast.success("Log out");
@@ -201,8 +199,8 @@ export default function Navbar() {
                       className="p-2 rounded-md hover:bg-gray-100 flex items-center"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
-                          <Image src={'/Frame_63.png'} alt="User avatar" width={40} height={40} className="object-cover" />
+                        <div className="h-10 w-10 flex justify-center items-center rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
+                          <AiOutlineUser size={20} />
                         </div>
                         <span className="text-[#1A0F33] font-medium text-sm">{user?.firstName && user?.lastName && (user?.firstName + " " + user?.lastName)}</span>
                       </div>
@@ -299,13 +297,7 @@ export default function Navbar() {
                     aria-controls="mobile-user-submenu"
                   >
                     <div className="flex items-center gap-3">
-                      <Image
-                        src={'/Frame_63.png'}
-                        alt="avatar"
-                        width={40}
-                        height={40}
-                        className="h-10 w-10 rounded-full object-cover border-2 border-gray-100 shadow-sm"
-                      />
+                      <AiOutlineUser size={20} />
                       <div className="text-left">
                         <div className="font-medium text-sm">Admin</div>
                         <div className="text-xs text-gray-500">{user?.email}</div>

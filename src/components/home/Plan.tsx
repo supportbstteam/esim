@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Pagetitle from "@/components/ui/PageTitle";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import AuthModal from "../modals/AuthModal";
 import { useRouter } from "next/navigation";
 import Flag from "@/components/ui/Flag";
@@ -10,6 +10,7 @@ type PlanProps = {
   classed?: string; 
 }
 export const Plan = ({ classed }: PlanProps ) => {
+  const dispatch = useAppDispatch()
   const { featured } = useAppSelector((state) => state?.plan);
   const { isAuth } = useAppSelector((state) => state?.user);
   const [isAuthModal, setIsAuthModal] = useState(false);

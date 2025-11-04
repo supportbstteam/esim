@@ -9,6 +9,7 @@ import Image from "next/image";
 import Success from "./Success";
 import { X } from "lucide-react";
 import { api } from "@/lib/api";
+import { Eye, EyeOff } from "lucide-react";
 import ForgotPassword from "../ui/ForgetPasswordComponent";
 type AuthModalProps = {
     isOpen: boolean;
@@ -31,6 +32,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
     const [showSuccess, setShowSuccess] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showLoginPassword, setShowLoginPassword] = useState(false);
+    const [showSignupPassword, setShowSignupPassword] = useState(false);
+
     useEffect(() => {
         // when modal opens, honour initialTab if provided
         if (isOpen && initialTab) {
@@ -295,17 +299,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
                                             </div>
 
                                             {/* Password */}
-                                            <div>
+                                            <div className="relative">
                                                 <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
                                                     Password <span className="text-[#E33629]">*</span>
                                                 </label>
-                                                <Field
-                                                    name="password"
-                                                    type="password"
-                                                    autoComplete="current-password"
-                                                    placeholder="*******"
-                                                    className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                />
+                                                <div className="relative">
+                                                    <Field
+                                                        name="password"
+                                                        type={showLoginPassword ? "text" : "password"}
+                                                        autoComplete="current-password"
+                                                        placeholder="*******"
+                                                        className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowLoginPassword(!showLoginPassword)}
+                                                        className="absolute right-3 top-[50%] translate-y-[-30%] text-gray-500 hover:text-gray-700"
+                                                    >
+                                                        {showLoginPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                                    </button>
+                                                </div>
                                                 <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -390,17 +403,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
                                             </div>
 
                                             {/* Password */}
-                                            <div>
-                                                <label htmlFor="password" className="block  mb-0 md:mb-1  font-medium text-gray-700">
+                                            <div className="relative">
+                                                <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
                                                     Password <span className="text-[#E33629]">*</span>
                                                 </label>
-                                                <Field
-                                                    name="password"
-                                                    type="password"
-                                                    autoComplete="new-password"
-                                                    placeholder="*******"
-                                                    className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                />
+                                                <div className="relative">
+                                                    <Field
+                                                        name="password"
+                                                        type={showSignupPassword ? "text" : "password"}
+                                                        autoComplete="new-password"
+                                                        placeholder="*******"
+                                                        className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowSignupPassword(!showSignupPassword)}
+                                                        className="absolute right-3 top-[50%] translate-y-[-30%] text-gray-500 hover:text-gray-700"
+                                                    >
+                                                        {showSignupPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                                    </button>
+                                                </div>
                                                 <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
                                             </div>
 
