@@ -76,8 +76,11 @@ export default function CheckoutDetailPage() {
   const handleDeleteItem = async (cartItemId: string) => {
     try {
       setLoading(true); // optional, show loading state
-      await dispatch(removeCartItem(cartItemId))
-      toast.success("Item removed from cart");
+      const response = await dispatch(removeCartItem(cartItemId));
+      if (response?.type === 'cart/removeCartItem/fulfilled')
+        toast.success("Item removed from cart");
+
+      console.log("----- response in remove to cart ----", response);
     } catch (err) {
       console.error("Failed to delete cart item:", err);
       toast.error("Failed to remove item");
