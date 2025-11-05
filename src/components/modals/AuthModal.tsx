@@ -34,6 +34,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
     const [loading, setLoading] = useState(false);
     const [showLoginPassword, setShowLoginPassword] = useState(false);
     const [showSignupPassword, setShowSignupPassword] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [signupValues, setSignupValues] = useState<any>(null);
 
     useEffect(() => {
         // when modal opens, honour initialTab if provided
@@ -106,6 +108,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
             if (response?.type === 'user/signup/fulfilled') {
                 toast.success("Sign Up successful");
                 setVerifyEmail(values?.email);
+                setSignupValues({
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    email: values.email,
+                    password: values.password,
+                })
                 setShowVerifyOtp(true);
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -172,6 +180,20 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
         }
     }
 
+    const handleResendOtp = async () => {
+        if (!signupValues) return toast.error("Signup data missing.");
+        setLoading(true);
+        try {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const response: any = await dispatch(signupUser(signupValues));
+            if (response?.type === 'user/signup/fulfilled') toast.success("OTP resent!");
+        } catch {
+            toast.error("Failed to resend OTP.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div
             className="fixed inset-0 bg-[#00000073] backdrop-blur-sm bg-opacity-0 flex justify-center items-center z-50 max-md:p-8"
@@ -226,7 +248,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
                                     </div>
 
                                     <p className="subtext">
-                                        Didn’t receive the code? <button type="button" className="text-[#3BC852]">Resend Code</button>
+                                        Didn’t receive the code? <button type="button" onClick={handleResendOtp} className="text-[#3BC852]">Resend OTP</button>
                                     </p>
 
                                     <button
