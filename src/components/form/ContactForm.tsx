@@ -7,7 +7,7 @@ import { api } from '@/lib/api';
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('*required').max(30, 'Max 30 chars'),
-    lastName: Yup.string().required('*equired').max(30, 'Max 30 chars'),
+    lastName: Yup.string().required('*required').max(30, 'Max 30 chars'),
     email: Yup.string().email('Invalid email').required('*required'),
     phone: Yup.string()
         .matches(/^\+?[0-9]{7,15}$/, 'Invalid phone number')
