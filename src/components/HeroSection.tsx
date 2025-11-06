@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useNavigate } from "./hooks/navigation";
 import Image from "next/image";
 import { fetchPlans } from "@/redux/thunk/planThunk";
+import toast from "react-hot-toast";
 
 export default function HeroSection() {
     const dispatch = useAppDispatch();
@@ -85,8 +86,19 @@ export default function HeroSection() {
                                         setShowDropdown(true);
                                     }}
                                     onFocus={() => setShowDropdown(true)}
+                                    onKeyDown={async (e) => {
+                                        if (e.key === "Enter") {
+                                            e.preventDefault();
+                                            if (filteredCountries.length > 0) {
+                                                await handleSelectCountry(filteredCountries[0]);
+                                            }
+                                            else{
+                                                toast.error("We are not currently serving here")
+                                            }
+                                        }
+                                    }}
                                     placeholder="Choose Your Destination"
-                                    className="flex-1  bg-transparent text-[16px] md:text-[22px] text-[#006110] placeholder-[#006110]  focus:outline-none "
+                                    className="flex-1 bg-transparent text-[16px] md:text-[22px] text-[#006110] placeholder-[#006110] focus:outline-none"
                                 />
                                 <button
                                     type="button"
