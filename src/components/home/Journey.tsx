@@ -36,7 +36,7 @@ export const Journey = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 min-[500px]:grid-cols-2
 gap-x-8  gap-y-10 mt-18">
         <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">sim_card</span>
+          <span className="material-symbols-outlined  rounded-full !text-white p-2 !text-[40px] bg-[#133365] p-4 bg-[#133365]">sim_card</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Instant Activation
           </h5>
@@ -47,7 +47,7 @@ gap-x-8  gap-y-10 mt-18">
           </p>
         </div>
         <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">airplane_ticket</span>
+          <span className="material-symbols-outlined  rounded-full !text-white p-2 !text-[40px] bg-[#133365] p-4 bg-[#133365]">airplane_ticket</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Affordable Plans
           </h5>
@@ -57,7 +57,7 @@ gap-x-8  gap-y-10 mt-18">
           </p>
         </div>
         <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">encrypted</span>
+          <span className="material-symbols-outlined  rounded-full !text-white p-2 !text-[40px] bg-[#133365] p-4 bg-[#133365]">encrypted</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Secure & Private
           </h5>
@@ -67,7 +67,7 @@ gap-x-8  gap-y-10 mt-18">
           </p>
         </div>
         <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">map</span>
+          <span className="material-symbols-outlined  rounded-full !text-white p-2 !text-[40px] bg-[#133365] p-4 bg-[#133365]">map</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Trusted by Travelers
           </h5>
