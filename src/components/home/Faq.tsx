@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Plus, Minus, ChevronRight } from "lucide-react";
+import { Plus, Minus, ChevronRight, ArrowRight } from "lucide-react";
 import Image from 'next/image'
 interface FAQItemProps {
   question: string;
@@ -31,9 +31,8 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
       </button>
 
       <div
-        className={` text-start faq-answer text-[#1A0F33] text-[14px] leading-4 md:text-[16px] md:leading-relaxed transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0 overflow-hidden"
-        }`}
+        className={` text-start faq-answer text-[#1A0F33] text-[14px] leading-4 md:text-[16px] md:leading-relaxed transition-all duration-300 ease-in-out ${isOpen ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0 overflow-hidden"
+          }`}
       >
         {answer}
       </div>
@@ -48,13 +47,25 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="flex flex-col md:flex-row items-start gap-16">
           {/* Left Illustration */}
-          <div className="md:w-1/2 w-full">
+          <div className="md:w-1/2 w-full relative">
             <Image
-            height={700} width={700}
+              height={700} width={700}
               src="/faq.webp"
               alt="FAQ Illustration"
               className="w-full h-auto  object-cover object-top rounded-xl"
             />
+            <div className="absolute inset-0 !bg-[linear-gradient(to_top_right,#133366_15%,transparent_80%)] rounded-xl ">
+
+            </div>
+            <div className="flex flex-col gap-2 z-10 p-6 absolute bottom-4 left-3 w-[90%]">
+            <p className="text-white font-bold text-3xl md:text-4xl">
+           Need help? 
+</p>
+<p className="text-[20px]  text-white mb-4">Our team is always ready to guide you through setup  selection—no matter where your journey takes you.</p>
+{/* <div className="flex"></div> */}
+<a className="flex gap-3 font-bold text-white">Reach Out To Support <ArrowRight /></a>
+<a className="flex gap-3 font-bold text-white">Chat On Whatsapp <ArrowRight /></a>
+            </div>
           </div>
 
           {/* Right Content */}
@@ -75,7 +86,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
                   key={index}
                   question={faq.question}
                   answer={faq.answer}
-                  initiallyOpen={index === 0} // ✅ First FAQ open by default
+                  initiallyOpen={false} // ✅ First FAQ open by default
                 />
               ))}
             </div>

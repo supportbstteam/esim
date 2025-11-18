@@ -143,7 +143,7 @@ export default function CountryplanTabs() {
                     </svg>
                   </div>
                 ) : (
-                  <div className={`mt-10 mb-10 flex flex-wrap gap-4 sm:gap-6 ${countries.length === 2 ? "justify-center" : "justify-start"
+                  <div className={`mt-10 mb-3 flex flex-wrap gap-4 sm:gap-6 ${countries.length === 2 ? "justify-center" : "justify-start"
                     }`}>
                     {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -229,7 +229,7 @@ export default function CountryplanTabs() {
                         onClick={() => handleNavigate(plan.country.id)}
                         key={plan.id}
                         className="max-[670px]:w-full max-[1080px]:w-[48%] lg:w-[32%]
-  bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-6 "
+  bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-2 "
                       >
                         <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4 cursor-pointer">
                           <div className="flex w-full justify-between">
@@ -276,6 +276,11 @@ export default function CountryplanTabs() {
               </div>
             )}
           </div>
+          <div className="flex flex-col items-center gap-4">
+          <p className='text-white  text-center text-lg sm:text-xl mt-4'>Explore eSIMs and stay connected anywhere in the world.
+</p>
+<a className='mt-3 bg-[#fff] text-center text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]'>Explore Esims Now</a>
+        </div>
         </div>
       </div>
     </section>

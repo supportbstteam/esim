@@ -45,7 +45,7 @@ export const Explore = () => {
         <p className="!text-white text-[16px] md:!text-[20px] max-[425px]:!text-[14px] ">
           One eSIM → Endless destinations, fast data, no physical SIM.
         </p>
-        <a className="bg-[#fff] text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px] hover:text-white px-6 py-2 rounded-full hover:bg-[#3BC852] transition text-[16px]">Explore More </a>
+        <a className="bg-[#fff] text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]">Explore Esims Now</a>
 
 
 

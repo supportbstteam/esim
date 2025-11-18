@@ -77,6 +77,11 @@ gap-x-8  gap-y-10 mt-18">
           </p>
         </div>
       </div>
+        <div className="flex flex-col items-center gap-4">
+          <p className='text-[#64748B] text-center text-lg sm:text-xl mt-6'>Explore eSIMs and stay connected anywhere in the world.
+</p>
+<a className='mt-3 bg-[#133365] text-center text-[#fff] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]'>Explore Esims Now</a>
+        </div>
     </div>
 
   </div>

@@ -54,7 +54,7 @@ export default function HeroSection() {
                     </h1>
 
                     {/* Description */}
-                    <p className="text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl mt-5 mb-5 md:!mb-18">
+                    <p className="text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl mt-5 mb-5 md:!mb-7">
                         Stay connected in{" "}
                         {(() => {
                             const count = countries?.length || 0;
