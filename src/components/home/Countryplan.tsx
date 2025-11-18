@@ -199,7 +199,7 @@ export default function CountryplanTabs() {
 
             {active === 'popular' && (
               <div role="tabpanel" aria-label="Popular plans">
-                <div className={`mt-10 !pb-5 ${featured.length === 0 ? 'flex justify-center' : 'flex flex-wrap gap-x-6 justify-center'}`}>
+                <div className={`mt-10 !pb-0 ${featured.length === 0 ? 'flex justify-center' : 'flex flex-wrap gap-x-6 justify-center'}`}>
                   {featured.length === 0 ? (
                     <div className="flex justify-center items-center py-12">
                       <svg
@@ -276,8 +276,8 @@ export default function CountryplanTabs() {
               </div>
             )}
           </div>
-          <div className="flex flex-col items-center gap-4">
-          <p className='text-white  text-center text-lg sm:text-xl mt-4'>Explore eSIMs and stay connected anywhere in the world.
+          <div className="flex flex-col items-center gap-4  mt-6  md:mt-15">
+          <p className='text-white  text-center text-lg sm:text-xl '>Explore eSIMs and stay connected anywhere in the world.
 </p>
 <a className='mt-3 bg-[#fff] text-center text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]'>Explore Esims Now</a>
         </div>
