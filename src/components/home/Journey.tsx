@@ -35,7 +35,7 @@ export const Journey = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 min-[500px]:grid-cols-2
 gap-x-8  gap-y-10 mt-18">
-        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+        <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
           <span className="material-symbols-outlined bg-white p-2 !text-[40px]">sim_card</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Instant Activation
@@ -46,7 +46,7 @@ gap-x-8  gap-y-10 mt-18">
            
           </p>
         </div>
-        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+        <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
           <span className="material-symbols-outlined bg-white p-2 !text-[40px]">airplane_ticket</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Affordable Plans
@@ -56,7 +56,7 @@ gap-x-8  gap-y-10 mt-18">
             your budget.
           </p>
         </div>
-        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+        <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
           <span className="material-symbols-outlined bg-white p-2 !text-[40px]">encrypted</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Secure & Private
@@ -66,7 +66,7 @@ gap-x-8  gap-y-10 mt-18">
            
           </p>
         </div>
-        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+        <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
           <span className="material-symbols-outlined bg-white p-2 !text-[40px]">map</span>
           <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Trusted by Travelers

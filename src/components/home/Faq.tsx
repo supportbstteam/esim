@@ -53,7 +53,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             height={700} width={700}
               src="/faq.webp"
               alt="FAQ Illustration"
-              className="w-full h-auto max-h-[500px] object-cover object-top rounded-xl"
+              className="w-full h-auto  object-cover object-top rounded-xl"
             />
           </div>
 
