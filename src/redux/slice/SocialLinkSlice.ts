@@ -14,7 +14,7 @@ export const getAllLinks = createAsyncThunk(
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res: any = await api({
-                url: `/admin/social-media`,
+                url: `/user/social-media`,
                 method: "GET",
             });
 

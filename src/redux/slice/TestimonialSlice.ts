@@ -30,7 +30,7 @@ export const getAllTestimonials = createAsyncThunk(
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res: any = await api({
-                url: `/admin/testimonials`,
+                url: `/user/testimonials`,
                 method: "GET",
             });
             return res.testimonials || [];
