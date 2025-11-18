@@ -1,9 +1,6 @@
 import DynamicPageClient from "@/components/DynamicPageClient";
 
-// Server component
-export default async function DynamicPage({ params }: { params: { page: string } }) {
-  // For now, direct access is fine; Next.js warns for migration
-  const pageSlug = params.page;
-
-  return <DynamicPageClient page={pageSlug} />;
+export default async function DynamicPage({ params }: { params: Promise<{ page: string }> }) {
+  const { page } = await params;
+  return <DynamicPageClient page={page} />;
 }

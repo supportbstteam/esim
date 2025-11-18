@@ -105,23 +105,6 @@ export default function CheckoutDetailPage() {
     setSelectedMethod(method);
   };
 
-  // ✅ COD payment
-  const handleCODPayment = async () => {
-    setLoading(true);
-    try {
-      const res = await api({
-        url: "/user/transactions/cod/initiate",
-        method: "POST",
-      });
-      toast.success("COD transaction completed successfully!");
-      console.log("COD:", res);
-    } catch (error) {
-      console.error("COD Payment failed:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // ✅ Initiate Stripe PaymentIntent
   const initiateStripePayment = async () => {
     setLoading(true);
@@ -159,7 +142,7 @@ export default function CheckoutDetailPage() {
     }
 
     if (selectedMethod.id === "cod") {
-      await handleCODPayment();
+      // await handleCODPayment();
     } else if (selectedMethod.id === "stripe") {
       await initiateStripePayment();
     }

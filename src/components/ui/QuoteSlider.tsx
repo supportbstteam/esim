@@ -1,10 +1,11 @@
 "use client";
 
-import React, { JSX, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { Marquee } from "@/components/ui/marquee"; // path to your Marquee
 import QuoteCard from "./QuoteCard"; // import your QuoteCard
 import { ChevronRight } from "lucide-react";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { getAllTestimonials } from "@/redux/slice/TestimonialSlice";
 interface Quote {
   quote: string;
   name: string;
@@ -26,6 +27,13 @@ const secondRow = quotes.slice(quotes.length / 2);
 
 export function QuoteSlider(): JSX.Element {
   const [paused, setPaused] = useState(false);
+  const dispatch = useAppDispatch();
+  useEffect(()=>{
+    const fetchTesti =async()=>{
+      await dispatch(getAllTestimonials());
+    }
+    fetchTesti();
+  },[dispatch]);
   const { testimonials } = useAppSelector(state => state?.testimonials);
 
   // console.log("----- testimonials-----", testimonials);

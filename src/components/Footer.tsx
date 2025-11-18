@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { RiFacebookFill, RiTwitterXFill } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
-import { FaLinkedinIn } from "react-icons/fa6";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { BiLogoWhatsapp } from "react-icons/bi";
 import { IconType } from "react-icons";
+import { getAllLinks } from "@/redux/slice/SocialLinkSlice";
 
 const linkSections = [
   {
@@ -32,6 +33,7 @@ const iconMap: Record<string, IconType> = {
   Linkedin: FaLinkedinIn,
   Email: MdOutlineEmail,
   Whatsapp: BiLogoWhatsapp,
+  Instagram: FaInstagram,
 };
 
 const toSlug = (text: string) =>
@@ -57,19 +59,35 @@ export const Footer: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const { links } = useAppSelector((state) => state?.links);
   const { countries } = useAppSelector((state) => state.country);
+  const dispatch = useAppDispatch();
+  const DefaultIcon = MdOutlineEmail;
 
   const toggleSection = (i: number) => {
     setOpenIdx((prev) => (prev === i ? null : i));
   };
 
-  console.log("🌐 Dynamic social links:", links);
+  // console.log("🌐 Dynamic social links:", links);
 
   // ✅ Map backend links to icon components
   const dynamicSocials =
     links?.map((social: { type: string; link: string }) => {
-      const Icon = iconMap[social.type] || null;
-      return Icon ? { icon: Icon, href: social.link, type: social.type } : null;
-    }).filter(Boolean) || [];
+      // Pick icon if exists, otherwise fallback
+      const Icon = iconMap[social.type] || DefaultIcon;
+
+      return {
+        icon: Icon,
+        href: social.link,
+        type: social.type,
+      };
+    }) || [];
+
+
+  useEffect(() => {
+    const fetchTesti = async () => {
+      await dispatch(getAllLinks());
+    }
+    fetchTesti();
+  }, [dispatch]);
 
   return (
     <footer className="bg-[#001637] text-white py-10">
