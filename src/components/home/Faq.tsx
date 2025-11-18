@@ -20,7 +20,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
   const toggleAnswer = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="faq-item !text-left mb-6 bg-white p-5 rounded-xl shadow-md transition-all duration-300">
+    <div className="faq-item !text-left mb-6 bg-white p-5 rounded-xl  transition-all duration-300">
       <button
         onClick={toggleAnswer}
         className="faq-question text-[16px] leading-5 md:text-[20px] font-semibold text-[#1A0F33] w-full flex items-start justify-between focus:outline-none"
@@ -51,9 +51,9 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
           <div className="md:w-1/2 w-full">
             <Image
             height={700} width={700}
-              src="/Foooter.webp"
+              src="/faq.webp"
               alt="FAQ Illustration"
-              className="w-full h-auto object-contain rounded-xl"
+              className="w-full h-auto max-h-[500px] object-cover object-top rounded-xl"
             />
           </div>
 

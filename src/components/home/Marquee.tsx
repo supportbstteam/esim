@@ -40,8 +40,8 @@ const Marquee: React.FC<MarqueeProps> = ({ items, speed = 2, fontSize = "30px" }
         style={{ display: "flex" }}
       >
         {[...items, ...items].map((item, idx) => ( // duplicate items
-          <span key={idx} className="items-center opacity-[24%] flex text-[#D9D9D9] !text-[24px] md:text-[36px]" style={{ marginRight: "50px", fontSize: "36px" }}>
-           <span className=" !text-[44px]  md:text-[70px] leading-0 mt-[20px] md:mt-[25px] mr-10 ">*</span> {item} </span>
+          <span key={idx} className="items-center  flex text-[#133365]  !text-[24px] md:text-[36px]" style={{ marginRight: "50px", fontSize: "36px" }}>
+           <span className=" !text-[44px]  md:text-[70px] leading-0 mt-[20px] md:mt-[25px] text-[#3BC852]  mr-10 ">*</span> {item} </span>
           
         ))}
       </div>

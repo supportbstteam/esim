@@ -7,6 +7,7 @@ import { Journey } from "@/components/home/Journey";
 import { EasyStep } from "@/components/home/EasyStep";
 import TrustedTravel from '@/components/home/TrustedTravel';
 import FAQ from "@/components/home/Faq";
+import { Explore } from "@/components/home/Explore";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useEffect } from "react";
 import { fetchCountries } from "@/redux/thunk/thunk";
@@ -49,7 +50,7 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <HeroSection />
 
-        <div className="bg-[#133365] p-3 md:p-5 text-[#FFFFFF]">
+        <div className="bg-[#fff] border-t-1 border-[#133365] p-3 md:p-5 text-[#133365]">
           <Marquee
             items={[
               "Global Coverage",
@@ -62,12 +63,13 @@ export default function Home() {
             speed={1}
           />
         </div>
-
+   <Countryplan />
         {/* <Plan /> */}
         <Journey />
         {/* <TravelPlans /> */}
         <EasyStep />
-        <Countryplan />
+        <Explore />
+     
         <TrustedTravel />
         <FAQ faqs={list} />
 

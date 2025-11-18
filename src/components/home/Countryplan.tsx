@@ -83,7 +83,7 @@ export default function CountryplanTabs() {
   // console.log(countries+'yuwkwoidsj');
 
   return (
-    <section className="w-full   bg-[#133365] mb-6 md:mb-25 mt-6 md:mt-25">
+    <section className="w-full   bg-[#133365]  ">
       <div className="container pt-20 pb-10">
         <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
         <Pagetitle title="Plans That Travel With You" subtitle="Choose a plan that keeps you connected anywhere, anytime." subclass='text-white' />
@@ -143,7 +143,7 @@ export default function CountryplanTabs() {
                     </svg>
                   </div>
                 ) : (
-                  <div className={`mt-10 mb-10 flex flex-wrap gap-4 sm:gap-6 ${countries.length === 1 ? "justify-center" : "justify-start"
+                  <div className={`mt-10 mb-10 flex flex-wrap gap-4 sm:gap-6 ${countries.length === 2 ? "justify-center" : "justify-start"
                     }`}>
                     {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any

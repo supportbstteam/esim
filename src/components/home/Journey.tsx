@@ -9,68 +9,69 @@ import Image from 'next/image'
 export const Journey = () => {
     return (
        <div className="bg-[#E5EFF780]  pt-[88px] mt-[0px] ">
-  <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
+  <div className="container grid grid-cols-1 md:grid-cols-1 gap-10 items-end">
 
     {/* Right Image - Mobile first */}
-    <div className="order-2 md:order-2 flex justify-center md:justify-end">
-      <div className="relative w-full ">
+    {/* <div className="order-2 md:order-2 flex justify-center md:justify-end"> */}
+      {/* <div className="relative w-full ">
         <Image
         height={700} width={700}
           src="/WCU.webp"
           alt="Phone with eSIM"
           className="w-full h-full object-contain object-bottom"
         />
-      </div>
-    </div>
+      </div> */}
+    {/* </div> */}
 
     {/* Left Content */}
     <div className="order-1 md:order-1 pb-8 md:pb-[95px]">
-      <h2 className="h1 text-3xl md:text-[42px] tracking-[-2px] font-bold text-[#1A0F33]">
+      <h2 className="h1 text-center text-3xl md:text-[42px] tracking-[-2px] font-bold text-[#1A0F33]">
         One eSIM, Unlimited Journeys
       </h2>
-      <h4 className="text-[#64748B] text-lg sm:text-xl mt-4">
+      <h4 className="text-[#64748B] text-center text-lg sm:text-xl mt-4">
         Fast setup, reliable coverage, and no hidden fees—so you can focus on
         your trip, not your SIM.
       </h4>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8  gap-y-10 mt-18">
-        <div>
-          <span className="material-symbols-outlined">sim_card</span>
-          <h5 className="text-[#1A0F33] text-lg font-semibold">
+      <div className="grid grid-cols-1 md:grid-cols-4 min-[500px]:grid-cols-2
+gap-x-8  gap-y-10 mt-18">
+        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">sim_card</span>
+          <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Instant Activation
           </h5>
-          <p className="text-[#64748B] text-base mt-2">
+          <p className="text-[#64748B] text-base mt-2 text-center">
              No waiting, no SIM cards—just scan the QR code and connect in
             minutes.
            
           </p>
         </div>
-        <div>
-          <span className="material-symbols-outlined">airplane_ticket</span>
-          <h5 className="text-[#1A0F33] text-lg font-semibold">
+        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">airplane_ticket</span>
+          <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Affordable Plans
           </h5>
-          <p className="text-[#64748B] text-base mt-2">
+          <p className="text-[#64748B] text-base mt-2 text-center">
              Choose from flexible local, regional, or global data packs that fit
             your budget.
           </p>
         </div>
-        <div>
-          <span className="material-symbols-outlined">encrypted</span>
-          <h5 className="text-[#1A0F33] text-lg font-semibold">
+        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">encrypted</span>
+          <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Secure & Private
           </h5>
-          <p className="text-[#64748B] text-base mt-2">
+          <p className="text-[#64748B] text-base mt-2 text-center">
             Enjoy safe browsing with encrypted connections wherever you go.
            
           </p>
         </div>
-        <div>
-          <span className="material-symbols-outlined">map</span>
-          <h5 className="text-[#1A0F33] text-lg font-semibold">
+        <div className="bg-white py-4 px-6 rounded-md border-1 flex flex-col items-center">
+          <span className="material-symbols-outlined bg-white p-2 !text-[40px]">map</span>
+          <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
             Trusted by Travelers
           </h5>
-          <p className="text-[#64748B] text-base mt-2">
+          <p className="text-[#64748B] text-base mt-2 text-center">
             Rated 4.7+ by thousands of users who rely on us for travel
             connectivity.
           </p>
