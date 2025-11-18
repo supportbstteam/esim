@@ -98,7 +98,7 @@ export const Footer: React.FC = () => {
             <Link href="/" className="inline-block">
               <Image height={100} width={100} src="/footer_main.png" alt="footerLogo" className="w-[115px] h-auto" />
             </Link>
-            <p className="text-gray-300 text-sm sm:text-[15px] md:text-[16px]">
+            <p className="!text-white text-sm sm:text-[15px] md:text-[16px]">
               We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless
               connectivity in {(() => {
                 const count = countries?.length || 0;
