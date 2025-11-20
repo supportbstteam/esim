@@ -58,7 +58,7 @@ export function QuoteSlider(): JSX.Element {
       </Marquee>
 
       {/* Second row scrolls right */}
-      <Marquee
+      {/* <Marquee
         reverse
         pauseOnHover={true}
         className="[--duration:50s] gap-[25px]"
@@ -73,7 +73,7 @@ export function QuoteSlider(): JSX.Element {
             <QuoteCard {...quote} />
           </div>
         ))}
-      </Marquee>
+      </Marquee> */}
 
       {/* Gradient overlays */}
       <a href-="/" className="subtext !text-xl flex items-center gap-2">
