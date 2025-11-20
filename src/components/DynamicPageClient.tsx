@@ -54,7 +54,7 @@ export default function DynamicPageClient({ page }: Props) {
         <div>
             <div className="p-4 container">
                 <h1 className={`${title === 'How It Works' || title === 'Help Center' ? 'text-center' : 'text-start'} h1 font-bold mb-4 mt-5 md:mt-12`}>
-                    {title === 'Help Center' || title === 'Device Compatibility' || title === 'Troubleshooting' || title === 'Setup Guide' || title === 'Feature' ? '' : title}
+                    {title === 'Help Center' || title === 'Device Compatibility' || title === 'Troubleshooting' || title === 'Setup Guide' || title === 'Features' ? '' : title}
                 </h1>
 
                 {loading && (
