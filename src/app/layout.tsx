@@ -46,6 +46,8 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
           rel="stylesheet"
         /> 
+          <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  
       </head>
       <ReduxProvider>
         <body
