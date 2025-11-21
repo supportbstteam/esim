@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { clearESimDetails, fetchSimDetailsByUser } from "@/redux/slice/ESimSlice";
 import { postUserClaimRefund } from "@/lib/pageFunction";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 function ESimDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ function ESimDetails() {
 
   useEffect(() => {
     dispatch(clearESimDetails());
+    dispatch(fetchUserDetails());
     if (id) dispatch(fetchSimDetailsByUser(id as string));
   }, [id, dispatch]);
 

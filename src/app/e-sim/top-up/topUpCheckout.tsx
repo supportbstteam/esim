@@ -8,6 +8,7 @@ import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import toast from "react-hot-toast";
 import ThankyouModal from "@/components/modals/ThankyouModal";
 import LoadingModal from "@/components/cards/LoadingCard";
+import { fetchCart } from "@/redux/slice/CartSlice";
 
 export default function TopUpCheckOut() {
     const router = useRouter();
@@ -169,6 +170,7 @@ export default function TopUpCheckOut() {
             // setShowModal(true);
             toast.success("E-SIM Top-Up Successful!");
             setShowModal(false);
+            await dispatch(fetchCart());
             router.push(`/thank-you?mode=topup`);
         }
         catch (err) {
@@ -176,7 +178,7 @@ export default function TopUpCheckOut() {
             toast.error("Failed to complete top-up purchase");
             router.push("/");
         }
-        finally{
+        finally {
             setShowModal(false);
         }
     }

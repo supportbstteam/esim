@@ -16,8 +16,12 @@ export default function ThankYouContent() {
 
   const { orderDetails, loading, error } = useAppSelector((state) => state.order);
 
+  const fetchingCart = async () => {
+    await dispatch(fetchCart());
+  }
   // ✅ Fetch order details only for eSIM (not for topup)
   useEffect(() => {
+    fetchingCart();
     if (mode === "esim" && orderId && orderId !== "failed") {
       dispatch(fetchOrderDetailsByUser(orderId));
     }
@@ -54,8 +58,8 @@ export default function ThankYouContent() {
           description="Your eSIM has been recharged successfully. Enjoy uninterrupted connectivity and keep exploring without limits!"
           isButton={true}
           buttonText="Go to Home"
-          onViewQrCode={async() =>{
-              await dispatch(fetchCart());
+          onViewQrCode={async () => {
+            await dispatch(fetchCart());
             router.push("/")
           }}
         />
