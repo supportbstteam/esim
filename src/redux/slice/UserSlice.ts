@@ -111,7 +111,7 @@ export const fetchUserDetails = createAsyncThunk(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const res: any = await axios.get(
         // `${process.env.NEXT_PUBLIC_API_URL || "https://esim-backend-three.vercel.app/api"}/user/details`, // replace with your URL
-        `${"https://esim-backend-three.vercel.app/api"}/user/details`, // replace with your URL
+        `https://esim-backend-three.vercel.app/api/user/details`, // replace with your URL
         {
           headers: {
             Authorization: `Bearer ${token}`, // or whatever header you want

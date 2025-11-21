@@ -5,6 +5,7 @@ import { fetchOrderDetailsByUser } from "@/redux/slice/OrderSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import PurchaseSuccess from "@/components/cards/PurchaseThankyouCard";
+import { fetchCart } from "@/redux/slice/CartSlice";
 
 export default function ThankYouContent() {
   const router = useRouter();
@@ -53,7 +54,10 @@ export default function ThankYouContent() {
           description="Your eSIM has been recharged successfully. Enjoy uninterrupted connectivity and keep exploring without limits!"
           isButton={true}
           buttonText="Go to Home"
-          onViewQrCode={() => router.push("/")}
+          onViewQrCode={async() =>{
+              await dispatch(fetchCart());
+            router.push("/")
+          }}
         />
       </div>
     );
