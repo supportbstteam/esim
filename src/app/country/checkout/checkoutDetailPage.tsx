@@ -198,6 +198,7 @@ export default function CheckoutDetailPage() {
       // Still navigate to thank-you, but mark as failed order
       router.push(`/thank-you?mode=esim&orderId=failed`);
     } finally {
+      await dispatch(fetchCart());
       setLoading(false);
       setModalOpen(false);
     }
