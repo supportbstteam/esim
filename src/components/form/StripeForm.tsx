@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import toast from "react-hot-toast";
 import { api } from "@/lib/api";
 
 interface StripeFormProps {
   clientSecret: string;
-  transactionId: string; // ID of the transaction created in your backend
-  transaction: string; // ID of the transaction created in your backend
+  transactionId: string; // DB UUID
+  transaction: string;   // also DB UUID here
   onSuccess?: () => void;
 }
 
@@ -17,16 +17,19 @@ const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, tr
   const elements = useElements();
   const [loading, setLoading] = useState(false);
 
+  // 👇 Guard to ensure we never call onSuccess twice from here
+  const hasFiredSuccess = useRef(false);
+
   const handlePayNow = async () => {
     if (!stripe || !elements) {
       toast.error("Stripe has not loaded yet. Please try again.");
       return;
     }
 
+    if (loading) return; // extra guard
     setLoading(true);
 
     try {
-      // Confirm the payment
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -40,8 +43,8 @@ const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, tr
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
         toast.success("Payment successful!");
 
-        // Update transaction status in backend
         try {
+          // Mark transaction SUCCESS in backend (uses UUID)
           await api({
             url: `/user/transactions/${transaction}/success`,
             method: "POST",
@@ -50,8 +53,10 @@ const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, tr
           console.error("Failed to update transaction status", err);
         }
 
-        // Optional success callback
-        onSuccess?.();
+        if (!hasFiredSuccess.current) {
+          hasFiredSuccess.current = true;
+          onSuccess?.();
+        }
       }
     } catch (err) {
       console.error("Stripe payment error:", err);
@@ -68,7 +73,7 @@ const StripeForm: React.FC<StripeFormProps> = ({ clientSecret, transactionId, tr
         type="button"
         onClick={handlePayNow}
         disabled={loading}
-        className="mt-4 w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transition"
+        className="mt-4 w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transition disabled:opacity-50"
       >
         {loading ? "Processing..." : "Pay Now"}
       </button>
