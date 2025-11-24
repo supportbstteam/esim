@@ -166,7 +166,7 @@ function Country() {
 
         <div role="tabpanel" aria-label="Country specific plans" className="w-full">
           {countries.length === 0 ? (
-            <div className="flex items-center py-12">
+            <div className="flex items-center justify-center py-12">
               <svg
                 className="animate-spin h-8 w-8 text-[#3BC852]"
                 xmlns="http://www.w3.org/2000/svg"
