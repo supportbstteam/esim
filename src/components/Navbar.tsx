@@ -271,7 +271,7 @@ export default function Navbar() {
           </div>
           <nav className="px-4 py-6">
             <ul className="flex flex-col gap-4">
-              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">View Plans</button></li>
+              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Countries</button></li>
               <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">How It Works</button></li>
               <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Features</button></li>
               <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Support</button></li>
