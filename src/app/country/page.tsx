@@ -222,9 +222,9 @@ function Country() {
         </div>
       </div>
 
-      <EasyStep />
+      {/* <EasyStep />
       <TrustedTravel />
-      <FAQ faqs={list} />
+      <FAQ faqs={list} /> */}
     </>
 
   );
