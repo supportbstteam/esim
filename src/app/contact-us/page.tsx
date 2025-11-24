@@ -156,8 +156,8 @@ const dispatch = useAppDispatch();
                 <ContactForm handleSave={handleSave} />
             </div>
         </div>
-         <TrustedTravel />
-        <FAQ faqs={list} />
+         {/* <TrustedTravel />
+        <FAQ faqs={list} /> */}
         </div>
     );
 }
