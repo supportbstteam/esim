@@ -234,8 +234,9 @@ export default function CountryplanTabs() {
                         <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4 cursor-pointer">
                           <div className="flex w-full justify-between">
                             <div className="flex items-center justify-between gap-3 ">
+                             {plan?.country?.name}
                               <Flag
-                                countryName={plan?.country?.name}
+                                countryName='Turkey'
                                 size={36}
                                 className="md:h-[36px] md:w-[36px] h-[24px] w-[24px]"
                               />

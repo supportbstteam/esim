@@ -76,6 +76,7 @@ export default function DynamicPageClient({ page }: Props) {
                     />
                 )}
             </div>
+            
             {title === 'How It Works' ? <EasyStep /> : ''}
             {title === 'Terms And Conditions' || 'Privacy Policy'
                 ?
