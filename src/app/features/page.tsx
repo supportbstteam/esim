@@ -78,7 +78,7 @@ function Features() {
         </section>
 
         {/* SAFE & TRUSTWORTHY */}
-        <section className="pb-15 md:pb-20">
+        <section className="">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12">
             <div className="w-full md:w-1/2">
               <div className="text-[#3BC852] text-3xl mb-8">
