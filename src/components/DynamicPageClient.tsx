@@ -39,7 +39,7 @@ export default function DynamicPageClient({ page }: Props) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
                 console.error(err);
-                setError("Coming Soon");
+                setError("Coming Soon.......");
             } finally {
                 setLoading(false);
             }

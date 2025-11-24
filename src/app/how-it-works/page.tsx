@@ -237,8 +237,8 @@ function HowItsWorks() {
         </section>
       </div>
 
-      <TrustedTravel />
-      <FAQ faqs={list} />
+      {/* <TrustedTravel />
+      <FAQ faqs={list} /> */}
     </div>
   );
 }
