@@ -69,7 +69,7 @@ function Country() {
   const { list } = useAppSelector((state) => state?.faq);
   return (
     <>
-      <div className="container px-4 md:px-6">
+      <div className="container px-4 md:px-6 pb-10">
         {/* Heading + Info Left Aligned */}
         <div className="mt-10 mb-6">
           <h2 className="h2 text-center">
