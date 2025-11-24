@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa6";
 import Flag from "@/components/ui/Flag";
 import AuthModal from "@/components/modals/AuthModal";
-import OrderModal from "@/components/modals/orderModal";
 import PaymentMethods, { PaymentMethod } from "@/components/common/PaymentMethods";
 import { RiDeleteBinLine } from "react-icons/ri";
 // Stripe
@@ -204,7 +203,7 @@ export default function CheckoutDetailPage() {
     }
   };
 
-  console.log("----- esim data -----", esimData);
+  // console.log("----- esim data -----", esimData);
 
   return (
     <div className="container my-10">
