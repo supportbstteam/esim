@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addToCart, removeCartItem, fetchCart, updateCartItem } from "@/redux/slice/CartSlice";
+import { addToCart, removeCartItem, fetchCart, updateCartItem, clearCart } from "@/redux/slice/CartSlice";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { api } from "@/lib/api";
 import debounce from "lodash/debounce";
@@ -44,12 +44,13 @@ export default function CheckoutDetailPage() {
   // Guard to prevent duplicate order requests from frontend (StrictMode, double effect, re-renders)
   const hasCalledOrder = useRef(false);
 
-  console.log("---- cart----", cart);
+  // console.log("---- cart----", cart);
 
   // ✅ Fetch cart & user details
   const fetchCartData = async () => {
     try {
       await dispatch(fetchCart());
+      console.log("dispatch c1");
       await dispatch(fetchUserDetails());
     } catch (err) {
       console.error("Error fetching cart:", err);
@@ -57,6 +58,7 @@ export default function CheckoutDetailPage() {
   };
 
   useEffect(() => {
+    console.log("dispatch 2");
     fetchCartData();
   }, [dispatch]);
 
@@ -66,6 +68,7 @@ export default function CheckoutDetailPage() {
       try {
         await dispatch(updateCartItem({ cartItemId, quantity: newQty })).unwrap();
         await dispatch(fetchCart());
+        console.log("dispatch c2");
       } catch (err) {
         toast.error("Failed to update quantity");
       }
@@ -197,7 +200,9 @@ export default function CheckoutDetailPage() {
       // Still navigate to thank-you, but mark as failed order
       router.push(`/thank-you?mode=esim&orderId=failed`);
     } finally {
+      await dispatch(clearCart());
       await dispatch(fetchCart());
+      console.log("dispatch checkout 3");
       setLoading(false);
       setModalOpen(false);
     }

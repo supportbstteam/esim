@@ -171,6 +171,7 @@ export default function TopUpCheckOut() {
             toast.success("E-SIM Top-Up Successful!");
             setShowModal(false);
             await dispatch(fetchCart());
+            console.log("dispatch t1");
             router.push(`/thank-you?mode=topup`);
         }
         catch (err) {

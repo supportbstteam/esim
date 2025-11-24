@@ -34,6 +34,7 @@ export default function Home() {
       await dispatch(getAllLinks());
       await dispatch(fetchPlans({ countryId: "all" }));
       await dispatch(fetchCart());
+      console.log("dispatch home");
       // const token = Cookies.get("token");
     }
     fetchData();

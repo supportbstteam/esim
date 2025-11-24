@@ -104,6 +104,14 @@ export default function Navbar() {
     }, 150);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const menuItems: any = [
+    { label: "Countries", href: "/country" },
+    { label: "How It Works", href: "/how-it-works" },
+    { label: "Features", href: "/features" },
+    { label: "Support", href: "/contact-us" },
+  ];
+
 
   // console.log("----- isAuth ----", cart?.items.length);
 
@@ -271,11 +279,21 @@ export default function Navbar() {
           </div>
           <nav className="px-4 py-6">
             <ul className="flex flex-col gap-4">
-              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Countries</button></li>
-              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">How It Works</button></li>
-              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Features</button></li>
-              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Support</button></li>
-              <li className="text-lg font-medium"><button onClick={() => setIsOpen(false)} className="w-full text-left">Partner Program</button></li>
+              {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                menuItems.map((item: any, index: number) => (
+                  <li key={index} className="text-lg font-medium">
+                    <button
+                      onClick={() => {
+                        navigation(item.href); // if using next/router
+                        setIsOpen(false);
+                      }}
+                      className="w-full text-left"
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
             </ul>
             <div className="mt-6">
               {!isAuth ? (

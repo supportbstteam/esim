@@ -55,7 +55,7 @@ export const addToCart = createAsyncThunk<Cart, { planId: string; quantity?: num
     "cart/addToCart",
     async (plans, { rejectWithValue }) => {
 
-        console.log("----- plans in add to cart ----", plans);
+        // console.log("----- plans in add to cart ----", plans);
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const data: any = await api({

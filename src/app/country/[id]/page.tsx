@@ -72,7 +72,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     fetchPlanDetails();
   }, [user?.id, dispatch, id]);
 
-  console.log("----- plans -----",plans);
+  // console.log("----- plans -----",plans);
 
   const handleTogglePlan = (planId: string) => {
     setSelectedPlans((prev) => {
@@ -88,7 +88,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   };
 
 
-  console.log("----- plans ----", plans);
+  // console.log("----- plans ----", plans);
 
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -117,7 +117,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     try {
       const response = await dispatch(addToCart(plansArray));
 
-      console.log("---- response in teh add to cart ----", response?.payload);
+      // console.log("---- response in teh add to cart ----", response?.payload);
 
       if (response?.type === "cart/addToCart/fulfilled") {
         toast.success("Added to cart successfully!");

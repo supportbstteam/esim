@@ -18,6 +18,7 @@ export default function ThankYouContent() {
 
   const fetchingCart = async () => {
     await dispatch(fetchCart());
+    console.log("dispatch 1");
   }
   // ✅ Fetch order details only for eSIM (not for topup)
   useEffect(() => {
@@ -60,6 +61,7 @@ export default function ThankYouContent() {
           buttonText="Go to Home"
           onViewQrCode={async () => {
             await dispatch(fetchCart());
+            console.log("dispatch t3");
             router.push("/")
           }}
         />
