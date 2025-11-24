@@ -1,8 +1,11 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import Image from 'next/image'
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 export const Explore = () => {
+  const router = useRouter();
   return (
 
     <div className="mb-6 md:mb-25 relative container">
@@ -34,7 +37,7 @@ export const Explore = () => {
 
       {/* Left Content */}
       {/* <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div> */}
-     
+
 
 
       <div className=" absolute bottom-2 md:bottom-10 max-[425px]:!bottom-5 max-[370px]:!bottom-1 -translate-y-[0] left-10 gap-2 sm:gap-5 container flex items-start flex-col !max-w-[80%] sm:!max-w-[60%] !p-2 sm:!p-10 rounded-xl
@@ -45,7 +48,13 @@ export const Explore = () => {
         <p className="!text-white text-[16px] md:!text-[20px] max-[425px]:!text-[14px] ">
           One eSIM → Endless destinations, fast data, no physical SIM.
         </p>
-        <a className="bg-[#fff] text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]">Explore Esims Now</a>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            router.push("/country")
+          }}
+
+          className="bg-[#fff] text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]">Explore Esims Now</button>
 
 
 

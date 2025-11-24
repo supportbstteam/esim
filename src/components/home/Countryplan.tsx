@@ -64,7 +64,7 @@ export default function CountryplanTabs() {
 
     if (isAuth) {
       const response = await dispatch(addToCart([{ ...plan, planId: plan?.id, quantity: 1 }]));
-      if(response?.type === 'cart/addToCart/fulfilled'){
+      if (response?.type === 'cart/addToCart/fulfilled') {
         toast.success("Added to Cart")
         navigation(`/country/checkout?plan=${plan.id}&country=${plan?.country?.id}`);
       }
@@ -277,10 +277,16 @@ export default function CountryplanTabs() {
             )}
           </div>
           <div className="flex flex-col items-center gap-4  mt-6  md:mt-15">
-          <p className='text-white  text-center text-lg sm:text-xl '>Explore eSIMs and stay connected anywhere in the world.
-</p>
-<a className='mt-3 bg-[#fff] text-center text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]'>Explore Esims Now</a>
-        </div>
+            <p className='text-white  text-center text-lg sm:text-xl '>Explore eSIMs and stay connected anywhere in the world.
+            </p>
+            <button
+              onClick={(e)=>{
+                e.preventDefault();
+                router.push("/country")
+              }}
+            
+            className='mt-3 bg-[#fff] text-center text-[#133365] max-[425px]:!text-[14px] max-[330px]:!text-[12px]  hover:text-white px-6 py-2.5 rounded-full hover:bg-[#3BC852] transition text-[16px]'>Explore Esims Now</button>
+          </div>
         </div>
       </div>
     </section>
