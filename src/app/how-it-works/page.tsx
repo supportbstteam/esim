@@ -240,7 +240,7 @@ function HowItsWorks() {
       {/* <TrustedTravel />
       <FAQ faqs={list} /> */}
     </div>
-  );
+  );   
 }
 
 export default HowItsWorks;

@@ -48,7 +48,7 @@ const getHref = (section: string, item: string) => {
      if (item === "Plan & Pricing") return "/country";
     if (item === "How It Works") return "/how-it-works";
     return `/quick-links/${toSlug(item)}`;
-  }
+  } 
   if (section === "Support") {
     if (item === "Setup Guide") return "/set-up";
     return `/supports/${toSlug(item)}`;

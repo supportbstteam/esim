@@ -237,7 +237,7 @@ export default function CountryplanTabs() {
                              {plan?.country?.name}
                               <Flag
                                 countryName={plan?.country?.name}
-                                size={36}
+                                size={36} 
                                 className="md:h-[36px] md:w-[36px] h-[24px] w-[24px]"
                               />
                               <p className="text-base min-[700px]:text-lg text-[#1A0F33] font-[700]">
