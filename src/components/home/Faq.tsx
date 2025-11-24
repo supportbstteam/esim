@@ -47,7 +47,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="flex flex-col md:flex-row items-start gap-16">
           {/* Left Illustration */}
-          <div className="md:w-1/2 w-full relative">
+          <div className=" md:w-1/2 w-full relative">
             <Image
               height={700} width={700}
               src="/faq.webp"
@@ -57,14 +57,14 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             <div className="absolute inset-0 !bg-[linear-gradient(to_top_right,#133366_15%,transparent_80%)] rounded-xl ">
 
             </div>
-            <div className="flex flex-col gap-2 z-10 p-6 absolute bottom-4 left-3 w-[90%]">
-            <p className="text-white font-bold text-3xl md:text-4xl">
+            <div className="flex flex-col gap-1 md:gap-2 z-10 p-2 sm:p-6 absolute bottom-1 md:bottom-4 left-0 md:left-3 w-full md:w-[90%]">
+            <p className="text-white font-bold text-2xl md:text-4xl">
            Need help? 
 </p>
-<p className="text-[20px]  text-white mb-4">Our team is always ready to guide you through setup  selection—no matter where your journey takes you.</p>
+<p className="text-sm sm:text-[20px]  text-white mb-2 sm:mb-4">Our team is always ready to guide you through setup  selection—no matter where your journey takes you.</p>
 {/* <div className="flex"></div> */}
-<a className="flex gap-3 font-bold text-white">Reach Out To Support <ArrowRight /></a>
-<a className="flex gap-3 font-bold text-white">Chat On Whatsapp <ArrowRight /></a>
+<a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Reach Out To Support <ArrowRight /></a>
+<a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Chat On Whatsapp <ArrowRight /></a>
             </div>
           </div>
 
