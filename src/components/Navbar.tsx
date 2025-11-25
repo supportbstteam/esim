@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from './hooks/navigation';
 import { AiOutlineUser } from "react-icons/ai";
 const navItems = [
-  { label: "Countries", href: "/country" },
+  { label: "eSIM Store", href: "/country" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Features", href: "/features" },
   { label: "Support", href: "/contact-us" },
