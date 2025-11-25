@@ -176,8 +176,7 @@ export default function CheckoutDetailPage() {
       const message = response?.message || "Something went wrong";
 
       console.log("postOrder response:", response);
-
-      if (message.toLowerCase().includes("completed")) {
+      if (message.toLowerCase() === "order completed successfully" || response?.order?.status.toLowerCase() === "completed") {
         toast.success(message);
       } else if (message.toLowerCase().includes("partial")) {
         toast.error(message);
