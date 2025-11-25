@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from './hooks/navigation';
 import { AiOutlineUser } from "react-icons/ai";
 const navItems = [
-  { label: "eSIM Store", href: "/country" },
+  { label: "eSIM", href: "/country" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Features", href: "/features" },
   { label: "Support", href: "/contact-us" },
@@ -106,7 +106,7 @@ export default function Navbar() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const menuItems: any = [
-    { label: "Countries", href: "/country" },
+    { label: "eSim", href: "/country" },
     { label: "How It Works", href: "/how-it-works" },
     { label: "Features", href: "/features" },
     { label: "Support", href: "/contact-us" },
