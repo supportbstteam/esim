@@ -108,7 +108,7 @@ const dispatch = useAppDispatch();
 
     return (
         <div className='mb-0 md:mb-25'>
-        <div className='flex flex-col md:flex-row container lg:border-2 lg:border-[#F3F5F7] rounded-[8px] w-full h-full my-15 md:my-25  p-5 md:!p-10 gap-10'>
+        <div className='flex flex-col md:flex-row container lg:border-2 lg:border-[#F3F5F7] rounded-[8px] w-full h-full mt-2 mb-5 md:mb-25 md:mt-25  p-5 md:!p-10 gap-10'>
 
             {/* Left Column - About & Contacts */}
             <div className='flex w-full md:w-[58%] flex-col justify-between'>
