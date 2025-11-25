@@ -69,13 +69,18 @@ function Country() {
   const { list } = useAppSelector((state) => state?.faq);
   return (
     <>
-      <div className="container px-4 md:px-6 pb-10">
+      <div className="container px-4 md:px-6 pb-0">
+        
+
+     
         {/* Heading + Info Left Aligned */}
-        <div className="mt-10 mb-6">
-          <h2 className="h2 text-center">
+        <div className="mt-10 mb-6 relative bg-[url(/external_journey.webp)] bg-no-repeat bg-bottom bg-cover p-16 rounded-xl" >
+        <div className="absolute inset-0 bg-[#133366]/50 rounded-xl "></div>
+
+          <h2 className="h2 relative z-10 !text-white text-center">
             Connect in over 270 destinations
           </h2>
-          <div className="w-full lg:w-[541px]  justify-center mx-auto items-center  mt-8 !mb-20 flex flex-col gap-3 md:gap-7">
+          <div className="w-full lg:w-[541px]  justify-center mx-auto items-center  mt-8  flex flex-col gap-3 md:gap-7">
             <div className="relative mt-0 w-full  mx-auto md:mx-0">
               <div className="flex items-center pr-1.5 py-0 rounded-full border border-[#3BC852] hover:bg-green-50 transition !pl-6   bg-white h-auto md:h-[72px]">
                 <input
@@ -147,7 +152,7 @@ function Country() {
             </div>
 
             {/* 🌍 Popular Countries */}
-            <div className="flex flex-wrap gap-2 justify-center md:justify-start mt-0 md:mt-1 ">
+            <div className="flex relative z-10 flex-wrap gap-2 justify-center md:justify-start mt-0 md:mt-1 ">
               {countries &&
                 countries.length > 0 &&
                 countries.slice(0, 6).map((country: cunt) => (
@@ -164,7 +169,7 @@ function Country() {
           </div>
         </div>
 
-        <div role="tabpanel" aria-label="Country specific plans" className="w-full">
+        <div role="tabpanel" aria-label="Country specific plans" className="w-full mt-20">
           {countries.length === 0 ? (
             <div className="flex items-center justify-center py-12">
               <svg
