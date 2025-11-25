@@ -74,7 +74,7 @@ function Country() {
 
      
         {/* Heading + Info Left Aligned */}
-        <div className="mt-10 mb-6 relative bg-[url(/external_journey.webp)] bg-no-repeat bg-bottom bg-cover p-16 rounded-xl" >
+        <div className="mt-10 mb-6 relative bg-[url(/external_journey.webp)] bg-no-repeat bg-bottom bg-cover py-6 px-4 sm:py-16 sm:px-16 rounded-xl" >
         <div className="absolute inset-0 bg-[#133366]/50 rounded-xl "></div>
 
           <h2 className="h2 relative z-10 !text-white text-center">
