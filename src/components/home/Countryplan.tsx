@@ -199,7 +199,7 @@ export default function CountryplanTabs() {
 
             {active === 'popular' && (
               <div role="tabpanel" aria-label="Popular plans">
-                <div className={`mt-10 !pb-0 ${featured.length === 0 ? 'flex justify-center' : 'flex flex-wrap gap-x-6 justify-center'}`}>
+                <div className={`mt-10 !pb-0 ${featured.length === 0 ? 'flex justify-center' : 'flex flex-wrap gap-x-6 gap-y-6 justify-center'}`}>
                   {featured.length === 0 ? (
                     <div className="flex justify-center items-center py-12">
                       <svg
@@ -229,7 +229,7 @@ export default function CountryplanTabs() {
                         onClick={() => handleNavigate(plan.country.id)}
                         key={plan.id}
                         className="max-[670px]:w-full max-[1080px]:w-[48%] lg:w-[32%]
-  bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-2 "
+  bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-0 "
                       >
                         <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4 cursor-pointer">
                           <div className="flex w-full justify-between">
