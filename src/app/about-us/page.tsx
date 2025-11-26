@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/redux/store";
 import { useAppSelector } from "@/redux/store";
 import Image from 'next/image';
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
+import MainBanner from '@/components/ui/MainBanner';
 const features = [
     {
         id: "coverage",
@@ -61,9 +62,10 @@ function About() {
 
     return (
         <div>
+            <MainBanner title="our eSIMs are designed to give you freedom" subtitle="Enjoy seamless connectivity in countries around the world—without the hassle of traditional SIM cards." backgroundImage="/about_banner.webp" />
         <div className='container mb-10 md:mb-25'>
             <div className="about-layout">
-                <div className=" mx-auto  pt-16 mb-10 md:mb-25 flex max-lg:flex-col justify-between">
+                <div className=" mx-auto  pt-5 mb-10 md:mb-25 flex max-lg:flex-col justify-between">
 
                     <div className='flex flex-col gap-6 lg:gap-[57px]'>
                         <p className="text-[16px] font-semibold text-[#1A0F33] tracking-wide ">
@@ -183,8 +185,8 @@ function About() {
                 </div>
             </div>
         </div>
-            <TrustedTravel />
-            <FAQ faqs={list} />
+            {/* <TrustedTravel />
+            <FAQ faqs={list} /> */}
         </div>
     );
 }

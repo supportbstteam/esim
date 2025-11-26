@@ -5,7 +5,7 @@ import TrustedTravel from "@/components/home/TrustedTravel";
 import FAQ from "@/components/home/Faq";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
-
+import MainBanner from '@/components/ui/MainBanner';
 function HowItsWorks() {
   const dispatch = useAppDispatch();
 
@@ -17,10 +17,11 @@ function HowItsWorks() {
 
   return (
     <div>
+        <MainBanner title="Get Connected in Just a Few Steps" subtitle="From purchase to activation, our eSIM process is quick, simple, and designed for hassle-free travel." backgroundImage="/work_how.webp" />
       <div className="container px-4 md:px-6 mb-10 md:mb-20">
 
         {/* SECTION 1 */}
-        <section className="py-10 md:py-20">
+        <section className="pb-10 pt-10 md:pt-10 md:pb-20">
           <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-12">
             <div className="w-full md:w-[35%] flex flex-col justify-between">
               <h2 className="text-[#1A0F33] font-bold text-[16px]">How its Works</h2>

@@ -11,6 +11,7 @@ import FAQ from "@/components/home/Faq";
 import {  useAppSelector } from "@/redux/store";
 import { useAppDispatch } from "@/redux/store";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
+import MainBanner from '@/components/ui/MainBanner';
 interface ContactItem {
     id: string;
     position: string;
@@ -108,7 +109,8 @@ const dispatch = useAppDispatch();
 
     return (
         <div className='mb-0 md:mb-25'>
-        <div className='flex flex-col md:flex-row container lg:border-2 lg:border-[#F3F5F7] rounded-[8px] w-full h-full mt-2 mb-5 md:mb-25 md:mt-25  p-5 md:!p-10 gap-10'>
+                    <MainBanner title="We’re Here to Help You Stay Connected" subtitle="Whether you need support, have questions, or want guidance choosing the right eSIM, our team is always ready to assist." backgroundImage="/support_esim.webp" />
+        <div className='flex flex-col md:flex-row container  lg:border-[#F3F5F7] rounded-[8px] w-full h-full mt-2 mb-5 md:mb-25 md:mt-10  p-5 md:!p-10 gap-10'>
 
             {/* Left Column - About & Contacts */}
             <div className='flex w-full md:w-[58%] flex-col justify-between'>

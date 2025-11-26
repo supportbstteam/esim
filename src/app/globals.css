@@ -10,7 +10,7 @@
     font-family: "DM Sans", "Arial", "sans-serif";
   }
   .h1 {
-    @apply text-[26px] md:text-[42px] font-semibold md:leading-[56px] text-[#1A0F33];
+    @apply text-[26px] md:text-[42px] font-semibold md:!leading-[115%] text-[#1A0F33];
   }
   .h2 {
     @apply text-[22px]  md:text-[32px] font-semibold md:leading-[44px] text-[#1A0F33];
