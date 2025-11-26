@@ -196,19 +196,19 @@ function HowItsWorks() {
         </div>
 
         {/* WHY IT'S SO EASY */}
-        <section className="pb-5 md:pb-10">
+        <section className="pb-0">
           <h2 className="text-[#1A0F33] font-bold text-[16px] tracking-wider mb-10 md:mb-12">
             WHY IT’S SO EASY
           </h2>
 
           <div className="flex flex-col lg:flex-row justify-between gap-8 md:gap-12">
-            <h3 className="text-3xl md:text-[42px] font-bold text-[#1A0F33] lg:max-w-[60%] leading-snug">
+            <h3 className="h1">
               Built for travelers — enjoy fast <br />
               activation, flexible plans, and global <br />
               connectivity with our digital E-SIM.
             </h3>
 
-            <p className="text-[#64748B] text-xl md:text-[20px] lg:max-w-[38%]">
+            <p className="text-[#64748B] text-xl md:text-[20px] lg:max-w-[36%]">
               Our eSIM is designed to make travel effortless. With quick activation, flexible data plans, and global compatibility, you can stay connected anywhere without the hassle of physical SIM cards or complex setups.
             </p>
           </div>
