@@ -31,11 +31,11 @@ function HowItsWorks() {
             </div>
 
             <div className="w-full md:w-[55%] flex flex-col gap-5 md:gap-8">
-              <p className="text-[#64748B] text-[16px] md:text-[20px] leading-6">
+              <p className="text-[#64748B] text-[16px] leading-6">
                 Experience next-gen connectivity with our E-SIM technology. It’s 100% digital, quick to set up, and works seamlessly across countries giving you freedom, flexibility, and control over your mobile data.
               </p>
 
-              <p className="text-[#64748B] text-[16px] md:text-[20px] leading-6">
+              <p className="text-[#64748B] text-[16px]  leading-6">
                 Connecting while traveling shouldn’t be complicated. With our E-SIM, it takes just a few taps pick your data plan, scan the QR, and you’re online in seconds, anywhere in the world.
               </p>
             </div>
