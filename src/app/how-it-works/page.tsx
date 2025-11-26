@@ -196,7 +196,7 @@ function HowItsWorks() {
         </div>
 
         {/* WHY IT'S SO EASY */}
-        <section className="pb-15 md:pb-20">
+        <section className="pb-5 md:pb-10">
           <h2 className="text-[#1A0F33] font-bold text-[16px] tracking-wider mb-10 md:mb-12">
             WHY IT’S SO EASY
           </h2>

@@ -30,12 +30,12 @@ function Features() {
             </div>
 
             <div className="w-full md:w-[50%] flex flex-col gap-5 md:gap-8">
-              <p className="text-[#64748B] text-[16px] md:text-[20px] leading-6">
+              <p className="text-[#64748B] text-[16px]  leading-6">
                 Experience seamless mobile connectivity designed for modern travelers.
                 Activate your eSIM instantly and stay connected wherever you go.
               </p>
 
-              <p className="text-[#64748B] text-[16px] md:text-[20px] leading-6">
+              <p className="text-[#64748B] text-[16px]  leading-6">
                 Flexible plans and secure global coverage give you full control —
                 no physical SIMs, no hidden fees, just hassle-free travel-ready connectivity.
               </p>
