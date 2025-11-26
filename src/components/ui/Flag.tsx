@@ -110,7 +110,6 @@ export default function Flag({
           return;
         }
 
-        // fallback
         for (const entry of data || []) {
           if (entry?.cca2) {
             const lower = entry.cca2.toLowerCase();
@@ -139,7 +138,24 @@ export default function Flag({
 
   const svgUrl = code ? `https://flagcdn.com/${code}.svg` : null;
 
-  // ❌ IF IMAGE ERROR -> fallback initials
+  // ⭐ Special Case → EUROPE Image
+  if (countryName?.toLowerCase() === "europe") {
+    return (
+      <div
+        className={`overflow-hidden rounded-sm ${className}`}
+        style={{ width: size, height: size }}
+      >
+        <Image
+          src="/europ_flag.webp"
+          alt="Europe"
+          width={size}
+          height={size}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    );
+  }
+
   if (imgError || !code) {
     const initials =
       countryName
@@ -169,7 +185,7 @@ export default function Flag({
     );
   }
 
-  // ✅ Final Image
+
   return (
     <div
       className={`overflow-hidden rounded-sm ${className}`}
