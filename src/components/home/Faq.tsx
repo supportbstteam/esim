@@ -1,5 +1,5 @@
 "use client";
-
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Plus, Minus, ChevronRight, ArrowRight } from "lucide-react";
@@ -16,6 +16,8 @@ interface FAQProps {
 
 /* Single FAQ Item */
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = false }) => {
+
+
   const [isOpen, setIsOpen] = useState(initiallyOpen);
   const toggleAnswer = () => setIsOpen((prev) => !prev);
 
@@ -42,6 +44,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
 
 /* Main FAQ Section */
 const FAQ: React.FC<FAQProps> = ({ faqs }) => {
+  const pathname = usePathname();
   return (
     <section className="faq-container bg-[#E5EFF780] py-20">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
@@ -58,13 +61,13 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
 
             </div>
             <div className="flex flex-col gap-1 md:gap-2 z-10 p-2 sm:p-6 absolute bottom-1 md:bottom-4 left-0 md:left-3 w-full md:w-[90%]">
-            <p className="text-white font-bold text-2xl md:text-4xl">
-           Need help? 
-</p>
-<p className="text-sm sm:text-[20px]  text-white mb-2 sm:mb-4">Our team is always ready to guide you through setup  selection—no matter where your journey takes you.</p>
-{/* <div className="flex"></div> */}
-<a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Reach Out To Support <ArrowRight /></a>
-<a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Chat On Whatsapp <ArrowRight /></a>
+              <p className="text-white font-bold text-2xl md:text-4xl">
+                Need help?
+              </p>
+              <p className="text-sm sm:text-[20px]  text-white mb-2 sm:mb-4">Our team is always ready to guide you through setup  selection—no matter where your journey takes you.</p>
+              {/* <div className="flex"></div> */}
+              <a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Reach Out To Support <ArrowRight /></a>
+              <a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Chat On Whatsapp <ArrowRight /></a>
             </div>
           </div>
 
@@ -92,13 +95,15 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             </div>
 
             {/* View All Link using Next.js Link */}
-            <Link
-              href="/faq"
-              className="text-[#64748B] text-[16px] md:text-xl font-medium flex items-center gap-2 mt-12 hover:underline transition-all"
-            >
-              View All FAQs
-              <ChevronRight className="w-5 h-5 text-[#64748B]" />
-            </Link>
+            {pathname !== "/faq" && (
+              <Link
+                href="/faq"
+                className="text-[#64748B] text-[16px] md:text-xl font-medium flex items-center gap-2 mt-12 hover:underline transition-all"
+              >
+                View All FAQs
+                <ChevronRight className="w-5 h-5 text-[#64748B]" />
+              </Link>
+            )}
           </div>
         </div>
       </div>
