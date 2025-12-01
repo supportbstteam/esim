@@ -102,13 +102,13 @@ const OrderDetails = () => {
               const rechargeRecords = activeSim.topUps.map((topupItem: any) => {
                 console.log("------ topupItem -----", topupItem);
                 return ({
-                  purchasedOn: new Date(topupItem.purchasedOn).toLocaleDateString("en-GB"),
+                  purchasedOn: moment(topupItem.purchasedOn).format("MMM Do YY"),
                   plan: topupItem?.title || topupItem?.name || "Unknown Plan",
                   // planStart: activeSim.startDate
                   //   ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
                   //   : "-",
                   planEnd: activeSim.endDate
-                    ? new Date(activeSim.endDate).toLocaleDateString("en-GB")
+                    ? moment(activeSim.endDate).format("MMM Do YY")
                     : "-",
                   paymentMode: "Online",
                 })
