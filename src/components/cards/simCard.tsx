@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ClaimRefundModal } from "../modals/ClaimFundModal";
+import moment from "moment";
 
 // Utility: map country names to ISO codes
 const getCountryCode = (countryName: string | undefined): string | null => {
@@ -53,6 +54,9 @@ export const SimCard = ({ order }: any) => {
     if (!order?.id) return;
     router.push(`/e-sim/top-up?simId=${order.id}`);
   };
+
+  const formatted = moment(order.startDate, "YYYY-MM-DD").format("DD/MM/YYYY");
+  // console.log("---- order in sim card ----", order?.startDate);
 
   const handleRefund = () => {
     if (!order?.id) return;
@@ -154,8 +158,8 @@ export const SimCard = ({ order }: any) => {
             </div>
 
             <div className="flex justify-between items-center mb-1 gap-4 text-xs text-gray-500">
-              <span>Start: {order?.startDate || "N/A"}</span>
-              <span>End: {order?.endDate || "N/A"}</span>
+              <span>Start: {moment(order?.startDate ).format("DD/MM/YYYY")|| "N/A"}</span>
+              <span>End: {moment(order?.endDate ).format("DD/MM/YYYY")|| "N/A"}</span>
             </div>
             <button
               className="flex-1 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium py-2.5 px-4 rounded-lg text-sm transition-colors"
@@ -211,8 +215,8 @@ export const SimCard = ({ order }: any) => {
             </div>
 
             <div className="flex justify-between items-center mb-4 gap-4 text-xs text-gray-500">
-              <span>Start: {order?.startDate || "—"}</span>
-              <span>End: {order?.endDate || "—"}</span>
+              <span>Start: {formatted || "—"}</span>
+              <span>End: {moment(order?.endDate, "YYYY-MM-DD").format("DD/MM/YYYY") || "—"}</span>
             </div>
 
             <div className="flex gap-3 mt-4 pt-4 border-t border-gray-100">

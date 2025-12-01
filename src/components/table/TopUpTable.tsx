@@ -26,6 +26,8 @@ const RechargeHistory: React.FC<RechargeHistoryProps> = ({
         page * rowsPerPage + rowsPerPage
     );
 
+    // console.log("---- paginatedData ----", paginatedData);
+
 
     // ✅ Empty state
     if (records.length === 0) {
@@ -77,7 +79,7 @@ const RechargeHistory: React.FC<RechargeHistoryProps> = ({
                         <tr className="border-b border-neutral-200 ">
                             <th className="text-left font-normal text-neutral-400 py-2 px-2">Purchased on</th>
                             <th className="text-left font-normal text-neutral-400 py-2 px-2">Plan</th>
-                            <th className="text-left font-normal text-neutral-400 py-2 px-2">Plan start date</th>
+                            {/* <th className="text-left font-normal text-neutral-400 py-2 px-2">Plan start date</th> */}
                             {/* <th className="text-left font-normal text-neutral-400 py-2 px-2">Plan end date</th> */}
                             <th className="text-left font-normal text-neutral-400 py-2 px-2">Payment Mode</th>
                         </tr>
@@ -92,7 +94,7 @@ const RechargeHistory: React.FC<RechargeHistoryProps> = ({
                             >
                                 <td className="py-2 px-2 text-neutral-700 ">{row.purchasedOn}</td>
                                 <td className="py-2 px-2 text-neutral-700 ">{row.plan}</td>
-                                <td className="py-2 px-2 text-neutral-700 ">{row.planStart}</td>
+                                {/* <td className="py-2 px-2 text-neutral-700 ">{row.planStart}</td> */}
                                 {/* <td className="py-2 px-2 text-neutral-700 ">{row.planEnd}</td> */}
                                 <td className="py-2 px-2 text-neutral-700 ">{row.paymentMode}</td>
                             </tr>

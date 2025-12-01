@@ -11,7 +11,7 @@ function ESim() {
     const dispatch = useAppDispatch();
     const { esims, loading } = useAppSelector(state => state.esims);
 
-    console.log("---- esims array ----", esims)
+    // console.log("---- esims array ----", esims)
 
     useEffect(() => {
         dispatch(fetchSimsByUser());

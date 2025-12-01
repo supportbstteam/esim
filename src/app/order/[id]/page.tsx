@@ -100,13 +100,13 @@ const OrderDetails = () => {
             (() => {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const rechargeRecords = activeSim.topUps.map((topupItem: any) => {
-                // console.log("------ topupItem -----", topupItem);
+                console.log("------ topupItem -----", topupItem);
                 return ({
-                  purchasedOn: new Date(topupItem.createdAt).toLocaleDateString("en-GB"),
+                  purchasedOn: new Date(topupItem.purchasedOn).toLocaleDateString("en-GB"),
                   plan: topupItem?.title || topupItem?.name || "Unknown Plan",
-                  planStart: activeSim.startDate
-                    ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
-                    : "-",
+                  // planStart: activeSim.startDate
+                  //   ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
+                  //   : "-",
                   planEnd: activeSim.endDate
                     ? new Date(activeSim.endDate).toLocaleDateString("en-GB")
                     : "-",

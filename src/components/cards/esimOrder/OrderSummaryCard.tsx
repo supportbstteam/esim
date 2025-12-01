@@ -44,12 +44,16 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                     {totalAmount}
                 </span>
             </div>
-            <div className="flex justify-between">
-                <span className="text-neutral-400">Payment Method:</span>
-                <span className="font-medium text-neutral-700 ">
-                    {paymentMethod}
-                </span>
-            </div>
+
+            {
+                paymentMethod && <div className="flex justify-between">
+                    <span className="text-neutral-400">Payment Method:</span>
+                    <span className="font-medium text-neutral-700 ">
+                        {paymentMethod}
+                    </span>
+                </div>
+            }
+
         </div>
     </div>
 );
