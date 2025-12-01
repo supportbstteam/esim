@@ -55,7 +55,7 @@ export const SimCard = ({ order }: any) => {
     router.push(`/e-sim/top-up?simId=${order.id}`);
   };
 
-  const formatted = moment(order.startDate, "YYYY-MM-DD").format("MMM Do YY");
+  const formatted = moment(order.startDate, "YYYY-MM-DD").format("DD/MM/YYYY");
   // console.log("---- order in sim card ----", order?.startDate);
 
   const handleRefund = () => {
@@ -158,8 +158,8 @@ export const SimCard = ({ order }: any) => {
             </div>
 
             <div className="flex justify-between items-center mb-1 gap-4 text-xs text-gray-500">
-              <span>Start: {moment(order?.startDate ).format("MMM Do YY")|| "N/A"}</span>
-              <span>End: {moment(order?.endDate ).format("MMM Do YY")|| "N/A"}</span>
+              <span>Start: {moment(order?.startDate ).format("DD/MM/YYYY")|| "N/A"}</span>
+              <span>End: {moment(order?.endDate ).format("DD/MM/YYYY")|| "N/A"}</span>
             </div>
             <button
               className="flex-1 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium py-2.5 px-4 rounded-lg text-sm transition-colors"
@@ -216,7 +216,7 @@ export const SimCard = ({ order }: any) => {
 
             <div className="flex justify-between items-center mb-4 gap-4 text-xs text-gray-500">
               <span>Start: {formatted || "—"}</span>
-              <span>End: {moment(order?.endDate, "YYYY-MM-DD").format("MMM Do YY") || "—"}</span>
+              <span>End: {moment(order?.endDate, "YYYY-MM-DD").format("DD/MM/YYYY") || "—"}</span>
             </div>
 
             <div className="flex gap-3 mt-4 pt-4 border-t border-gray-100">

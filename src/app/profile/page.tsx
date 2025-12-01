@@ -244,7 +244,7 @@ function Profile() {
                       {row?.code.length > 10 ? "..." : ""}
                     </td>
                     <td className="px-6 py-3 text-sm text-gray-600">
-                      {dayjs(row.createdAt).format("MMM DD, YYYY")}
+                      {dayjs(row.createdAt).format("DD/MM/YYYY")}
                     </td>
                     <td className="px-6 py-3 text-sm text-gray-600">
                       {row.totalPlans}

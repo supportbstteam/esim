@@ -63,7 +63,7 @@ function ESimDetails() {
                           planType={esim?.productName?.replace(/-$/, "")}
                           expired={false}
                           simNo={esim?.iccid || "No iccid no."}
-                          purchasedOn={moment(esim?.createdAt).format("MMM Do YY")}
+                          purchasedOn={moment(esim?.createdAt).format("DD/MM/YYYY")}
                           activationDate=""
                           validityDays={esim?.validityDays || "0"}
                           dataUsed={0}
@@ -132,7 +132,7 @@ function ESimDetails() {
             <OrderSummary
               orderId={eSimDetails?.orderCode}
               transactionId={eSimDetails?.transaction?.transactionId}
-              orderDate={moment(eSimDetails?.esims[0]?.createdAt).format("MMM Do YY")}
+              orderDate={moment(eSimDetails?.esims[0]?.createdAt).format("DD/MM/YYYY")}
               totalAmount={
                 (activeSim?.country?.currency === "USD"
                   ? "$"

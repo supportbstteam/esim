@@ -60,7 +60,7 @@ const OrderDetails = () => {
                           planType={esim?.productName?.replace(/-$/, "")}
                           expired={false}
                           simNo={esim?.iccid || "No iccid no."}
-                          purchasedOn={moment(esim?.createdAt).format("MMM Do YY") || "N/A"}
+                          purchasedOn={moment(esim?.createdAt).format("DD/MM/YYYY") || "N/A"}
                           activationDate=""
                           validityDays={esim?.validityDays || "0"}
                           dataUsed={0}
@@ -102,13 +102,13 @@ const OrderDetails = () => {
               const rechargeRecords = activeSim.topUps.map((topupItem: any) => {
                 console.log("------ topupItem -----", topupItem);
                 return ({
-                  purchasedOn: moment(topupItem.purchasedOn).format("MMM Do YY"),
+                  purchasedOn: moment(topupItem.purchasedOn).format("DD/MM/YYYY"),
                   plan: topupItem?.title || topupItem?.name || "Unknown Plan",
                   // planStart: activeSim.startDate
                   //   ? new Date(activeSim.startDate).toLocaleDateString("en-GB")
                   //   : "-",
                   planEnd: activeSim.endDate
-                    ? moment(activeSim.endDate).format("MMM Do YY")
+                    ? moment(activeSim.endDate).format("DD/MM/YYYY")
                     : "-",
                   paymentMode: "Online",
                 })
@@ -123,7 +123,7 @@ const OrderDetails = () => {
             <OrderSummary
               orderId={orderDetails?.orderCode}
               transactionId={orderDetails?.transaction?.transactionId}
-              orderDate={moment(orderDetails?.esims[0]?.createdAt).format("MMM Do YY")}
+              orderDate={moment(orderDetails?.esims[0]?.createdAt).format("DD/MM/YYYY")}
               totalAmount={
                 (orderDetails?.country?.currency === "USD"
                   ? "$"
