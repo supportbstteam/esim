@@ -66,7 +66,7 @@ const SummarySimCard = () => {
         method: "GET",
       });
 
-      console.log("---- eSIM summary response ----", response);
+      // console.log("---- eSIM summary response ----", response);
 
       if (response?.status === "success") {
         setSummary(response?.data);

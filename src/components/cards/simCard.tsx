@@ -50,6 +50,8 @@ export const SimCard = ({ order }: any) => {
   const router = useRouter();
   const [orderErrorModal, setOrderErrorModal] = useState(false);
 
+  console.log("---- order in sim card component ----", order);
+
   const handleRecharge = () => {
     if (!order?.id) return;
     router.push(`/e-sim/top-up?simId=${order.id}`);

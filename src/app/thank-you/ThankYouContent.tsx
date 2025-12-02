@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import PurchaseSuccess from "@/components/cards/PurchaseThankyouCard";
 import { fetchCart } from "@/redux/slice/CartSlice";
+import { title } from "process";
 
 export default function ThankYouContent() {
   const router = useRouter();
@@ -13,6 +14,10 @@ export default function ThankYouContent() {
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode");
   const orderId = searchParams.get("orderId");
+  const code = searchParams.get("code");
+
+  console.log("ThankYouContent - mode:", mode, "orderId:", orderId, "code:", code);
+
 
   const { orderDetails, loading, error } = useAppSelector((state) => state.order);
 
@@ -41,7 +46,7 @@ export default function ThankYouContent() {
     return (
       <div className="max-w-full mx-auto px-4 md:px-10 py-6">
         <PurchaseSuccess
-          title="Order Failed ❌"
+          title={`Order #${code} Failed ❌`}
           description="Unfortunately, your eSIM order could not be processed. Please try again or contact support."
           isButton={false}
           onViewQrCode={() => router.push("/")}
@@ -55,7 +60,8 @@ export default function ThankYouContent() {
     return (
       <div className="max-w-full mx-auto px-4 md:px-10 py-6">
         <PurchaseSuccess
-          title="Recharge Successful ⚡"
+          // title="Recharge Successful ⚡"
+          title={`Recharge #${code} Successful 🎉`}
           description="Your eSIM has been recharged successfully. Enjoy uninterrupted connectivity and keep exploring without limits!"
           isButton={true}
           buttonText="Go to Home"
@@ -76,7 +82,7 @@ export default function ThankYouContent() {
     switch (orderStatus) {
       case "COMPLETED":
         return {
-          title: "Order Successful 🎉",
+          title: `Order #${code} Successful 🎉`,
           description:
             "Your eSIM has been successfully created. You can now view your QR code and start using your data plan.",
           buttonText: "View eSIM",
@@ -84,7 +90,7 @@ export default function ThankYouContent() {
         };
       case "PARTIAL":
         return {
-          title: "Partially Completed ⚠️",
+          title: `Order #${code} Partially Completed ⚠️`,
           description:
             "Some of your eSIMs were created successfully, but a few failed. Please review the details in your order.",
           buttonText: "View Details",
@@ -92,7 +98,7 @@ export default function ThankYouContent() {
         };
       case "FAILED":
         return {
-          title: "Order Failed ❌",
+          title: `Order #${code} Failed ❌`,
           description:
             "We couldn’t create your eSIMs. Please contact support or retry your order.",
           buttonText: "Try Again",
@@ -100,7 +106,7 @@ export default function ThankYouContent() {
         };
       default:
         return {
-          title: "Order Processing",
+          title: `Order #${code} Processing`,
           description: "We are currently processing your order. Please check back later.",
           buttonText: "Go Home",
           isButton: false,

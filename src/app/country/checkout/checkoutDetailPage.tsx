@@ -25,7 +25,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 export default function CheckoutDetailPage() {
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const router:any = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { cart }: any = useAppSelector((state) => state.cart);
 
@@ -188,8 +189,10 @@ export default function CheckoutDetailPage() {
 
       setTransactionData(response?.order?.transaction);
 
+      console.log("Order placed successfully, orderId:", response?.order?.orderCode );
+
       // Always navigate to thank-you page (successful or already-processed)
-      router.push(`/thank-you?mode=esim&orderId=${orderId ?? "processed"}`);
+      router.push(`/thank-you?mode=esim&orderId=${orderId ?? "processed"}&code=${response?.order?.orderCode ?? ""}`);
        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Error in place order after stripe success", err);
