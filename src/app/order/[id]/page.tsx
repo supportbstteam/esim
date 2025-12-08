@@ -31,7 +31,7 @@ const OrderDetails = () => {
   const activeSim = orderDetails?.esims?.[activeSimIndex];
 
 
-  console.log("----- order details ----", orderDetails);
+  // console.log("----- order details ----", orderDetails);
 
   return (
     <div className="max-w-full mx-auto px-4 md:px-10 py-6">
@@ -49,7 +49,7 @@ const OrderDetails = () => {
             {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               orderDetails.esims.map((esim: any, index: number) => {
-                // console.log("---- esim ----", esim);
+                console.log("---- esim ----", esim);
                 return (
                   <SwiperSlide key={index}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 mt-8 items-start">
@@ -65,7 +65,7 @@ const OrderDetails = () => {
                           validityDays={esim?.validityDays || "0"}
                           dataUsed={0}
                           dataTotal={esim?.dataAmount}
-                          price={((orderDetails?.country?.currency === "USD" ? "$" : orderDetails?.country?.currency) || "N/A") + " " + (orderDetails?.totalAmount || "N/A")}
+                          price={((orderDetails?.country?.currency === "USD" ? "$" : orderDetails?.country?.currency) || "N/A") + " " + (esim?.price || "N/A")}
                           planStart="Dec 1, 2024"
                           planEnd="Dec 5, 2024"
                           onRecharge={() => alert("Recharge clicked!")}
