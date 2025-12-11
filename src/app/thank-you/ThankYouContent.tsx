@@ -46,7 +46,7 @@ export default function ThankYouContent() {
     return (
       <div className="max-w-full mx-auto px-4 md:px-10 py-6">
         <PurchaseSuccess
-          title={`Order #${code} Failed ❌`}
+          title={`Order ${code ? `#${code}` : ""} Failed ❌`}
           description="Unfortunately, your eSIM order could not be processed. Please try again or contact support."
           isButton={false}
           onViewQrCode={() => router.push("/")}

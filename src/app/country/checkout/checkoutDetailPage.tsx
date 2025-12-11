@@ -83,7 +83,7 @@ export default function CheckoutDetailPage() {
       setLoading(true); // optional, show loading state
       const response = await dispatch(removeCartItem(cartItemId));
       if (response?.type === "cart/removeCartItem/fulfilled") toast.success("Item removed from cart");
-      console.log("----- response in remove to cart ----", response);
+      // console.log("----- response in remove to cart ----", response);
     } catch (err) {
       console.error("Failed to delete cart item:", err);
       toast.error("Failed to remove item");
@@ -127,7 +127,7 @@ export default function CheckoutDetailPage() {
       setClientSecret(res.clientSecret);
       setTransactionId(res.transaction?.id);
       toast.success("Proceed with Stripe payment below");
-      console.log("Stripe initialized:", { clientSecret: res.clientSecret, transactionId: res.transaction?.id });
+      // console.log("Stripe initialized:", { clientSecret: res.clientSecret, transactionId: res.transaction?.id });
     } catch (error) {
       toast.error("Stripe Error");
       console.error("Stripe initiation failed:", error);
@@ -199,8 +199,11 @@ export default function CheckoutDetailPage() {
       const msg = err?.response?.data?.message || "Something went wrong";
       toast.error(msg);
 
+      console.log("-=-=-=---=-=--=-=-=-=-= error response -=-=-=-=--=-==-=-=-=-=",err?.response)
+
       // Still navigate to thank-you, but mark as failed order
-      router.push(`/thank-you?mode=esim&orderId=failed`);
+      // router.push(`/thank-you?mode=esim&orderId=${orderId ?? "processed"}&code=${response?.order?.orderCode ?? ""}`);
+      router.push(`/thank-you?mode=esim&orderId=failed&code=${err?.response?.data?.order?.orderCode ?? ""}`);
     } finally {
       await dispatch(clearCart());
       await dispatch(fetchCart());

@@ -72,7 +72,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     fetchPlanDetails();
   }, [user?.id, dispatch, id]);
 
-  console.log("----- plans -----",plans);
+  // console.log("----- plans -----",plans);
 
   const handleTogglePlan = (planId: string) => {
     setSelectedPlans((prev) => {
