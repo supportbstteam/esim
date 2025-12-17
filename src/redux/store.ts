@@ -10,6 +10,7 @@ import CartSlice from "./slice/CartSlice"
 import ESimSlice from "./slice/ESimSlice"
 import TestimonialSlice from "./slice/TestimonialSlice"
 import LinkSlice from "./slice/SocialLinkSlice"
+import CMSSlice from "./slice/CmsPagesSlice"
 
 export const store = configureStore({
     reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
         cart: CartSlice,
         esims: ESimSlice,
         testimonials: TestimonialSlice,
-        links: LinkSlice
+        links: LinkSlice,
+        cmsPage:CMSSlice,
     },
 });
 

@@ -8,12 +8,14 @@ interface FetchPlansArgs {
 export const fetchPlans = createAsyncThunk(
     "plans/fetchPlans",
     async ({ countryId }: FetchPlansArgs = {}, { rejectWithValue }) => {
+
+        console.log("-=-=-=-=-= coutnry id -=-=-=-=-=-",countryId);
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res = await api<{ success: boolean; data: any[] }, { countryId?: string }>({
                 url: "/user/plans",
                 method: "GET",
-                params: { countryId: countryId || "all" }, // ✅ pass as object
+                params: { countryId }, // ✅ pass as object
             });
 
             // console.log("---- response in the fetching plans ----", res);

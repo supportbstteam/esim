@@ -32,7 +32,10 @@ export default function Home() {
       await dispatch(fetchFaqs());
       await dispatch(featurePlans());
       await dispatch(getAllLinks());
-      await dispatch(fetchPlans({ countryId: "all" }));
+      // ✅ ONLY on home page
+      if (location.pathname === "/") {
+        await dispatch(fetchPlans({ countryId: "all" }));
+      }
       await dispatch(fetchCart());
       console.log("dispatch home");
       // const token = Cookies.get("token");
@@ -64,13 +67,13 @@ export default function Home() {
             speed={1}
           />
         </div>
-   <Countryplan />
+        <Countryplan />
         {/* <Plan /> */}
         <Journey />
         {/* <TravelPlans /> */}
         <EasyStep />
         <Explore />
-     
+
         <TrustedTravel />
         <FAQ faqs={list} />
 

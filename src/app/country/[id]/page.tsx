@@ -66,7 +66,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   useEffect(() => {
     const fetchPlanDetails = async () => {
       await dispatch(clearPlans());
-      await dispatch(fetchPlans({ countryId: id }));
+        await dispatch(fetchPlans({ countryId: id }));
       await dispatch(fetchUserDetails());
     };
     fetchPlanDetails();

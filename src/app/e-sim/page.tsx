@@ -3,19 +3,28 @@ import { SimCard } from '@/components/cards/simCard';
 import SummarySimCard from '@/components/cards/SummarySimCard';
 import SimCardSkeleton from '@/components/skeleton/SimCardSkeleton';
 import { fetchSimsByUser } from '@/redux/slice/ESimSlice';
+import { getAllLinks } from '@/redux/slice/SocialLinkSlice';
 import { fetchUserDetails } from '@/redux/slice/UserSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { fetchPlans } from '@/redux/thunk/planThunk';
+import { fetchCountries } from '@/redux/thunk/thunk';
 import React, { useEffect } from 'react';
 
 function ESim() {
     const dispatch = useAppDispatch();
     const { esims, loading } = useAppSelector(state => state.esims);
 
-    // console.log("---- esims array ----", esims)
+    // console.log("---- esims array ----", esims
+
+    const fetchingSimsDatas = async () => {
+        await dispatch(fetchCountries());
+        await dispatch(getAllLinks());
+        await dispatch(fetchSimsByUser());
+        await dispatch(fetchUserDetails());
+    }
 
     useEffect(() => {
-        dispatch(fetchSimsByUser());
-        dispatch(fetchUserDetails());
+        fetchingSimsDatas();
     }, [dispatch]);
 
     return (
@@ -38,9 +47,9 @@ function ESim() {
                             .fill(null)
                             .map((_, i) => <SimCardSkeleton key={i} />)
                         : esims && esims.length > 0
-                            ? esims.map(esim => { 
+                            ? esims.map(esim => {
                                 // console.log("------ e sim ----", esim);
-                                return <SimCard key={esim.id} order={esim} /> 
+                                return <SimCard key={esim.id} order={esim} />
                             })
                             : <p>No orders found.</p>}
                 </div>
