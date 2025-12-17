@@ -11,6 +11,7 @@ import { X } from "lucide-react";
 import { api } from "@/lib/api";
 import { Eye, EyeOff } from "lucide-react";
 import ForgotPassword from "../ui/ForgetPasswordComponent";
+import { fetchCountries } from "@/redux/thunk/thunk";
 type AuthModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -184,6 +185,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
         if (!signupValues) return toast.error("Signup data missing.");
         setLoading(true);
         try {
+            await dispatch(fetchCountries());
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const response: any = await dispatch(signupUser(signupValues));
             if (response?.type === 'user/signup/fulfilled') toast.success("OTP resent!");
