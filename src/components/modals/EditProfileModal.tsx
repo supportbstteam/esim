@@ -124,7 +124,7 @@ export const EditProfileModal: React.FC<Props> = ({
 
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Contact No <span className="text-rose-500">*</span>
+                  Contact No 
                 </label>
                 <Field
                   name="contact"
@@ -134,7 +134,7 @@ export const EditProfileModal: React.FC<Props> = ({
 
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Location <span className="text-rose-500">*</span>
+                  Location 
                 </label>
                 <Field
                   name="location"

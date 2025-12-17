@@ -21,6 +21,7 @@ import { OrderDetailModal } from "@/components/modals/OrderDetailsModal";
 import { ClaimRefundModal } from "@/components/modals/ClaimFundModal";
 import { useRouter } from "next/navigation";
 import { postUserClaimRefund } from "@/lib/pageFunction";
+import { fetchCountries } from "@/redux/thunk/thunk";
 
 const statusStyles: Record<string, string> = {
   completed: "text-green-600",
@@ -65,6 +66,7 @@ function Profile() {
   const [statusFilter, setStatusFilter] = useState("All");
 
   useEffect(() => {
+    dispatch(fetchCountries());
     dispatch(fetchUserDetails());
     dispatch(fetchOrdersByUser());
   }, [dispatch]);
