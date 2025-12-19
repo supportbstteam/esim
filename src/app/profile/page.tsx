@@ -90,7 +90,7 @@ function Profile() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdateUser = async (values: any) => {
     try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await api({
         url: "user/update",
         method: "PUT",
@@ -222,13 +222,12 @@ function Profile() {
           <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr>
-                {["Order No", "Date", "Total Sim", "Total Amount", "Status", "Action"].map(
+                {["Order No", "Date", "Total Made Sim", "Total Amount", "Status", "Action"].map(
                   (col) => (
                     <th
                       key={col}
-                      className={`px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ${
-                        col === "Action" ? "text-right" : ""
-                      }`}
+                      className={`px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ${col === "Action" ? "text-right" : ""
+                        }`}
                     >
                       {col}
                     </th>
@@ -275,9 +274,12 @@ function Profile() {
                             setOrderErrorModal(true);
                           }
                         }}
-                        className="text-blue-600 text-sm font-medium hover:underline"
+                        className={`${row.status?.toLowerCase() === "completed" ? "text-green-600" : row.status?.toLowerCase() === "partial" ? "text-yellow-600" : "text-red-600"} text-sm font-medium hover:underline`}
                       >
-                        View Detail
+                        {
+                          row.status?.toLowerCase() === "completed" || row.status?.toLowerCase() === "partial" ? "View Details" : "Claim Refund"
+                        }
+                        {/* View Detail */}
                       </button>
                     </td>
                   </tr>
@@ -319,6 +321,7 @@ function Profile() {
 
       <ClaimRefundModal
         orderDate={selectedOrder?.createdAt}
+        orderStatus={selectedOrder?.status || "FAILED"}
         onSubmit={async (values) => {
           await postUserClaimRefund({
             id: selectedOrder?.id,

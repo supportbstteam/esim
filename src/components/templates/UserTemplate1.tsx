@@ -2,12 +2,12 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function UserTemplate1({ data }: any) {
     return (
-        <section className="py-20 bg-white">
+        <section className="py-20 ">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
 
                 <div>
-                    <p className="text-sm font-semibold text-gray-600 mb-4">
-                        {data.heading}
+                    <p className="text-xl font-semibold text-gray-600 mb-4">
+                        {(data?.heading).toUpperCase()}
                     </p>
                     <h2 className="text-4xl font-bold text-gray-900 leading-tight">
                         {data.subHeading}

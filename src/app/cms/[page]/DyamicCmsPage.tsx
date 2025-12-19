@@ -4,39 +4,46 @@ import { resetCMSState } from '@/redux/slice/CmsPagesSlice';
 import { fetchUserDetails } from '@/redux/slice/UserSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { fetchPageBySlug } from '@/redux/thunk/cmsPageThunk';
-import React, { useEffect } from 'react'
+import { fetchCountries } from '@/redux/thunk/thunk';
+import React, { useEffect } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function DyamicCmsPage({ page }: any) {
-    const dispatch = useAppDispatch();
-    const { page: cmsPage, sections } = useAppSelector(state => state?.cmsPage)
-    const fetchContentCMS = async () => {
-        await dispatch(fetchUserDetails());
-        await dispatch(resetCMSState());
-        await dispatch(fetchPageBySlug(page));
-    }
+  const dispatch = useAppDispatch();
+  const { sections } = useAppSelector(state => state?.cmsPage);
 
-    // console.log("-=-=-=-=-=- page in the dynamic cms-=-=--=-=-", cmsPage);
-    // console.log("-=-=-=-=-=- sections in the dynamic cms-=-=--=-=-", sections);
-    useEffect(() => {
-        fetchContentCMS();
-    }, [dispatch]);
-    return (
-        <div>
-            {/* <h2>{cmsPage?.split("-").join(" ").toUpperCase()}</h2> */}
-            {sections && sections.map((section, index) => {
-                const Component = TEMPLATE_MAP[section.template];
-                if (!Component) return null;
+  const fetchContentCMS = async () => {
+    await dispatch(fetchCountries());
+    await dispatch(fetchUserDetails());
+    await dispatch(resetCMSState());
+    await dispatch(fetchPageBySlug(page));
+  };
 
-                return (
-                    <Component
-                        key={index}
-                        data={section.data}
-                    />
-                );
-            })}
-        </div>
-    )
+  useEffect(() => {
+    fetchContentCMS();
+  }, [dispatch]);
+
+  return (
+    <div>
+      {sections?.map((section, index) => {
+        const Component = TEMPLATE_MAP[section.template];
+        if (!Component) return null;
+
+        // 🔥 odd-even background logic
+        const bgClass =
+          index % 2 === 0 ? "bg-white" : "bg-gray-50";
+
+        return (
+          <section
+            key={section.id ?? index}
+            className={`${bgClass}`}
+          >
+            <Component data={section.data} />
+          </section>
+        );
+      })}
+    </div>
+  );
 }
 
-export default DyamicCmsPage
+export default DyamicCmsPage;

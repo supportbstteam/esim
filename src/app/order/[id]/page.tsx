@@ -14,15 +14,20 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { postUserClaimRefund } from "@/lib/pageFunction";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { ClaimRefundModal } from "@/components/modals/ClaimFundModal";
 
 const OrderDetails = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-
   const { orderDetails, loading } = useAppSelector((state) => state.order);
   const [activeSimIndex, setActiveSimIndex] = useState(0);
+  const [orderErrorModal, setOrderErrorModal] = useState(false);
 
   useEffect(() => {
+    dispatch(fetchCountries());
+    dispatch(fetchUserDetails());
     if (id) dispatch(fetchOrderDetailsByUser(id as string));
   }, [id, dispatch]);
 
@@ -49,7 +54,7 @@ const OrderDetails = () => {
             {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               orderDetails.esims.map((esim: any, index: number) => {
-                console.log("---- esim ----", esim);
+                // console.log("---- esim ----", esim);
                 return (
                   <SwiperSlide key={index}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 mt-8 items-start">
@@ -100,7 +105,7 @@ const OrderDetails = () => {
             (() => {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const rechargeRecords = activeSim.topUps.map((topupItem: any) => {
-                console.log("------ topupItem -----", topupItem);
+                // console.log("------ topupItem -----", topupItem);
                 return ({
                   purchasedOn: moment(topupItem.purchasedOn).format("DD/MM/YYYY"),
                   plan: topupItem?.title || topupItem?.name || "Unknown Plan",
@@ -118,7 +123,7 @@ const OrderDetails = () => {
         </div>
 
         {/* ✅ Order Summary (Static) */}
-        <div className="md:col-span-1 flex justify-center">
+        <div className="md:col-span-1 flex flex-col justify-center">
           {orderDetails && (
             <OrderSummary
               orderId={orderDetails?.orderCode}
@@ -134,8 +139,35 @@ const OrderDetails = () => {
               paymentMethod={orderDetails?.transaction?.paymentGateway?.toUpperCase()}
             />
           )}
+
+          {
+            orderDetails?.status.toLowerCase() === "partial" && <button
+              onClick={(e) => {
+                e.preventDefault();
+                setOrderErrorModal(true);
+              }}
+              className="bg-black my-2 p-3 rounded-sm text-white font-semibold"
+            >Claim Refund</button>
+          }
+
+
         </div>
       </div>
+
+      <ClaimRefundModal
+        orderDate={orderDetails?.createdAt}
+        orderStatus={orderDetails?.status}
+        onSubmit={async (values) => {
+          await postUserClaimRefund({
+            id: orderDetails?.id,
+            message: values?.comment,
+          });
+          setOrderErrorModal(false);
+        }}
+        orderNo={orderDetails?.code}
+        isOpen={orderErrorModal}
+        onClose={() => setOrderErrorModal(false)}
+      />
     </div>
   );
 };

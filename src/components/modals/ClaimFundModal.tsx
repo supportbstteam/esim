@@ -11,13 +11,14 @@ interface Props {
   orderDate?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (values: any) => Promise<void>;
+  orderStatus?: string
 }
 
 const schema = Yup.object().shape({
   comment: Yup.string().min(5, "Too short").required("Please enter a reason"),
 });
 
-export const ClaimRefundModal: React.FC<Props> = ({ isOpen, onClose, orderNo, orderDate, onSubmit }) => {
+export const ClaimRefundModal: React.FC<Props> = ({ isOpen, onClose, orderNo, orderDate, onSubmit, orderStatus = "FAILED" }) => {
   return (
     <ModalWrapper title="Claim Refund Request" isOpen={isOpen} onClose={onClose} widthClass="min-w-2xl max-w-4xl">
       <div className="text-md text-gray-500 mb-3 space-y-2">
@@ -33,7 +34,7 @@ export const ClaimRefundModal: React.FC<Props> = ({ isOpen, onClose, orderNo, or
 
         <div className="flex justify-between">
           <span>Order Status</span>
-          <span className="font-medium text-red-500">Failed</span>
+          <span className="font-medium text-red-500">{orderStatus.toUpperCase()}</span>
         </div>
       </div>
 
