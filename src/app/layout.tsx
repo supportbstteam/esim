@@ -3,8 +3,7 @@ import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import ReduxProvider from "@/providers/reduxProvider";
-import { Toaster } from "react-hot-toast"; // ✅ import Toaster
+import ClientProviders from "@/providers/ClientProviders";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +30,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <head>
@@ -45,27 +44,17 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
           rel="stylesheet"
-        /> 
-        
+        />
       </head>
-      <ReduxProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
-        >
-          {/* Global toast container */}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-              style: { fontFamily: "inherit" },
-            }}
-          />
-
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
+      >
+        <ClientProviders>
           <Navbar />
           {children}
           <Footer />
-        </body>
-      </ReduxProvider>
+        </ClientProviders>
+      </body>
     </html>
   );
 }

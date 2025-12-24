@@ -20,6 +20,8 @@ import StripeForm from "@/components/form/StripeForm";
 import { useNavigate } from "@/components/hooks/navigation";
 import LoadingModal from "@/components/cards/LoadingCard";
 import CheckoutCartSkeleton from "@/components/skeleton/CheckoutCardSkeleton";
+import PayPalButton from "@/components/buttons/PayPalButtonts";
+import { fetchCountries } from "@/redux/thunk/thunk";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -51,6 +53,7 @@ export default function CheckoutDetailPage() {
   // ✅ Fetch cart & user details
   const fetchCartData = async () => {
     try {
+      await dispatch(fetchCountries());
       await dispatch(fetchCart());
       console.log("dispatch c1");
       await dispatch(fetchUserDetails());
@@ -139,6 +142,7 @@ export default function CheckoutDetailPage() {
 
   // ✅ Proceed button handler
   const handleProceed = async () => {
+    await dispatch(fetchCountries());
     if (!selectedMethod) {
       toast.error("Please select a payment method");
       return;
@@ -165,12 +169,13 @@ export default function CheckoutDetailPage() {
 
     setLoading(true);
     setModalOpen(true);
+    setSelectedMethod(null);
 
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await api({
         method: "POST",
-        url: "/user/order/",
+        url: "/user/order",
         data: { transactionId },
       });
 
@@ -214,7 +219,19 @@ export default function CheckoutDetailPage() {
     }
   };
 
-  // console.log("----- esim data -----", esimData);
+  // console.log("-=-=-=--=-=--= selectedMethod--=-=-=-=-=-=",selectedMethod);
+
+
+  const handlePaypal = async () => {
+
+  }
+
+
+  const handlePayPalApproval = async () => {
+
+  }
+
+  console.log("----- transaction ID -----", transactionId);
 
   return (
     <div className="container my-10">
@@ -226,11 +243,11 @@ export default function CheckoutDetailPage() {
           {
             cartLoading ? (
               <>
-              {
-                [1,2,3].map((item,index)=>(
-                  <CheckoutCartSkeleton key={index} />
-                ))
-              }
+                {
+                  [1, 2, 3].map((item, index) => (
+                    <CheckoutCartSkeleton key={index} />
+                  ))
+                }
               </>
             ) : (
               <>
@@ -322,15 +339,40 @@ export default function CheckoutDetailPage() {
             <h3 className="font-semibold text-lg mb-6">Choose Payment Method</h3>
             <PaymentMethods onSelect={handlePaymentSelect} defaultMethodId="stripe" />
 
-            <div className="my-6">
-              <button
-                onClick={handleProceed}
-                disabled={loading || !!clientSecret} // if clientSecret exists, payment is already initiated
-                className="bg-black text-white px-6 py-3 rounded-md w-full hover:bg-gray-800 transition disabled:opacity-50"
-              >
-                {loading ? "Processing..." : clientSecret ? "Payment Ready" : "Proceed to Pay"}
-              </button>
-            </div>
+            {
+              selectedMethod?.id === "stripe" && (
+                <div className="my-6">
+                  <button
+                    onClick={handleProceed}
+                    disabled={loading || !!clientSecret} // if clientSecret exists, payment is already initiated
+                    className="bg-black text-white px-6 py-3 rounded-md w-full hover:bg-gray-800 transition disabled:opacity-50"
+                  >
+                    {loading ? "Processing..." : clientSecret ? "Payment Ready" : "Proceed to Pay"}
+                  </button>
+                </div>
+              )
+            }
+
+
+            {/* PayPal */}
+            {selectedMethod?.id === "paypal" && (
+              <div className="flex min-w-full items-center justify-center mt-10">
+                <div className="w-full max-w-full">
+                  <PayPalButton
+                    setTransactionId={setTransactionId}
+                    cartId={cart?.id}
+                    amount={grandTotal.toFixed(2)}
+                    onSuccess={(id: string) => {
+                      // setTransactionId(id);
+                      if (transactionId)
+                        handleOnSuccess()
+                    }}
+                    onApprove={handlePayPalApproval}
+
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Stripe Form */}
             {selectedMethod?.id === "stripe" && clientSecret && transactionId && (
@@ -343,6 +385,10 @@ export default function CheckoutDetailPage() {
                 />
               </Elements>
             )}
+
+
+
+
           </div>
         )}
       </div>

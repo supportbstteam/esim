@@ -155,12 +155,14 @@ export default function TopUpCheckOut() {
 
     const handleSuccess = async () => {
         setShowModal(true);
+        setSelectedPaymentMethod(null);
         try {
-            const response = await api({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const response: any = await api({
                 method: "POST",
                 data: {
                     topupId: selectedPlan,
-                    transactionId: transactionId?.id || "",
+                    transactionId: transactionId?.id || transactionId,
                     esimId: simId
                 },
                 url: "/user/top-up/purchase"
@@ -172,7 +174,7 @@ export default function TopUpCheckOut() {
             setShowModal(false);
             await dispatch(fetchCart());
             console.log("dispatch t1");
-            router.push(`/thank-you?mode=topup`);
+            router.push(`/thank-you?mode=topup&code=${response?.orderCode}`);
         }
         catch (err) {
             console.error("Error completing top-up purchase:", err);
@@ -184,8 +186,7 @@ export default function TopUpCheckOut() {
         }
     }
 
-    // console.log("----- validation -----", validityOptions);
-
+    // console.log("----- selectedPlan -----", setTransactionId);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -260,6 +261,9 @@ export default function TopUpCheckOut() {
                         showPaymentModule ? (
                             <div className="lg:col-span-2"> {/* Use same column span as plans */}
                                 <PaymentSection
+                                    setTransactionId={setTransactionId}
+                                    amount={selectedPlanData?.price}
+                                    topupId={selectedPlanData?.id}
                                     loading={payLoading}
                                     clientSecret={clientSecret}
                                     transaction={transactionId?.id}

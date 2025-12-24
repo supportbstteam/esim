@@ -64,7 +64,7 @@ export const addToCart = createAsyncThunk<Cart, { planId: string; quantity?: num
                 data: { plans }, // 🔹 wrap in object to match backend
             });
 
-            console.log("---- response int the add to cart ----", data);
+            // console.log("---- response int the add to cart ----", data);
             return data.cart;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {

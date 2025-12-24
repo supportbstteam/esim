@@ -258,7 +258,10 @@ button,
 a {
   cursor: pointer;
 }
-
+.paypal-button-container {
+    min-width: 100%  !important;
+    max-width: 100%  !important;
+}
 .bg_sectioned:before {
   z-index: -1;
   content: "";

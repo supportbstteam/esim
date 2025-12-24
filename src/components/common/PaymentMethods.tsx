@@ -1,52 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { FaPaypal, FaStripe } from "react-icons/fa";
+import { Images } from "../Images";
+import Image from 'next/image'
 export interface PaymentMethod {
   id: string;
   name: string;
   subHead: string;
-  icon: React.ReactNode;
+  icon: string;
 }
 
 interface PaymentMethodsProps {
-  methods?: PaymentMethod[]; // Allow override of default methods
+  methods?: PaymentMethod[];
   onSelect?: (method: PaymentMethod) => void;
   defaultMethodId?: string;
 }
 
 const defaultPaymentMethods: PaymentMethod[] = [
-  // {
-  //   id: "cod",
-  //   name: "Cash On Delivery",
-  //   subHead: "Pay using COD",
-  //   icon: (
-  //     <svg
-  //       className="w-5 h-5 mr-2 text-gray-600"
-  //       fill="none"
-  //       stroke="currentColor"
-  //       viewBox="0 0 24 24"
-  //     >
-  //       <rect width="18" height="12" x="3" y="6" rx="2" strokeWidth="2"></rect>
-  //       <path d="M3 10h18" strokeWidth="2"></path>
-  //     </svg>
-  //   ),
-  // },
   {
     id: "stripe",
     name: "Pay Online",
     subHead: "Pay using STRIPE",
-    icon: (
-      <svg
-        className="w-5 h-5 mr-2 text-gray-600"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <rect width="18" height="12" x="3" y="6" rx="2" strokeWidth="2"></rect>
-        <path d="M3 10h18" strokeWidth="2"></path>
-      </svg>
-    ),
+    icon: "/svg/stripe.svg",
+  },
+  {
+    id: "paypal",
+    name: "Pay Online",
+    subHead: "Pay using PAYPAL",
+    icon: "/svg/paypal.svg",
   },
 ];
 
@@ -55,11 +37,18 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   onSelect,
   defaultMethodId,
 }) => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(defaultMethodId ?? "");
+
+  useEffect(() => {
+    if (defaultMethodId) {
+      const method = methods.find(m => m.id === defaultMethodId);
+      if (method && onSelect) onSelect(method);
+    }
+  }, [defaultMethodId, methods]);
 
   const handleSelect = (method: PaymentMethod) => {
     setSelected(method.id);
-    if (onSelect) onSelect(method);
+    onSelect?.(method);
   };
 
   return (
@@ -67,21 +56,26 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       {methods.map((method) => (
         <div
           key={method.id}
-          className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition 
-            ${selected === method.id ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:bg-gray-50"}`}
           onClick={() => handleSelect(method)}
+          className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition
+            ${selected === method.id
+              ? "border-green-600 bg-green-50"
+              : "border-gray-200 hover:bg-gray-50"
+            }`}
         >
           <div className="flex items-center">
-            {method.icon}
-            <div>
+            {/* {method.icon} */}
+            <Image src={method?.icon} alt="My Logo" width={30} height={30} />
+            <div className="ml-2" >
               <h4 className="font-medium text-gray-800">{method.name}</h4>
               <p className="text-sm text-gray-500">{method.subHead}</p>
             </div>
           </div>
           <div
-            className={`w-4 h-4 rounded-full border-2 ${selected === method.id
-              ? "border-blue-600 bg-blue-600"
-              : "border-gray-400"
+            className={`w-4 h-4 rounded-full border-2
+              ${selected === method.id
+                ? "border-green-600 bg-green-600"
+                : "border-gray-400"
               }`}
           />
         </div>
