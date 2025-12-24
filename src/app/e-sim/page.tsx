@@ -1,6 +1,8 @@
 "use client";
 import { SimCard } from '@/components/cards/simCard';
 import SummarySimCard from '@/components/cards/SummarySimCard';
+import { Images } from '@/components/Images';
+import LottieAnimation from '@/components/LottieAnimation';
 import SimCardSkeleton from '@/components/skeleton/SimCardSkeleton';
 import { fetchSimsByUser } from '@/redux/slice/ESimSlice';
 import { getAllLinks } from '@/redux/slice/SocialLinkSlice';
@@ -39,20 +41,35 @@ function ESim() {
 
             {/* eSIM List */}
             <div className="mt-6">
-                <div className="font-semibold text-md text-2xl">Your E-SIMs</div>
+                {
+                    esims && esims.length > 0 && <div className="font-semibold text-md text-2xl">Your E-SIMs</div>
+                }
+
 
                 <div className="grid grid-cols-3 gap-4 mt-3">
-                    {loading
-                        ? Array(3)
+                    {loading ? (
+                        Array(3)
                             .fill(null)
                             .map((_, i) => <SimCardSkeleton key={i} />)
-                        : esims && esims.length > 0
-                            ? esims.map(esim => {
-                                // console.log("------ e sim ----", esim);
-                                return <SimCard key={esim.id} order={esim} />
-                            })
-                            : <p>No orders found.</p>}
+                    ) : esims && esims.length > 0 ? (
+                        esims.map((esim) => (
+                            <SimCard key={esim.id} order={esim} />
+                        ))
+                    ) : (
+                        <>
+                            <div />
+                            <div className="flex flex-col justify-center items-center">
+                                <LottieAnimation
+                                    animationData={Images.NoDataAnimation}
+                                    style={{ width: 250, height: 250 }}
+                                />
+                                <p className='font-bold text-xl text-gray-400' >No E-sim found</p>
+                            </div>
+                            <div />
+                        </>
+                    )}
                 </div>
+
             </div>
         </div>
     );

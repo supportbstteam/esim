@@ -22,6 +22,7 @@ import { ClaimRefundModal } from "@/components/modals/ClaimFundModal";
 import { useRouter } from "next/navigation";
 import { postUserClaimRefund } from "@/lib/pageFunction";
 import { fetchCountries } from "@/redux/thunk/thunk";
+import Empty from "@/components/Empty";
 
 const statusStyles: Record<string, string> = {
   completed: "text-green-600",
@@ -290,7 +291,7 @@ function Profile() {
                     colSpan={6}
                     className="text-center text-gray-400 py-6 text-sm"
                   >
-                    No orders match your filters.
+                    <Empty text="No Order Available" />
                   </td>
                 </tr>
               )}

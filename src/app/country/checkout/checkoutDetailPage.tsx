@@ -22,6 +22,8 @@ import LoadingModal from "@/components/cards/LoadingCard";
 import CheckoutCartSkeleton from "@/components/skeleton/CheckoutCardSkeleton";
 import PayPalButton from "@/components/buttons/PayPalButtonts";
 import { fetchCountries } from "@/redux/thunk/thunk";
+import LottieAnimation from "@/components/LottieAnimation";
+import { Images } from "@/components/Images";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -237,84 +239,101 @@ export default function CheckoutDetailPage() {
     <div className="container my-10">
       <div className="flex flex-col lg:flex-row w-full gap-6">
         {/* 🧺 ORDER SUMMARY */}
-        <div className="flex-1/3 bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6">
-          <h2 className="h2 font-semibold !text-[20px] mb-4">Your Cart</h2>
+        <div className="flex-1/3  ">
+          {
+            cart && cart?.items?.length > 0 && <h2 className="h2 font-semibold !text-[20px] mb-4">Your Cart</h2>
+          }
+
 
           {
             cartLoading ? (
-              <>
+              <div className="bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6" >
                 {
                   [1, 2, 3].map((item, index) => (
                     <CheckoutCartSkeleton key={index} />
                   ))
                 }
-              </>
+              </div>
             ) : (
-              <>
+              <div  >
                 {cart?.items?.length > 0 ? (
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  cart.items.map((item: any, index: number) => {
-                    return (
-                      <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
-                        <div className="flex items-center mb-3 justify-between">
-                          <div className="flex items-center ">
-                            <Flag
-                              countryName={item?.plan?.country?.name || "Country"}
-                              size={36}
-                              className="h-[36px] w-[36px] mr-2"
-                            />
-                            <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
-                          </div>
-                          <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
-                        </div>
+                  <div className="bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6" >
+                    {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      cart.items.map((item: any, index: number) => {
+                        return (
+                          <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
+                            <div className="flex items-center mb-3 justify-between">
+                              <div className="flex items-center ">
+                                <Flag
+                                  countryName={item?.plan?.country?.name || "Country"}
+                                  size={36}
+                                  className="h-[36px] w-[36px] mr-2"
+                                />
+                                <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
+                              </div>
+                              <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
+                            </div>
 
-                        <div className="space-y-2 text-[15px] text-gray-700">
-                          <div className="flex justify-between">
-                            <span>Plan Name</span>
-                            <span className="font-medium">{item?.plan?.title || item?.plan?.name}</span>
-                          </div>
+                            <div className="space-y-2 text-[15px] text-gray-700">
+                              <div className="flex justify-between">
+                                <span>Plan Name</span>
+                                <span className="font-medium">{item?.plan?.title || item?.plan?.name}</span>
+                              </div>
 
-                          <div className="flex justify-between">
-                            <span>Data Allowance</span>
-                            <span>{item?.plan?.data || "—"} GB</span>
-                          </div>
+                              <div className="flex justify-between">
+                                <span>Data Allowance</span>
+                                <span>{item?.plan?.data || "—"} GB</span>
+                              </div>
 
-                          <div className="flex justify-between">
-                            <span>Validity</span>
-                            <span>{item?.plan?.validityDays || "—"} Days</span>
-                          </div>
+                              <div className="flex justify-between">
+                                <span>Validity</span>
+                                <span>{item?.plan?.validityDays || "—"} Days</span>
+                              </div>
 
-                          <div className="flex justify-between items-center mt-2">
-                            <span>Quantity</span>
-                            <div className="flex items-center gap-3">
-                              <button
-                                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
-                              >
-                                −
-                              </button>
-                              <span className="w-6 text-center">{item?.quantity || 1}</span>
-                              <button
-                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
-                              >
-                                +
-                              </button>
+                              <div className="flex justify-between items-center mt-2">
+                                <span>Quantity</span>
+                                <div className="flex items-center gap-3">
+                                  <button
+                                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                    className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
+                                  >
+                                    −
+                                  </button>
+                                  <span className="w-6 text-center">{item?.quantity || 1}</span>
+                                  <button
+                                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                    className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                                <span>Subtotal</span>
+                                <span>${(parseFloat(item?.plan?.price || "0") * (item?.quantity || 1)).toFixed(2)}</span>
+                              </div>
                             </div>
                           </div>
+                        );
+                      })
+                    }
 
-                          <div className="flex justify-between font-semibold border-t pt-2 mt-2">
-                            <span>Subtotal</span>
-                            <span>${(parseFloat(item?.plan?.price || "0") * (item?.quantity || 1)).toFixed(2)}</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
+                  </div>
                 ) : (
-                  <p className="text-gray-500">No items in cart</p>
+                  !cartLoading && <div className="flex flex-col bg-white justify-center items-center " >
+                    <LottieAnimation
+                      animationData={Images.EmptyAnimation1}
+                      style={{
+                        width: "30%",
+                        height: "30%",
+                      }}
+                    />
+                    <p className="text-md font-semibold text-gray-600 " >No Cart Found</p>
+                  </div>
                 )}
-              </>
+              </div>
             )
           }
 
@@ -396,9 +415,11 @@ export default function CheckoutDetailPage() {
       {/* Modals */}
       <LoadingModal open={modalOpen} />
 
-      {showlogin && (
-        <AuthModal isOpen={showlogin} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
-      )}
-    </div>
+      {
+        showlogin && (
+          <AuthModal isOpen={showlogin} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
+        )
+      }
+    </div >
   );
 }
