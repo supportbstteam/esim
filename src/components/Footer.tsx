@@ -10,6 +10,7 @@ import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { BiLogoWhatsapp } from "react-icons/bi";
 import { IconType } from "react-icons";
 import { getAllLinks } from "@/redux/slice/SocialLinkSlice";
+import { Images } from "./Images";
 
 const linkSections = [
   {
@@ -45,10 +46,10 @@ const getHref = (section: string, item: string) => {
     if (item === "Contact Us") return "/contact-us";
     if (item === "About Us") return "/about-us";
     if (item === "FAQs") return "/faq";
-     if (item === "Plan & Pricing") return "/country";
+    if (item === "Plan & Pricing") return "/country";
     if (item === "How It Works") return "/how-it-works";
     return `/quick-links/${toSlug(item)}`;
-  } 
+  }
   if (section === "Support") {
     if (item === "Setup Guide") return "/set-up";
     return `/supports/${toSlug(item)}`;
@@ -135,7 +136,18 @@ export const Footer: React.FC = () => {
                       <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
                     </Link>
                   ))}
+
+                {/* <p className="text-white" >Download for Android</p> */}
               </div>
+              <div className="mt-4">
+              {/* <p className="text-white">Download for Android</p> */}
+              <Link
+                href={process.env.NEXT_PUBLIC_APK_URL || "#"}
+                className="text-gray-300 hover:text-white transition-colors text-sm"
+              >
+                <Image className="w-30 h-30" src={Images.AndroidDownload} alt="Download for Android" />
+              </Link>
+            </div>
             </div>
           </div>
 
@@ -202,6 +214,17 @@ export const Footer: React.FC = () => {
                     <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
                   </Link>
                 ))}
+
+            </div>
+
+            <div className="mt-4">
+              {/* <p className="text-white">Download for Android</p> */}
+              <Link
+                href={process.env.NEXT_PUBLIC_APK_URL || "#"}
+                className="text-gray-300 hover:text-white transition-colors text-sm"
+              >
+                <Image src={Images.AndroidDownload} alt="Download for Android" />
+              </Link>
             </div>
           </div>
         </div>

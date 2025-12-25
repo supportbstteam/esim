@@ -1,5 +1,6 @@
 import Stripe from "../../public/svg/stripe.svg"
 import Paypal from "../../public/svg/paypal.svg"
+import AndroidDownload from "../../public/download.svg"
 import CartAnimation from "../../public/lottie/cart.json"
 import EmptyAnimation1 from "../../public/lottie/empty.json"
 import EmptyAnimation2 from "../../public/lottie/empty1.json"
@@ -17,5 +18,6 @@ export const Images = {
     Failed,
     NoDataAnimation,
     LoadingAnimation,
-    NotFoundAnimation
+    NotFoundAnimation,
+    AndroidDownload
 }
