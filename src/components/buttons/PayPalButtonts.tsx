@@ -6,6 +6,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 interface PayPalButtonProps {
   amount: string;
   cartId?: string;
+  esimId?: string;
   topupId?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSuccess: any;
@@ -15,7 +16,7 @@ interface PayPalButtonProps {
   setTransactionId: any;
 }
 
-export default function PayPalButton({ amount, onSuccess, onApprove, setTransactionId, cartId, topupId }: PayPalButtonProps) {
+export default function PayPalButton({ amount, onSuccess, onApprove, setTransactionId, cartId, topupId, esimId }: PayPalButtonProps) {
   return (
     <PayPalButtons
       style={{ layout: "vertical", disableMaxWidth:true }}
@@ -29,7 +30,8 @@ export default function PayPalButton({ amount, onSuccess, onApprove, setTransact
           data: {
             amount,
             cartId,
-            topupId
+            topupId,
+            esimId
           },
         });
 

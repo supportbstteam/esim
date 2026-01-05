@@ -26,6 +26,7 @@ interface PaymentSectionProps {
     transaction?: string | null;
     onBack: () => void;
     topupId: string;
+    esimId: string;
     amount: string;
 }
 
@@ -42,7 +43,8 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
     onBack,
     setTransactionId,
     topupId,
-    amount
+    amount,
+    esimId
 }) => {
 
     // console.log("-=-=-=-=--=- topupId- -=-=-=--=-=", topupId);
@@ -78,6 +80,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
                         <PayPalButton
                             setTransactionId={setTransactionId}
                             topupId={topupId}
+                            esimId={esimId}
                             amount={amount}
                             onSuccess={(id:string)=>{
                                 setTransactionId(id);

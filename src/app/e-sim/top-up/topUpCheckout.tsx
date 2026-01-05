@@ -264,6 +264,7 @@ export default function TopUpCheckOut() {
                                     setTransactionId={setTransactionId}
                                     amount={selectedPlanData?.price}
                                     topupId={selectedPlanData?.id}
+                                    esimId={simId || ""}
                                     loading={payLoading}
                                     clientSecret={clientSecret}
                                     transaction={transactionId?.id}
