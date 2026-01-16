@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ClaimRefundModal } from "../modals/ClaimFundModal";
 import moment from "moment";
+import Flag from "../ui/Flag";
 
 // Utility: map country names to ISO codes
 const getCountryCode = (countryName: string | undefined): string | null => {
@@ -57,6 +58,8 @@ export const SimCard = ({ order }: any) => {
     router.push(`/e-sim/top-up?simId=${order.id}`);
   };
 
+
+
   const formatted = moment(order.startDate, "YYYY-MM-DD").format("DD/MM/YYYY");
   // console.log("---- order in sim card ----", order?.startDate);
 
@@ -68,13 +71,31 @@ export const SimCard = ({ order }: any) => {
   const isFailed = !order?.iccid && !order?.externalId;
   const countryName = order?.country?.name || "Unknown Country";
   const countryCode = getCountryCode(countryName);
-  const flagUrl = countryCode
-    ? `https://flagcdn.com/w80/${countryCode}.png`
-    : "https://flagcdn.com/w80/un.png"; // fallback flag
+  // const flagUrl = countryCode
+  //   ? `https://flagcdn.com/w80/${countryCode}.png`
+  //   : "https://flagcdn.com/w80/un.png"; 
 
 
   // if (!order?.externalId)
-  //   console.log("--- esim cart ----", order);
+  console.log("--- esim countryName ----", countryName);
+
+  const totalDataGB = Number(order?.dataAmount) || 0;
+
+  const remainingDataGB = order?.remainingData
+    ? order.remainingData / 1024
+    : 0;
+
+  const usedDataGB = Math.max(
+    totalDataGB - remainingDataGB,
+    0
+  ); // ✅ number
+
+  const usagePercent =
+    totalDataGB > 0 ? (usedDataGB / totalDataGB) * 100 : 0;
+
+  // 🔹 ONLY for UI
+  const usedDataGBFormatted = usedDataGB.toFixed(2);
+
 
   return (
     <Link href={isFailed ? "#" : `/e-sim/${order?.id}`} className="block">
@@ -83,12 +104,12 @@ export const SimCard = ({ order }: any) => {
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
-              {countryCode ? (
-                <img
-                  src={flagUrl}
-                  alt={`${countryName} flag`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
+              {countryName ? (
+
+                <Flag
+                  countryName={countryName}
+                  size={40}
+                  className="h-[40px] w-[40px] objext-cover"
                 />
               ) : (
                 <span className="text-xl">🌍</span> // fallback icon if no flag
@@ -146,22 +167,22 @@ export const SimCard = ({ order }: any) => {
                   <span>Data Usage</span>
                 </div>
                 <span className="text-xs font-medium text-gray-900">
-                  {order?.usedData || 0} GB / {order?.dataAmount || 0} GB
+                  {usedDataGBFormatted} GB / {totalDataGB || 0} GB
                 </span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
                 <div
                   className="bg-red-500 h-2 rounded-full transition-all duration-300"
                   style={{
-                    width: `${((order?.usedData || 0) / (order?.dataAmount || 0)) * 100}%`,
+                    width: `${usagePercent}%`,
                   }}
                 />
               </div>
             </div>
 
             <div className="flex justify-between items-center mb-1 gap-4 text-xs text-gray-500">
-              <span>Start: {moment(order?.startDate ).format("DD/MM/YYYY")|| "N/A"}</span>
-              <span>End: {moment(order?.endDate ).format("DD/MM/YYYY")|| "N/A"}</span>
+              <span>Start: {moment(order?.startDate).format("DD/MM/YYYY") || "N/A"}</span>
+              <span>End: {moment(order?.endDate).format("DD/MM/YYYY") || "N/A"}</span>
             </div>
             <button
               className="flex-1 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium py-2.5 px-4 rounded-lg text-sm transition-colors"
@@ -203,14 +224,14 @@ export const SimCard = ({ order }: any) => {
                   <span>Data Usage</span>
                 </div>
                 <span className="text-xs font-medium text-gray-900">
-                  {order?.usedData || 0} GB / {order?.dataAmount || 0} GB
+                  {usedDataGBFormatted || 0} GB / {totalDataGB} GB
                 </span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
                 <div
                   className="bg-green-500 h-2 rounded-full transition-all duration-300"
                   style={{
-                    width: `${((order?.usedData || 0) / (order?.dataAmount || 0)) * 100}%`,
+                    width: `${usagePercent}%`,
                   }}
                 />
               </div>
