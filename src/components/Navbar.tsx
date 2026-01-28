@@ -317,7 +317,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-3">
                       <AiOutlineUser size={20} />
                       <div className="text-left">
-                        <div className="font-medium text-sm">Admin</div>
+                        <div className="font-medium text-sm">{user?.firstName} {user?.lastName}</div>
                         <div className="text-xs text-gray-500">{user?.email}</div>
                       </div>
                     </div>
