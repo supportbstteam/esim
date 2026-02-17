@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from '@/components/hooks/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/store';

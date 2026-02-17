@@ -32,7 +32,7 @@ export default function DynamicPageClient({ page }: Props) {
             setError(null);
             try {
                 const response = await api<{ html: string }>({
-                    url: `/user/cms/content/${page.split(/[-_]/)[0].toLowerCase()}`,
+                    url: `/user/cms/content/${page.toLowerCase()}`,
                     method: "GET",
                 });
 
