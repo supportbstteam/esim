@@ -3,11 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchPageBySlug = createAsyncThunk(
     "cms/fetchPage",
-    async (page: string, { rejectWithValue }) => {
+    async ({page, type="pages"}:{page:string, type:string}, { rejectWithValue }) => {
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res: any = await api({
-                url: `/user/cms/pages/${page}`,
+                url: `/user/cms/${type}/${page}`,
                 method: "GET",
             });
             

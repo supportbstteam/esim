@@ -16,7 +16,7 @@ function DyamicCmsPage({ page }: any) {
     await dispatch(fetchCountries());
     await dispatch(fetchUserDetails());
     await dispatch(resetCMSState());
-    await dispatch(fetchPageBySlug(page));
+    await dispatch(fetchPageBySlug({ page, type: "pages" }));
   };
 
   useEffect(() => {
