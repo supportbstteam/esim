@@ -2,39 +2,76 @@ import { IconRenderer } from "../common/IconComponent";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function UserTemplate4({ data }: any) {
+
   if (!data?.items?.length) return null;
 
   return (
-    <section className="py-20 ">
+
+    <section className="py-20">
+
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
         {data.items.map((item: any, i: number) => (
+
           <div
             key={item.id || i}
-            className="rounded-xl bg-white border p-6 space-y-4"
+            className="rounded-xl bg-white border border-gray-200 p-6 space-y-4 shadow-sm hover:shadow-md transition-shadow"
           >
-            {/* ICON */}
-            <div className="w-10 h-10 flex items-center justify-center rounded bg-gray-100">
-              <IconRenderer
-                name={item.icon}
-                size={22}
-                className="text-gray-900"
+
+            {/* ================= ICON ================= */}
+
+            {item.icon && (
+
+              <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-100">
+
+                <IconRenderer
+                  name={item.icon}
+                  size={22}
+                  className="text-gray-900"
+                />
+
+              </div>
+
+            )}
+
+
+
+            {/* ================= TITLE (HTML) ================= */}
+
+            {item.title && (
+
+              <div
+                className="text-xl font-semibold text-gray-900 leading-snug"
+                dangerouslySetInnerHTML={{
+                  __html: item.title,
+                }}
               />
-            </div>
 
-            {/* TITLE */}
-            <h4 className="font-semibold text-xl text-gray-900">
-              {item.title}
-            </h4>
+            )}
 
-            {/* DESCRIPTION */}
-            <p className="text-gray-600 text-md">
-              {item.description}
-            </p>
+
+
+            {/* ================= DESCRIPTION (HTML) ================= */}
+
+            {item.description && (
+
+              <div
+                className="text-gray-600 text-md leading-relaxed"
+                dangerouslySetInnerHTML={{
+                  __html: item.description,
+                }}
+              />
+
+            )}
+
           </div>
+
         ))}
 
       </div>
+
     </section>
+
   );
+
 }
