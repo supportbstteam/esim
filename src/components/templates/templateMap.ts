@@ -5,6 +5,7 @@ import UserTemplate3 from "./UserTemplate3";
 import UserTemplate4 from "./UserTemplate4";
 import UserTemplate5 from "./UserTemplate5";
 import UserTemplate6 from "./UserTemplate6";
+import UserTemplate7 from "./UserTemplate7";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TEMPLATE_MAP: any = {
@@ -14,4 +15,5 @@ export const TEMPLATE_MAP: any = {
     template4: UserTemplate4,
     template5: UserTemplate5,
     template6: UserTemplate6,
+    template7: UserTemplate7,
 };
