@@ -30,13 +30,13 @@ function DyamicCmsPage({ page }: any) {
         if (!Component) return null;
 
         // 🔥 odd-even background logic
-        const bgClass =
-          index % 2 === 0 ? "bg-white" : "bg-gray-50";
+        // const bgClass =
+        //   index % 2 === 0 ? "bg-white" : "bg-gray-50";
 
         return (
           <section
             key={section.id ?? index}
-            className={`${bgClass}`}
+            // className={`${bgClass}`}
           >
             <Component data={section.data} />
           </section>

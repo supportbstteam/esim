@@ -9,24 +9,24 @@ export default function UserTemplate4({ data }: any) {
 
     <section className="py-20">
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
         {data.items.map((item: any, i: number) => (
 
           <div
             key={item.id || i}
-            className="rounded-xl bg-white border border-gray-200 p-6 space-y-4 shadow-sm hover:shadow-md transition-shadow"
+            className="rounded-xl bg-white border border-gray-200 p-6 space-y-2 shadow-sm hover:shadow-md transition-shadow"
           >
 
             {/* ================= ICON ================= */}
 
             {item.icon && (
 
-              <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-100">
+              <div className="rounded-lg">
 
                 <IconRenderer
                   name={item.icon}
-                  size={22}
+                  size={25}
                   className="text-gray-900"
                 />
 
