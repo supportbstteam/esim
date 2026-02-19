@@ -20,7 +20,6 @@ interface Block {
 
 interface Template7Data {
   blocks: Block[];
-  // Legacy support for old data format
   heading?: string;
   cards?: Card[];
   columns?: number;
@@ -33,20 +32,12 @@ interface Props {
 /* ================= MAIN ================= */
 
 export default function UserTemplate7({ data }: Props) {
-  // Guard clause if no data is provided
   if (!data) return null;
 
-  /**
-   * MIGRATION LOGIC
-   * If the data is in the new 'blocks' format, we use it.
-   * If it's the old format (heading/cards at top level), we convert it 
-   * into a block structure so it renders correctly.
-   */
   const getBlocksToRender = (): Block[] => {
     if (data.blocks && Array.isArray(data.blocks)) {
       return data.blocks;
     }
-
     const legacyBlocks: Block[] = [];
     if (data.heading) {
       legacyBlocks.push({
@@ -69,35 +60,40 @@ export default function UserTemplate7({ data }: Props) {
   const displayBlocks = getBlocksToRender();
 
   return (
-    <section className="py-12 border-1 mb-6 rounded-lg shadow-sm bg-white">
-      {/* CSS FIX:
-          1. prose table: Ensures tables inside the editor take 100% width.
-          2. prose img: Ensures images don't overflow.
-      */}
+    <section className="py-6 border border-gray-200 mb-6 rounded-lg shadow-sm bg-white">
       <style jsx global>{`
-        .prose-full-width {
+        .prose-custom {
           max-width: 100% !important;
         }
-        .prose-full-width table {
+        /* Fix for tables taking full width */
+        .prose-custom table {
           width: 100% !important;
-          table-layout: fixed;
+          table-layout: auto;
           border-collapse: collapse;
-          margin-bottom: 1rem;
+          margin: 1rem 0 !important;
         }
-        .prose-full-width th, .prose-full-width td {
+        .prose-custom th, .prose-custom td {
           border: 1px solid #e5e7eb;
           padding: 8px;
         }
+        /* REMOVE EXTRA GAPS created by prose margins */
+        .prose-custom > *:first-child {
+          margin-top: 0 !important;
+        }
+        .prose-custom > *:last-child {
+          margin-bottom: 0 !important;
+        }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-6 space-y-12">
+      {/* Changed space-y-12 to space-y-4 to reduce gap between blocks */}
+      <div className="max-w-7xl mx-auto px-6 space-y-4">
         {displayBlocks.map((block) => (
           <div key={block.id} className="w-full">
             
             {/* ================= CASE: PARAGRAPH ================= */}
             {block.type === "paragraph" && block.content && (
               <div
-                className="prose prose-lg prose-full-width text-gray-900"
+                className="prose prose-slate prose-custom text-gray-900"
                 dangerouslySetInnerHTML={{ __html: block.content }}
               />
             )}
@@ -105,20 +101,19 @@ export default function UserTemplate7({ data }: Props) {
             {/* ================= CASE: CARDS GRID ================= */}
             {block.type === "cards" && block.cards && (
               <div
-                className="grid gap-8"
+                className="grid gap-4" /* Reduced gap from 5 to 4 */
                 style={{
-                  // Dynamically setting columns based on user selection
                   gridTemplateColumns: `repeat(${block.columns || 1}, minmax(0, 1fr))`,
                 }}
               >
                 {block.cards.map((card) => (
                   <div
                     key={card.id}
-                    className="rounded-2xl border border-gray-100 p-8 shadow-sm transition-all hover:shadow-md"
+                    className="rounded-xl border border-gray-100 p-5 shadow-sm transition-all hover:shadow-md"
                     style={{ backgroundColor: card.bgColor || "#ffffff" }}
                   >
                     <div
-                      className="prose prose-full-width text-gray-800"
+                      className="prose prose-slate prose-custom text-gray-800"
                       dangerouslySetInnerHTML={{ __html: card.content }}
                     />
                   </div>
