@@ -11,6 +11,7 @@ import React, { useEffect } from 'react';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function DyamicCmsPage({ page }: any) {
   const dispatch = useAppDispatch();
+  // commit
   const { sections } = useAppSelector(state => state?.cmsPage);
 
   const fetchContentCMS = async () => {
