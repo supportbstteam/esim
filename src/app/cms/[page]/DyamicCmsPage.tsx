@@ -1,5 +1,6 @@
 "use client";
 import { TEMPLATE_MAP } from '@/components/templates/templateMap';
+import MainBanner from '@/components/ui/MainBanner';
 import { resetCMSState } from '@/redux/slice/CmsPagesSlice';
 import { fetchUserDetails } from '@/redux/slice/UserSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
@@ -25,23 +26,26 @@ function DyamicCmsPage({ page }: any) {
 
   return (
     <div>
-      {sections?.map((section, index) => {
-        const Component = TEMPLATE_MAP[section.template];
-        if (!Component) return null;
+      <MainBanner title={sections[0]?.data?.heading} subtitle={sections[0]?.data?.subHeading} />
+      <div className="container px-4 md:px-6 mb-10 md:mb-20" >
+        {sections?.map((section, index) => {
+          const Component = TEMPLATE_MAP[section.template];
+          if (!Component) return null;
 
-        // 🔥 odd-even background logic
-        // const bgClass =
-        //   index % 2 === 0 ? "bg-white" : "bg-gray-50";
+          // 🔥 odd-even background logic
+          // const bgClass =
+          //   index % 2 === 0 ? "bg-white" : "bg-gray-50";
 
-        return (
-          <section
-            key={section.id ?? index}
+          return (
+            <section
+              key={section.id ?? index}
             // className={`${bgClass}`}
-          >
-            <Component data={section.data} />
-          </section>
-        );
-      })}
+            >
+              <Component data={section.data} />
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }
