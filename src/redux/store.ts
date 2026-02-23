@@ -11,6 +11,8 @@ import ESimSlice from "./slice/ESimSlice"
 import TestimonialSlice from "./slice/TestimonialSlice"
 import LinkSlice from "./slice/SocialLinkSlice"
 import CMSSlice from "./slice/CmsPagesSlice"
+import DeviceSlice from "./slice/DeviceSlice"
+import BrandSlice from "./slice/BrandSlice"
 
 export const store = configureStore({
     reducer: {
@@ -24,6 +26,8 @@ export const store = configureStore({
         testimonials: TestimonialSlice,
         links: LinkSlice,
         cmsPage:CMSSlice,
+        devices:DeviceSlice,
+        brands:BrandSlice
     },
 });
 

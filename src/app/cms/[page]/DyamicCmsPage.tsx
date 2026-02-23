@@ -25,9 +25,12 @@ function DyamicCmsPage({ page }: any) {
     fetchContentCMS();
   }, [dispatch]);
 
+
+  // console.log("-=-=-=- sections[0]?.data?.subHeading -=-=-=-=-",sections[0]?.data?.image?.url);
+
   return (
     <div>
-      <MainBanner title={sections[0]?.data?.heading} subtitle={sections[0]?.data?.subHeading} />
+      <MainBanner title={sections[0]?.data?.heading} backgroundImage={sections[0]?.data?.image?.url} subtitle={sections[0]?.data?.subHeading} />
       <div className="container px-4 md:px-6 mb-10 md:mb-20" >
         {sections?.map((section, index) => {
           const Component = TEMPLATE_MAP[section.template];

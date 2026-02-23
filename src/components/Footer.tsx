@@ -51,8 +51,11 @@ const getHref = (section: string, item: string) => {
     return `/quick-links/${toSlug(item)}`;
   }
   if (section === "Support") {
+
     if (item === "Setup Guide") return "/set-up";
+    if (item === "Device Compatibility") return "/supports/devices";
     return `/supports/${toSlug(item)}`;
+
   }
   if (section === "Legal") return `/${toSlug(item)}`;
   return "#";
@@ -140,14 +143,14 @@ export const Footer: React.FC = () => {
                 {/* <p className="text-white" >Download for Android</p> */}
               </div>
               <div className="mt-4">
-              {/* <p className="text-white">Download for Android</p> */}
-              <Link
-                href={process.env.NEXT_PUBLIC_APK_URL || "#"}
-                className="text-gray-300 hover:text-white transition-colors text-sm"
-              >
-                <Image className="w-30 h-30" src={Images.AndroidDownload} alt="Download for Android" />
-              </Link>
-            </div>
+                {/* <p className="text-white">Download for Android</p> */}
+                <Link
+                  href={process.env.NEXT_PUBLIC_APK_URL || "#"}
+                  className="text-gray-300 hover:text-white transition-colors text-sm"
+                >
+                  <Image className="w-30 h-30" src={Images.AndroidDownload} alt="Download for Android" />
+                </Link>
+              </div>
             </div>
           </div>
 
