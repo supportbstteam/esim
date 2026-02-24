@@ -1,6 +1,14 @@
-import React from 'react'
+"use client";
+import React, { useEffect } from 'react'
 import PageTitle from '../ui/PageTitle'
+import { fetchUserDetails } from '@/redux/slice/UserSlice';
+import { useAppDispatch } from '@/redux/store';
 export const EasyStep = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserDetails());
+  }, []);
   return (
     <section className="pt-25 bg-white container mb-25 ">
       {/* Heading */}
@@ -78,44 +86,44 @@ export const EasyStep = () => {
           <p className="subtext mb-10">
             Your plan starts, Track your usage in real-time and never worry about roaming fees
           </p>
-             <div className="max-h-[304px] overflow-y-hidden scrollbar-hide">
-          <div className="border-[#3BC852] border rounded-xl py-4 px-7 bg-[#F5FCF6] flex flex-col gap-2">
-            <div className="flex items-center justify-between">
+          <div className="max-h-[304px] overflow-y-hidden scrollbar-hide">
+            <div className="border-[#3BC852] border rounded-xl py-4 px-7 bg-[#F5FCF6] flex flex-col gap-2">
+              <div className="flex items-center justify-between">
 
-              <img src="/us_flag.png" className='rounded-4xl' alt="" />
+                <img src="/us_flag.png" className='rounded-4xl' alt="" />
 
-              <span className="text-[#309E3A] bg-[#309E3A3D] rounded-3xl px-2 py-1 text-xs font-semibold">ACTIVE</span>
+                <span className="text-[#309E3A] bg-[#309E3A3D] rounded-3xl px-2 py-1 text-xs font-semibold">ACTIVE</span>
 
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="!font-medium !text-[#1A0F33] subtext">United States</span>
+                <p className="text-sm text-gray-500">7 Days</p>
+              </div>
+              <p className="!text-[16px] subtext flex items-center justify-between">
+                Remaining Data <span className="font-semibold text-[#1A0F33] text-[16px]">20/30 GB</span>
+              </p>
+              <p className="!text-[16px] subtext flex items-center justify-between">
+                Expires in <span className="font-semibold text-[#1A0F33] text-[16px]">29 D, 7 H</span>
+              </p>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="!font-medium !text-[#1A0F33] subtext">United States</span>
-              <p className="text-sm text-gray-500">7 Days</p>
-            </div>
-            <p className="!text-[16px] subtext flex items-center justify-between">
-              Remaining Data <span className="font-semibold text-[#1A0F33] text-[16px]">20/30 GB</span>
-            </p>
-            <p className="!text-[16px] subtext flex items-center justify-between">
-              Expires in <span className="font-semibold text-[#1A0F33] text-[16px]">29 D, 7 H</span>
-            </p>
-          </div>
-          <div className=" rounded-xl py-4 px-7 bg-[#fff] flex flex-col gap-2 mt-5">
-            <div className="flex items-center justify-between">
+            <div className=" rounded-xl py-4 px-7 bg-[#fff] flex flex-col gap-2 mt-5">
+              <div className="flex items-center justify-between">
 
-              <img src="/swed_flag.png" className='rounded-4xl' alt="" />
-              <span className=" bg-[#F7F7F8] w-[58px] h-[20px]  rounded-2xl"></span>
+                <img src="/swed_flag.png" className='rounded-4xl' alt="" />
+                <span className=" bg-[#F7F7F8] w-[58px] h-[20px]  rounded-2xl"></span>
 
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="bg-[#F7F7F8] w-[98px] h-[26px]  rounded-2xl"></span>
+                <p className="bg-[#F7F7F8] w-[58px] h-[26px]  rounded-2xl"></p>
+              </div>
+              <p className="!text-[16px] subtext flex items-center justify-between">
+                <span className='bg-[#F7F7F8] w-[98px] h-[26px]  rounded-2xl'></span> <span className="bg-[#F7F7F8] w-[58px] h-[26px]  rounded-2xl"></span>
+              </p>
+              <p className="!text-[16px] subtext flex items-center justify-between">
+                <span className='bg-[#F7F7F8] w-[98px] h-[26px]  rounded-2xl'></span> <span className="bg-[#F7F7F8] w-[58px] h-[26px]  rounded-2xl"></span>
+              </p>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="bg-[#F7F7F8] w-[98px] h-[26px]  rounded-2xl"></span>
-              <p className="bg-[#F7F7F8] w-[58px] h-[26px]  rounded-2xl"></p>
-            </div>
-            <p className="!text-[16px] subtext flex items-center justify-between">
-              <span className='bg-[#F7F7F8] w-[98px] h-[26px]  rounded-2xl'></span> <span className="bg-[#F7F7F8] w-[58px] h-[26px]  rounded-2xl"></span>
-            </p>
-            <p className="!text-[16px] subtext flex items-center justify-between">
-              <span className='bg-[#F7F7F8] w-[98px] h-[26px]  rounded-2xl'></span> <span className="bg-[#F7F7F8] w-[58px] h-[26px]  rounded-2xl"></span>
-            </p>
-          </div>
           </div>
         </div>
 

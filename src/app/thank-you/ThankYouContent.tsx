@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import PurchaseSuccess from "@/components/cards/PurchaseThankyouCard";
 import { fetchCart } from "@/redux/slice/CartSlice";
 import { title } from "process";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 
 export default function ThankYouContent() {
   const router = useRouter();
@@ -16,14 +17,15 @@ export default function ThankYouContent() {
   const orderId = searchParams.get("orderId");
   const code = searchParams.get("code");
 
-  console.log("ThankYouContent - mode:", mode, "orderId:", orderId, "code:", code);
+  // console.log("ThankYouContent - mode:", mode, "orderId:", orderId, "code:", code);
 
 
   const { orderDetails, loading, error } = useAppSelector((state) => state.order);
 
   const fetchingCart = async () => {
     await dispatch(fetchCart());
-    console.log("dispatch 1");
+    await dispatch(fetchUserDetails());
+    // console.log("dispatch 1");
   }
   // ✅ Fetch order details only for eSIM (not for topup)
   useEffect(() => {

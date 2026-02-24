@@ -3,12 +3,14 @@ import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchOrdersByUser } from "@/redux/slice/OrderSlice";
 import OrderCard from "@/components/cards/orderCard";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 
 const OrdersPage = () => {
     const dispatch = useAppDispatch();
     const { orders } = useAppSelector((state) => state.order);
 
     useEffect(() => {
+        dispatch(fetchUserDetails());
         if (!orders || orders.length === 0) {
             dispatch(fetchOrdersByUser());
         }

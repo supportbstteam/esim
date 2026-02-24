@@ -9,7 +9,7 @@ export default async function SupportPage({
 
   // ✅ unwrap params Promise
   const resolvedParams = await params;
-  console.log("-=-=-resolvedParams -=-=--",resolvedParams?.slug);
+  // console.log("-=-=-resolvedParams -=-=--",resolvedParams?.slug);
 
   const pageSlug = resolvedParams?.slug || "";
 

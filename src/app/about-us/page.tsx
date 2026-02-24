@@ -8,6 +8,7 @@ import { useAppSelector } from "@/redux/store";
 import Image from 'next/image';
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import MainBanner from '@/components/ui/MainBanner';
+import { fetchUserDetails } from '@/redux/slice/UserSlice';
 const features = [
     {
         id: "coverage",
@@ -57,6 +58,7 @@ function About() {
      const dispatch = useAppDispatch();
      useEffect(() => {
             dispatch(fetchFaqs());
+            dispatch(fetchUserDetails());
         }, [dispatch]);
     const { list } = useAppSelector((state) => state?.faq);
 
