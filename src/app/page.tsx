@@ -29,7 +29,7 @@ export default function Home() {
       await dispatch(featurePlans());
       await dispatch(fetchUserDetails());
       await dispatch(fetchSimsByUser());
-      await dispatch(getAllTestimonials());
+      await dispatch(getAllTestimonials({}));
       await dispatch(fetchFaqs());
       await dispatch(getAllLinks());
       // ✅ ONLY on home page
