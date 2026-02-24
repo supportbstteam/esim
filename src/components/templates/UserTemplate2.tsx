@@ -8,6 +8,9 @@ export default function UserTemplate2({ data }: any) {
   const paragraphs =
     data.description?.paragraphs || [];
 
+
+  console.log("-=-=-=- data.stepNumber -=-=-=", data.stepNumber);
+
   return (
 
     <section className="py-24">
@@ -38,11 +41,11 @@ export default function UserTemplate2({ data }: any) {
 
           {/* STEP NUMBER */}
 
-          {data.stepNumber && (
+          {data.stepNumber.trim() && (
 
             <div className="h-15 w-15 text-xl flex items-center justify-center rounded-full bg-gray-200 font-bold mb-6">
 
-              {data.stepNumber}
+              {data.stepNumber.trim()}
 
             </div>
 
