@@ -26,11 +26,11 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchCountries());
+      await dispatch(featurePlans());
       await dispatch(fetchUserDetails());
       await dispatch(fetchSimsByUser());
       await dispatch(getAllTestimonials());
       await dispatch(fetchFaqs());
-      await dispatch(featurePlans());
       await dispatch(getAllLinks());
       // ✅ ONLY on home page
       if (location.pathname === "/") {

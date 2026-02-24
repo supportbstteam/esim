@@ -3,11 +3,15 @@ import React, { useEffect } from 'react'
 import PageTitle from '../ui/PageTitle'
 import { fetchUserDetails } from '@/redux/slice/UserSlice';
 import { useAppDispatch } from '@/redux/store';
+import { fetchCountries } from '@/redux/thunk/thunk';
+import { featurePlans } from '@/redux/thunk/planThunk';
 export const EasyStep = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchUserDetails());
+    dispatch(fetchCountries());
+          dispatch(featurePlans());
   }, []);
   return (
     <section className="pt-25 bg-white container mb-25 ">

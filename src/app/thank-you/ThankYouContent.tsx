@@ -8,6 +8,8 @@ import PurchaseSuccess from "@/components/cards/PurchaseThankyouCard";
 import { fetchCart } from "@/redux/slice/CartSlice";
 import { title } from "process";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { featurePlans } from "@/redux/thunk/planThunk";
 
 export default function ThankYouContent() {
   const router = useRouter();
@@ -24,6 +26,8 @@ export default function ThankYouContent() {
 
   const fetchingCart = async () => {
     await dispatch(fetchCart());
+    await dispatch(fetchCountries());
+    await dispatch(featurePlans());
     await dispatch(fetchUserDetails());
     // console.log("dispatch 1");
   }

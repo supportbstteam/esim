@@ -10,6 +10,8 @@ import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import { useAppSelector } from "@/redux/store";
 import { EasyStep } from "./home/EasyStep";
 import MainBanner from "./ui/MainBanner";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { featurePlans } from "@/redux/thunk/planThunk";
 interface Props {
     page: string;
 }
@@ -26,6 +28,8 @@ export default function DynamicPageClient({ page }: Props) {
 
     useEffect(() => {
         dispatch(fetchUserDetails());
+        dispatch(fetchCountries());
+        dispatch(featurePlans());
         const fetchData = async () => {
             // await dispatch(fetchUserDetails());
             setLoading(true);
@@ -53,7 +57,7 @@ export default function DynamicPageClient({ page }: Props) {
     const { list } = useAppSelector((state) => state?.faq);
     return (
         <div>
-            <MainBanner/>
+            <MainBanner />
             <div className="p-4 container">
                 <h1 className={`${title === 'How It Works' || title === 'Help Center' ? 'text-center' : 'text-start'} h1 font-bold mb-4 mt-5 md:mt-12`}>
                     {/* {title === 'Help Center' || title === 'Device Compatibility' || title === 'Troubleshooting' || title === 'Setup Guide' || title === 'Features' ? '' : title} */}

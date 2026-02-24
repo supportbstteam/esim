@@ -4,12 +4,16 @@ import FAQ from "@/components/home/Faq";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { featurePlans } from "@/redux/thunk/planThunk";
 
 function Faqs() {
     const dispatch = useAppDispatch();
     const { list, loading } = useAppSelector((state) => state.faq);
 
     useEffect(() => {
+        dispatch(fetchCountries());
+        dispatch(featurePlans());
         dispatch(fetchFaqs());
         dispatch(fetchUserDetails());
     }, [dispatch]);

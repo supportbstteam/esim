@@ -11,6 +11,8 @@ import { BiLogoWhatsapp } from "react-icons/bi";
 import { IconType } from "react-icons";
 import { getAllLinks } from "@/redux/slice/SocialLinkSlice";
 import { Images } from "./Images";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { featurePlans } from "@/redux/thunk/planThunk";
 
 const linkSections = [
   {
@@ -91,6 +93,8 @@ export const Footer: React.FC = () => {
   useEffect(() => {
     const fetchTesti = async () => {
       await dispatch(getAllLinks());
+      await dispatch(fetchCountries());
+      await dispatch(featurePlans());
     }
     fetchTesti();
   }, [dispatch]);

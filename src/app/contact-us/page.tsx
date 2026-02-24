@@ -13,6 +13,8 @@ import { useAppDispatch } from "@/redux/store";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import MainBanner from '@/components/ui/MainBanner';
 import { fetchUserDetails } from '@/redux/slice/UserSlice';
+import { fetchCountries } from '@/redux/thunk/thunk';
+import { featurePlans } from '@/redux/thunk/planThunk';
 interface ContactItem {
     id: string;
     position: string;
@@ -37,6 +39,8 @@ function Contact() {
     useEffect(() => {
         dispatch(fetchFaqs());
         dispatch(fetchUserDetails());
+        dispatch(fetchCountries());
+              dispatch(featurePlans());
     }, [dispatch]);
     const { list } = useAppSelector((state) => state?.faq);
     const fetchContact = async () => {

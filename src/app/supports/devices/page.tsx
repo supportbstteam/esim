@@ -12,6 +12,8 @@ import {
 import { fetchUserBrands } from "@/redux/thunk/BrandsThunks";
 import { fetchUserDevices } from "@/redux/slice/DeviceSlice";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { featurePlans } from "@/redux/thunk/planThunk";
 
 function Page() {
 
@@ -39,6 +41,8 @@ function Page() {
   useEffect(() => {
 
     dispatch(fetchUserBrands({}));
+    dispatch(fetchCountries());
+    dispatch(featurePlans());
 
     dispatch(
       fetchUserDevices({
