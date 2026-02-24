@@ -6,11 +6,13 @@ import FAQ from "@/components/home/Faq";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import MainBanner from '@/components/ui/MainBanner';
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 
 function Features() {
      const dispatch = useAppDispatch();
        useEffect(() => {
               dispatch(fetchFaqs());
+              dispatch(fetchUserDetails());
           }, [dispatch]);
       const { list } = useAppSelector((state) => state?.faq);
 
