@@ -134,19 +134,33 @@ export const Footer: React.FC = () => {
               <h4 className="text-sm text-gray-200 mb-3">Connect With Us</h4>
               <div className="flex gap-2 items-center">
                 {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  dynamicSocials.map(({ icon: Icon, href, type }: any, idx) => (
-                    <Link
-                      key={idx}
-                      href={href || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
-                      aria-label={type}
-                    >
-                      <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
-                    </Link>
-                  ))}
+                  dynamicSocials.map(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    ({ icon: Icon, href, type }: any, idx: number) => {
+
+                      const isEmail =
+                        type?.toLowerCase() === "email" ||
+                        type?.toLowerCase() === "gmail";
+
+                      const finalHref = isEmail
+                        ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(href)}`
+                        : href || "#";
+
+                      return (
+                        <a
+                          key={idx}
+                          href={finalHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                          aria-label={type}
+                        >
+                          <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
+                        </a>
+                      );
+                    }
+                  )
+                }
 
                 {/* <p className="text-white" >Download for Android</p> */}
               </div>

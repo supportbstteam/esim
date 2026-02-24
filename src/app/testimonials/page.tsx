@@ -84,9 +84,11 @@ const Testimonials = () => {
 
             {/* ✅ Grid layout: 2 per row */}
             <div className="max-w-7xl  mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {memoTestimonials.map((item) => (
-                    <QuoteCard key={item.id} {...item} className="w-full" />
-                ))}
+                {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    memoTestimonials.map((item: any) => (
+                        item?.isActive && <QuoteCard key={item.id} {...item} className="w-full" />
+                    ))}
             </div>
 
             {/* ✅ Loading indicator */}
