@@ -86,6 +86,7 @@ function Contact() {
     const address = contacts.find(c => c.type === "Address");
     const emails = contacts.filter(c => c.type === "Email");
     const phones = contacts.filter(c => c.type === "Phone");
+    const others = contacts.filter(c => c.type === "Other");
 
 
     const handleSave = async (
@@ -154,6 +155,15 @@ function Contact() {
                             <div key={email.id} className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
                                 <FiMail className="text-2xl text-black-700" />
                                 <p className='font-semibold text-xl mt-4 text-[#1A0F33] mb-2' >Email Us <span className='text-sm' >({email?.position})</span></p>
+                                <span>{email.value}</span>
+                            </div>
+                        ))}
+
+                        {/* Emails */}
+                        {others.map(email => (
+                            <div key={email.id} className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
+                                <FiMail className="text-2xl text-black-700" />
+                                <p className='font-semibold text-xl mt-4 text-[#1A0F33] mb-2' >Chat With Us <span className='text-sm' >({email?.position})</span></p>
                                 <span>{email.value}</span>
                             </div>
                         ))}
