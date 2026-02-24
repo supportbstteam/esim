@@ -13,6 +13,7 @@ import { getAllLinks } from "@/redux/slice/SocialLinkSlice";
 import { Images } from "./Images";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
+import { iconMap } from "./SocialIcons";
 
 const linkSections = [
   {
@@ -28,16 +29,6 @@ const linkSections = [
     items: ["Terms & Conditions", "Privacy Policy", "Cookie Policy"],
   },
 ];
-
-// 🧩 Map backend type to icon dynamically
-const iconMap: Record<string, IconType> = {
-  Facebook: RiFacebookFill,
-  Twitter: RiTwitterXFill,
-  Linkedin: FaLinkedinIn,
-  Email: MdOutlineEmail,
-  Whatsapp: BiLogoWhatsapp,
-  Instagram: FaInstagram,
-};
 
 const toSlug = (text: string) =>
   text.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
@@ -77,16 +68,29 @@ export const Footer: React.FC = () => {
   // console.log("🌐 Dynamic social links:", links);
 
   // ✅ Map backend links to icon components
+
   const dynamicSocials =
     links?.map((social: { type: string; link: string }) => {
-      // Pick icon if exists, otherwise fallback
-      const Icon = iconMap[social.type] || DefaultIcon;
+
+      // normalize type safely
+      const normalizedType =
+        social?.type?.trim()?.toLowerCase();
+
+      // find matching key in iconMap (case insensitive)
+      const matchedKey = Object.keys(iconMap).find(
+        key => key.toLowerCase() === normalizedType
+      );
+
+      const Icon = matchedKey
+        ? iconMap[matchedKey]
+        : DefaultIcon;
 
       return {
         icon: Icon,
-        href: social.link,
-        type: social.type,
+        href: social?.link || "#",
+        type: social?.type || "Unknown",
       };
+
     }) || [];
 
 
@@ -207,20 +211,24 @@ export const Footer: React.FC = () => {
           <div className="max-md:hidden">
             <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">Connect With Us</h4>
             <div className="flex gap-2 items-center">
-              {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                dynamicSocials.map(({ icon: Icon, href, type }: any, idx) => (
-                  <Link
-                    key={idx}
-                    href={href || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group h-9 w-9 flex items-center justify-center rounded-full bg-[#233756] hover:bg-[#3BC852] transition"
-                    aria-label={type}
-                  >
-                    <Icon className="w-5 h-5 transition-colors group-hover:text-white" />
-                  </Link>
-                ))}
+              { // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                dynamicSocials.map(({ href, type }: any, idx: number) => {
+                  const Icon = iconMap[type] || MdOutlineEmail;
+
+                  return (
+                    <Link
+                      key={idx}
+                      href={href || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group h-9 w-9 flex items-center justify-center rounded-full bg-[#233756] hover:bg-[#3BC852] transition"
+                      aria-label={type}
+                    >
+                      <Icon className="w-5 h-5 text-white transition-transform duration-200 group-hover:scale-110" />
+                    </Link>
+                  );
+                })
+              }
 
             </div>
 
