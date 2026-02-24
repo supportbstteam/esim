@@ -6,13 +6,14 @@ import QuoteCard from "./QuoteCard"; // import your QuoteCard
 import { ChevronRight } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getAllTestimonials } from "@/redux/slice/TestimonialSlice";
+import Link from "next/link";
 
 export function QuoteSlider(): JSX.Element {
   const [paused, setPaused] = useState(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
     const fetchTesti = async () => {
-      await dispatch(getAllTestimonials());
+      await dispatch(getAllTestimonials({}));
     }
     fetchTesti();
   }, [dispatch]);
@@ -35,8 +36,9 @@ export function QuoteSlider(): JSX.Element {
             quote?.isActive && <div
               key={idx}
               style={{ animationPlayState: paused ? "paused" : "running" }}
+              className="flex-shrink-0 w-[430px]"
             >
-              <QuoteCard {...quote} />
+              <QuoteCard {...quote} className="max-w-[403px]" />
             </div>
           ))}
       </Marquee>
@@ -60,10 +62,13 @@ export function QuoteSlider(): JSX.Element {
       </Marquee> */}
 
       {/* Gradient overlays */}
-      <a href-="/" className="subtext !text-xl flex items-center gap-2">
-        View All Testimonial <ChevronRight className="w-5 h-5 text-gray-500" />
-
-      </a>
+      <Link
+        href="/testimonials"
+        className="subtext !text-xl flex items-center gap-2"
+      >
+        View All Testimonial
+        <ChevronRight className="w-5 h-5 text-gray-500" />
+      </Link>
     </div>
   );
 }
