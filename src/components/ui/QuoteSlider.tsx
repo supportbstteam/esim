@@ -6,34 +6,16 @@ import QuoteCard from "./QuoteCard"; // import your QuoteCard
 import { ChevronRight } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getAllTestimonials } from "@/redux/slice/TestimonialSlice";
-interface Quote {
-  quote: string;
-  name: string;
-  designation: string;
-  imageSrc?: string;
-}
-
-const quotes: Quote[] = [
-  { quote: "Activating my eSIM took less than 5 minutes. No more hunting for local SIM cards at airports!", name: "Vikram Patel", designation: "Software Engineer", imageSrc: "/Frame_61.png" },
-  { quote: "Activating my eSIM took less than 5 minutes. No more hunting for local SIM cards at airports!", name: "Jill", designation: "Frequent Traveler", imageSrc: "/Frame_62.png" },
-  { quote: "Super reliable coverage and affordable data plans. Perfect for my travel-heavy schedule.", name: "John", designation: "Frequent Traveler", imageSrc: "/Frame_63.png" },
-  { quote: "Activating my eSIM took less than 5 minutes. No more hunting for local SIM cards at airports!", name: "Jane", designation: "Frequent Traveler", imageSrc: "/Frame_61.png" },
-  { quote: "Activating my eSIM took less than 5 minutes. No more hunting for local SIM cards at airports!", name: "Vikram Pate", designation: "Frequent Traveler", imageSrc: "/Frame_62.png" },
-  { quote: "Activating my eSIM took less than 5 minutes. No more hunting for local SIM cards at airports!", name: "Amit Sharma", designation: "Frequent Traveler", imageSrc: "/Frame_63.png" },
-];
-
-const firstRow = quotes.slice(0, quotes.length / 2);
-const secondRow = quotes.slice(quotes.length / 2);
 
 export function QuoteSlider(): JSX.Element {
   const [paused, setPaused] = useState(false);
   const dispatch = useAppDispatch();
-  useEffect(()=>{
-    const fetchTesti =async()=>{
+  useEffect(() => {
+    const fetchTesti = async () => {
       await dispatch(getAllTestimonials());
     }
     fetchTesti();
-  },[dispatch]);
+  }, [dispatch]);
   const { testimonials } = useAppSelector(state => state?.testimonials);
 
   // console.log("----- testimonials-----", testimonials);
@@ -47,14 +29,16 @@ export function QuoteSlider(): JSX.Element {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {testimonials && testimonials.map((quote, idx) => (
-          <div
-            key={idx}
-            style={{ animationPlayState: paused ? "paused" : "running" }}
-          >
-            <QuoteCard {...quote} />
-          </div>
-        ))}
+        {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          testimonials && testimonials.map((quote: any, idx) => (
+            quote?.isActive && <div
+              key={idx}
+              style={{ animationPlayState: paused ? "paused" : "running" }}
+            >
+              <QuoteCard {...quote} />
+            </div>
+          ))}
       </Marquee>
 
       {/* Second row scrolls right */}

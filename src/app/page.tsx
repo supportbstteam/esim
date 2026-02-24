@@ -75,7 +75,7 @@ export default function Home() {
         <Explore />
 
         <TrustedTravel />
-        <FAQ faqs={list} />
+        <FAQ faqs={list.slice(0,3)} />
 
       </div>
     </>

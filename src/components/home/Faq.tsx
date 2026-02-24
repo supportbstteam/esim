@@ -84,14 +84,16 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
 
             {/* FAQ List */}
             <div className="faq-list mt-10 ">
-              {faqs.map((faq, index) => (
-                <FAQItem
-                  key={index}
-                  question={faq.question}
-                  answer={faq.answer}
-                  initiallyOpen={false} // ✅ First FAQ open by default
-                />
-              ))}
+              {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                faqs.map((faq: any, index) => (
+                  <FAQItem
+                    key={index}
+                    question={faq.question}
+                    answer={faq.answer}
+                    initiallyOpen={false} // ✅ First FAQ open by default
+                  />
+                ))}
             </div>
 
             {/* View All Link using Next.js Link */}
