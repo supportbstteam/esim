@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import FAQ from "@/components/home/Faq";
 import { fetchFaqs } from "@/redux/slice/FaqSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
 
 function Faqs() {
     const dispatch = useAppDispatch();
@@ -10,6 +11,7 @@ function Faqs() {
 
     useEffect(() => {
         dispatch(fetchFaqs());
+        dispatch(fetchUserDetails());
     }, [dispatch]);
 
     if (loading) {
