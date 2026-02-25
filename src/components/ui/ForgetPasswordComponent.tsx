@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import { api } from "@/lib/api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 type AuthModalProps = {
     onClose: () => void;
@@ -14,6 +15,8 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
 }) => {
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     // ✅ Validation schemas
     const emailSchema = Yup.object({
@@ -177,36 +180,49 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
                     <Form>
                         <p className="text-gray-600 mb-3">Reset password for <b>{email}</b></p>
 
+                        {/* New Password Field */}
                         <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
                             New Password <span className="text-[#E33629]">*</span>
                         </label>
-                        <Field
-                            name="password"
-                            type="password"
-                            placeholder="Enter new password"
-                            className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <div className="relative">
+                            <Field
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Enter new password"
+                                className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-3 top-5 text-gray-500"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
                         <ErrorMessage name="password" component="div" className="mt-1 text-red-600 text-sm" />
 
+                        {/* Confirm Password Field */}
                         <label htmlFor="confirmPassword" className="block mb-1 font-medium text-gray-700 mt-4">
                             Confirm Password <span className="text-[#E33629]">*</span>
                         </label>
-                        <Field
-                            name="confirmPassword"
-                            type="password"
-                            placeholder="Re-enter new password"
-                            className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        <ErrorMessage
-                            name="confirmPassword"
-                            component="div"
-                            className="mt-1 text-red-600 text-sm"
-                        />
+                        <div className="relative">
+                            <Field
+                                name="confirmPassword"
+                                type={showConfirmPassword ? "text" : "password"}
+                                placeholder="Re-enter new password"
+                                className="w-full px-4 py-2 border border-[#959595] mt-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-3 top-5 text-gray-500"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
+                        <ErrorMessage name="confirmPassword" component="div" className="mt-1 text-red-600 text-sm" />
 
-                        <button
-                            type="submit"
-                            className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition"
-                        >
+                        <button type="submit" className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition">
                             Reset Password
                         </button>
                     </Form>

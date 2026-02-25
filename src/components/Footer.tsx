@@ -142,8 +142,12 @@ export const Footer: React.FC = () => {
                         type?.toLowerCase() === "email" ||
                         type?.toLowerCase() === "gmail";
 
+                      // const finalHref = isEmail
+                      //   ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(href)}`
+                      //   : href || "#";
+
                       const finalHref = isEmail
-                        ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(href)}`
+                        ? `mailto:${href}`
                         : href || "#";
 
                       return (

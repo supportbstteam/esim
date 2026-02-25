@@ -122,7 +122,7 @@ export default function MainBanner({
           </div>
 
           {/* 🌍 Popular Countries */}
-          <div className="flex relative z-10 flex-wrap gap-0 justify-center md:justify-start mt-0 md:mt-1">
+          {/* <div className="flex relative z-10 flex-wrap gap-0 justify-center md:justify-start mt-0 md:mt-1">
             {countries &&
               countries.length > 0 &&
               countries.slice(0, 6).map((country: cunt) => (
@@ -134,7 +134,7 @@ export default function MainBanner({
                   {country.name}
                 </span>
               ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
