@@ -234,7 +234,7 @@ function Page() {
 
           <Link
             href="/contact-us"
-            className="inline-block bg-blue-800 px-6 py-3 rounded-md text-white my-5 hover:bg-blue-900 transition"
+            className="inline-block bg-[#133365] px-6 py-3 rounded-md text-white my-5 hover:bg-blue-900 transition"
           >
             Contact Support
           </Link>

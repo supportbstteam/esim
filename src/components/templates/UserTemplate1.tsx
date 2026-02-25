@@ -14,28 +14,26 @@ export default function UserTemplate1({ data }: any) {
 
   const hasLeft = leftParagraphs.length > 0;
 
+  /**
+   * Tailwind replacements for the global prose-content styles.
+   * This handles tables, images, and margin resets for injected HTML.
+   */
+  const proseStyles = `
+    prose-content
+    max-w-none
+    [&_table]:w-full [&_table]:table-auto [&_table]:border-collapse [&_table]:my-[1.5em]
+    [&_th]:border [&_th]:border-gray-200 [&_th]:p-3 [&_th]:text-left
+    [&_td]:border [&_td]:border-gray-200 [&_td]:p-3 [&_td]:text-left
+    [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg
+    [&_>*:first-child]:mt-0
+    [&_>*:last-child]:mb-0
+  `;
+
   return (
     <section className="py-20 bg-white">
-      <style jsx global>{`
-        .prose-content table {
-          width: 100% !important;
-          table-layout: auto;
-          border-collapse: collapse;
-          margin: 1.5em 0;
-        }
-        .prose-content th, .prose-content td {
-          border: 1px solid #e5e7eb;
-          padding: 12px;
-          text-align: left;
-        }
-        .prose-content > *:first-child { margin-top: 0 !important; }
-        .prose-content > *:last-child { margin-bottom: 0 !important; }
-        .prose-content img { max-width: 100%; height: auto; border-radius: 8px; }
-      `}</style>
-
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* HEADING (Label) - Now spans full width or sits at the top to keep columns balanced */}
+        {/* HEADING (Label) */}
         <div className="mb-4">
           <p className="text-xl font-semibold tracking-wide text-gray-500 uppercase">
             {(data.heading || "").replace(/<[^>]+>/g, "")}
@@ -54,7 +52,7 @@ export default function UserTemplate1({ data }: any) {
                 leftParagraphs.map((paragraph: any, index: number) => (
                   <div
                     key={index}
-                    className="prose prose-lg prose-slate prose-content text-gray-700 max-w-none"
+                    className={`prose prose-lg prose-slate text-gray-700 ${proseStyles}`}
                     dangerouslySetInnerHTML={{ __html: paragraph.content }}
                   />
                 ))}
@@ -62,7 +60,7 @@ export default function UserTemplate1({ data }: any) {
             ) : (
               /* If no left paragraphs, Subheading goes here */
               <div
-                className="prose prose-2xl prose-slate prose-content font-bold text-gray-900 leading-tight max-w-none"
+                className={`prose prose-2xl prose-slate font-bold text-gray-900 leading-tight ${proseStyles}`}
                 dangerouslySetInnerHTML={{ __html: data.subHeading }}
               />
             )}
@@ -73,7 +71,7 @@ export default function UserTemplate1({ data }: any) {
             {hasLeft ? (
               /* If left paragraphs exist, Subheading is on the right */
               <div
-                className="prose prose-2xl prose-slate prose-content font-bold text-gray-900 leading-tight max-w-none"
+                className={`prose prose-2xl prose-slate font-bold text-gray-900 leading-tight ${proseStyles}`}
                 dangerouslySetInnerHTML={{ __html: data.subHeading }}
               />
             ) : (
@@ -84,7 +82,7 @@ export default function UserTemplate1({ data }: any) {
                 rightParagraphs.map((paragraph: any, index: number) => (
                   <div
                     key={index}
-                    className="prose prose-lg prose-slate prose-content text-gray-700 max-w-none"
+                    className={`prose prose-lg prose-slate text-gray-700 ${proseStyles}`}
                     dangerouslySetInnerHTML={{ __html: paragraph.content }}
                   />
                 ))}
@@ -101,7 +99,7 @@ export default function UserTemplate1({ data }: any) {
             downParagraphs.map((paragraph: any, index: number) => (
               <div
                 key={index}
-                className="prose prose-lg prose-slate prose-content text-gray-700 max-w-none"
+                className={`prose prose-lg prose-slate text-gray-700 ${proseStyles}`}
                 dangerouslySetInnerHTML={{ __html: paragraph.content }}
               />
             ))}

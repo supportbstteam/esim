@@ -34,11 +34,23 @@ interface Props {
 export default function UserTemplate7({ data }: Props) {
   if (!data) return null;
 
+  /**
+   * CLEANER: Removes problematic inline styles (like lab, oklab, fixed widths) 
+   * sent by the backend so they don't break the Next.js build or layout.
+   */
+  const cleanHtml = (html?: string) => {
+    if (!html) return "";
+    // Removes all style="..." attributes from the HTML string
+    return html.replace(/style="[^"]*"/g, "");
+  };
+
   const getBlocksToRender = (): Block[] => {
     if (data.blocks && Array.isArray(data.blocks)) {
       return data.blocks;
     }
+
     const legacyBlocks: Block[] = [];
+
     if (data.heading) {
       legacyBlocks.push({
         id: "legacy-heading",
@@ -46,6 +58,7 @@ export default function UserTemplate7({ data }: Props) {
         content: data.heading,
       });
     }
+
     if (data.cards && data.cards.length > 0) {
       legacyBlocks.push({
         id: "legacy-cards",
@@ -54,72 +67,64 @@ export default function UserTemplate7({ data }: Props) {
         columns: data.columns || 3,
       });
     }
+
     return legacyBlocks;
   };
 
   const displayBlocks = getBlocksToRender();
 
-  return (
-    <section className="py-6 border border-gray-200 mb-6 rounded-lg shadow-sm bg-white">
-      <style jsx global>{`
-        .prose-custom {
-          max-width: 100% !important;
-        }
-        /* Fix for tables taking full width */
-        .prose-custom table {
-          width: 100% !important;
-          table-layout: auto;
-          border-collapse: collapse;
-          margin: 1rem 0 !important;
-        }
-        .prose-custom th, .prose-custom td {
-          border: 1px solid #e5e7eb;
-          padding: 8px;
-        }
-        /* REMOVE EXTRA GAPS created by prose margins */
-        .prose-custom > *:first-child {
-          margin-top: 0 !important;
-        }
-        .prose-custom > *:last-child {
-          margin-bottom: 0 !important;
-        }
-      `}</style>
+  const getResponsiveGridClasses = (columns?: number) => {
+    switch (columns) {
+      case 4: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
+      case 3: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+      case 2: return "grid-cols-1 sm:grid-cols-2";
+      default: return "grid-cols-1";
+    }
+  };
 
-      {/* Changed space-y-12 to space-y-4 to reduce gap between blocks */}
-      <div className="max-w-7xl mx-auto px-6 space-y-4">
+  const proseStyles = `
+    max-w-none 
+    [&_table]:w-full [&_table]:table-auto [&_table]:border-collapse [&_table]:my-4 [&_table]:block [&_table]:overflow-x-auto [&_table]:white-space-nowrap [&_table]:border [&_table]:border-gray-200
+    [&_th]:border [&_th]:border-gray-200 [&_th]:p-3 [&_th]:bg-gray-50 [&_th]:font-semibold
+    [&_td]:border [&_td]:border-gray-200 [&_td]:p-3
+    [&_img]:max-w-full [&_img]:h-auto
+    [&_>*:first-child]:mt-0
+    [&_>*:last-child]:mb-0
+  `;
+
+  return (
+    <section className="py-4 sm:py-6 md:py-8 border border-gray-200 mb-4 sm:mb-6 rounded-lg sm:rounded-xl shadow-sm bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 sm:space-y-4 md:space-y-6">
+        
         {displayBlocks.map((block) => (
           <div key={block.id} className="w-full">
-            
-            {/* ================= CASE: PARAGRAPH ================= */}
+
+            {/* ================= PARAGRAPH ================= */}
             {block.type === "paragraph" && block.content && (
               <div
-                className="prose prose-slate prose-custom text-gray-900"
-                dangerouslySetInnerHTML={{ __html: block.content }}
+                className={`prose prose-sm sm:prose-base md:prose-lg prose-slate text-gray-900 ${proseStyles}`}
+                dangerouslySetInnerHTML={{ __html: cleanHtml(block.content) }}
               />
             )}
 
-            {/* ================= CASE: CARDS GRID ================= */}
+            {/* ================= CARDS ================= */}
             {block.type === "cards" && block.cards && (
-              <div
-                className="grid gap-4" /* Reduced gap from 5 to 4 */
-                style={{
-                  gridTemplateColumns: `repeat(${block.columns || 1}, minmax(0, 1fr))`,
-                }}
-              >
+              <div className={`grid gap-3 sm:gap-4 md:gap-5 ${getResponsiveGridClasses(block.columns)}`}>
                 {block.cards.map((card) => (
                   <div
                     key={card.id}
-                    className="rounded-xl border border-gray-100 p-5 shadow-sm transition-all hover:shadow-md"
+                    className="rounded-lg sm:rounded-xl border border-gray-100 p-4 sm:p-5 md:p-6 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
                     style={{ backgroundColor: card.bgColor || "#ffffff" }}
                   >
                     <div
-                      className="prose prose-slate prose-custom text-gray-800"
-                      dangerouslySetInnerHTML={{ __html: card.content }}
+                      className={`prose prose-sm sm:prose-base prose-slate text-gray-800 ${proseStyles}`}
+                      dangerouslySetInnerHTML={{ __html: cleanHtml(card.content) }}
                     />
                   </div>
                 ))}
               </div>
             )}
+
           </div>
         ))}
       </div>
