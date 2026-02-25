@@ -41,13 +41,13 @@ const getHref = (section: string, item: string) => {
     if (item === "FAQs") return "/faq";
     if (item === "Plan & Pricing") return "/country";
     if (item === "How It Works") return "/how-it-works";
-    return `/quick-links/${toSlug(item)}`;
+    return `/${toSlug(item)}`;
   }
   if (section === "Support") {
 
     if (item === "Setup Guide") return "/set-up";
-    if (item === "Device Compatibility") return "/supports/devices";
-    return `/supports/${toSlug(item)}`;
+    // if (item === "Device Compatibility") return "/devices";
+    return `/${toSlug(item)}`;
 
   }
   if (section === "Legal") return `/${toSlug(item)}`;
