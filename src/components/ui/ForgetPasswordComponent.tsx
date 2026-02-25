@@ -17,6 +17,7 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
     const [email, setEmail] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // ✅ Validation schemas
     const emailSchema = Yup.object({
@@ -40,7 +41,7 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
 
     // ✅ Step 1 - Send OTP
     const handleSendPasswordOtp = async (values: { email: string }) => {
-
+        setLoading(true);
         try {
             // await axios.post("/user/auth/forget-password", { email: values?.email });
             await api({
@@ -51,16 +52,19 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
                 }
             });
             setEmail(values?.email);
+            setLoading(false);
             setStep(2);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(err.response?.data?.message || "Failed to send OTP")
+            setLoading(false);
             // alert(err.response?.data?.message || "Failed to send OTP");
         }
     };
 
     // ✅ Step 2 - Verify OTP
     const handleVerifyOtp = async (values: { otp: string }) => {
+        setLoading(true);
         try {
             // await axios.post("/api/user/verify-forgot-otp", { email, otp: values.otp });
             await api({
@@ -71,15 +75,18 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
                     otp: values?.otp
                 }
             });
+            setLoading(false);
             setStep(3);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(err.response?.data?.message || "Failed to send OTP")
+            setLoading(false);
         }
     };
 
     // ✅ Step 3 - Reset Password
     const handleResetPassword = async (values: { password: string }) => {
+        setLoading(true);
         try {
             // await axios.post("/api/user/reset-password", { email, password: values.password });
             await api({
@@ -91,10 +98,12 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
                 }
             })
             toast.success("Password reset successfully!");
+            setLoading(false);
             onClose();
             // setShowForgotPassword(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
+            setLoading(false);
             toast.error(err.response?.data?.message || "Failed to send OTP")
         }
     };
@@ -135,9 +144,39 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
 
                         <button
                             type="submit"
-                            className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition"
+                            disabled={loading}
+                            className={`w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition flex items-center justify-center gap-2
+    ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-[#34b44a]"}`}
                         >
-                            Send OTP
+                            {loading ? (
+                                <>
+                                    {/* Spinner */}
+                                    <svg
+                                        className="animate-spin h-5 w-5 text-white"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                        />
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8v8H4z"
+                                        />
+                                    </svg>
+
+                                    Sending...
+                                </>
+                            ) : (
+                                "Send OTP"
+                            )}
                         </button>
                     </Form>
                 </Formik>
@@ -162,9 +201,43 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
 
                         <button
                             type="submit"
-                            className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition"
+                            disabled={loading}
+                            className={`w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition flex items-center justify-center gap-2
+    ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-[#34b44a]"}`}
                         >
-                            Verify OTP
+
+                            {
+                                loading && (
+                                    <>
+                                        {/* Spinner */}
+                                        <svg
+                                            className="animate-spin h-5 w-5 text-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            />
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8v8H4z"
+                                            />
+                                        </svg>
+
+                                        Sending...
+                                    </>
+                                )
+                            }
+                            {
+                                !loading && "Verify OTP"
+                            }
                         </button>
                     </Form>
                 </Formik>
@@ -222,8 +295,42 @@ const ForgotPassword: React.FC<AuthModalProps> = ({
                         </div>
                         <ErrorMessage name="confirmPassword" component="div" className="mt-1 text-red-600 text-sm" />
 
-                        <button type="submit" className="w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition">
-                            Reset Password
+                        <button type="submit" disabled={loading}
+                            className={`w-full mt-5 py-3 bg-[#3BC852] text-white font-semibold rounded-4xl transition flex items-center justify-center gap-2
+    ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-[#34b44a]"}`}>
+                            {
+                                loading && (
+                                    <>
+                                        {/* Spinner */}
+                                        <svg
+                                            className="animate-spin h-5 w-5 text-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            />
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8v8H4z"
+                                            />
+                                        </svg>
+
+                                        Sending...
+                                    </>
+                                )
+                            }
+                            {
+                                !loading && "Reset Password"
+                            }
+
                         </button>
                     </Form>
                 </Formik>
