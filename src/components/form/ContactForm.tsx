@@ -1,14 +1,19 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import {  MdPhone } from 'react-icons/md';
+import { MdPhone } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { api } from '@/lib/api';
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('*required').max(30, 'Max 30 chars'),
     lastName: Yup.string().required('*required').max(30, 'Max 30 chars'),
-    email: Yup.string().email('Invalid email').required('*required'),
+    email: Yup.string()
+        .required('*required')
+        .matches(
+            /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+            'Enter valid email (example@gmail.com)'
+        ),
     phone: Yup.string()
         .matches(/^\+?[0-9]{7,15}$/, 'Invalid phone number')
         .required('*required'),
@@ -47,7 +52,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 <label htmlFor="firstName" className="block text-[#181818]  mb-2">
                                     First Name<span className='text-[#E33629]'>*</span>
                                 </label>
-                                
+
                                 <Field
                                     id="firstName"
                                     name="firstName"
@@ -82,7 +87,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         <div className="mb-6">
                             <label htmlFor="email" className="block text-[#181818] ">
                                 <label htmlFor="phone" className=" text-[#181818]  mb-2 flex items-center gap-2">
-                                 
+
                                     Email<span className='text-[#E33629]'>*</span>
                                 </label>
                             </label>
@@ -103,8 +108,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         {/* Phone row */}
                         <div className="mb-6">
                             <label htmlFor="phone" className=" text-[#181818]  mb-2 flex items-center gap-2">
-                                
-                             Phone<span className='text-[#E33629]'>*</span>
+
+                                Phone<span className='text-[#E33629]'>*</span>
                             </label>
                             <Field
                                 id="phone"
