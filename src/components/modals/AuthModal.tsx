@@ -352,9 +352,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
                                                         Remember Me
                                                     </label>
                                                 </span> */}
-                                                <button onClick={() => setShowForgotPassword(true)} className="text-sm subtext hover:underline ml-auto">
-                                                    Forgot Password?
-                                                </button>
+
                                             </div>
                                             <button
                                                 type="submit"
@@ -370,6 +368,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess, i
                                                 ) : (
                                                     "Submit"
                                                 )}
+                                            </button>
+                                            <button onClick={() => setShowForgotPassword(true)} className="text-sm subtext hover:underline ml-auto">
+                                                Forgot Password?
                                             </button>
                                         </Form>
                                     </Formik>
