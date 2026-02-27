@@ -66,6 +66,7 @@ function Page() {
 
   const selectedDevice =
     devices.find(
+       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (d: any) =>
         String(d.id) === selectedDeviceId
     );
@@ -73,6 +74,7 @@ function Page() {
   const brandFilteredDevices =
     selectedBrand
       ? devices.filter(
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (d: any) =>
           d?.brand?.name === selectedBrand
       )
@@ -177,7 +179,9 @@ function Page() {
               All Brands
             </option>
 
-            {brands.map((brand: any) => (
+            {
+             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            brands.map((brand: any) => (
               <option
                 key={brand.id}
                 value={brand.name}
@@ -203,6 +207,7 @@ function Page() {
             </option>
 
             {brandFilteredDevices.map(
+               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (device: any) => (
                 <option
                   key={device.id}
@@ -277,7 +282,7 @@ function Page() {
             </p>
 
           ) : (
-
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
             brands.map((brand: any) => {
 
               const isOpen =
@@ -285,6 +290,7 @@ function Page() {
 
               const brandDevices =
                 devices.filter(
+                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   (device: any) => {
 
                     if (
@@ -353,6 +359,7 @@ function Page() {
                       ) : (
 
                         brandDevices.map(
+                           // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           (device: any) => (
 
                             <p key={device.id}>
