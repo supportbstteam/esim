@@ -66,7 +66,7 @@ function Page() {
 
   const selectedDevice =
     devices.find(
-       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (d: any) =>
         String(d.id) === selectedDeviceId
     );
