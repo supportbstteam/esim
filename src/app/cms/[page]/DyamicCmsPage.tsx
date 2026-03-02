@@ -31,7 +31,7 @@ function DyamicCmsPage({ page }: any) {
   return (
     <div>
       <MainBanner title={sections[0]?.data?.heading} backgroundImage={sections[0]?.data?.image?.url} subtitle={sections[0]?.data?.subHeading} />
-      <div className="container px-4 md:px-6 mb-10 md:mb-20" >
+      <div className="mb-10 md:mb-20" >
         {sections?.map((section, index) => {
           const Component = TEMPLATE_MAP[section.template];
           if (!Component) return null;

@@ -8,6 +8,9 @@ import Failed from "../../public/lottie/failed.json"
 import NoDataAnimation from "../../public/lottie/nodata.json"
 import LoadingAnimation from "../../public/lottie/loading.json"
 import NotFoundAnimation from "../../public/lottie/notfound.json"
+import How1 from "../../public/how1.png"
+import How2 from "../../public/how2.png"
+import How3 from "../../public/how3.png"
 
 export const Images = {
     Stripe,
@@ -19,5 +22,8 @@ export const Images = {
     NoDataAnimation,
     LoadingAnimation,
     NotFoundAnimation,
-    AndroidDownload
+    AndroidDownload,
+    How1,
+    How2,
+    How3
 }

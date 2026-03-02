@@ -9,6 +9,8 @@ import MainBanner from '@/components/ui/MainBanner';
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
+import Image from "next/image";
+import { Images } from "@/components/Images";
 function HowItsWorks() {
   const dispatch = useAppDispatch();
 
@@ -23,7 +25,7 @@ function HowItsWorks() {
 
   return (
     <div>
-        <MainBanner title="Get Connected in Just a Few Steps" subtitle="From purchase to activation, our eSIM process is quick, simple, and designed for hassle-free travel." backgroundImage="/work_how.webp" />
+      <MainBanner title="Get Connected in Just a Few Steps" subtitle="From purchase to activation, our eSIM process is quick, simple, and designed for hassle-free travel." backgroundImage="/work_how.webp" />
       <div className="container px-4 md:px-6 mb-10 md:mb-20">
 
         {/* SECTION 1 */}
@@ -52,37 +54,11 @@ function HowItsWorks() {
         <div className="flex flex-col-reverse md:flex-row justify-between gap-10 mb-10 md:mb-20">
           <div className="bg-[#F3F5F7] p-8 rounded-2xl w-full md:w-[40%] space-y-3">
             {/** Plan list */}
-            <div className="rounded-[12px] py-5 px-7 flex justify-between items-center bg-white cursor-pointer mb-5">
-              <div className="flex">
-                <input type="radio" name="plan" className="mr-3 h-5 w-5 accent-[#64748B]" />
-                <span className="font-medium bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span>
-              </div>
-              <span className="text-gray-500 text-sm bg-[#F7F7F8] w-[59px] h-[26px] rounded-2xl"></span>
-            </div>
-
-            <div className="rounded-[12px] py-5 px-7 border border-[#3BC852] bg-[#F5FCF6] flex justify-between items-center mb-5">
-              <div className="flex">
-                <input type="radio" name="plan" className="mr-3 h-5 w-5 accent-[#1A0F33]" defaultChecked />
-                <span className="font-medium">3 GB</span>
-              </div>
-              <span className="text-gray-500 text-sm">7 Days</span>
-            </div>
-
-            <div className="rounded-[12px] py-5 px-7 flex justify-between items-center bg-white cursor-pointer mb-5">
-              <div className="flex">
-                <input type="radio" name="plan" className="mr-3 h-5 w-5 accent-[#64748B]" />
-                <span className="font-medium bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span>
-              </div>
-              <span className="text-gray-500 text-sm bg-[#F7F7F8] w-[59px] h-[26px] rounded-2xl"></span>
-            </div>
-
-            <div className="rounded-[12px] py-5 px-7 flex justify-between items-center bg-white cursor-pointer">
-              <div className="flex">
-                <input type="radio" name="plan" className="mr-3 h-5 w-5 accent-[#64748B]" />
-                <span className="font-medium bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span>
-              </div>
-              <span className="text-gray-500 text-sm bg-[#F7F7F8] w-[59px] h-[26px] rounded-2xl"></span>
-            </div>
+            <Image
+              alt="Plan1"
+              src={Images.How1}
+              className="w-full h-auto"
+            />
           </div>
 
           <div className="flex flex-col gap-6 md:gap-8 w-full md:w-[45%]">
@@ -109,17 +85,11 @@ function HowItsWorks() {
           </div>
 
           <div className="flex w-full md:w-[40%] bg-[#F3F5F7] p-8 rounded-2xl flex-col items-center">
-            <div className="flex flex-col gap-6 text-sm text-[#64748B] w-full">
-              <label className="flex items-center gap-2 cursor-pointer mb-5">
-                <input type="radio" name="install" className="accent-[#64748B] h-5 w-5" defaultChecked /> QR Code
-              </label>
-
-              <img src="/Frame_qr.png" alt="QR Code" className="max-h-[169px] w-auto mx-auto" />
-
-              <label className="flex items-center gap-2 cursor-pointer mt-5">
-                <input type="radio" className="accent-[#64748B] h-5 w-5" name="install" /> Activate By Link
-              </label>
-            </div>
+            <Image
+              alt="Plan1"
+              src={Images.How2}
+              className="w-full h-auto"
+            />
           </div>
         </div>
 
@@ -138,48 +108,11 @@ function HowItsWorks() {
 
           <div className="w-full md:w-[40%] bg-[#F3F5F7] p-8 rounded-2xl">
             {/* Card 1 */}
-            <div className="border border-[#3BC852] rounded-xl py-4 px-7 bg-[#F5FCF6] flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <img src="/us_flag.png" alt="" className="rounded-4xl" />
-                <span className="text-[#309E3A] bg-[#309E3A3D] rounded-3xl px-2 py-1 text-xs font-semibold">ACTIVE</span>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="font-medium text-[#1A0F33]">United States</span>
-                <p className="text-sm text-gray-500">7 Days</p>
-              </div>
-
-              <p className="text-[16px] flex justify-between">
-                Remaining Data <span className="font-semibold text-[#1A0F33]">20/30 GB</span>
-              </p>
-
-              <p className="text-[16px] flex justify-between">
-                Expires in <span className="font-semibold text-[#1A0F33]">29 D, 7 H</span>
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="rounded-xl py-4 px-7 bg-white flex flex-col gap-2 mt-5">
-              <div className="flex items-center justify-between">
-                <img src="/swed_flag.png" alt="" className="rounded-4xl" />
-                <span className="bg-[#F7F7F8] w-[58px] h-[20px] rounded-2xl"></span>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span>
-                <p className="bg-[#F7F7F8] w-[58px] h-[26px] rounded-2xl"></p>
-              </div>
-
-              <p className="text-[16px] flex justify-between">
-                <span className="bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span>
-                <span className="bg-[#F7F7F8] w-[58px] h-[26px] rounded-2xl"></span>
-              </p>
-
-              <p className="text-[16px] flex justify-between">
-                <span className="bg-[#F7F7F8] w-[98px] h-[26px] rounded-2xl"></span>
-                <span className="bg-[#F7F7F8] w-[58px] h-[26px] rounded-2xl"></span>
-              </p>
-            </div>
+            <Image
+              alt="Plan1"
+              src={Images.How3}
+              className="w-full h-auto"
+            />
           </div>
         </div>
 
@@ -243,11 +176,8 @@ function HowItsWorks() {
           </div>
         </section>
       </div>
-
-      {/* <TrustedTravel />
-      <FAQ faqs={list} /> */}
     </div>
-  );   
+  );
 }
 
 export default HowItsWorks;
