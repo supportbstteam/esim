@@ -11,6 +11,7 @@ import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
 import Image from "next/image";
 import { Images } from "@/components/Images";
+import Link from "next/link";
 function HowItsWorks() {
   const dispatch = useAppDispatch();
 
@@ -67,9 +68,9 @@ function HowItsWorks() {
             <p className="subtext">
               Browse from a wide range of data plans available for your travel destination. Pick the one that fits your needs and budget.
             </p>
-            <button className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
+            <Link href="/country" className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
               View All Plan
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -79,9 +80,9 @@ function HowItsWorks() {
             <h2 className="text-lg font-bold bg-[#F3F5F7] rounded-4xl px-4 py-3 w-fit">02</h2>
             <h3 className="h2">Install Your eSIM</h3>
             <p className="subtext">Instantly receive your QR code by email after purchase. Scan the code using your phone to activate your eSIM.</p>
-            <button className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
+            <Link href="/set-up" className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
               Setup Guide
-            </button>
+            </Link>
           </div>
 
           <div className="flex w-full md:w-[40%] bg-[#F3F5F7] p-8 rounded-2xl flex-col items-center">
@@ -101,9 +102,9 @@ function HowItsWorks() {
             <p className="subtext">
               Once installed, you can start using your eSIM immediately. Enjoy high-speed data wherever you go — no SIM card swaps needed!
             </p>
-            <button className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
+            <Link href="/supports/devices" className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
               Check Device Compatibility
-            </button>
+            </Link>
           </div>
 
           <div className="w-full md:w-[40%] bg-[#F3F5F7] p-8 rounded-2xl">
@@ -128,9 +129,9 @@ function HowItsWorks() {
             <p className="subtext">
               Get Started Instantly – Checking takes just a few seconds, so you can enjoy a hassle-free start to your travel experience.
             </p>
-            <button className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
+            <Link href="/supports/devices" className="border-[#1A0F33] border px-6 py-3 hover:bg-[#1A0F33] hover:text-white rounded-full text-[#1A0F33] font-light w-fit">
               Check Device Compatibility
-            </button>
+            </Link>
           </div>
         </div>
 
