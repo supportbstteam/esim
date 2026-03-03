@@ -95,6 +95,7 @@ export const EditProfileModal: React.FC<Props> = ({
                       if (file) {
                         const url = URL.createObjectURL(file);
                         setPreview(url);
+                        // setPreview(url);
                       }
                     }}
                     className="hidden"
@@ -102,7 +103,7 @@ export const EditProfileModal: React.FC<Props> = ({
                 </label>
               </div>
             </div>
-
+            
             {/* Form Fields */}
             <div className="grid grid-cols-2 gap-5">
               <div>
