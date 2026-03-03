@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FaUser } from "react-icons/fa";
 import { ModalWrapper } from "./ModalWrapper";
 import { useAppSelector } from "@/redux/store";
-
+import axios from "axios";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -29,6 +29,23 @@ export const EditProfileModal: React.FC<Props> = ({
 }) => {
   const { user } = useAppSelector(state => state?.user);
   const [preview, setPreview] = useState<string | null>(user ? user.image : null);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [country,setCountry] = useState<any>([]);
+  
+  
+  const fetchAllCountriesDetails = async()=>{
+    const response = await axios.get("https://restcountries.com/v3.1/all?fields=name");
+    setCountry(response?.data);
+  }
+  
+  // console.log("-=-=- response in the fetch All Countries Details --=-=-=", country);
+  
+  useEffect(()=>{
+    fetchAllCountriesDetails();
+  },[]);
+  
+  
   return (
     <ModalWrapper title="Edit Profile" isOpen={isOpen} onClose={onClose} widthClass="max-w-lg" footer={null}>
       <Formik
@@ -51,7 +68,7 @@ export const EditProfileModal: React.FC<Props> = ({
             setSubmitting(false);
           }
         }}
-      >
+        >
         {({ setFieldValue, isSubmitting }) => (
           <Form className="space-y-6 px-2">
             {/* Avatar + Upload */}
@@ -81,7 +98,7 @@ export const EditProfileModal: React.FC<Props> = ({
                       }
                     }}
                     className="hidden"
-                  />
+                    />
                 </label>
               </div>
             </div>
@@ -95,7 +112,7 @@ export const EditProfileModal: React.FC<Props> = ({
                 <Field
                   name="firstName"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                />
+                  />
                 <ErrorMessage name="firstName" component="div" className="text-xs text-rose-500 mt-1" />
               </div>
 
@@ -106,7 +123,7 @@ export const EditProfileModal: React.FC<Props> = ({
                 <Field
                   name="lastName"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                />
+                  />
                 <ErrorMessage name="lastName" component="div" className="text-xs text-rose-500 mt-1" />
               </div>
 
@@ -118,7 +135,7 @@ export const EditProfileModal: React.FC<Props> = ({
                   name="email"
                   type="email"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                />
+                  />
                 <ErrorMessage name="email" component="div" className="text-xs text-rose-500 mt-1" />
               </div>
 
@@ -129,7 +146,7 @@ export const EditProfileModal: React.FC<Props> = ({
                 <Field
                   name="contact"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                />
+                  />
               </div>
 
               <div className="col-span-2">
@@ -140,11 +157,24 @@ export const EditProfileModal: React.FC<Props> = ({
                   name="location"
                   as="select"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                >
-                  <option value="">Select Location</option>
+                  >
+
+                  {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    country && country.length >0 && country?.map(({name}:any) =>{
+
+                      // console.log("0-=1-=-= itme in the country -=-=-", name);
+                      return(
+                        <option value={name?.common} >
+                          {name?.common}
+                        </option>
+                      )
+                    })
+                  }
+                  {/* <option value="">Select Location</option>
                   <option value="Turkey">Turkey</option>
                   <option value="India">India</option>
-                  <option value="USA">USA</option>
+                  <option value="USA">USA</option> */}
                 </Field>
               </div>
             </div>

@@ -13,6 +13,7 @@ import Image from "next/image";
 import { addToCart } from "@/redux/slice/CartSlice";
 import Link from "next/link";
 import { clearPlans } from "@/redux/slice/PlanSlice";
+import { RxCross2 } from "react-icons/rx";
 type CountryDetailsProps = {
   params: Promise<{ id: string }>;
 };
@@ -148,6 +149,11 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   }, 0);
   const groupedPlans = groupPlansByDays(displayedPlans);
 
+
+  const handleRemoveSelected = ()=>{
+    setSelectedPlans({});
+  }
+
   return (
     <>
       <div>
@@ -262,13 +268,24 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                   {totalPlansSelected} Plan{totalPlansSelected > 1 ? "s" : ""} Total: ${totalPrice.toFixed(2)}
                 </p>
               </div>
+              
+              <div className="flex items-center" >
               <button onClick={handleCheckout} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
                 {content.plansSection.checkoutButton}
               </button>
+
+              <button onClick={handleRemoveSelected} className="text-red ml-10" >
+               <RxCross2 size={30} color="#ff0000" />
+              </button>
+              </div>
+
+
             </div>
           </div>
         )}
       </div>
+
+    
 
       <AuthModal isOpen={isAuthModal} onClose={() => setIsAuthModal(false)} onAuthSuccess={handleAuthSuccess} />
 
