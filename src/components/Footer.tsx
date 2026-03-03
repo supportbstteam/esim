@@ -46,6 +46,7 @@ const getHref = (section: string, item: string) => {
   if (section === "Support") {
 
     if (item === "Setup Guide") return "/set-up";
+    if (item === "Device Compatibility") return "/supports/devices";
     // if (item === "Device Compatibility") return "/devices";
     return `/${toSlug(item)}`;
 
