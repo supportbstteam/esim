@@ -12,7 +12,6 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (values: any) => Promise<void>;
 }
-
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
@@ -95,7 +94,7 @@ export const EditProfileModal: React.FC<Props> = ({
                       if (file) {
                         const url = URL.createObjectURL(file);
                         setPreview(url);
-                        // setPreview(url);
+                        // setPreview(url); this is commenting
                       }
                     }}
                     className="hidden"
