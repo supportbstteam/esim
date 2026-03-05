@@ -267,8 +267,12 @@ export const Footer: React.FC = () => {
           © {new Date().getFullYear()} Esim. All rights reserved.
         </div>
       </div>
+
     </footer>
   );
 };
 
 export default Footer;
+
+
+

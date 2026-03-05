@@ -10,9 +10,9 @@ export default function UserTemplate8({ data }: any) {
   const cleanHtml = (html?: string) => {
     if (!html) return "";
     return html
-      .replace(/style="[^"]*font-size:[^"]*"/gi, "") 
-      .replace(/style="[^"]*lab\([^"]*"/gi, "")      
-      .replace(/style="[^"]*width:[^"]*"/gi, "");    
+      .replace(/style="[^"]*font-size:[^"]*"/gi, "")
+      .replace(/style="[^"]*lab\([^"]*"/gi, "")
+      .replace(/style="[^"]*width:[^"]*"/gi, "");
   };
 
   /**
@@ -44,9 +44,9 @@ export default function UserTemplate8({ data }: any) {
   `;
 
   return (
-    <section className="py-12 px-10 sm:py-24 bg-white overflow-hidden">
+    <section className=" px-10 sm:py-10 bg-white overflow-hidden">
       <div className="max-w-full mx-auto px-4 sm:px-6">
-        
+
         {/* Render the unified content from Template8 */}
         <div
           className={`${proseStyles}`}
