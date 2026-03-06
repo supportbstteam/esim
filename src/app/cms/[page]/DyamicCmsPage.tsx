@@ -1,4 +1,5 @@
 "use client";
+import NotFound from '@/app/not-found';
 import { TEMPLATE_MAP } from '@/components/templates/templateMap';
 import MainBanner from '@/components/ui/MainBanner';
 import { resetCMSState } from '@/redux/slice/CmsPagesSlice';
@@ -31,25 +32,34 @@ function DyamicCmsPage({ page }: any) {
   return (
     <div>
       <MainBanner title={sections[0]?.data?.heading} backgroundImage={sections[0]?.data?.image?.url} subtitle={sections[0]?.data?.subHeading} />
-      <div >
-        {sections?.map((section, index) => {
-          const Component = TEMPLATE_MAP[section.template];
-          if (!Component) return null;
+      {
+        sections && sections.length > 0 && <div >
+          {sections?.map((section, index) => {
+            const Component = TEMPLATE_MAP[section.template];
+            if (!Component) return null;
 
-          // 🔥 odd-even background logic
-          // const bgClass =
-          //   index % 2 === 0 ? "bg-white" : "bg-gray-50";
+            // 🔥 odd-even background logic
+            // const bgClass =
+            //   index % 2 === 0 ? "bg-white" : "bg-gray-50";
 
-          return (
-            <section
-              key={section.id ?? index}
-            // className={`${bgClass}`}
-            >
-              <Component data={section.data} />
-            </section>
-          );
-        })}
-      </div>
+            return (
+              <section
+                key={section.id ?? index}
+              // className={`${bgClass}`}
+              >
+                <Component data={section.data} />
+              </section>
+            );
+          })}
+        </div>
+      }
+
+      {
+        sections && sections.length < 1 && (
+          <NotFound />
+        )
+      }
+
     </div>
   );
 }
