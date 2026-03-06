@@ -1,5 +1,6 @@
 "use client";
 import NotFound from '@/app/not-found';
+import CmsSkeleton from '@/components/skeleton/CmsSkeleton';
 import { TEMPLATE_MAP } from '@/components/templates/templateMap';
 import MainBanner from '@/components/ui/MainBanner';
 import { resetCMSState } from '@/redux/slice/CmsPagesSlice';
@@ -13,7 +14,7 @@ import React, { useEffect } from 'react';
 function DyamicCmsPage({ page }: any) {
   const dispatch = useAppDispatch();
   // commit
-  const { sections } = useAppSelector(state => state?.cmsPage);
+  const { sections, loading } = useAppSelector(state => state?.cmsPage);
 
   const fetchContentCMS = async () => {
     await dispatch(fetchCountries());
@@ -26,12 +27,25 @@ function DyamicCmsPage({ page }: any) {
     fetchContentCMS();
   }, [dispatch]);
 
+  if (loading || !sections ) {
+    return (
+      <div>
+        <MainBanner />
+        <CmsSkeleton />
+      </div>
+    )
+  }
+
+
+  console.log("-=-=-=- url -=-==-",loading);
+
 
   // console.log("-=-=-=- sections[0]?.data?.subHeading -=-=-=-=-",sections[0]?.data?.image?.url);
 
   return (
     <div>
       <MainBanner title={sections[0]?.data?.heading} backgroundImage={sections[0]?.data?.image?.url} subtitle={sections[0]?.data?.subHeading} />
+
       {
         sections && sections.length > 0 && <div >
           {sections?.map((section, index) => {
@@ -54,11 +68,13 @@ function DyamicCmsPage({ page }: any) {
         </div>
       }
 
-      {
-        sections && sections.length < 1 && (
+
+
+      {/* {
+        !loading && sections.length < 1 && (
           <NotFound />
         )
-      }
+      } */}
 
     </div>
   );

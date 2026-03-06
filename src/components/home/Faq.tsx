@@ -66,8 +66,8 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
               </p>
               <p className="text-sm sm:text-[20px]  text-white mb-2 sm:mb-4">Our team is always ready to guide you through setup  selection—no matter where your journey takes you.</p>
               {/* <div className="flex"></div> */}
-              <a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Reach Out To Support <ArrowRight /></a>
-              <a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Chat On Whatsapp <ArrowRight /></a>
+              <Link href="/contact-us" className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Reach Out To Support <ArrowRight /></Link>
+              {/* <a className="flex gap-3 font-bold text-white text-sm sm:text-[20px]">Chat On Whatsapp <ArrowRight /></a> */}
             </div>
           </div>
 
