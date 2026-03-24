@@ -15,6 +15,7 @@ import { Navigation } from "swiper/modules";
 import { clearESimDetails, fetchSimDetailsByUser } from "@/redux/slice/ESimSlice";
 import { postUserClaimRefund } from "@/lib/pageFunction";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import ProtectedRoute from "@/components/hooks/ProtectedRoute";
 function ESimDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ function ESimDetails() {
   console.log("---- esim details ----", eSimDetails);
 
   return (
+    <ProtectedRoute>
     <div className="max-w-full mx-auto px-4 md:px-10 py-6">
       {/* ✅ eSIM Carousel Section */}
       {eSimDetails?.esims && eSimDetails.esims.length > 0 && (
@@ -146,6 +148,7 @@ function ESimDetails() {
         </div> */}
       </div>
     </div>
+    </ProtectedRoute>
   );
 }
 
