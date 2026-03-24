@@ -13,8 +13,8 @@ import { useNavigate } from './hooks/navigation';
 import { AiOutlineUser } from "react-icons/ai";
 const navItems = [
   { label: "eSIM", href: "/country" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Features", href: "/features" },
+  { label: "How It Works", href: "/cms/how-it-works" },
+  { label: "Features", href: "/cms/features" },
   { label: "Support", href: "/contact-us" },
   // { label: "Partner Program", href: "/partner-program" },
 ];

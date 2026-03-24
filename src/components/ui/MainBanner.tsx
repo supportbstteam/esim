@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from '@/components/hooks/navigation';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { fetchCountries } from '@/redux/thunk/thunk';
-import toast from 'react-hot-toast';
-import { fetchPlans } from '@/redux/thunk/planThunk';
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "@/components/hooks/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import toast from "react-hot-toast";
+import { fetchPlans } from "@/redux/thunk/planThunk";
 
-import { Country as cunt } from '@/types';
+import { Country as cunt } from "@/types";
 
 interface MainBannerProps {
   title?: string;
@@ -15,27 +15,29 @@ interface MainBannerProps {
 }
 
 export default function MainBanner({
-  title = 'Save More. Travel More. Stay Online.',
-  subtitle = 'Activate your eSIM instantly and enjoy seamless global coverage.',
-  backgroundImage = '/external_journey.webp',
+  title = "Save More. Travel More. Stay Online.",
+  subtitle = "Activate your eSIM instantly and enjoy seamless global coverage.",
+  backgroundImage = "/external_journey.webp",
 }: MainBannerProps) {
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const { countries = [], loading } = useAppSelector((state) => state?.country ?? {});
+  const { countries = [], loading } = useAppSelector(
+    (state) => state?.country ?? {},
+  );
   const filteredCountries = useMemo(() => {
     if (!searchTerm.trim()) return [];
     return countries.filter((country: cunt) =>
-      country.name.toLowerCase().includes(searchTerm.toLowerCase())
+      country.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [searchTerm, countries]);
 
   const handleSelectCountry = async (country: cunt) => {
     setSearchTerm(country?.name);
     await dispatch(fetchPlans({ countryId: country?.id }));
-    navigation(`/country/${country?.id}`);
+    navigation(`/country/${country?.name}?countryId=${country?.id}`);
     setShowDropdown(false);
   };
 
@@ -46,15 +48,17 @@ export default function MainBanner({
         // dynamic background image handled via style so it can be updated at runtime
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'bottom',
-          backgroundSize: 'cover',
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "bottom",
+          backgroundSize: "cover",
         }}
       >
         {/* overlay */}
         <div className="absolute inset-0 bg-[#133366]/50 rounded-xl" />
 
-        <h2 className="h1 relative z-10 !text-white text-center mb-2">{title}</h2>
+        <h2 className="h1 relative z-10 !text-white text-center mb-2">
+          {title}
+        </h2>
         <p className="subtext !text-white text-center relative">{subtitle}</p>
 
         <div className="w-full lg:w-[541px] justify-center mx-auto items-center mt-8 flex flex-col gap-3 md:gap-4">
@@ -69,12 +73,12 @@ export default function MainBanner({
                 }}
                 onFocus={() => setShowDropdown(true)}
                 onKeyDown={async (e) => {
-                  if (e.key === 'Enter') {
+                  if (e.key === "Enter") {
                     e.preventDefault();
                     if (filteredCountries.length > 0) {
                       await handleSelectCountry(filteredCountries[0]);
                     } else {
-                      toast.error('We are not currently serving here');
+                      toast.error("We are not currently serving here");
                     }
                   }
                 }}
@@ -93,7 +97,11 @@ export default function MainBanner({
                   stroke="currentColor"
                   strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </button>
             </div>
@@ -114,11 +122,13 @@ export default function MainBanner({
             )}
 
             {/* No Results */}
-            {showDropdown && searchTerm.trim() !== '' && filteredCountries.length === 0 && (
-              <div className="absolute z-10 bg-white border border-gray-200 rounded-xl mt-2 w-full shadow-md px-4 py-2 text-sm text-gray-500">
-                No countries found
-              </div>
-            )}
+            {showDropdown &&
+              searchTerm.trim() !== "" &&
+              filteredCountries.length === 0 && (
+                <div className="absolute z-10 bg-white border border-gray-200 rounded-xl mt-2 w-full shadow-md px-4 py-2 text-sm text-gray-500">
+                  No countries found
+                </div>
+              )}
           </div>
 
           {/* 🌍 Popular Countries */}

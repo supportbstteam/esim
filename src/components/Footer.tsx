@@ -18,11 +18,24 @@ import { iconMap } from "./SocialIcons";
 const linkSections = [
   {
     title: "Quick Links",
-    items: ["Home", "About Us", "Plan & Pricing", "How It Works", "FAQs", "Contact Us"],
+    items: [
+      "Home",
+      "About Us",
+      "Plan & Pricing",
+      "How It Works",
+      "FAQs",
+      "Contact Us",
+    ],
   },
   {
     title: "Support",
-    items: ["Help Center", "Device Compatibility", "Setup Guide", "Troubleshooting", "Refund Policy"],
+    items: [
+      "Help Center",
+      "Device Compatibility",
+      "Setup Guide",
+      "Troubleshooting",
+      "Refund Policy",
+    ],
   },
   {
     title: "Legal",
@@ -31,27 +44,30 @@ const linkSections = [
 ];
 
 const toSlug = (text: string) =>
-  text.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+  text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "");
 
 const getHref = (section: string, item: string) => {
   if (section === "Quick Links") {
     if (item === "Home") return "/";
     if (item === "Contact Us") return "/contact-us";
-    if (item === "About Us") return "/about-us";
+    // if (item === "About Us") return "/about-us";
     if (item === "FAQs") return "/faq";
     if (item === "Plan & Pricing") return "/country";
     if (item === "How It Works") return "/how-it-works";
-    return `/${toSlug(item)}`;
+    return `/cms/${toSlug(item)}`;
   }
   if (section === "Support") {
-
     if (item === "Setup Guide") return "/set-up";
     if (item === "Device Compatibility") return "/supports/devices";
+    if (item === "Troubleshooting") return "/cms/troubleshoot";
     // if (item === "Device Compatibility") return "/devices";
-    return `/${toSlug(item)}`;
-
+    return `/cms/${toSlug(item)}`;
   }
-  if (section === "Legal") return `/${toSlug(item)}`;
+  if (section === "Legal") return `/cms/${toSlug(item)}`;
   return "#";
 };
 
@@ -72,35 +88,29 @@ export const Footer: React.FC = () => {
 
   const dynamicSocials =
     links?.map((social: { type: string; link: string }) => {
-
       // normalize type safely
-      const normalizedType =
-        social?.type?.trim()?.toLowerCase();
+      const normalizedType = social?.type?.trim()?.toLowerCase();
 
       // find matching key in iconMap (case insensitive)
       const matchedKey = Object.keys(iconMap).find(
-        key => key.toLowerCase() === normalizedType
+        (key) => key.toLowerCase() === normalizedType,
       );
 
-      const Icon = matchedKey
-        ? iconMap[matchedKey]
-        : DefaultIcon;
+      const Icon = matchedKey ? iconMap[matchedKey] : DefaultIcon;
 
       return {
         icon: Icon,
         href: social?.link || "#",
         type: social?.type || "Unknown",
       };
-
     }) || [];
-
 
   useEffect(() => {
     const fetchTesti = async () => {
       await dispatch(getAllLinks());
       await dispatch(fetchCountries());
       await dispatch(featurePlans());
-    }
+    };
     fetchTesti();
   }, [dispatch]);
 
@@ -111,11 +121,18 @@ export const Footer: React.FC = () => {
           {/* Logo & About */}
           <div className="space-y-4 md:col-span-1">
             <Link href="/" className="inline-block">
-              <Image height={100} width={100} src="/footer_main.png" alt="footerLogo" className="w-[115px] h-auto" />
+              <Image
+                height={100}
+                width={100}
+                src="/footer_main.png"
+                alt="footerLogo"
+                className="w-[115px] h-auto"
+              />
             </Link>
             <p className="!text-white text-sm sm:text-[15px] md:text-[16px]">
-              We provide affordable and instant eSIM solutions for global travelers. Skip roaming fees and enjoy seamless
-              connectivity in {(() => {
+              We provide affordable and instant eSIM solutions for global
+              travelers. Skip roaming fees and enjoy seamless connectivity in{" "}
+              {(() => {
                 const count = countries?.length || 0;
 
                 if (count < 10) return `${count} countries`;
@@ -127,45 +144,41 @@ export const Footer: React.FC = () => {
                 const display = `${firstDigit}${zeros}+`;
 
                 return `${display} countries`;
-              })()}.
+              })()}
+              .
             </p>
 
             {/* Mobile view */}
             <div className="mt-2 md:hidden">
               <h4 className="text-sm text-gray-200 mb-3">Connect With Us</h4>
               <div className="flex gap-2 items-center">
-                {
-                  dynamicSocials.map(
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    ({ icon: Icon, href, type }: any, idx: number) => {
+                {dynamicSocials.map(
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  ({ icon: Icon, href, type }: any, idx: number) => {
+                    const isEmail =
+                      type?.toLowerCase() === "email" ||
+                      type?.toLowerCase() === "gmail";
 
-                      const isEmail =
-                        type?.toLowerCase() === "email" ||
-                        type?.toLowerCase() === "gmail";
+                    // const finalHref = isEmail
+                    //   ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(href)}`
+                    //   : href || "#";
 
-                      // const finalHref = isEmail
-                      //   ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(href)}`
-                      //   : href || "#";
+                    const finalHref = isEmail ? `mailto:${href}` : href || "#";
 
-                      const finalHref = isEmail
-                        ? `mailto:${href}`
-                        : href || "#";
-
-                      return (
-                        <a
-                          key={idx}
-                          href={finalHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
-                          aria-label={type}
-                        >
-                          <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
-                        </a>
-                      );
-                    }
-                  )
-                }
+                    return (
+                      <a
+                        key={idx}
+                        href={finalHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group h-9 w-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                        aria-label={type}
+                      >
+                        <Icon className="w-5 h-5 text-white group-hover:text-[#3BC852]" />
+                      </a>
+                    );
+                  },
+                )}
 
                 {/* <p className="text-white" >Download for Android</p> */}
               </div>
@@ -175,7 +188,11 @@ export const Footer: React.FC = () => {
                   href={process.env.NEXT_PUBLIC_APK_URL || "#"}
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  <Image className="w-30 h-30" src={Images.AndroidDownload} alt="Download for Android" />
+                  <Image
+                    className="w-30 h-30"
+                    src={Images.AndroidDownload}
+                    alt="Download for Android"
+                  />
                 </Link>
               </div>
             </div>
@@ -190,11 +207,14 @@ export const Footer: React.FC = () => {
                 className="w-full flex items-center justify-between md:justify-start md:gap-0 md:mb-4 md:cursor-default"
                 aria-expanded={openIdx === idx}
               >
-                <h4 className="text-lg md:text-base mb-2 md:mb-0 md:mr-0">{title}</h4>
+                <h4 className="text-lg md:text-base mb-2 md:mb-0 md:mr-0">
+                  {title}
+                </h4>
                 <span className="md:hidden ml-2 text-gray-300">
                   <svg
-                    className={`w-4 h-4 transform transition-transform ${openIdx === idx ? "rotate-180" : "rotate-0"
-                      }`}
+                    className={`w-4 h-4 transform transition-transform ${
+                      openIdx === idx ? "rotate-180" : "rotate-0"
+                    }`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -209,8 +229,9 @@ export const Footer: React.FC = () => {
               </button>
 
               <ul
-                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
-                  } md:max-h-full`}
+                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${
+                  openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
+                } md:max-h-full`}
               >
                 {items.map((item, i) => (
                   <li key={i} className="mb-2">
@@ -228,9 +249,12 @@ export const Footer: React.FC = () => {
 
           {/* Desktop view social icons */}
           <div className="max-md:hidden">
-            <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">Connect With Us</h4>
+            <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">
+              Connect With Us
+            </h4>
             <div className="flex gap-2 items-center">
-              { // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 dynamicSocials.map(({ href, type }: any, idx: number) => {
                   const Icon = iconMap[type] || MdOutlineEmail;
 
@@ -248,7 +272,6 @@ export const Footer: React.FC = () => {
                   );
                 })
               }
-
             </div>
 
             <div className="mt-4">
@@ -257,7 +280,10 @@ export const Footer: React.FC = () => {
                 href={process.env.NEXT_PUBLIC_APK_URL || "#"}
                 className="text-gray-300 hover:text-white transition-colors text-sm"
               >
-                <Image src={Images.AndroidDownload} alt="Download for Android" />
+                <Image
+                  src={Images.AndroidDownload}
+                  alt="Download for Android"
+                />
               </Link>
             </div>
           </div>
@@ -267,12 +293,8 @@ export const Footer: React.FC = () => {
           © {new Date().getFullYear()} Esim. All rights reserved.
         </div>
       </div>
-
     </footer>
   );
 };
 
 export default Footer;
-
-
-

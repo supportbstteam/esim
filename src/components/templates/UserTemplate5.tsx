@@ -21,10 +21,8 @@ export default function UserTemplate5({ data }: any) {
   return (
 
     <section className="
-      max-w-7xl 
-      mx-auto 
-      px-4 sm:px-6 lg:px-8 
-      mb-4 sm:mb-6
+      container
+      my-5
     ">
 
       <div className="
