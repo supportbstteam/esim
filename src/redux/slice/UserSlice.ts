@@ -125,7 +125,7 @@ export const fetchUserDetails = createAsyncThunk(
       return res?.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      console.error("--- error in the user details ----", err);
+      console.error("error in the user details ", err);
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }

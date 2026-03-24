@@ -9,7 +9,7 @@ export const fetchPlans = createAsyncThunk(
     "plans/fetchPlans",
     async ({ countryId }: FetchPlansArgs = {}, { rejectWithValue }) => {
 
-        console.log("-=-=-=-=-= coutnry id -=-=-=-=-=-",countryId);
+        // console.log("-=-=-=-=-= coutnry id -=-=-=-=-=-",countryId);
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const res = await api<{ success: boolean; data: any[] }, { countryId?: string }>({
@@ -18,7 +18,7 @@ export const fetchPlans = createAsyncThunk(
                 params: { countryId }, // ✅ pass as object
             });
 
-            // console.log("---- response in the fetching plans ----", res);
+            console.log("---- response in the fetching plans ----", res);
             return res?.data;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
