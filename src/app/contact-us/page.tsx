@@ -104,7 +104,7 @@ function Contact() {
       });
 
       if (response?.status) {
-        console.log("---- response in the query questions ----", response);
+        // console.log("---- response in the query questions ----", response);
         toast.success(response?.message || "Message sent successfully!");
         resetForm(); // ✅ reset the form after success
       } else {

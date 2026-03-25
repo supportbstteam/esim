@@ -26,27 +26,35 @@ export const EditProfileModal: React.FC<Props> = ({
   // initial = {},
   onSubmit,
 }) => {
-  const { user } = useAppSelector(state => state?.user);
-  const [preview, setPreview] = useState<string | null>(user ? user.image : null);
+  const { user } = useAppSelector((state) => state?.user);
+  const [preview, setPreview] = useState<string | null>(
+    user ? user.image : null,
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [country,setCountry] = useState<any>([]);
-  
-  
-  const fetchAllCountriesDetails = async()=>{
-    const response = await axios.get("https://restcountries.com/v3.1/all?fields=name");
+  const [country, setCountry] = useState<any>([]);
+
+  const fetchAllCountriesDetails = async () => {
+    const response = await axios.get(
+      "https://restcountries.com/v3.1/all?fields=name",
+    );
     setCountry(response?.data);
-  }
-  
+  };
+
   // console.log("-=-=- response in the fetch All Countries Details --=-=-=", country);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     fetchAllCountriesDetails();
-  },[]);
-  
-  
+  }, []);
+
   return (
-    <ModalWrapper title="Edit Profile" isOpen={isOpen} onClose={onClose} widthClass="max-w-lg" footer={null}>
+    <ModalWrapper
+      title="Edit Profile"
+      isOpen={isOpen}
+      onClose={onClose}
+      widthClass="max-w-lg"
+      footer={null}
+    >
       <Formik
         initialValues={{
           firstName: user ? user.firstName : "",
@@ -54,20 +62,11 @@ export const EditProfileModal: React.FC<Props> = ({
           email: user ? user.email : "",
           contact: user ? user.phone : "",
           location: user ? user.country : "",
-          avatar: null as File | null,
+          image: null as File | null,
         }}
         validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting }) => {
-          try {
-            await onSubmit(values);
-            onClose();
-          } catch (err) {
-            console.error(err);
-          } finally {
-            setSubmitting(false);
-          }
-        }}
-        >
+        onSubmit={onSubmit}
+      >
         {({ setFieldValue, isSubmitting }) => (
           <Form className="space-y-6 px-2">
             {/* Avatar + Upload */}
@@ -75,7 +74,11 @@ export const EditProfileModal: React.FC<Props> = ({
               <div className="flex items-center gap-6">
                 <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-200 flex items-center justify-center bg-gray-100">
                   {preview ? (
-                    <img src={preview} alt="avatar" className="w-full h-full object-cover" />
+                    <img
+                      src={preview}
+                      alt="avatar"
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
                     <FaUser className="text-gray-400 text-3xl" />
                   )}
@@ -90,19 +93,19 @@ export const EditProfileModal: React.FC<Props> = ({
                     accept="image/*"
                     onChange={(e) => {
                       const file = e.currentTarget.files?.[0] ?? null;
-                      setFieldValue("avatar", file);
+
+                      setFieldValue("image", file); // ✅ Formik value
+
                       if (file) {
-                        const url = URL.createObjectURL(file);
-                        setPreview(url);
-                        // setPreview(url); this is commenting
+                        setPreview(URL.createObjectURL(file)); // preview
                       }
                     }}
                     className="hidden"
-                    />
+                  />
                 </label>
               </div>
             </div>
-            
+
             {/* Form Fields */}
             <div className="grid grid-cols-2 gap-5">
               <div>
@@ -112,8 +115,12 @@ export const EditProfileModal: React.FC<Props> = ({
                 <Field
                   name="firstName"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                  />
-                <ErrorMessage name="firstName" component="div" className="text-xs text-rose-500 mt-1" />
+                />
+                <ErrorMessage
+                  name="firstName"
+                  component="div"
+                  className="text-xs text-rose-500 mt-1"
+                />
               </div>
 
               <div>
@@ -123,8 +130,12 @@ export const EditProfileModal: React.FC<Props> = ({
                 <Field
                   name="lastName"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                  />
-                <ErrorMessage name="lastName" component="div" className="text-xs text-rose-500 mt-1" />
+                />
+                <ErrorMessage
+                  name="lastName"
+                  component="div"
+                  className="text-xs text-rose-500 mt-1"
+                />
               </div>
 
               <div>
@@ -136,41 +147,43 @@ export const EditProfileModal: React.FC<Props> = ({
                   type="email"
                   disabled
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                  />
-                <ErrorMessage name="email" component="div" className="text-xs text-rose-500 mt-1" />
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-xs text-rose-500 mt-1"
+                />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Contact No 
+                  Contact No
                 </label>
                 <Field
                   name="contact"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                  />
+                />
               </div>
 
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Location 
+                  Location
                 </label>
                 <Field
                   name="location"
                   as="select"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
-                  >
-
+                >
                   {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    country && country.length >0 && country?.map(({name}:any) =>{
-
-                      // console.log("0-=1-=-= itme in the country -=-=-", name);
-                      return(
-                        <option value={name?.common} >
-                          {name?.common}
-                        </option>
-                      )
-                    })
+                    country &&
+                      country.length > 0 &&
+                      country?.map(({ name }: any) => {
+                        // console.log("0-=1-=-= itme in the country -=-=-", name);
+                        return (
+                          <option value={name?.common}>{name?.common}</option>
+                        );
+                      })
                   }
                   {/* <option value="">Select Location</option>
                   <option value="Turkey">Turkey</option>

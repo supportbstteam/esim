@@ -25,7 +25,8 @@ import { fetchCountries } from "@/redux/thunk/thunk";
 import Empty from "@/components/Empty";
 import AuthModal from "@/components/modals/AuthModal";
 import ProtectedRoute from "@/components/hooks/ProtectedRoute";
-
+import Cookies from "js-cookie";
+import axios from "axios";
 const statusStyles: Record<string, string> = {
   completed: "text-green-600",
   partial: "text-yellow-600",
@@ -93,33 +94,46 @@ function Profile() {
   }, [orders, statusFilter, searchQuery]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleUpdateUser = async (values: any) => {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const response: any = await api({
-        url: "user/update",
-        method: "PUT",
-        data: {
-          firstName: values?.firstName,
-          lastName: values?.lastName,
-          phone: values?.contact,
-          email: values?.email,
-          country: values?.location,
-          password: values?.newPassword,
-          currentPassword: values?.currentPassword,
-        },
-      });
+const handleUpdateUser = async (values: any) => {
 
-      if (response?.status === "success") {
-        toast.success("User Updated Successfully");
-        dispatch(fetchUserDetails());
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      console.error("Error updating user:", err);
-      toast.error(err?.response?.data?.message || "Something went wrong");
+  console.log("user",values);
+  // return;
+  try {
+    const token = Cookies.get("token");
+
+    const formData = new FormData();
+
+    formData.append("firstName", values.firstName);
+    formData.append("lastName", values.lastName);
+    formData.append("email", values.email);
+    formData.append("phone", values.contact || "");
+    formData.append("country", values.location || "");
+
+    // image
+    if (values.image instanceof File) {
+      formData.append("image", values.image);
     }
-  };
+
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/update`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response?.data?.status === "success") {
+      toast.success("User Updated Successfully");
+      dispatch(fetchUserDetails());
+    }
+
+  } catch (err: any) {
+    console.error("Error updating user:", err);
+    toast.error(err?.response?.data?.message || "Something went wrong");
+  }
+};
 
   return (
     <ProtectedRoute>
