@@ -34,7 +34,7 @@ export default function Home() {
       await dispatch(getAllLinks());
       // ✅ ONLY on home page
       if (location.pathname === "/") {
-        await dispatch(fetchPlans({ countryId: "all" }));
+        await dispatch(fetchPlans({ name: "all" }));
       }
       await dispatch(fetchCart());
       console.log("dispatch home");

@@ -14,6 +14,8 @@ import { Images } from "./Images";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
 import { iconMap } from "./SocialIcons";
+import { FaWhatsapp } from "react-icons/fa";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 const linkSections = [
   {
@@ -293,6 +295,8 @@ export const Footer: React.FC = () => {
           © {new Date().getFullYear()} Esim. All rights reserved.
         </div>
       </div>
+
+      <WhatsAppIcon/>
     </footer>
   );
 };

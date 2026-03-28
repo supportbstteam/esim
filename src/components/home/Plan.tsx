@@ -40,7 +40,13 @@ export const Plan = ({ classed }: PlanProps ) => {
   };
 
   const handleNavigate = (id: string) => {
-    router.push(`/country/${id}`);
+
+    const slug = id
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // spaces → hyphen
+    router.push(`/country/${slug}`);
   };
 
   return (
@@ -77,7 +83,7 @@ export const Plan = ({ classed }: PlanProps ) => {
         ) : (
           featured.slice(0, 5).map((plan) => (
             <div
-              onClick={() => handleNavigate(plan.country.id)}
+              onClick={() => handleNavigate(plan.country.name)}
               key={plan.id}
               className="w-full border border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] transition duration-300 mb-6 "
             >

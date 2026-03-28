@@ -75,8 +75,19 @@ export default function CountryplanTabs() {
   };
 
   const handleNavigate = ({ name, id }: { name: string; id: string }) => {
-    router.push(`/country/${name}?countryId=${id}`);
+
+    const slug = name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // spaces → hyphen
+
+    
+    router.push(`/country/${slug}`);
   };
+
+
+
   const handleAuthSuccess = () => {
     setIsAuthModal(false);
     if (selectedPlan) {

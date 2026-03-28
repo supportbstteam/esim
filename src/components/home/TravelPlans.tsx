@@ -13,8 +13,16 @@ const TravelPlans = ({ classed , maincontaiuner }: travelprops) => {
   const router = useRouter();
   const { countries } = useAppSelector((state) => state?.country);
   const handleNavigate = (id: string) => {
-    router.push(`/country/${id}`);
+
+    const slug = id
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // spaces → hyphen
+    router.push(`/country/${slug}`);
   };
+
+  
   return (
     <section className={`${maincontaiuner} bg-white px-0  mt-25 container`}>
       {/* Section Heading */}
@@ -32,7 +40,7 @@ const TravelPlans = ({ classed , maincontaiuner }: travelprops) => {
             return (
               <div
                 key={i}
-                onClick={() => handleNavigate(item.id)}
+                onClick={() => handleNavigate(item.name)}
               className="border border-gray-200 rounded-[8px] hover:bg-green-50 hover:border-green-500 transition duration-300 cursor-pointer w-full sm:w-[48%] lg:w-[31%] xl:w-[23%]"
               >
                 <div className="p-6 flex items-center justify-between gap-4"

@@ -9,7 +9,7 @@ import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchPageBySlug } from "@/redux/thunk/cmsPageThunk";
 import { fetchCountries } from "@/redux/thunk/thunk";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function DyamicCmsPage({ page }: any) {
@@ -17,6 +17,7 @@ function DyamicCmsPage({ page }: any) {
   // commit
   const { sections, loading, metaDescription, metaKeywords, metaTitle } =
     useAppSelector((state) => state?.cmsPage);
+  const [cmsLoading, setCmsLoading] = useState(false);
 
   const seo = {
     metaDescription,
@@ -27,17 +28,19 @@ function DyamicCmsPage({ page }: any) {
   useSEO(seo);
 
   const fetchContentCMS = async () => {
+    setCmsLoading(true);
     await dispatch(fetchCountries());
     await dispatch(fetchUserDetails());
     await dispatch(resetCMSState());
     await dispatch(fetchPageBySlug({ page, type: "pages" }));
+    setCmsLoading(false);
   };
 
   useEffect(() => {
     fetchContentCMS();
   }, [dispatch]);
 
-  if (loading || !sections) {
+  if (loading && cmsLoading) {
     return (
       <div>
         <MainBanner />

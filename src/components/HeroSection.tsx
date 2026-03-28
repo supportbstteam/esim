@@ -30,8 +30,15 @@ export default function HeroSection() {
   // Handle selection
   const handleSelectCountry = async (country: Country) => {
     setSearchTerm(country?.name);
-    await dispatch(fetchPlans({ countryId: country?.id }));
-    navigation(`/country/${country?.name}?countryId=${country?.id}`);
+    const slug = country?.name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // spaces → hyphen
+    
+    await dispatch(fetchPlans({ name: slug }));
+    navigation(`/country/${slug}`);
+
     setShowDropdown(false);
   };
 

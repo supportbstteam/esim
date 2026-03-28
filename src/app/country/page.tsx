@@ -17,8 +17,6 @@ function Country() {
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
   const { countries = [], loading } = useAppSelector(
     (state) => state?.country ?? {},
   );
@@ -27,8 +25,14 @@ function Country() {
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
   const handleNavigate = ({ name, id }: { name: string; id: string }) => {
-    router.push(`/country/${name}?countryId=${id}`);
-  };
+  const slug = name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // spaces → hyphen
+
+  router.push(`/country/${slug}`);
+};
 
   const fetchingCountries = async () => {
     await dispatch(fetchCountries());
@@ -56,20 +60,8 @@ function Country() {
   useEffect(() => {
     fetchingCountries();
   }, [dispatch]);
-  const filteredCountries = useMemo(() => {
-    if (!searchTerm.trim()) return [];
-    return countries.filter((country: cunt) =>
-      country.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [searchTerm, countries]);
+  
 
-  const handleSelectCountry = async (country: cunt) => {
-    setSearchTerm(country?.name);
-    await dispatch(fetchPlans({ countryId: country?.id }));
-    navigation(`/country/${country?.id}`);
-    setShowDropdown(false);
-  };
-  const { list } = useAppSelector((state) => state?.faq);
   return (
     <>
       <MainBanner />

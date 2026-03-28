@@ -151,9 +151,9 @@ const handleUpdateUser = async (values: any) => {
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-full overflow-hidden border border-gray-200">
-              {user?.profilePic ? (
+              {user?.image ? (
                 <Image
-                  src={user.profilePic}
+                  src={`${process.env.NEXT_PUBLIC_API_URL_IMAGE}${user.image}`}
                   alt="Profile"
                   width={56}
                   height={56}

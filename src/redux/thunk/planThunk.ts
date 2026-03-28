@@ -2,23 +2,23 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/lib/api";
 
 interface FetchPlansArgs {
-    countryId?: string;
+    name?: string;
 }
 
 export const fetchPlans = createAsyncThunk(
     "plans/fetchPlans",
-    async ({ countryId }: FetchPlansArgs = {}, { rejectWithValue }) => {
+    async ({ name }: FetchPlansArgs = {}, { rejectWithValue }) => {
 
         // console.log("-=-=-=-=-= coutnry id -=-=-=-=-=-",countryId);
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const res = await api<{ success: boolean; data: any[] }, { countryId?: string }>({
+            const res = await api<{ success: boolean; data: any[] }, { name?: string }>({
                 url: "/user/plans",
                 method: "GET",
-                params: { countryId }, // ✅ pass as object
+                params: { name }, // ✅ pass as object
             });
 
-            console.log("---- response in the fetching plans ----", res);
+           // console.log("---- response in the fetching plans ----", res);
             return res?.data;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {

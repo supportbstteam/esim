@@ -50,7 +50,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         <div className="flex gap-4 mb-6">
                             <div className="flex-1">
                                 <label htmlFor="firstName" className="block text-[#181818]  mb-2">
-                                    First Name<span className='text-[#E33629]'>*</span>
+                                    First Name<span className='text-[#E33629]'> *</span>
                                 </label>
 
                                 <Field
@@ -67,7 +67,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                             </div>
                             <div className="flex-1">
                                 <label htmlFor="lastName" className="block text-[#181818] mb-2">
-                                    Last Name<span className='text-[#E33629]'>*</span>
+                                    Last Name<span className='text-[#E33629]'> *</span>
                                 </label>
                                 <Field
                                     id="lastName"
@@ -86,9 +86,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         {/* Email row */}
                         <div className="mb-6">
                             <label htmlFor="email" className="block text-[#181818] ">
-                                <label htmlFor="phone" className=" text-[#181818]  mb-2 flex items-center gap-2">
-
-                                    Email<span className='text-[#E33629]'>*</span>
+                                <label htmlFor="phone" className=" text-[#181818]  mb-2 ">
+                                    Email<span className='text-[#E33629]'> *</span>
                                 </label>
                             </label>
                             <Field
@@ -107,16 +106,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
 
                         {/* Phone row */}
                         <div className="mb-6">
-                            <label htmlFor="phone" className=" text-[#181818]  mb-2 flex items-center gap-2">
+                            <label htmlFor="phone" className="block text-[#181818] ">
 
-                                Phone<span className='text-[#E33629]'>*</span>
+                                Phone<span className='text-[#E33629]'> *</span>
                             </label>
                             <Field
                                 id="phone"
                                 name="phone"
                                 type="tel"
                                 placeholder="+1234567890"
-                                className="w-full px-3 py-2 border rounded-md  border-[#959595]focus:outline-none focus:ring-2 focus:ring-green-500 "
+                               className="w-full px-3 py-2 border rounded-md  border-[#959595] "
                             />
                             <ErrorMessage
                                 name="phone"
@@ -128,7 +127,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                         {/* Message row */}
                         <div className="mb-6">
                             <label htmlFor="message" className="block text-[#181818]  mb-2">
-                                Message
+                                Message<span className='text-[#E33629]'> *</span>
                             </label>
                             <Field
                                 as="textarea"
@@ -136,7 +135,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ handleSave }) => {
                                 name="message"
                                 rows={4}
                                 placeholder="Your message..."
-                                className="w-full px-3 py-2 border rounded-md  border-[#959595]resize-none focus:outline-none focus:ring-2 focus:ring-blue-600 "
+                                className="w-full px-3 py-2 border rounded-md  border-[#959595] "
                             />
                             <ErrorMessage
                                 name="message"

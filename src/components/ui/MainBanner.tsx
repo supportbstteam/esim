@@ -35,9 +35,16 @@ export default function MainBanner({
   }, [searchTerm, countries]);
 
   const handleSelectCountry = async (country: cunt) => {
+
+    const slug = country?.name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // spaces → hyphen
+
     setSearchTerm(country?.name);
-    await dispatch(fetchPlans({ countryId: country?.id }));
-    navigation(`/country/${country?.name}?countryId=${country?.id}`);
+    await dispatch(fetchPlans({ name: slug }));
+    navigation(`/country/${slug}`);
     setShowDropdown(false);
   };
 

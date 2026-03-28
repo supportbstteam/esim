@@ -6,7 +6,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "flagcdn.com",
-        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "esimaero.com", // ✅ ADD THIS
         pathname: "/**",
       },
     ],

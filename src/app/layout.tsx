@@ -24,8 +24,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "E-SIM AERO WORLD'S NO.1 E-SIM",
-  description: "esim",
+  title: "E-SIM Aero World’s No.1 eSIM | Fast & Reliable Global Data",
+  description: "Stay connected worldwide with global eSIM Aero. Enjoy fast, reliable coverage, easy setup, and seamless connectivity anywhere you go.",
 };
 
 export default function RootLayout({

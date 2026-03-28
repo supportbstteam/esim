@@ -15,6 +15,8 @@ import MainBanner from "@/components/ui/MainBanner";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
+import { FaWhatsapp } from "react-icons/fa";
+import { IoSettingsOutline } from "react-icons/io5";
 interface ContactItem {
   id: string;
   position: string;
@@ -67,10 +69,10 @@ function Contact() {
         method: "GET",
       });
 
-      console.log(
-        "--==--=response -=-=-=",
-        response?.sections[1]?.data?.content,
-      );
+      // console.log(
+      //   "--==--=response -=-=-=",
+      //   response?.sections[1]?.data?.content,
+      // );
       setContent(response?.sections[1]?.data?.content || "");
     } catch (err) {
       console.error(err);
@@ -90,6 +92,7 @@ function Contact() {
   const emails = contacts.filter((c) => c.type === "Email");
   const phones = contacts.filter((c) => c.type === "Phone");
   const others = contacts.filter((c) => c.type === "Other");
+  const chats = contacts.filter((c) => c.type === "Chat");
 
   const handleSave = async (
     values: ContactFormValues,
@@ -146,7 +149,8 @@ function Contact() {
             {phones.map((phone) => (
               <div
                 key={phone.id}
-                className="gap-3 border-1 border-[#ccc] p-5 rounded-xl"
+                onClick={() => window.open(`tel:${phone.value}`)}
+                className="gap-3 cursor-pointer border-1 border-[#ccc] p-5 rounded-xl"
               >
                 <FiPhone className="text-2xl text-black-700" />
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
@@ -158,7 +162,7 @@ function Contact() {
 
             {/* Address */}
             {address && (
-              <div className="gap-3 border-1 border-[#ccc] p-5 rounded-xl">
+              <div className="gap-3  border-1 border-[#ccc] p-5 rounded-xl">
                 <FiMapPin className="text-2xl text-black-700" />
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
                   Our Location{" "}
@@ -172,7 +176,8 @@ function Contact() {
             {emails.map((email) => (
               <div
                 key={email.id}
-                className="gap-3 border-1 border-[#ccc] p-5 rounded-xl"
+                onClick={() => window.open(`mailto:${email.value}`)}
+                className="gap-3 cursor-pointer border-1 border-[#ccc] p-5 rounded-xl"
               >
                 <FiMail className="text-2xl text-black-700" />
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
@@ -183,15 +188,41 @@ function Contact() {
             ))}
 
             {/* Emails */}
+            {chats.map((email) => (
+              <div
+                key={email.id}
+                onClick={() => {
+                  const phone = email.value.replace(/\s+/g, "");
+                  // console.log("phone",phone);
+                  // return;
+                  const text = encodeURIComponent("Hi");
+                  window.open(
+                    `https://web.whatsapp.com/send?l=en&phone=${phone}&text=${text}`,
+                    "_blank",
+                  );
+                }}
+                className="gap-3 border-1 cursor-pointer border-[#ccc] p-5 rounded-xl"
+              >
+                <FaWhatsapp className="text-2xl text-black-700" />
+                <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
+                  Chat With Us{" "}
+                  <span className="text-sm">({email?.position})</span>
+                </p>
+                <span>{email.value}</span>
+              </div>
+            ))}
+
+            {/* chats */}
             {others.map((email) => (
               <div
                 key={email.id}
                 className="gap-3 border-1 border-[#ccc] p-5 rounded-xl"
               >
-                <FiMail className="text-2xl text-black-700" />
+                <IoSettingsOutline className="text-2xl text-black-700" />
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
-                  Chat With Us{" "}
-                  <span className="text-sm">({email?.position})</span>
+                  <span className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
+                    {email?.position}
+                  </span>
                 </p>
                 <span>{email.value}</span>
               </div>

@@ -32,12 +32,15 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, initiallyOpen = fal
         {isOpen ? <Minus className="w-5 h-5 text-[#1A0F33]" /> : <Plus className="w-5 h-5 text-[#1A0F33]" />}
       </button>
 
-      <div
-        className={` text-start faq-answer text-[#1A0F33] text-[14px] leading-4 md:text-[16px] md:leading-relaxed transition-all duration-300 ease-in-out ${isOpen ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0 overflow-hidden"
-          }`}
-      >
-        {answer}
-      </div>
+     <div
+  className={`text-start whitespace-pre-line faq-answer text-[#1A0F33] text-[14px] leading-4 md:text-[16px] md:leading-relaxed transition-all duration-300 ease-in-out ${
+    isOpen
+      ? "max-h-[800px] opacity-100 mt-3"
+      : "max-h-0 opacity-0 overflow-hidden"
+  }`}
+>
+  {answer}
+</div>
     </div>
   );
 };
