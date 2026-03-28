@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: {
+      exclude: ["error"],
+    },
   },
   images: {
     remotePatterns: [
@@ -13,7 +15,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "esimaero.com", // ✅ ADD THIS
+        hostname: "esimaero.com",
         pathname: "/**",
       },
     ],
