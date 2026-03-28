@@ -1,10 +1,10 @@
 "use client";
+
 import NotFound from "@/app/not-found";
 import { useSEO } from "@/components/hooks/useSeo";
 import CmsSkeleton from "@/components/skeleton/CmsSkeleton";
 import { TEMPLATE_MAP } from "@/components/templates/templateMap";
 import MainBanner from "@/components/ui/MainBanner";
-import { resetCMSState } from "@/redux/slice/CmsPagesSlice";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { fetchPageBySlug } from "@/redux/thunk/cmsPageThunk";
@@ -14,9 +14,10 @@ import React, { useEffect, useState } from "react";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function DyamicCmsPage({ page }: any) {
   const dispatch = useAppDispatch();
-  // commit
+
   const { sections, loading, metaDescription, metaKeywords, metaTitle } =
     useAppSelector((state) => state?.cmsPage);
+
   const [cmsLoading, setCmsLoading] = useState(false);
 
   const seo = {
@@ -29,65 +30,58 @@ function DyamicCmsPage({ page }: any) {
 
   const fetchContentCMS = async () => {
     setCmsLoading(true);
-    await dispatch(fetchCountries());
-    await dispatch(fetchUserDetails());
-    await dispatch(resetCMSState());
-    await dispatch(fetchPageBySlug({ page, type: "pages" }));
+
+    await Promise.all([
+      // dispatch(fetchCountries()),
+      dispatch(fetchUserDetails()),
+      dispatch(fetchPageBySlug({ page, type: "pages" })),
+    ]);
+
     setCmsLoading(false);
   };
 
   useEffect(() => {
     fetchContentCMS();
-  }, [dispatch]);
+  }, [page, dispatch]);
 
-  if (loading && cmsLoading) {
-    return (
-      <div>
-        <MainBanner />
-        <CmsSkeleton />
-      </div>
-    );
-  }
+  const isLoading = loading || cmsLoading;
+  const hasSections = sections && sections.length > 0;
 
-  // console.log("-=-=-=- url -=-==-",loading);
 
-  // console.log("-=-=-=- sections[0]?.data?.subHeading -=-=-=-=-",sections[0]?.data?.image?.url);
+  console.log((!isLoading || !cmsLoading) && !hasSections);
 
   return (
     <div>
-      <MainBanner
-        title={sections[0]?.data?.heading}
-        backgroundImage={sections[0]?.data?.image?.url}
-        subtitle={sections[0]?.data?.subHeading}
-      />
+      {/* Loading */}
+      {(isLoading|| cmsLoading ) && <CmsSkeleton />}
 
-      {sections && sections.length > 0 && (
-        <div>
-          {sections?.map((section, index) => {
-            const Component = TEMPLATE_MAP[section.template];
-            if (!Component) return null;
+      {/* Content */}
+      {(!isLoading || !cmsLoading) && hasSections && (
+        <>
+          <MainBanner
+            title={sections[0]?.data?.heading}
+            backgroundImage={sections[0]?.data?.image?.url}
+            subtitle={sections[0]?.data?.subHeading}
+          />
 
-            // 🔥 odd-even background logic
-            // const bgClass =
-            //   index % 2 === 0 ? "bg-white" : "bg-gray-50";
+          <div>
+            {sections?.map((section: any, index: number) => {
+              const Component = TEMPLATE_MAP[section.template];
 
-            return (
-              <section
-                key={section.id ?? index}
-                // className={`${bgClass}`}
-              >
-                <Component data={section.data} />
-              </section>
-            );
-          })}
-        </div>
+              if (!Component) return null;
+
+              return (
+                <section key={section?.id || index}>
+                  <Component data={section?.data} />
+                </section>
+              );
+            })}
+          </div>
+        </>
       )}
 
-      {/* {
-        !loading && sections.length < 1 && (
-          <NotFound />
-        )
-      } */}
+      {/* Not Found */}
+      {/* {(!isLoading || !cmsLoading) && !hasSections &&  <NotFound />} */}
     </div>
   );
 }

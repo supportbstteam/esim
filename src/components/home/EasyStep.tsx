@@ -1,53 +1,46 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import PageTitle from '../ui/PageTitle'
-import { fetchUserDetails } from '@/redux/slice/UserSlice';
-import { useAppDispatch } from '@/redux/store';
-import { fetchCountries } from '@/redux/thunk/thunk';
-import { featurePlans } from '@/redux/thunk/planThunk';
-import { api } from '@/lib/api';
+import React, { useEffect, useState } from "react";
+import PageTitle from "../ui/PageTitle";
+import { fetchUserDetails } from "@/redux/slice/UserSlice";
+import { useAppDispatch } from "@/redux/store";
+import { fetchCountries } from "@/redux/thunk/thunk";
+import { featurePlans } from "@/redux/thunk/planThunk";
+import { api } from "@/lib/api";
 export const EasyStep = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [content,setContent] = useState(null);
-
-
-  
-
+  const [content, setContent] = useState(null);
 
   const fetchData = async () => {
-      setLoading(true);
-      setError("");
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const response = await api<any>({
-          url: `user/cms/pages/setup-guide`,
-          method: "GET",
-        });
-  
-        // console.log(
-        //   "--==--=response -=-=-=",
-        //   response?.sections[1]?.data?.content,
-        // );
-        setContent(response?.sections[1]?.data?.content || "");
-      } catch (err) {
-        console.error(err);
-        setError("Comming Soon");
-      } finally {
-        setLoading(false);
-      }
-    };
+    setLoading(true);
+    setError("");
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response = await api<any>({
+        url: `user/cms/pages/setup-guide`,
+        method: "GET",
+      });
 
+      // console.log(
+      //   "--==--=response -=-=-=",
+      //   response?.sections[1]?.data?.content,
+      // );
+      setContent(response?.sections[1]?.data?.content || "");
+    } catch (err) {
+      console.error(err);
+      setError("Comming Soon");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     dispatch(fetchUserDetails());
     dispatch(fetchCountries());
-          dispatch(featurePlans());
-          fetchData();
+    dispatch(featurePlans());
+    fetchData();
   }, []);
-
-
 
   return (
     // <section className="pt-25 bg-white container mb-25 ">
@@ -168,17 +161,14 @@ export const EasyStep = () => {
     //   </div>
     // </section>
     <section className="pt-10 bg-white container mb-25 ">
-      <div>
-
-            <p className="subtext !leading-8 !text-[20px]">
-              {!loading && !error && content && (
-                <div
-                  className="prose max-w-none mb-8 mt-2"
-                  dangerouslySetInnerHTML={{ __html: content }}
-                />
-              )}
-            </p>
-          </div>
+      <div className="subtext !leading-8 !text-[20px]">
+        {!loading && !error && content && (
+          <div
+            className="prose max-w-none mb-8 mt-2"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        )}
+      </div>
     </section>
-  )
-}
+  );
+};

@@ -14,7 +14,7 @@ export const fetchPageBySlug = createAsyncThunk(
         method: "GET",
       });
 
-      console.log("response in the cms", res);
+      // console.log("response in the cms", res);
 
       return res;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
