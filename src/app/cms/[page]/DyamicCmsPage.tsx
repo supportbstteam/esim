@@ -20,13 +20,13 @@ function DyamicCmsPage({ page }: any) {
 
   const [cmsLoading, setCmsLoading] = useState(false);
 
-  const seo = {
-    metaDescription,
-    metaTitle,
-    metaKeywords,
-  };
+  // const seo = {
+  //   metaDescription,
+  //   metaTitle,
+  //   metaKeywords,
+  // };
 
-  useSEO(seo);
+  // useSEO(seo);
 
   const fetchContentCMS = async () => {
     setCmsLoading(true);
