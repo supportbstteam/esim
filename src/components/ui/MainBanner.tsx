@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { fetchPlans } from "@/redux/thunk/planThunk";
 
 import { Country as cunt } from "@/types";
+import Flag from "./Flag";
 
 interface MainBannerProps {
   title?: string;
@@ -35,12 +36,11 @@ export default function MainBanner({
   }, [searchTerm, countries]);
 
   const handleSelectCountry = async (country: cunt) => {
-
     const slug = country?.name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
-    .replace(/\s+/g, "-"); // spaces → hyphen
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+      .replace(/\s+/g, "-"); // spaces → hyphen
 
     setSearchTerm(country?.name);
     await dispatch(fetchPlans({ name: slug }));
@@ -76,6 +76,7 @@ export default function MainBanner({
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
+                  // console.log("e.target.value searching",e.target.value);
                   setShowDropdown(true);
                 }}
                 onFocus={() => setShowDropdown(true)}
@@ -116,15 +117,23 @@ export default function MainBanner({
             {/* 🔽 Dropdown Results */}
             {showDropdown && filteredCountries.length > 0 && (
               <ul className="absolute z-10 bg-white border border-gray-200 rounded-xl mt-2 w-full max-h-60 overflow-y-auto shadow-lg">
-                {filteredCountries.map((country: cunt) => (
+                {filteredCountries.map((country: cunt) =>{
+
+                  // console.log(" --- country ---", country?.name);
+                  return(
                   <li
                     key={country.id}
                     onClick={() => handleSelectCountry(country)}
-                    className="px-4 py-2 text-sm text-gray-700 hover:bg-green-100 cursor-pointer"
+                    className="px-4 py-3 flex items-center gap-3  text-sm text-gray-700 hover:bg-green-100 cursor-pointer"
                   >
+                    <Flag
+                      countryName={country?.name}
+                      size={36}
+                      className="h-[36px] w-[36px]"
+                    />
                     {country.name}
                   </li>
-                ))}
+                )})}
               </ul>
             )}
 

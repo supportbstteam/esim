@@ -8,6 +8,7 @@ import { useNavigate } from "./hooks/navigation";
 import Image from "next/image";
 import { fetchPlans } from "@/redux/thunk/planThunk";
 import toast from "react-hot-toast";
+import Flag from "./ui/Flag";
 
 export default function HeroSection() {
   const dispatch = useAppDispatch();
@@ -31,11 +32,11 @@ export default function HeroSection() {
   const handleSelectCountry = async (country: Country) => {
     setSearchTerm(country?.name);
     const slug = country?.name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
-    .replace(/\s+/g, "-"); // spaces → hyphen
-    
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+      .replace(/\s+/g, "-"); // spaces → hyphen
+
     await dispatch(fetchPlans({ name: slug }));
     navigation(`/country/${slug}`);
 
@@ -135,8 +136,13 @@ export default function HeroSection() {
                     <li
                       key={country.id}
                       onClick={() => handleSelectCountry(country)}
-                      className="px-4 py-2 text-sm text-gray-700 hover:bg-green-100 cursor-pointer"
+                      className="px-4 py-2 flex items-center gap-3 text-sm mt-3 text-gray-700 hover:bg-green-100 cursor-pointer"
                     >
+                      <Flag
+                        countryName={country?.name}
+                        size={36}
+                        className="h-[36px] w-[36px]"
+                      />
                       {country.name}
                     </li>
                   ))}
