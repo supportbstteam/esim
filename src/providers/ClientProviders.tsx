@@ -11,6 +11,13 @@ export default function ClientProviders({
 }) {
   return (
     <ReduxProvider>
+      {/* <PayPalScriptProvider
+        options={{
+          clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+          currency: "USD",
+          intent: "capture",
+        }}
+      > */}
       <PayPalScriptProvider
         options={{
           clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,

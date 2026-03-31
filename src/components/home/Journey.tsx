@@ -3,11 +3,13 @@ import Link from "next/link";
 import React from "react";
 import { LuFacebook } from "react-icons/lu";
 import { RiTwitterXFill } from "react-icons/ri";
-import { MdOutlineEmail } from "react-icons/md";
+import { MdOutlineAirplaneTicket, MdOutlineEmail, MdOutlineSimCard } from "react-icons/md";
 import { CiLinkedin } from "react-icons/ci";
 import { TbBrandWhatsapp } from "react-icons/tb";
 import Image from 'next/image'
 import { useRouter } from "next/navigation";
+import { BsFillShieldLockFill } from "react-icons/bs";
+import { FaRegMap } from "react-icons/fa";
 export const Journey = () => {
   const router = useRouter();
   return (
@@ -39,7 +41,9 @@ export const Journey = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 min-[500px]:grid-cols-2
 gap-x-8  gap-y-10 mt-18">
             <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-              <span className="material-symbols-outlined  rounded-full !text-white  !text-[40px]  p-4 bg-[#133365]">sim_card</span>
+              <span className="material-symbols-outlined  rounded-full !text-white  !text-[40px]  p-4 bg-[#133365]">
+                <MdOutlineSimCard size={22} />
+              </span>
               <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
                 Instant Activation
               </h5>
@@ -50,7 +54,9 @@ gap-x-8  gap-y-10 mt-18">
               </p>
             </div>
             <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-              <span className="material-symbols-outlined  rounded-full !text-white !text-[40px] p-4 bg-[#133365]">airplane_ticket</span>
+              <span className="material-symbols-outlined  rounded-full !text-white !text-[40px] p-4 bg-[#133365]">
+                <MdOutlineAirplaneTicket size={22} />
+              </span>
               <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
                 Affordable Plans
               </h5>
@@ -60,7 +66,9 @@ gap-x-8  gap-y-10 mt-18">
               </p>
             </div>
             <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-              <span className="material-symbols-outlined  rounded-full !text-white  !text-[40px]  p-4 bg-[#133365]">encrypted</span>
+              <span className="material-symbols-outlined  rounded-full !text-white  !text-[40px]  p-4 bg-[#133365]">
+                <BsFillShieldLockFill size={22} />
+              </span>
               <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
                 Secure & Private
               </h5>
@@ -70,7 +78,9 @@ gap-x-8  gap-y-10 mt-18">
               </p>
             </div>
             <div className="bg-white py-8 px-6 rounded-md border-1 flex flex-col items-center">
-              <span className="material-symbols-outlined  rounded-full !text-white  !text-[40px]  p-4 bg-[#133365]">map</span>
+              <span className="material-symbols-outlined  rounded-full !text-white  !text-[40px]  p-4 bg-[#133365]">
+                <FaRegMap size={22} />
+              </span>
               <h5 className="text-[#1A0F33] text-lg font-semibold mt-4">
                 Trusted by Travelers
               </h5>

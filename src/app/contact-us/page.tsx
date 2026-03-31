@@ -1,12 +1,11 @@
-import React from "react";
-import Home from "./HomePage";
 import { Metadata } from "next";
+import Contact from "./ContactUs";
 
 export const dynamic = "force-dynamic";
 
 async function fetchSeo() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/cms/pages/home`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/cms/pages/contact`,
     { next: { revalidate: 60 } }
   );
 
@@ -28,8 +27,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const page = () => {
-  return <Home />;
-};
-
-export default page;
+export default function Page() {
+  return <Contact />;
+}

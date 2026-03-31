@@ -6,10 +6,6 @@ import ProtectedRoute from "@/components/hooks/ProtectedRoute";
 
 export default function CheckoutPage() {
   return (
-    <ProtectedRoute>
-      <Suspense fallback={<div>Loading...</div>}>
-        <CheckoutDetailPage />
-      </Suspense>
-    </ProtectedRoute>
+    <CheckoutDetailPage />
   );
 }

@@ -4,7 +4,7 @@ import CountryDetails from "./CountryDetail";
 async function fetchCountrySEO(slug: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/plans?name=${slug}`,
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 60 } },
   );
 
   if (!res.ok) return null;

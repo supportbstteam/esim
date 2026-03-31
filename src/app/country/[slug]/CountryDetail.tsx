@@ -10,11 +10,19 @@ import toast from "react-hot-toast";
 import { FaFire } from "react-icons/fa";
 import Flag from "@/components/ui/Flag";
 import Image from "next/image";
-import { addToCart } from "@/redux/slice/CartSlice";
+import {
+  addToCart,
+  clearAddToCartState,
+  removeWholeCart,
+} from "@/redux/slice/CartSlice";
 import Link from "next/link";
 import { clearPlans } from "@/redux/slice/PlanSlice";
 import { RxCross2 } from "react-icons/rx";
 import { useSearchParams } from "next/navigation";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import { BsSim } from "react-icons/bs";
+import CartConfirmModal from "@/components/modals/CartConfirmModal";
+import { Loader } from "lucide-react";
 
 type CountryDetailsProps = {
   params: Promise<{ slug: string }>;
@@ -27,13 +35,13 @@ const content = {
     title: "What’s Included",
     items: [
       {
-        icon: "flash_on",
+        icon: <AiOutlineThunderbolt size={22} />,
         title: "Instant Activation",
         description:
           "Download your eSIM via QR code or app and connect within seconds.",
       },
       {
-        icon: "sim_card",
+        icon: <BsSim size={22} />,
         title: "Top-up Anytime",
         description:
           "Recharge or upgrade your plan while traveling, without hassle.",
@@ -60,11 +68,14 @@ const content = {
 export default function CountryDetails({ params }: CountryDetailsProps) {
   const navigation = useNavigate();
   const { slug } = React.use(params);
-
+  const [isConfimModal, setIsConfirmModal] = useState(false);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-
+  const [loading, setLoading] = useState(false);
   const { user, isAuth } = useAppSelector((state) => state.user);
+  const { cart, addedPlans, failedPlans, loading:cartLoading, error } = useAppSelector(
+    (state) => state?.cart,
+  );
   const { plans } = useAppSelector((state) => state.plan);
 
   const countryId = searchParams.get("countryId") ?? undefined;
@@ -76,7 +87,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   const [isAuthModal, setIsAuthModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState<"standard" | "unlimited">(
-    "standard"
+    "standard",
   );
 
   // ✅ fetch plans
@@ -89,6 +100,24 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
 
     fetchPlanDetails();
   }, [slug, dispatch]);
+
+  useEffect(() => {
+    if (failedPlans && failedPlans.length > 0) {
+      toast.error("Some plans could not be added to cart");
+      setIsConfirmModal(true);
+      return;
+    }
+
+    if (
+      failedPlans &&
+      failedPlans.length === 0 &&
+      addedPlans &&
+      addedPlans.length > 0
+    ) {
+      toast.success("Added to cart successfully!");
+      navigation(`/country/checkout`);
+    }
+  }, [failedPlans]);
 
   const handleTogglePlan = (planId: string) => {
     setSelectedPlans((prev) => {
@@ -114,16 +143,18 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   };
 
   const handleCheckout = async () => {
+
     if (!isAuth) {
       setIsAuthModal(true);
       return;
     }
 
+    setLoading(true);
     const plansArray = Object.entries(selectedPlans).map(
       ([planId, quantity]) => ({
         planId,
         quantity,
-      })
+      }),
     );
 
     if (plansArray.length === 0) {
@@ -134,13 +165,16 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     try {
       const response = await dispatch(addToCart(plansArray));
 
-      if (response?.type === "cart/addToCart/fulfilled") {
-        toast.success("Added to cart successfully!");
-      }
+      // if (response?.type === "cart/addToCart/fulfilled") {
+      //   toast.success("Added to cart successfully!");
+      // }
 
-      navigation(`/country/checkout`);
+      // navigation(`/country/checkout`);
     } catch (err) {
       toast.error("Failed to add plans to cart");
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -150,11 +184,11 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   };
 
   const standardPlans = (plans || []).filter(
-    (p: any) => !/unlimited/i.test(p?.title || "")
+    (p: any) => !/unlimited/i.test(p?.title || ""),
   );
 
   const unlimitedPlans = (plans || []).filter((p: any) =>
-    /unlimited/i.test(p?.title || "")
+    /unlimited/i.test(p?.title || ""),
   );
 
   const displayedPlans =
@@ -169,7 +203,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
       const plan: any = plans.find((p: any) => p.id === planId);
       return acc + (plan ? Number(plan.price) * qty : 0);
     },
-    0
+    0,
   );
 
   const handleRemoveSelected = () => {
@@ -179,6 +213,23 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   const countryImage = plans?.[0]?.country?.image
     ? `${process.env.NEXT_PUBLIC_API_URL_IMAGE}${plans?.[0]?.country?.image}`
     : content.image.src;
+
+  const handleContinue = async () => {
+    dispatch(clearAddToCartState());
+    navigation(`/country/checkout`);
+    setIsConfirmModal(false);
+  };
+
+  const handleRemoveAdded = async () => {
+    const response = await dispatch(removeWholeCart());
+    setIsConfirmModal(false);
+    if (response?.type === "cart/removeWholeCart/fulfilled") {
+      toast.success("Cart cleared successfully");
+      setSelectedPlans({});
+    } else {
+      toast.error("Failed to clear cart");
+    }
+  };
 
   return (
     <>
@@ -199,10 +250,8 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
               </div>
 
               <div className="subtext mt-4">
-                {plans?.[0]?.country?.description ||
-                  content.heroSubtext}
+                {plans?.[0]?.country?.description || content.heroSubtext}
               </div>
-
 
               <div className="mt-8">
                 <p className="text-[#1A0F33] text-[20px] font-bold">
@@ -247,6 +296,20 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
         {/* PLANS */}
         <div className="flex flex-col px-8 py-4 md:py-12 rounded-xl w-full bg_sectioned">
           <div className="bg-[#133365]/90 py-8 md:py-10 rounded-xl w-full md:w-[60%] mx-auto px-5 md:px-20">
+            <div className="mb-12 flex items-center justify-between max-w-2xl mx-auto  bg-[#133365] rounded-lg p-2 ">
+              <button
+                onClick={() => setActiveTab("standard")}
+                className={` w-1/2 px-0 md:px-4 py-1 text-[16px] md:text-[21px]  border-[#133365] text-white rounded-lg font-medium transition-all focus:outline-none ${activeTab === "standard" ? "bg-white !text-[#133365]" : ""}`}
+              >
+                Standard
+              </button>
+              <button
+                onClick={() => setActiveTab("unlimited")}
+                className={`w-1/2 px-0 md:px-4 py-1 text-[16px] md:text-[21px] border-[#133365] text-white rounded-lg font-medium transition-all focus:outline-none ${activeTab === "unlimited" ? "bg-white !text-[#133365]" : ""}`}
+              >
+                Unlimited
+              </button>
+            </div>
             {Object.entries(groupedPlans).map(([days, plans]) => (
               <div key={days} className="mb-8">
                 <h4 className="text-white font-bold text-lg mb-4">
@@ -274,14 +337,10 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                       )}
 
                       <div className="flex justify-between items-center">
-                        <h3 className="font-semibold">
-                          {plan.title}
-                        </h3>
+                        <h3 className="font-semibold">{plan.title}</h3>
 
                         <span className="font-bold text-xl">
-                          {plan.currency === "USD"
-                            ? "$"
-                            : plan.currency}{" "}
+                          {plan.currency === "USD" ? "$" : plan.currency}{" "}
                           {plan.price}
                         </span>
                       </div>
@@ -298,16 +357,20 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
           <div className="fixed bottom-0 w-full bg-white p-5 border-t">
             <div className="container flex justify-between items-center">
               <p>
-                {totalPlansSelected} Plans — $
-                {totalPrice.toFixed(2)}
+                {totalPlansSelected} Plans — ${totalPrice.toFixed(2)}
               </p>
 
               <div className="flex items-center gap-4">
                 <button
                   onClick={handleCheckout}
+                  disabled={loading || cartLoading}
                   className="bg-green-600 text-white px-6 py-2 rounded-lg"
                 >
-                  Buy Now
+                  {
+                    loading ? (
+                      <Loader/>
+                    ) :"Buy Now"
+                  }
                 </button>
 
                 <button onClick={handleRemoveSelected}>
@@ -318,6 +381,14 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
           </div>
         )}
       </div>
+
+      <CartConfirmModal
+        isOpen={isConfimModal}
+        onClose={() => setIsConfirmModal(false)}
+        failedPlans={failedPlans || []}
+        onContinue={handleContinue}
+        onRemoveAdded={handleRemoveAdded}
+      />
 
       <AuthModal
         isOpen={isAuthModal}

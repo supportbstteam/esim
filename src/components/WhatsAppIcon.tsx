@@ -67,24 +67,40 @@ const WhatsAppIcon = () => {
   if (!chats.length) return null;
 
   const handleClick = () => {
-    const phone = chats[0].value.replace(/\s+/g, "");
-    const text = encodeURIComponent("Hi");
+  const phone = chats[0].value.replace(/\s+/g, "");
+  const text = encodeURIComponent("Hi");
 
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // try open app
+    const appUrl = `whatsapp://send?phone=${phone}&text=${text}`;
+    const webUrl = `https://web.whatsapp.com/send?l=en&phone=${phone}&text=${text}`;
+
+    const start = Date.now();
+
+    window.location.href = appUrl;
+
+    // fallback if app not installed
+    setTimeout(() => {
+      if (Date.now() - start < 1500) {
+        window.open(webUrl, "_blank");
+      }
+    }, 1200);
+
+  } else {
+    // desktop
     window.open(
       `https://web.whatsapp.com/send?l=en&phone=${phone}&text=${text}`,
       "_blank"
     );
-  };
+  }
+};
 
   return (
-    <div className="fixed bottom-5 left-5 flex items-start  z-50">
-      {/* Close button */}
-      <button
-        onClick={() => setShow(false)}
-        className="bg-black shadow-md rounded-full p-1 hover:bg-gray-700"
-      >
-        <X size={14} />
-      </button>
+    <div className="fixed bottom-5 right-5 flex items-start  z-50">
+      
+      
 
       {/* WhatsApp Button */}
       <button
@@ -92,6 +108,14 @@ const WhatsAppIcon = () => {
         className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition"
       >
         <Icon size={28} />
+      </button>
+
+      {/* Close button */}
+      <button
+        onClick={() => setShow(false)}
+        className="bg-black shadow-md rounded-full p-1 hover:bg-gray-700"
+      >
+        <X size={14} />
       </button>
     </div>
   );

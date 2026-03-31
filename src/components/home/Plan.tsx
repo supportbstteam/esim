@@ -40,7 +40,8 @@ export const Plan = ({ classed }: PlanProps ) => {
   };
 
   const handleNavigate = (id: string) => {
-
+    // console.log("Navigating to country with id:", id);
+    // return;
     const slug = id
     .toLowerCase()
     .trim()

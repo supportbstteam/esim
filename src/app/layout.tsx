@@ -25,7 +25,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "E-SIM Aero World’s No.1 eSIM | Fast & Reliable Global Data",
-  description: "Stay connected worldwide with global eSIM Aero. Enjoy fast, reliable coverage, easy setup, and seamless connectivity anywhere you go.",
+  description:
+    "Stay connected worldwide with global eSIM Aero. Enjoy fast, reliable coverage, easy setup, and seamless connectivity anywhere you go.",
 };
 
 export default function RootLayout({
@@ -35,20 +36,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* <link rel="icon" href="/faviocn.webp" /> */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
       >
+
+        {/* Google Icons */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
+        
         <ClientProviders>
           <Navbar />
           {children}

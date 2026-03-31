@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addToCart, removeCartItem, fetchCart, updateCartItem, clearCart } from "@/redux/slice/CartSlice";
+import { addToCart, removeCartItem, fetchCart, updateCartItem, clearCart, clearAddToCartState } from "@/redux/slice/CartSlice";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { api } from "@/lib/api";
 import debounce from "lodash/debounce";
@@ -24,6 +24,7 @@ import PayPalButton from "@/components/buttons/PayPalButtonts";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import LottieAnimation from "@/components/LottieAnimation";
 import { Images } from "@/components/Images";
+import ProtectedRoute from "@/components/hooks/ProtectedRoute";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -40,32 +41,33 @@ export default function CheckoutDetailPage() {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [esimData, setEsimData] = useState<any>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [transactionData, setTransactionData] = useState<any>(null);
-  const [errorState, setErrorState] = useState<string | null>(null);
   const [showlogin, setShowlogin] = useState(false);
   const [transactionId, setTransactionId] = useState<string>("");
 
   // Guard to prevent duplicate order requests from frontend (StrictMode, double effect, re-renders)
   const hasCalledOrder = useRef(false);
 
+  // useEffect(()=>{
+  //   dispatch(clearAddToCartState());
+  // },[dispatch]);
+
   // console.log("---- cart----", cart);
 
   // ✅ Fetch cart & user details
   const fetchCartData = async () => {
+    await dispatch(clearAddToCartState());
+    await dispatch(fetchUserDetails());
     try {
       await dispatch(fetchCountries());
       await dispatch(fetchCart());
       console.log("dispatch c1");
-      await dispatch(fetchUserDetails());
     } catch (err) {
       console.error("Error fetching cart:", err);
     }
   };
 
   useEffect(() => {
-    console.log("dispatch 2");
     fetchCartData();
   }, [dispatch]);
 
@@ -103,7 +105,11 @@ export default function CheckoutDetailPage() {
     debouncedUpdateCart(itemId, newQty);
   };
 
-  const handleBack = () => router.back();
+  const handleBack = () => {
+    router.push("/country")
+  };
+  
+  
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const grandTotal = cart?.items?.reduce((sum: number, item: any) => {
@@ -223,203 +229,199 @@ export default function CheckoutDetailPage() {
 
   // console.log("-=-=-=--=-=--= selectedMethod--=-=-=-=-=-=",selectedMethod);
 
-
-  const handlePaypal = async () => {
-
-  }
-
-
   const handlePayPalApproval = async () => {
 
   }
 
-  console.log("----- transaction ID -----", transactionId);
+  // console.log("----- transaction ID -----", transactionId);
 
   return (
-    <div className="container my-10">
-      <div className="flex flex-col lg:flex-row w-full gap-6">
-        {/* 🧺 ORDER SUMMARY */}
-        <div className="flex-1/3  ">
-          {
-            cart && cart?.items?.length > 0 && <h2 className="h2 font-semibold !text-[20px] mb-4">Your Cart</h2>
-          }
+    <ProtectedRoute>
+      <div className="container my-10">
+        <div className="flex flex-col lg:flex-row w-full gap-6">
+          {/* 🧺 ORDER SUMMARY */}
+          <div className="flex-1/3  ">
+            {
+              cart && cart?.items?.length > 0 && <h2 className="h2 font-semibold !text-[20px] mb-4">Your Cart</h2>
+            }
 
-
-          {
-            cartLoading ? (
-              <div className="bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6" >
-                {
-                  [1, 2, 3].map((item, index) => (
-                    <CheckoutCartSkeleton key={index} />
-                  ))
-                }
-              </div>
-            ) : (
-              <div  >
-                {cart?.items?.length > 0 ? (
-                  <div className="bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6" >
-                    {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      cart.items.map((item: any, index: number) => {
-                        return (
-                          <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
-                            <div className="flex items-center mb-3 justify-between">
-                              <div className="flex items-center ">
-                                <Flag
-                                  countryName={item?.plan?.country?.name || "Country"}
-                                  size={36}
-                                  className="h-[36px] w-[36px] mr-2"
-                                />
-                                <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
-                              </div>
-                              <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
-                            </div>
-
-                            <div className="space-y-2 text-[15px] text-gray-700">
-                              <div className="flex justify-between">
-                                <span>Plan Name</span>
-                                <span className="font-medium">{item?.plan?.title || item?.plan?.name}</span>
-                              </div>
-
-                              <div className="flex justify-between">
-                                <span>Data Allowance</span>
-                                <span>{item?.plan?.data || "—"} GB</span>
-                              </div>
-
-                              <div className="flex justify-between">
-                                <span>Validity</span>
-                                <span>{item?.plan?.validityDays || "—"} Days</span>
-                              </div>
-
-                              <div className="flex justify-between items-center mt-2">
-                                <span>Quantity</span>
-                                <div className="flex items-center gap-3">
-                                  <button
-                                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                    className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
-                                  >
-                                    −
-                                  </button>
-                                  <span className="w-6 text-center">{item?.quantity || 1}</span>
-                                  <button
-                                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                    className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                              </div>
-
-                              <div className="flex justify-between font-semibold border-t pt-2 mt-2">
-                                <span>Subtotal</span>
-                                <span>${(parseFloat(item?.plan?.price || "0") * (item?.quantity || 1)).toFixed(2)}</span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    }
-
-                  </div>
-                ) : (
-                  !cartLoading && <div className="flex flex-col bg-white justify-center items-center " >
-                    <LottieAnimation
-                      animationData={Images.EmptyAnimation1}
-                      style={{
-                        width: "30%",
-                        height: "30%",
-                      }}
-                    />
-                    <p className="text-md font-semibold text-gray-600 " >No Cart Found</p>
-                  </div>
-                )}
-              </div>
-            )
-          }
-
-
-
-          {cart?.items?.length > 0 && (
-            <div className="mt-6 border-t pt-4 flex justify-between font-semibold text-lg">
-              <span>Total</span>
-              <span>${grandTotal?.toFixed(2)}</span>
-            </div>
-          )}
-        </div>
-
-        {/* 💳 PAYMENT SECTION */}
-        {cart && cart?.items?.length > 0 && (
-          <div className="flex-2/3 bg-white rounded-xl shadow px-5 md:px-8 py-6">
-            <button onClick={handleBack} className="mb-3 text-sm subtext hover:text-gray-700 flex items-center gap-2">
-              <FaArrowLeft />
-              <span>Back</span>
-            </button>
-
-            <h3 className="font-semibold text-lg mb-6">Choose Payment Method</h3>
-            <PaymentMethods onSelect={handlePaymentSelect} defaultMethodId="stripe" />
 
             {
-              selectedMethod?.id === "stripe" && (
-                <div className="my-6">
-                  <button
-                    onClick={handleProceed}
-                    disabled={loading || !!clientSecret} // if clientSecret exists, payment is already initiated
-                    className="bg-black text-white px-6 py-3 rounded-md w-full hover:bg-gray-800 transition disabled:opacity-50"
-                  >
-                    {loading ? "Processing..." : clientSecret ? "Payment Ready" : "Proceed to Pay"}
-                  </button>
+              cartLoading ? (
+                <div className="bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6" >
+                  {
+                    [1, 2, 3].map((item, index) => (
+                      <CheckoutCartSkeleton key={index} />
+                    ))
+                  }
+                </div>
+              ) : (
+                <div  >
+                  {cart?.items?.length > 0 ? (
+                    <div className="bg-[#F3F5F7] rounded-xl shadow py-4 px-5 md:px-8 md:py-6" >
+                      {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        cart.items.map((item: any, index: number) => {
+                          return (
+                            <div key={item.id || index} className="bg-white rounded-lg shadow-sm p-4 mb-4 border">
+                              <div className="flex items-center mb-3 justify-between">
+                                <div className="flex items-center ">
+                                  <Flag
+                                    countryName={item?.plan?.country?.name || "Country"}
+                                    size={36}
+                                    className="h-[36px] w-[36px] mr-2"
+                                  />
+                                  <span className="font-medium text-base">{item?.plan?.country?.name || "Unknown Country"}</span>
+                                </div>
+                                <RiDeleteBinLine className="text-red-500  cursor-pointer" onClick={() => handleDeleteItem(item.id)} />
+                              </div>
+
+                              <div className="space-y-2 text-[15px] text-gray-700">
+                                <div className="flex justify-between">
+                                  <span>Plan Name</span>
+                                  <span className="font-medium">{item?.plan?.title || item?.plan?.name}</span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                  <span>Data Allowance</span>
+                                  <span>{item?.plan?.data || "—"} GB</span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                  <span>Validity</span>
+                                  <span>{item?.plan?.validityDays || "—"} Days</span>
+                                </div>
+
+                                <div className="flex justify-between items-center mt-2">
+                                  <span>Quantity</span>
+                                  <div className="flex items-center gap-3">
+                                    <button
+                                      onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                      className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
+                                    >
+                                      −
+                                    </button>
+                                    <span className="w-6 text-center">{item?.quantity || 1}</span>
+                                    <button
+                                      onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                      className="px-3 py-1 border rounded-md hover:bg-gray-100 text-lg font-semibold"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                </div>
+
+                                <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                                  <span>Subtotal</span>
+                                  <span>${(parseFloat(item?.plan?.price || "0") * (item?.quantity || 1)).toFixed(2)}</span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })
+                      }
+
+                    </div>
+                  ) : (
+                    !cartLoading && <div className="flex flex-col bg-white justify-center items-center " >
+                      <LottieAnimation
+                        animationData={Images.EmptyAnimation1}
+                        style={{
+                          width: "30%",
+                          height: "30%",
+                        }}
+                      />
+                      <p className="text-md font-semibold text-gray-600 " >No Cart Found</p>
+                    </div>
+                  )}
                 </div>
               )
             }
 
 
-            {/* PayPal */}
-            {selectedMethod?.id === "paypal" && (
-              <div className="flex min-w-full items-center justify-center mt-10">
-                <div className="w-full max-w-full">
-                  <PayPalButton
-                    setTransactionId={setTransactionId}
-                    cartId={cart?.id}
-                    amount={grandTotal.toFixed(2)}
-                    onSuccess={(id: string) => {
-                      // setTransactionId(id);
-                      if (transactionId)
-                        handleOnSuccess()
-                    }}
-                    onApprove={handlePayPalApproval}
 
-                  />
-                </div>
+            {cart?.items?.length > 0 && (
+              <div className="mt-6 border-t pt-4 flex justify-between font-semibold text-lg">
+                <span>Total</span>
+                <span>${grandTotal?.toFixed(2)}</span>
               </div>
             )}
-
-            {/* Stripe Form */}
-            {selectedMethod?.id === "stripe" && clientSecret && transactionId && (
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <StripeForm
-                  transaction={transactionId}
-                  clientSecret={clientSecret}
-                  transactionId={transactionId}
-                  onSuccess={handleOnSuccess}
-                />
-              </Elements>
-            )}
-
-
-
-
           </div>
-        )}
-      </div>
 
-      {/* Modals */}
-      <LoadingModal open={modalOpen} />
+          {/* 💳 PAYMENT SECTION */}
+          {cart && cart?.items?.length > 0 && (
+            <div className="flex-2/3 bg-white rounded-xl shadow px-5 md:px-8 py-6">
+              <button onClick={handleBack} className="mb-3 text-sm subtext hover:text-gray-700 flex items-center gap-2">
+                <FaArrowLeft />
+                <span>Back</span>
+              </button>
 
-      {
-        showlogin && (
-          <AuthModal isOpen={showlogin} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
-        )
-      }
-    </div >
+              <h3 className="font-semibold text-lg mb-6">Choose Payment Method</h3>
+              <PaymentMethods onSelect={handlePaymentSelect} defaultMethodId="stripe" />
+
+              {
+                selectedMethod?.id === "stripe" && (
+                  <div className="my-6">
+                    <button
+                      onClick={handleProceed}
+                      disabled={loading || !!clientSecret} // if clientSecret exists, payment is already initiated
+                      className="bg-black text-white px-6 py-3 rounded-md w-full hover:bg-gray-800 transition disabled:opacity-50"
+                    >
+                      {loading ? "Processing..." : clientSecret ? "Payment Ready" : "Proceed to Pay"}
+                    </button>
+                  </div>
+                )
+              }
+
+
+              {/* PayPal */}
+              {selectedMethod?.id === "paypal" && (
+                <div className="flex min-w-full items-center justify-center mt-10">
+                  <div className="w-full max-w-full">
+                    <PayPalButton
+                      setTransactionId={setTransactionId}
+                      cartId={cart?.id}
+                      amount={grandTotal.toFixed(2)}
+                      onSuccess={(id: string) => {
+                        // setTransactionId(id);
+                        if (transactionId)
+                          handleOnSuccess()
+                      }}
+                      onApprove={handlePayPalApproval}
+
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Stripe Form */}
+              {selectedMethod?.id === "stripe" && clientSecret && transactionId && (
+                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                  <StripeForm
+                    transaction={transactionId}
+                    clientSecret={clientSecret}
+                    transactionId={transactionId}
+                    onSuccess={handleOnSuccess}
+                  />
+                </Elements>
+              )}
+
+
+
+
+            </div>
+          )}
+        </div>
+
+        {/* Modals */}
+        <LoadingModal open={modalOpen} />
+
+        {
+          showlogin && (
+            <AuthModal isOpen={showlogin} onClose={() => setShowlogin(false)} onAuthSuccess={() => setShowlogin(false)} />
+          )
+        }
+      </div >
+    </ProtectedRoute>
   );
 }

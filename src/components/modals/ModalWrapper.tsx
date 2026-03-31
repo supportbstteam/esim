@@ -22,11 +22,11 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
-        onClick={onClose}
-      />
+    className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+    onClick={onClose}
+  />
       <div className={`${widthClass} bg-white rounded-2xl shadow-2xl z-60 relative`}>
         <div className="flex items-center justify-between p-4 border-b border-gray-100 rounded-t-2xl">
           <h3 className="text-sm font-semibold">{title}</h3>

@@ -75,14 +75,14 @@ export default function CountryplanTabs() {
   };
 
   const handleNavigate = ({ name, id }: { name: string; id: string }) => {
-
+    // console.log("Navigating to country with id:", id, name);
+    // return;
     const slug = name
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9\s-]/g, "") // remove special chars
     .replace(/\s+/g, "-"); // spaces → hyphen
 
-    
     router.push(`/country/${slug}`);
   };
 
@@ -267,11 +267,12 @@ export default function CountryplanTabs() {
                     featured.map((plan) => (
                       <div
                         onClick={() =>
+                        {
                           handleNavigate({
-                            name: plan.country.id,
-                            id: plan?.country?.name,
+                            name: plan?.country?.name,
+                            id: plan?.country?.id,
                           })
-                        }
+                        }}
                         key={plan.id}
                         className="max-[670px]:w-full max-[1080px]:w-[48%] lg:w-[32%]
   bg-white border-gray-200 rounded-xl hover:bg-green-50 hover:border-[#3BC852] border-2 transition duration-300 mb-0 "
@@ -279,7 +280,7 @@ export default function CountryplanTabs() {
                         <div className="px-2 md:px-[24px] py-[18px] flex flex-col  justify-center items-center   gap-4 cursor-pointer">
                           <div className="flex w-full justify-between">
                             <div className="flex items-center justify-between gap-3 ">
-                              {plan?.country?.name}
+                              {/* {plan?.country?.name} */}
                               <Flag
                                 countryName={plan?.country?.name}
                                 size={36}

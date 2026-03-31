@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import { useNavigate } from "./hooks/navigation";
 import { AiOutlineUser } from "react-icons/ai";
+import { IoCartOutline } from "react-icons/io5";
 const navItems = [
   { label: "eSIM", href: "/country" },
   { label: "How It Works", href: "/cms/how-it-works" },
@@ -205,7 +206,7 @@ export default function Navbar() {
                     <Link href={`/country/checkout`}>
                       {" "}
                       <span className="material-symbols-outlined">
-                        shopping_bag
+                        <IoCartOutline size={22} />
                       </span>
                     </Link>{" "}
                   </div>
