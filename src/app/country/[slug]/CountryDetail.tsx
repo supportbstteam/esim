@@ -73,7 +73,9 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const { user, isAuth } = useAppSelector((state) => state.user);
-  const { cart, addedPlans, failedPlans, loading:cartLoading, error } = useAppSelector(
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { cart=[], addedPlans, failedPlans, loading:cartLoading, error }:any = useAppSelector(
     (state) => state?.cart,
   );
   const { plans } = useAppSelector((state) => state.plan);
@@ -215,9 +217,21 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     : content.image.src;
 
   const handleContinue = async () => {
+
+
+    console.log("cart", cart);
+    console.log("failedPlans", failedPlans);
+
+    if(!cart?.items && failedPlans && failedPlans?.length>0){
+      setIsConfirmModal(false);
+      return;
+    }
+
+
     dispatch(clearAddToCartState());
     navigation(`/country/checkout`);
     setIsConfirmModal(false);
+    return;
   };
 
   const handleRemoveAdded = async () => {

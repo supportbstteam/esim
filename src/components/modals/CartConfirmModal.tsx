@@ -34,18 +34,19 @@ const CartConfirmModal: React.FC<Props> = ({
       widthClass="max-w-lg"
       footer={
         <div className="flex gap-3 justify-between items-center">
-          <button
+          {/* <button
             onClick={onRemoveAdded}
             className="px-4 py-2 rounded-lg flex-1/2 border border-red-300 text-red-600 hover:bg-red-50"
           >
             Remove Cart
-          </button>
+          </button> */
+          }
 
           <button
             onClick={onContinue}
             className="px-4 py-2 rounded-lg flex-1/2 bg-[#38c852] text-white hover:bg-green-700"
           >
-            Continue Anyway
+            Ok
           </button>
         </div>
       }
