@@ -75,7 +75,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   const { user, isAuth } = useAppSelector((state) => state.user);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { cart=[], addedPlans, failedPlans, loading:cartLoading, error }:any = useAppSelector(
+  const { cart = [], addedPlans, failedPlans, loading: cartLoading, error }: any = useAppSelector(
     (state) => state?.cart,
   );
   const { plans } = useAppSelector((state) => state.plan);
@@ -175,7 +175,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     } catch (err) {
       toast.error("Failed to add plans to cart");
     }
-    finally{
+    finally {
       setLoading(false);
     }
   };
@@ -222,7 +222,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     // console.log("cart", cart);
     // console.log("failedPlans", failedPlans);
 
-    if(!cart?.items && failedPlans && failedPlans?.length>0){
+    if (!cart?.items && failedPlans && failedPlans?.length > 0) {
       setIsConfirmModal(false);
       return;
     }
@@ -324,45 +324,53 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                 Unlimited
               </button>
             </div>
-            {Object.entries(groupedPlans).map(([days, plans]) => (
-              <div key={days} className="mb-8">
-                <h4 className="text-white font-bold text-lg mb-4">
-                  {days} Days
-                </h4>
+            {displayedPlans.length === 0 ? (
+              <div className="text-center py-10">
+                <p className="text-white text-lg font-medium opacity-80">
+                  Sorry, there are currently no plans available under the
+                  category.
+                </p>
+              </div>
+            ) : (
+              Object.entries(groupedPlans).map(([days, plans]) => (
+                <div key={days} className="mb-8">
+                  <h4 className="text-white font-bold text-lg mb-4">
+                    {days} Days
+                  </h4>
 
-                {plans.map((plan: any) => {
-                  const qty = selectedPlans[plan.id] || 0;
+                  {plans.map((plan: any) => {
+                    const qty = selectedPlans[plan.id] || 0;
 
-                  return (
-                    <div
-                      key={plan.id}
-                      className={`relative shadow-xl bg-white border-2 rounded-xl py-[8px] px-5 mb-3 cursor-pointer ${
-                        qty > 0
+                    return (
+                      <div
+                        key={plan.id}
+                        className={`relative shadow-xl bg-white border-2 rounded-xl py-[8px] px-5 mb-3 cursor-pointer ${qty > 0
                           ? "!border-[#3BC852] !bg-green-100"
                           : "hover:border-[#7f7f7f]"
-                      }`}
-                      onClick={() => handleTogglePlan(plan.id)}
-                    >
-                      {plan.isFeatured && (
-                        <span className="absolute text-[12px] top-[-15px] right-[-2px] flex items-center bg-black text-white px-2 py-0.5 rounded-full">
-                          <FaFire className="text-[#eebe3c] mr-1" />
-                          Popular
-                        </span>
-                      )}
+                          }`}
+                        onClick={() => handleTogglePlan(plan.id)}
+                      >
+                        {plan.isFeatured && (
+                          <span className="absolute text-[12px] top-[-15px] right-[-2px] flex items-center bg-black text-white px-2 py-0.5 rounded-full">
+                            <FaFire className="text-[#eebe3c] mr-1" />
+                            Popular
+                          </span>
+                        )}
 
-                      <div className="flex justify-between items-center">
-                        <h3 className="font-semibold">{plan.title}</h3>
+                        <div className="flex justify-between items-center">
+                          <h3 className="font-semibold">{plan.title}</h3>
 
-                        <span className="font-bold text-xl">
-                          {plan.currency === "USD" ? "$" : plan.currency}{" "}
-                          {plan.price}
-                        </span>
+                          <span className="font-bold text-xl">
+                            {plan.currency === "USD" ? "$" : plan.currency}{" "}
+                            {plan.price}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
+                    );
+                  })}
+                </div>
+              ))
+            )}
           </div>
         </div>
 
@@ -382,8 +390,8 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                 >
                   {
                     loading ? (
-                      <Loader/>
-                    ) :"Buy Now"
+                      <Loader />
+                    ) : "Buy Now"
                   }
                 </button>
 
