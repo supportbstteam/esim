@@ -92,6 +92,34 @@ function Contact() {
   const Chat = contacts.filter((c) => c.type === "Chat");
   const others = contacts.filter((c) => c.type === "Other");
   console.log("contacts", contacts)
+
+  const handleChatClick = (value: string) => {
+    const phone = value.replace(/\s+/g, "");
+    const text = encodeURIComponent("Hi");
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // try open app
+      const appUrl = `whatsapp://send?phone=${phone}&text=${text}`;
+      const webUrl = `https://web.whatsapp.com/send?l=en&phone=${phone}&text=${text}`;
+      const start = Date.now();
+      window.location.href = appUrl;
+
+      // fallback if app not installed
+      setTimeout(() => {
+        if (Date.now() - start < 1500) {
+          window.open(webUrl, "_blank");
+        }
+      }, 1200);
+    } else {
+      // desktop
+      window.open(
+        `https://web.whatsapp.com/send?l=en&phone=${phone}&text=${text}`,
+        "_blank"
+      );
+    }
+  };
+
   const handleSave = async (
     values: ContactFormValues,
     { setSubmitting, resetForm }: FormikHelpers<ContactFormValues>,
@@ -167,7 +195,7 @@ function Contact() {
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
                   Email Us <span className="text-sm">({email?.position})</span>
                 </p>
-                <Link href={`mailto:${email.value}`}>
+                <Link href={`mailto:${email.value}`} className="hover:text-blue-800 ">
                   {email.value}
                 </Link>
               </div>
@@ -197,13 +225,13 @@ function Contact() {
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
                   Chat Us <span className="text-sm">({chat?.position})</span>
                 </p>
-                <Link
-                  href={chat.value.startsWith('http') ? chat.value : `https://wa.me/${chat.value.replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => handleChatClick(chat.value)}
+                  className="text-left hover:text-blue-800 transition-colors"
                 >
                   {chat.value}
-                </Link>
+                </button>
 
               </div>
             ))}
