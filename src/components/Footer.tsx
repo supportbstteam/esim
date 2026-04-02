@@ -250,7 +250,7 @@ export const Footer: React.FC = () => {
           {/* Desktop view social icons */}
           <div className="max-md:hidden">
             <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">
-              Connect With Ussdfs
+              Connect With Us
             </h4>
             <div className="flex gap-2 items-center">
               {
