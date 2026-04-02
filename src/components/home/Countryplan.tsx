@@ -78,10 +78,10 @@ export default function CountryplanTabs() {
     // console.log("Navigating to country with id:", id, name);
     // return;
     const slug = name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
-    .replace(/\s+/g, "-"); // spaces → hyphen
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+      .replace(/\s+/g, "-"); // spaces → hyphen
 
     router.push(`/country/${slug}`);
   };
@@ -118,11 +118,10 @@ export default function CountryplanTabs() {
               aria-selected={active === "country"}
               role="tab"
               onClick={() => setActive("country")}
-              className={`relative   px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${
-                active === "country"
+              className={`relative   px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === "country"
                   ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
                   : "hover:"
-              }`}
+                }`}
             >
               Popular Country
             </button>
@@ -131,11 +130,10 @@ export default function CountryplanTabs() {
               aria-selected={active === "popular"}
               role="tab"
               onClick={() => setActive("popular")}
-              className={`relative  px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff]  md:text-[21px] text-white font-medium transition-all focus:outline-none ${
-                active === "popular"
+              className={`relative  px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff]  md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === "popular"
                   ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
                   : "hover:"
-              }`}
+                }`}
             >
               Popular plans
             </button>
@@ -170,11 +168,10 @@ export default function CountryplanTabs() {
                   </div>
                 ) : (
                   <div
-                    className={`mt-10 mb-3 flex flex-wrap gap-4 sm:gap-6 ${
-                      countries.length === 2
+                    className={`mt-10 mb-3 flex flex-wrap gap-4 sm:gap-6 ${countries.length === 2
                         ? "justify-center"
                         : "justify-start"
-                    }`}
+                      }`}
                   >
                     {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -266,8 +263,7 @@ export default function CountryplanTabs() {
                   ) : (
                     featured.map((plan) => (
                       <div
-                        onClick={() =>
-                        {
+                        onClick={() => {
                           handleNavigate({
                             name: plan?.country?.name,
                             id: plan?.country?.id,

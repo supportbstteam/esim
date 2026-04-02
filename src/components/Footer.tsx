@@ -214,9 +214,8 @@ export const Footer: React.FC = () => {
                 </h4>
                 <span className="md:hidden ml-2 text-gray-300">
                   <svg
-                    className={`w-4 h-4 transform transition-transform ${
-                      openIdx === idx ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`w-4 h-4 transform transition-transform ${openIdx === idx ? "rotate-180" : "rotate-0"
+                      }`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -231,9 +230,8 @@ export const Footer: React.FC = () => {
               </button>
 
               <ul
-                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${
-                  openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
-                } md:max-h-full`}
+                className={`transition-[max-height] duration-200 ease-in-out overflow-hidden md:overflow-visible ${openIdx === idx ? "max-h-80" : "max-h-0 md:max-h-full"
+                  } md:max-h-full`}
               >
                 {items.map((item, i) => (
                   <li key={i} className="mb-2">
@@ -252,7 +250,7 @@ export const Footer: React.FC = () => {
           {/* Desktop view social icons */}
           <div className="max-md:hidden">
             <h4 className="text-lg md:text-base mb-2 md:mb-4 md:mr-0">
-              Connect With Us
+              Connect With Ussdfs
             </h4>
             <div className="flex gap-2 items-center">
               {
@@ -296,7 +294,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      <WhatsAppIcon/>
+      <WhatsAppIcon />
     </footer>
   );
 };

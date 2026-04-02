@@ -30,6 +30,8 @@ export default function Navbar() {
   const { user, isAuth, loading } = useAppSelector(
     (state) => state?.user || {},
   );
+
+  console.log("user", user)
   const { cart } = useAppSelector((state) => state?.cart || {});
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -225,7 +227,7 @@ export default function Navbar() {
                     >
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 flex justify-center items-center rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
-                          {user?.image !== "" ? (
+                          {user?.image !== "" && user?.image !== null ? (
                             <Image
                               src={`${process.env.NEXT_PUBLIC_API_URL_IMAGE}${user?.image}`}
                               alt="Profile"

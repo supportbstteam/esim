@@ -5,7 +5,7 @@ import { api } from "@/lib/api";
 import { FormikHelpers } from "formik";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FiMapPin, FiMail, FiPhone } from "react-icons/fi";
+import { FiMapPin, FiMail, FiPhone, FiMessageCircle } from "react-icons/fi";
 import TrustedTravel from "@/components/home/TrustedTravel";
 import FAQ from "@/components/home/Faq";
 import { useAppSelector } from "@/redux/store";
@@ -15,6 +15,7 @@ import MainBanner from "@/components/ui/MainBanner";
 import { fetchUserDetails } from "@/redux/slice/UserSlice";
 import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
+import Link from "next/link";
 interface ContactItem {
   id: string;
   position: string;
@@ -88,9 +89,9 @@ function Contact() {
   // Filter contacts by type
   const address = contacts.find((c) => c.type === "Address");
   const emails = contacts.filter((c) => c.type === "Email");
-  const phones = contacts.filter((c) => c.type === "Phone");
+  const Chat = contacts.filter((c) => c.type === "Chat");
   const others = contacts.filter((c) => c.type === "Other");
-
+  console.log("contacts", contacts)
   const handleSave = async (
     values: ContactFormValues,
     { setSubmitting, resetForm }: FormikHelpers<ContactFormValues>,
@@ -142,19 +143,7 @@ function Contact() {
           </div>
 
           <div className="grid  max-sm:grid-col-1 max-md:grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Phones */}
-            {phones.map((phone) => (
-              <div
-                key={phone.id}
-                className="gap-3 border-1 border-[#ccc] p-5 rounded-xl"
-              >
-                <FiPhone className="text-2xl text-black-700" />
-                <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
-                  Call Us <span className="text-sm">({phone?.position})</span>
-                </p>
-                <span>{phone.value}</span>
-              </div>
-            ))}
+
 
             {/* Address */}
             {address && (
@@ -178,22 +167,44 @@ function Contact() {
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
                   Email Us <span className="text-sm">({email?.position})</span>
                 </p>
-                <span>{email.value}</span>
+                <Link href={`mailto:${email.value}`}>
+                  {email.value}
+                </Link>
               </div>
             ))}
 
-            {/* Emails */}
-            {others.map((email) => (
+            {/* Others (treating as Email Us if type is Email or other) */}
+            {others.map((item) => (
               <div
-                key={email.id}
+                key={item.id}
                 className="gap-3 border-1 border-[#ccc] p-5 rounded-xl"
               >
                 <FiMail className="text-2xl text-black-700" />
                 <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
-                  Chat With Us{" "}
-                  <span className="text-sm">({email?.position})</span>
+                  Company <span className="text-sm">({item?.position})</span>
                 </p>
-                <span>{email.value}</span>
+                <span>{item.value}</span>
+              </div>
+            ))}
+
+            {/* Chat */}
+            {Chat.map((chat) => (
+              <div
+                key={chat.id}
+                className="gap-3 border-1 border-[#ccc] p-5 rounded-xl"
+              >
+                <FiMessageCircle className="text-2xl text-black-700" />
+                <p className="font-semibold text-xl mt-4 text-[#1A0F33] mb-2">
+                  Chat Us <span className="text-sm">({chat?.position})</span>
+                </p>
+                <Link
+                  href={chat.value.startsWith('http') ? chat.value : `https://wa.me/${chat.value.replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {chat.value}
+                </Link>
+
               </div>
             ))}
           </div>
