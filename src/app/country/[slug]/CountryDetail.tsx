@@ -219,8 +219,8 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   const handleContinue = async () => {
 
 
-    console.log("cart", cart);
-    console.log("failedPlans", failedPlans);
+    // console.log("cart", cart);
+    // console.log("failedPlans", failedPlans);
 
     if(!cart?.items && failedPlans && failedPlans?.length>0){
       setIsConfirmModal(false);
