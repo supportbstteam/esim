@@ -199,7 +199,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
     activeTab === "standard" ? standardPlans : unlimitedPlans;
 
   const groupedPlans = groupPlansByDays(displayedPlans);
-
+  console.log("groupedPlans", groupedPlans);
   const totalPlansSelected = Object.keys(selectedPlans).length;
 
   const totalPrice = Object.entries(selectedPlans).reduce(
@@ -359,7 +359,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                           </span>
                         )}
 
-                        <div className="flex justify-between items-center" data-id={plan.id}>
+                        <div className="flex justify-between items-center" data-id={plan.planId}>
                           <h3 className="font-semibold">{plan.title}</h3>
 
                           <span className="font-bold text-xl">
