@@ -27,6 +27,8 @@
 .DS_Store
 *.pem
 
+/uploadsimg
+
 # debug
 npm-debug.log*
 yarn-debug.log*
