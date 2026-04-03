@@ -119,7 +119,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
       addedPlans.length > 0
     ) {
       toast.success("Added to cart successfully!");
-      // navigation(`/country/checkout`);
+      navigation(`/country/checkout`);
     }
   }, [failedPlans]);
 
