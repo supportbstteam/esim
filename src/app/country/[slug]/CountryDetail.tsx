@@ -104,6 +104,8 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
   }, [slug, dispatch]);
 
   useEffect(() => {
+    console.log("failedPlans", failedPlans);
+    console.log("addedPlans", addedPlans);
     if (failedPlans && failedPlans.length > 0) {
       toast.error("Some plans could not be added to cart");
       setIsConfirmModal(true);
@@ -117,7 +119,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
       addedPlans.length > 0
     ) {
       toast.success("Added to cart successfully!");
-      navigation(`/country/checkout`);
+      // navigation(`/country/checkout`);
     }
   }, [failedPlans]);
 
@@ -357,7 +359,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                           </span>
                         )}
 
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center" data-id={plan.id}>
                           <h3 className="font-semibold">{plan.title}</h3>
 
                           <span className="font-bold text-xl">

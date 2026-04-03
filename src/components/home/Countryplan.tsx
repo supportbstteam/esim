@@ -1,14 +1,53 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import AuthModal from "../modals/AuthModal";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Flag from "@/components/ui/Flag";
 type TabKey = "country" | "popular";
 import { useRouter } from "next/navigation";
 import { useNavigate } from "../hooks/navigation";
+import CartConfirmModal from "@/components/modals/CartConfirmModal";
 
 import Pagetitle from "@/components/ui/PageTitle";
-import { addToCart } from "@/redux/slice/CartSlice";
+import { addToCart, clearAddToCartState, removeWholeCart } from "@/redux/slice/CartSlice";
 import toast from "react-hot-toast";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import { BsSim } from "react-icons/bs";
+const content = {
+  heroSubtext:
+    "Get a single global eSIM and enjoy seamless, reliable coverage with flexible data plans to stay connected anytime, anywhere.",
+  whatsIncluded: {
+    title: "What’s Included",
+    items: [
+      {
+        icon: <AiOutlineThunderbolt size={22} />,
+        title: "Instant Activation",
+        description:
+          "Download your eSIM via QR code or app and connect within seconds.",
+      },
+      {
+        icon: <BsSim size={22} />,
+        title: "Top-up Anytime",
+        description:
+          "Recharge or upgrade your plan while traveling, without hassle.",
+      },
+    ],
+  },
+  image: {
+    src: "/countryimg.jpg",
+    alt: "Country / coverage image",
+    height: 700,
+    width: 700,
+    className: "rounded-[8px]",
+  },
+  plansSection: {
+    heading: "Choose the Best Plan",
+    subtext:
+      "Stay connected without the hassle of roaming charges. Our flexible eSIM plans are designed to fit every kind of traveler.",
+    selectPlanError: "Please select at least one plan first.",
+    loginSuccessToast: "Login Successful",
+    checkoutButton: "Buy Now",
+  },
+};
 
 export default function CountryplanTabs() {
   const dispatch = useAppDispatch();
@@ -21,6 +60,11 @@ export default function CountryplanTabs() {
   const [active, setActive] = useState<TabKey>("country");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [isConfimModal, setIsConfirmModal] = useState(false);
+
+  const { cart = [], addedPlans, failedPlans, loading: cartLoading, error }: any = useAppSelector(
+    (state) => state?.cart,
+  );
 
   const basicPlanByCountry = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,34 +87,87 @@ export default function CountryplanTabs() {
     return map;
   }, [featured]);
 
-  // const formatPrice = (p?: number | string | null) => {
-  //   if (p === undefined || p === null) return null;
-  //   const num = Number(p);
-  //   if (Number.isNaN(num)) return null;
-  //   // show no decimals for whole numbers, else two decimals
-  //   return Number.isInteger(num) ? `$${num}` : `$${num.toFixed(2)}`;
-  // };
+  useEffect(() => {
+    if (failedPlans && failedPlans.length > 0) {
+      toast.error("Some plans could not be added to cart");
+      setIsConfirmModal(true);
+      return;
+    }
+
+    if (
+      failedPlans &&
+      failedPlans.length === 0 &&
+      addedPlans &&
+      addedPlans.length > 0
+    ) {
+      toast.success("Added to cart successfully!");
+      navigation(`/country/checkout`);
+    }
+  }, [failedPlans]);
+
+  const handleContinue = async () => {
+    if (!cart?.items && failedPlans && failedPlans?.length > 0) {
+      setIsConfirmModal(false);
+      return;
+    }
+
+    dispatch(clearAddToCartState());
+    navigation(`/country/checkout`);
+    setIsConfirmModal(false);
+    return;
+  };
+
+  const handleRemoveAdded = async () => {
+    const response = await dispatch(removeWholeCart());
+    setIsConfirmModal(false);
+    if (response?.type === "cart/removeWholeCart/fulfilled") {
+      toast.success("Cart cleared successfully");
+      // setSelectedPlan(null);
+    } else {
+      toast.error("Failed to clear cart");
+    }
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddToCart = async (plan: any) => {
-    // console.log("---- auth  add to cart ---", plan);
+    if (!plan) {
+      toast.error("No plans available for this country");
+      return;
+    }
+    console.log("---- auth  add to cart ---", plan);
+    const selectedPlans = {
+      [plan?.id]: 1, // ✅ object with dynamic key
+    };
+    console.log("selectedPlans", selectedPlans)
+
     // return;
     if (!isAuth) {
       setSelectedPlan(plan);
       setIsAuthModal(true);
       return;
     }
+    const plansArray = Object.entries(selectedPlans).map(
+      ([planId, quantity]) => ({
+        planId,
+        quantity,
+      }),
+    );
 
+    if (plansArray.length === 0) {
+      toast.error(content.plansSection.selectPlanError);
+      return;
+    }
+    console.log("plansArray", plansArray)
     if (isAuth) {
       const response = await dispatch(
         addToCart([{ ...plan, planId: plan?.id, quantity: 1 }]),
       );
-      if (response?.type === "cart/addToCart/fulfilled") {
-        toast.success("Added to Cart");
-        navigation(
-          `/country/checkout?plan=${plan.id}&country=${plan?.country?.id}`,
-        );
-      }
+      // if (response?.type === "cart/addToCart/fulfilled") {
+      //   toast.success("Added to Cart");
+      //   navigation(
+      //     `/country/checkout?plan=${plan.id}&country=${plan?.country?.id}`,
+      //   );
+      // }
     }
   };
 
@@ -119,8 +216,8 @@ export default function CountryplanTabs() {
               role="tab"
               onClick={() => setActive("country")}
               className={`relative   px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff] md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === "country"
-                  ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
-                  : "hover:"
+                ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
+                : "hover:"
                 }`}
             >
               Popular Country
@@ -131,8 +228,8 @@ export default function CountryplanTabs() {
               role="tab"
               onClick={() => setActive("popular")}
               className={`relative  px-3 max-[360px]:px-2 md:px-10  py-2 text-[14px] border-1 rounded-full border-[#ffffff]  md:text-[21px] text-white font-medium transition-all focus:outline-none ${active === "popular"
-                  ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
-                  : "hover:"
+                ? "!bg-[#3BC852] !border-[#3BC852] after:content-[''] after:absolute after:h-[10px] after:w-[10px] after:bg-[#3bc952] after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-[223deg]"
+                : "hover:"
                 }`}
             >
               Popular plans
@@ -169,8 +266,8 @@ export default function CountryplanTabs() {
                 ) : (
                   <div
                     className={`mt-10 mb-3 flex flex-wrap gap-4 sm:gap-6 ${countries.length === 2
-                        ? "justify-center"
-                        : "justify-start"
+                      ? "justify-center"
+                      : "justify-start"
                       }`}
                   >
                     {
@@ -337,6 +434,13 @@ export default function CountryplanTabs() {
           </div>
         </div>
       </div>
+      <CartConfirmModal
+        isOpen={isConfimModal}
+        onClose={() => setIsConfirmModal(false)}
+        failedPlans={failedPlans || []}
+        onContinue={handleContinue}
+        onRemoveAdded={handleRemoveAdded}
+      />
     </section>
   );
 }
