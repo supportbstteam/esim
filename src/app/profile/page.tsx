@@ -94,46 +94,46 @@ function Profile() {
   }, [orders, statusFilter, searchQuery]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleUpdateUser = async (values: any) => {
+  const handleUpdateUser = async (values: any) => {
 
-  console.log("user",values);
-  // return;
-  try {
-    const token = Cookies.get("token");
+    console.log("user", values);
+    // return;
+    try {
+      const token = Cookies.get("token");
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("firstName", values.firstName);
-    formData.append("lastName", values.lastName);
-    formData.append("email", values.email);
-    formData.append("phone", values.contact || "");
-    formData.append("country", values.location || "");
+      formData.append("firstName", values.firstName);
+      formData.append("lastName", values.lastName);
+      formData.append("email", values.email);
+      formData.append("phone", values.contact || "");
+      formData.append("country", values.location || "");
 
-    // image
-    if (values.image instanceof File) {
-      formData.append("image", values.image);
-    }
-
-    const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/update`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      // image
+      if (values.image instanceof File) {
+        formData.append("image", values.image);
       }
-    );
 
-    if (response?.data?.status === "success") {
-      toast.success("User Updated Successfully");
-      dispatch(fetchUserDetails());
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/update`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response?.data?.status === "success") {
+        toast.success("User Updated Successfully");
+        dispatch(fetchUserDetails());
+      }
+
+    } catch (err: any) {
+      console.error("Error updating user:", err);
+      toast.error(err?.response?.data?.message || "Something went wrong");
     }
-
-  } catch (err: any) {
-    console.error("Error updating user:", err);
-    toast.error(err?.response?.data?.message || "Something went wrong");
-  }
-};
+  };
 
   return (
     <ProtectedRoute>
@@ -195,7 +195,7 @@ const handleUpdateUser = async (values: any) => {
             </button>
             <button
               onClick={() => setChangePasswordModal(true)}
-              className="text-sm text-red-500 font-medium hover:underline"
+              className="text-sm text-blue-900 font-medium hover:underline"
             >
               Change Password
             </button>
@@ -252,9 +252,8 @@ const handleUpdateUser = async (values: any) => {
                   ].map((col) => (
                     <th
                       key={col}
-                      className={`px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ${
-                        col === "Action" ? "text-right" : ""
-                      }`}
+                      className={`px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ${col === "Action" ? "text-right" : ""
+                        }`}
                     >
                       {col}
                     </th>
@@ -280,9 +279,8 @@ const handleUpdateUser = async (values: any) => {
                         ${parseFloat(row.totalAmount)?.toFixed(2).toString()}
                       </td>
                       <td
-                        className={`px-6 py-3 text-sm font-medium flex items-center gap-1 ${
-                          statusStyles[row.status?.toLowerCase()]
-                        }`}
+                        className={`px-6 py-3 text-sm font-medium flex items-center gap-1 ${statusStyles[row.status?.toLowerCase()]
+                          }`}
                       >
                         {statusIcon(row.status)} {row.status?.toUpperCase()}
                       </td>
@@ -303,7 +301,7 @@ const handleUpdateUser = async (values: any) => {
                           className={`${row.status?.toLowerCase() === "completed" ? "text-green-600" : row.status?.toLowerCase() === "partial" ? "text-yellow-600" : "text-red-600"} text-sm font-medium hover:underline`}
                         >
                           {row.status?.toLowerCase() === "completed" ||
-                          row.status?.toLowerCase() === "partial"
+                            row.status?.toLowerCase() === "partial"
                             ? "View Details"
                             : "Claim Refund"}
                           {/* View Detail */}

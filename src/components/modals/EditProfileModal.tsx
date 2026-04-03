@@ -174,21 +174,22 @@ export const EditProfileModal: React.FC<Props> = ({
                   as="select"
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
                 >
+
+                  <option value="" disabled selected>
+                    Select your country
+                  </option>
                   {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     country &&
-                      country.length > 0 &&
-                      country?.map(({ name }: any) => {
-                        // console.log("0-=1-=-= itme in the country -=-=-", name);
-                        return (
-                          <option value={name?.common}>{name?.common}</option>
-                        );
-                      })
+                    country.length > 0 &&
+                    country?.map(({ name }: any) => {
+                      // console.log("0-=1-=-= itme in the country -=-=-", name);
+                      return (
+                        <option value={name?.common}>{name?.common}</option>
+                      );
+                    })
                   }
-                  {/* <option value="">Select Location</option>
-                  <option value="Turkey">Turkey</option>
-                  <option value="India">India</option>
-                  <option value="USA">USA</option> */}
+
                 </Field>
               </div>
             </div>
