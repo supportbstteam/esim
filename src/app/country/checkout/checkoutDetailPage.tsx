@@ -108,8 +108,8 @@ export default function CheckoutDetailPage() {
   const handleBack = () => {
     router.push("/country")
   };
-  
-  
+
+
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const grandTotal = cart?.items?.reduce((sum: number, item: any) => {
@@ -331,7 +331,8 @@ export default function CheckoutDetailPage() {
                           height: "30%",
                         }}
                       />
-                      <p className="text-md font-semibold text-gray-600 " >No Cart Found</p>
+                      <p className="text-md font-semibold text-gray-600 " >Sorry, Your cart is empty. Start shopping to add items.
+                      </p>
                     </div>
                   )}
                 </div>

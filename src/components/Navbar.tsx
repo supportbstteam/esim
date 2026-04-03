@@ -200,18 +200,17 @@ export default function Navbar() {
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <div className="relative">
-                    {" "}
-                    <span className="absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]">
-                      {cart?.items?.length || 0}
-                    </span>
-                    <Link href={`/country/checkout`}>
-                      {" "}
+                  <Link href="/country/checkout">
+                    <div className="relative cursor-pointer">
+                      <span className="absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]">
+                        {cart?.items?.length || 0}
+                      </span>
+
                       <span className="material-symbols-outlined">
                         <IoCartOutline size={22} />
                       </span>
-                    </Link>{" "}
-                  </div>
+                    </div>
+                  </Link>
 
                   <div
                     className="relative inline-block"
@@ -292,6 +291,18 @@ export default function Navbar() {
 
             {/* Mobile menu toggle */}
             <div className="min-[1100px]:hidden flex items-center">
+              <Link href="/country/checkout" className="mr-[15px]">
+                <div className="relative cursor-pointer">
+                  <span className="absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]">
+                    {cart?.items?.length || 0}
+                  </span>
+
+                  <span className="material-symbols-outlined">
+                    <IoCartOutline size={22} />
+                  </span>
+                </div>
+              </Link>
+
               <button
                 onClick={toggleMenu}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -303,9 +314,11 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+
       </div>
 
       {/* Mobile menu */}
+
       <div
         ref={mobileMenuRef}
         className={`fixed inset-0 z-50 min-[1100px]:hidden transition-transform duration-300 ease-in-out ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
@@ -332,6 +345,7 @@ export default function Navbar() {
                 className="h-8 w-auto object-contain"
               />
             </Link>
+
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Close menu"
