@@ -363,7 +363,7 @@ export default function CountryDetails({ params }: CountryDetailsProps) {
                           <h3 className="font-semibold">{plan.title}</h3>
 
                           <span className="font-bold text-xl">
-                            {plan.currency === "USD" ? "$" : plan.currency}{" "}
+                            {plan.currency === "USD" ? "$" : plan.currency}
                             {plan.price}
                           </span>
                         </div>

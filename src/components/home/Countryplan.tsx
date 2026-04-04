@@ -391,10 +391,10 @@ export default function CountryplanTabs() {
                             {plan?.data && plan?.validityDays && (
                               <div className="md:text-lg  text-start  text-gray-700 flex flex-col">
                                 <span className="text-[#64748B94]">
-                                  Starter:{" "}
+                                  Starting from{" "}
                                 </span>{" "}
                                 <span className="font-medium max-md:text-[14px]  min-[700px]:text-left text-gray-800">
-                                  {plan.data}GB / {plan.validityDays} days
+                                  {parseFloat(plan.data)} GB / {plan.validityDays} Days
                                 </span>
                               </div>
                             )}

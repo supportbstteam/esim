@@ -53,8 +53,8 @@ export default function HeroSection() {
             <img src="/airplane.svg" className="h-[19px] mr-2" />
             <span className="font-semibold text-[#1A0F33]">
               E-Sim Aero:
-            </span>{" "}
-            <span className="max-md:ml-2">World’s No. 1 E-Sim Provider</span>
+            </span>
+            <span className="ml-1 max-md:ml-2">World’s No. 1 E-Sim Provider</span>
           </span>
 
           {/* Heading */}
@@ -66,19 +66,20 @@ export default function HeroSection() {
           {/* Description */}
           <p className="text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl mt-5 mb-5 md:!mb-7">
             Stay connected in{" "}
-            {(() => {
-              const count = countries?.length || 0;
+            <span className="font-bold text-black">
+              {(() => {
+                const count = countries?.length || 0;
 
-              if (count < 10) return `${count} countries`;
+                if (count < 10) return `${count} countries`;
 
-              // Get the first digit and convert rest to zeros
-              const digits = count.toString();
-              const firstDigit = digits[0];
-              const zeros = "0".repeat(digits.length - 1);
-              const display = `${firstDigit}${zeros}+`;
+                const digits = count.toString();
+                const firstDigit = digits[0];
+                const zeros = "0".repeat(digits.length - 1);
+                const display = `${firstDigit}${zeros}+`;
 
-              return `${display} countries`;
-            })()}{" "}
+                return `${display} countries`;
+              })()}
+            </span>{" "}
             with easy, roaming-free data.
           </p>
 

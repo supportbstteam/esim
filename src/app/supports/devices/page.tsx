@@ -16,6 +16,8 @@ import { fetchCountries } from "@/redux/thunk/thunk";
 import { featurePlans } from "@/redux/thunk/planThunk";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { RxCrossCircled } from "react-icons/rx";
+import { api } from "@/lib/api";
+import { Device, UserDeviceResponse } from "@/redux/thunk/DeviceTypes";
 
 function Page() {
 
@@ -25,6 +27,7 @@ function Page() {
 
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [selectedDeviceId, setSelectedDeviceId] = useState<string>("");
+  const [dropdownDevices, setDropdownDevices] = useState<Device[]>([]);
 
   /* ---------------- REDUX STATE ---------------- */
 
@@ -59,26 +62,45 @@ function Page() {
     );
 
     dispatch(fetchUserDetails());
-
   }, [dispatch]);
+
+  // Fetch devices for dropdown independently whenever selectedBrand changes
+  useEffect(() => {
+    const loadDropdownDevices = async () => {
+      try {
+        const res = await api<UserDeviceResponse>({
+          url: "/user/devices",
+          method: "GET",
+          params: {
+            page: 1,
+            limit: 500,
+            brand: selectedBrand || undefined
+          },
+          isAuth: false,
+        });
+        setDropdownDevices(res.data);
+      } catch (e) {
+        console.error("Failed to load dropdown devices", e);
+      }
+    };
+    loadDropdownDevices();
+  }, [selectedBrand]);
 
   /* ---------------- FILTER LOGIC (ADDED) ---------------- */
 
   const selectedDevice =
-    devices.find(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (d: any) =>
+    dropdownDevices.find(
+      (d: Device) =>
         String(d.id) === selectedDeviceId
     );
 
   const brandFilteredDevices =
     selectedBrand
-      ? devices.filter(
-         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (d: any) =>
+      ? dropdownDevices.filter(
+        (d: Device) =>
           d?.brand?.name === selectedBrand
       )
-      : devices;
+      : dropdownDevices;
 
   /* ---------------- HANDLERS ---------------- */
 
@@ -105,20 +127,9 @@ function Page() {
   /* ---------------- FILTER HANDLERS (ADDED) ---------------- */
 
   const handleBrandChange = (brandName: string) => {
-
     setSelectedBrand(brandName);
-
     // clear device when brand changes
     setSelectedDeviceId("");
-
-    dispatch(
-      fetchUserDevices({
-        page: 1,
-        limit: 500,
-        brand: brandName || undefined,
-      })
-    );
-
   };
 
   const handleDeviceChange = (deviceId: string) => {
@@ -180,15 +191,15 @@ function Page() {
             </option>
 
             {
-             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            brands.map((brand: any) => (
-              <option
-                key={brand.id}
-                value={brand.name}
-              >
-                {brand.name}
-              </option>
-            ))}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              brands.map((brand: any) => (
+                <option
+                  key={brand.id}
+                  value={brand.name}
+                >
+                  {brand.name}
+                </option>
+              ))}
 
           </select>
 
@@ -207,7 +218,7 @@ function Page() {
             </option>
 
             {brandFilteredDevices.map(
-               // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (device: any) => (
                 <option
                   key={device.id}
@@ -282,7 +293,7 @@ function Page() {
             </p>
 
           ) : (
- // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             brands.map((brand: any) => {
 
               const isOpen =
@@ -290,25 +301,11 @@ function Page() {
 
               const brandDevices =
                 devices.filter(
-                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   (device: any) => {
-
-                    if (
-                      selectedBrand &&
-                      device?.brand?.name !== selectedBrand
-                    )
-                      return false;
-
-                    if (
-                      selectedDeviceId &&
-                      String(device.id) !== selectedDeviceId
-                    )
-                      return false;
-
                     return (
                       device?.brand?.name === brand.name
                     );
-
                   }
                 );
 
@@ -359,7 +356,7 @@ function Page() {
                       ) : (
 
                         brandDevices.map(
-                           // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           (device: any) => (
 
                             <p key={device.id}>

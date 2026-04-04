@@ -56,12 +56,13 @@ export const EditProfileModal: React.FC<Props> = ({
       footer={null}
     >
       <Formik
+        enableReinitialize
         initialValues={{
-          firstName: user ? user.firstName : "",
-          lastName: user ? user.lastName : "",
-          email: user ? user.email : "",
-          contact: user ? user.phone : "",
-          location: user ? user.country : "",
+          firstName: user?.firstName || "",
+          lastName: user?.lastName || "",
+          email: user?.email || "",
+          contact: user?.phone || "",
+          location: user?.country || "",
           image: null as File | null,
         }}
         validationSchema={validationSchema}
@@ -175,7 +176,7 @@ export const EditProfileModal: React.FC<Props> = ({
                   className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
                 >
 
-                  <option value="" disabled selected>
+                  <option value="" disabled>
                     Select your country
                   </option>
                   {
@@ -189,7 +190,10 @@ export const EditProfileModal: React.FC<Props> = ({
                       );
                     })
                   }
-
+                  {/* <option value="">Select Location</option>
+                  <option value="Turkey">Turkey</option>
+                  <option value="India">India</option>
+                  <option value="USA">USA</option> */}
                 </Field>
               </div>
             </div>

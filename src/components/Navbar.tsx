@@ -34,6 +34,7 @@ export default function Navbar() {
   console.log("user", user)
   const { cart } = useAppSelector((state) => state?.cart || {});
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isUserMenuMobileOpen, setIsUserMenuMobileOpen] = useState(false);
 
   const [selectedPlans, setSelectedPlans] = useState<{ [key: string]: number }>(
     {},
@@ -131,18 +132,33 @@ export default function Navbar() {
     <nav className="bg-white ">
       <div className="container">
         <div className="flex items-center justify-between h-16 py-10">
-          {/* Logo and main nav links */}
-          <div className="flex-shrink-0 flex items-center gap-2">
-            <Link href="/" className="flex items-center justify-start gap-2">
-              <Image
-                src="/Print.svg"
-                alt="E-SIM AERO"
-                width={300}
-                height={44}
-                className="h-auto md:h-auto w-[288px] max-md:w-[180px] object-contain"
-                priority
-              />
-            </Link>
+          {/* Left Side: Mobile (Hamburger + Logo) | Desktop (Logo) */}
+          <div className="flex items-center gap-1 flex-1 min-[1100px]:flex-none justify-start">
+            {/* Mobile: Hamburger (Left) | Desktop: Hidden */}
+            <div className="min-[1100px]:hidden">
+              <button
+                onClick={toggleMenu}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+                className="p-2 rounded-md focus:ring-2 focus:ring-offset-2"
+              >
+                <RxHamburgerMenu size={26} />
+              </button>
+            </div>
+
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/" className="flex items-center gap-2">
+                <Image
+                  src="/Print.svg"
+                  alt="E-SIM AERO"
+                  width={300}
+                  height={44}
+                  className="h-auto md:h-auto w-[288px] max-md:w-[140px] object-contain"
+                  priority
+                />
+              </Link>
+            </div>
           </div>
 
           <div className="hidden min-[1100px]:flex md:items-center md:space-x-8">
@@ -161,12 +177,47 @@ export default function Navbar() {
           </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-end gap-4 flex-1 min-[1100px]:flex-none">
+            {/* Mobile Controls: Cart + Profile */}
+            <div className="min-[1100px]:hidden flex items-center gap-3">
+              <Link href="/country/checkout">
+                <div className="relative cursor-pointer">
+                  <span className="absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]">
+                    {cart?.items?.length || 0}
+                  </span>
+                  <IoCartOutline size={22} />
+                </div>
+              </Link>
+
+              <button
+                onClick={() => {
+                  if (isAuth) {
+                    setIsUserMenuMobileOpen(true);
+                  } else {
+                    setAuthModalTab("login");
+                    setShowlogin(true);
+                  }
+                }}
+                className="h-8 w-8 flex justify-center items-center rounded-full overflow-hidden border border-gray-200"
+              >
+                {isAuth && user?.image ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL_IMAGE}${user?.image}`}
+                    alt="Profile"
+                    width={32}
+                    height={32}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <AiOutlineUser size={18} />
+                )}
+              </button>
+            </div>
+
             {/* Desktop right */}
             <div className="hidden min-[1100px]:flex items-center space-x-4">
               {loading && !isAuth ? (
                 <div className="space-y-3 animate-pulse">
-                  {/* Skeleton avatar and text */}
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-gray-300" />
                     <div className="flex flex-col gap-1 flex-1">
@@ -174,8 +225,6 @@ export default function Navbar() {
                       <div className="h-3 w-32 rounded bg-gray-200" />
                     </div>
                   </div>
-                  {/* Skeleton button */}
-                  {/* <div className="h-10 rounded bg-gray-300 w-full" /> */}
                 </div>
               ) : !isAuth ? (
                 <div className="flex gap-2">
@@ -273,9 +322,6 @@ export default function Navbar() {
                         My Plan
                       </Link>
 
-                      {/* <Link href="/order" onClick={() => setIsUserMenuOpen(false)} className="block w-full text-start py-2 hover:bg-gray-100 px-4 border-b" role="menuitem">
-                        My Order
-                      </Link> */}
                       <button
                         onClick={handleLogout}
                         className="w-full text-start px-4 py-2 hover:bg-gray-100"
@@ -288,184 +334,125 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-
-            {/* Mobile menu toggle */}
-            <div className="min-[1100px]:hidden flex items-center">
-              <Link href="/country/checkout" className="mr-[15px]">
-                <div className="relative cursor-pointer">
-                  <span className="absolute bg-black rounded-full text-white h-3.5 w-3.5 right-[-5px] flex items-center justify-center p-1 text-[10px]">
-                    {cart?.items?.length || 0}
-                  </span>
-
-                  <span className="material-symbols-outlined">
-                    <IoCartOutline size={22} />
-                  </span>
-                </div>
-              </Link>
-
-              <button
-                onClick={toggleMenu}
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
-                className="p-2 rounded-md focus:ring-2 focus:ring-offset-2 "
-              >
-                {isOpen ? <HiX size={26} /> : <RxHamburgerMenu size={26} />}
-              </button>
-            </div>
           </div>
         </div>
 
       </div>
 
-      {/* Mobile menu */}
-
+      {/* Mobile menu (Left Drawer) */}
       <div
-        ref={mobileMenuRef}
-        className={`fixed inset-0 z-50 min-[1100px]:hidden transition-transform duration-300 ease-in-out ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
-        aria-hidden={!isOpen}
+        className={`fixed inset-0 z-50 min-[1100px]:hidden transition-opacity duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
         <div
-          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         />
         <div
-          className={`absolute top-0 right-0 w-full max-w-sm h-full bg-white shadow-lg transform transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute top-0 left-0 w-[280px] h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
           <div className="flex items-center justify-between px-4 py-4 border-b">
-            <Link
-              href="/"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2"
-            >
+            <Link href="/" onClick={() => setIsOpen(false)}>
               <Image
-                src="/FullLogo1.png"
+                src="/Print.svg"
                 alt="logo"
-                width={120}
+                width={150}
                 height={36}
                 className="h-8 w-auto object-contain"
               />
             </Link>
-
-            <button
-              onClick={() => setIsOpen(false)}
-              aria-label="Close menu"
-              className="p-2 rounded-md"
-            >
+            <button onClick={() => setIsOpen(false)} className="p-2">
               <HiX size={22} />
             </button>
           </div>
-          <nav className="px-4 py-6">
+          <nav className="p-4">
             <ul className="flex flex-col gap-4">
-              {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                menuItems.map((item: any, index: number) => (
-                  <li key={index} className="text-lg font-medium">
-                    <button
-                      onClick={() => {
-                        navigation(item.href); // if using next/router
-                        setIsOpen(false);
-                      }}
-                      className="w-full text-left"
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                ))
-              }
+              {menuItems.map((item: any, index: number) => (
+                <li key={index} className="text-lg font-medium border-b border-gray-50 pb-2">
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
-            <div className="mt-6">
-              {!isAuth ? (
-                <button
-                  onClick={() => {
-                    setShowlogin(true);
-                    setIsOpen(false);
-                  }}
-                  className="w-full bg-[#133365] text-white px-4 py-2 rounded-full hover:bg-blue-900 transition"
-                >
-                  Login / Signup
-                </button>
-              ) : (
-                <div className="space-y-3">
-                  <button
-                    onClick={() => setIsUserSubOpen((v) => !v)}
-                    className="w-full flex items-center justify-between gap-3 px-2 py-3 hover:bg-gray-50 rounded"
-                    aria-expanded={isUserSubOpen}
-                    aria-controls="mobile-user-submenu"
-                  >
-                    <div className="flex items-center gap-3">
-                      <AiOutlineUser size={20} />
-                      <div className="text-left">
-                        <div className="font-medium text-sm">
-                          {user?.firstName} {user?.lastName}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {user?.email}
-                        </div>
-                      </div>
-                    </div>
-                    <svg
-                      className={`w-5 h-5 transform transition-transform ${isUserSubOpen ? "rotate-180" : "rotate-0"}`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.939l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                  <div
-                    id="mobile-user-submenu"
-                    className={`overflow-hidden transition-[max-height] duration-200 ease-in-out ${isUserSubOpen ? "max-h-48" : "max-h-0"}`}
-                  >
-                    <div className="flex flex-col gap-2 px-2 mt-2">
-                      <Link
-                        href="/profile"
-                        onClick={() => {
-                          setIsOpen(false);
-                          setIsUserSubOpen(false);
-                        }}
-                        className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
-                      >
-                        My Account
-                      </Link>
-
-                      {/* <Link
-                        href="/order"
-                        onClick={() => { setIsOpen(false); setIsUserSubOpen(false); }}
-                        className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
-                      >
-                        My Order
-                      </Link> */}
-
-                      <Link
-                        href="/e-sim"
-                        onClick={() => {
-                          setIsOpen(false);
-                          setIsUserSubOpen(false);
-                        }}
-                        className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100"
-                      >
-                        My Plans
-                      </Link>
-                      <button
-                        onClick={() => {
-                          handleLogout();
-                          setIsOpen(false);
-                          setIsUserSubOpen(false);
-                        }}
-                        className="w-full text-left py-2 px-3 rounded hover:bg-gray-100"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
           </nav>
+        </div>
+      </div>
+
+      {/* User menu (Right Drawer) */}
+      <div
+        className={`fixed inset-0 z-50 min-[1100px]:hidden transition-opacity duration-300 ${isUserMenuMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      >
+        <div
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+          onClick={() => setIsUserMenuMobileOpen(false)}
+        />
+        <div
+          className={`absolute top-0 right-0 w-[280px] h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${isUserMenuMobileOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+          <div className="flex items-center justify-between px-4 py-4 border-b bg-gray-50">
+            <h2 className="text-lg font-semibold text-[#133365]">Account</h2>
+            <button onClick={() => setIsUserMenuMobileOpen(false)} className="p-2">
+              <HiX size={22} />
+            </button>
+          </div>
+
+          <div className="p-4 border-b">
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
+                {user?.image ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL_IMAGE}${user?.image}`}
+                    alt="Profile"
+                    width={48}
+                    height={48}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
+                    <AiOutlineUser size={24} />
+                  </div>
+                )}
+              </div>
+              <div>
+                <div className="font-bold text-[#1A0F33]">
+                  {user?.firstName} {user?.lastName}
+                </div>
+                <div className="text-xs text-gray-500 truncate w-40">
+                  {user?.email}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 flex flex-col gap-2">
+            <Link
+              href="/profile"
+              onClick={() => setIsUserMenuMobileOpen(false)}
+              className="block w-full py-3 px-4 rounded-lg hover:bg-gray-100 text-gray-700 font-medium"
+            >
+              My Account
+            </Link>
+            <Link
+              href="/e-sim"
+              onClick={() => setIsUserMenuMobileOpen(false)}
+              className="block w-full py-3 px-4 rounded-lg hover:bg-gray-100 text-gray-700 font-medium"
+            >
+              My Plan
+            </Link>
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsUserMenuMobileOpen(false);
+              }}
+              className="w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 text-red-600 font-medium mt-4 border-t"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 
