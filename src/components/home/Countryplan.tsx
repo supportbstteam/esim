@@ -394,7 +394,7 @@ export default function CountryplanTabs() {
                                   Starting from{" "}
                                 </span>{" "}
                                 <span className="font-medium max-md:text-[14px]  min-[700px]:text-left text-gray-800">
-                                  {parseFloat(String(plan.data))} GB / {plan.validityDays} Days
+                                  {plan.title} GB / {plan.validityDays} Days
                                 </span>
                               </div>
                             )}

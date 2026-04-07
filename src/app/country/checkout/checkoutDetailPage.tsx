@@ -284,7 +284,7 @@ export default function CheckoutDetailPage() {
 
                                 <div className="flex justify-between">
                                   <span>Data Allowance</span>
-                                  <span>{item?.plan?.data || "—"} GB</span>
+                                  <span>{item?.plan?.title || "—"} GB</span>
                                 </div>
 
                                 <div className="flex justify-between">
