@@ -9,7 +9,7 @@ export default function Head() {
         href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
         rel="stylesheet"
       />
-      <script src="https://cdn.tailwindcss.com"></script>
+
 
       <link rel="icon" href="/faviocn.webp" />
     </>
