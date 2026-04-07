@@ -25,10 +25,10 @@ export default function UserTemplate8({ data }: any) {
   //   prose-slate
   //   prose-base sm:prose-lg md:prose-xl
   //   text-gray-800
-    
+
   //   /* Image Handling */
   //   [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-xl [&_img]:my-8 [&_img]:mx-auto
-    
+
   //   /* Table Handling */
   //   [&_table]:w-full [&_table]:table-auto [&_table]:border-collapse [&_table]:my-6 [&_table]:block [&_table]:overflow-x-auto
   //   [&_th]:border [&_th]:border-gray-200 [&_th]:p-3 [&_th]:bg-gray-50 [&_th]:text-left
@@ -38,13 +38,13 @@ export default function UserTemplate8({ data }: any) {
   //   [&_h1]:text-3xl sm:[&_h1]:text-5xl [&_h1]:font-extrabold [&_h1]:mb-6
   //   [&_h2]:text-2xl sm:[&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4
   //   [&_h3]:text-xl sm:[&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:mt-8
-    
+
   //   /* List styling */
   //   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:my-2
   // `;
 
   return (
-    <section className="px-0 sm:px-10 sm:py-10 bg-white overflow-hidden">
+    <section className="px-0 sm:px-10 sm:py-10 bg-white overflow-hidden test">
       <div className="max-w-full mx-auto px-4 sm:px-6">
 
         {/* Render the unified content from Template8 */}
