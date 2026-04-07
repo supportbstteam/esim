@@ -9,6 +9,7 @@ export default function Head() {
         href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
         rel="stylesheet"
       />
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
       <link rel="icon" href="/faviocn.webp" />
     </>
