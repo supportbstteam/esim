@@ -119,12 +119,12 @@ export default function Navbar() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const menuItems: any = [
-  //   { label: "eSim", href: "/country" },
-  //   { label: "How It Works", href: "/how-it-works" },
-  //   { label: "Features", href: "/features" },
-  //   { label: "Support", href: "/contact-us" },
-  // ];
+  const menuItems: any = [
+    { label: "eSim", href: "/country" },
+    { label: "How It Works", href: "/how-it-works" },
+    { label: "Features", href: "/features" },
+    { label: "Support", href: "/contact-us" },
+  ];
 
   // console.log("----- isAuth ----", cart?.items.length);
 
@@ -364,7 +364,7 @@ export default function Navbar() {
               <HiX size={22} />
             </button>
           </div>
-          {/* <nav className="p-4">
+          <nav className="p-4">
             <ul className="flex flex-col gap-4">
               {menuItems.map((item: any, index: number) => (
                 <li key={index} className="text-lg font-medium border-b border-gray-50 pb-2">
@@ -378,7 +378,7 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-          </nav> */}
+          </nav>
         </div>
       </div>
 
