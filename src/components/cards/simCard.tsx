@@ -51,7 +51,7 @@ export const SimCard = ({ order }: any) => {
   const router = useRouter();
   const [orderErrorModal, setOrderErrorModal] = useState(false);
 
-  // console.log("---- order in sim card component ----", order);
+  console.log("---- order in sim card component ----", order);
 
   const handleRecharge = () => {
     if (!order?.id) return;
@@ -63,10 +63,10 @@ export const SimCard = ({ order }: any) => {
   const formatted = moment(order.startDate, "YYYY-MM-DD").format("DD/MM/YYYY");
   // console.log("---- order in sim card ----", order?.startDate);
 
-  const handleRefund = () => {
-    if (!order?.id) return;
-    router.push(`/refund?orderId=${order.id}`);
-  };
+  // const handleRefund = () => {
+  //   if (!order?.id) return;
+  //   router.push(`/refund?orderId=${order.id}`);
+  // };
 
   const isFailed = !order?.iccid && !order?.externalId;
   const countryName = order?.country?.name || "Unknown Country";
@@ -131,12 +131,12 @@ export const SimCard = ({ order }: any) => {
             </span>
           ) : (
             <span
-              className={`${order?.networkStatus !== "NOT_ACTIVE"
+              className={`${order?.isActive
                 ? "bg-green-50 text-green-600"
                 : "bg-yellow-50 text-yellow-700"
                 } text-xs font-medium px-3 py-1 rounded-full`}
             >
-              {order?.networkStatus === "NOT_ACTIVE" ? "INACTIVE" : "ACTIVE"}
+              {order?.isActive ? "ACTIVE" : "INACTIVE"}
             </span>
           )}
         </div>
@@ -254,7 +254,7 @@ export const SimCard = ({ order }: any) => {
                 View Details
               </button>
 
-              {order?.iccid && (
+              {order?.iccid && order?.isActive && (
                 <button
                   onClick={(e) => {
                     e.preventDefault();
