@@ -15,6 +15,7 @@ interface EsimInfoProps {
     planStart: string;
     planEnd: string;
     price: string;
+    status: string;
     onRecharge: () => void;
 }
 
@@ -30,6 +31,7 @@ const EsimInfo: React.FC<EsimInfoProps> = ({
     dataUsed,
     dataTotal,
     planStart,
+    status,
     planEnd,
     price,
     onRecharge,
@@ -38,9 +40,21 @@ const EsimInfo: React.FC<EsimInfoProps> = ({
 
     return (
         <div className="max-full bg-white rounded-xl p-6 shadow border border-neutral-100 relative">
-            <h2 className="text-xl font-semibold text-neutral-900 mb-4">
-                Sim Information
-            </h2>
+            <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4">
+                    Sim Information
+                </h2>
+                <span
+                    className={`${status === "ACTIVE"
+                        ? "bg-green-50 text-green-600"
+                        : "bg-yellow-50 text-yellow-700"
+                        } text-xs font-medium px-3 py-1 rounded-full`}
+                >
+                    {status}
+                </span>
+
+            </div>
+
             <div className="flex flex-wrap gap-y-4 pb-2 justify-between">
                 {/* Country/Plan left */}
                 <div className="flex items-center">
