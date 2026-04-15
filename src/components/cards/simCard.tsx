@@ -79,16 +79,19 @@ export const SimCard = ({ order }: any) => {
   // if (!order?.externalId)
   console.log("--- esim countryName ----", countryName);
 
-  const totalDataGB = Number(order?.dataAmount) || 0;
+  // const totalDataGB = Number(order?.dataAmount) || 0;
 
-  const remainingDataGB = order?.remainingData
-    ? order.remainingData / 1024
-    : 0;
+  // const remainingDataGB = order?.remainingData
+  //   ? order.remainingData / 1024
+  //   : 0;
+  const totalDataGB = order?.dataAmount ? Number(order?.dataAmount.toFixed(2)) : 0; // total in GB
+  const remainingDataGB = order?.remainingData ? (Number(order?.remainingData ?? 0)) / 1024 : 0;
 
-  const usedDataGB = Math.max(
-    totalDataGB - remainingDataGB,
-    0
-  ); // ✅ number
+  // const usedDataGB = Math.max(
+  //   totalDataGB - remainingDataGB,
+  //   0
+  // ); // ✅ number
+  const usedDataGB = order?.remainingData ? Math.max(totalDataGB - remainingDataGB, 0) : 0;
 
   const usagePercent =
     totalDataGB > 0 ? (usedDataGB / totalDataGB) * 100 : 0;
@@ -167,7 +170,7 @@ export const SimCard = ({ order }: any) => {
                   <span>Data Usage</span>
                 </div>
                 <span className="text-xs font-medium text-gray-900">
-                  {usedDataGBFormatted} GB / {totalDataGB || 0} GB
+                  {`${usedDataGB.toFixed(2)} GB / ${totalDataGB} GB`}
                 </span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
