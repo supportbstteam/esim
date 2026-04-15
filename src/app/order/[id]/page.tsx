@@ -69,6 +69,8 @@ const OrderDetails = () => {
                             simNo={esim?.iccid || "No iccid no."}
                             purchasedOn={moment(esim?.createdAt).format("DD/MM/YYYY") || "N/A"}
                             activationDate=""
+                            status={esim?.order?.status !== "COMPLETED" && esim?.isExpiry ? "FAILED" : esim?.isActive ? "ACTIVE" : "INACTIVE"}
+
                             validityDays={esim?.validityDays || "0"}
                             dataUsed={0}
                             dataTotal={esim?.dataAmount}
