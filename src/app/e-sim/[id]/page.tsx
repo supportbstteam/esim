@@ -140,23 +140,22 @@ function ESimDetails() {
           </div>
 
           {/* ✅ Order Summary (Static) */}
-          {/* <div className="md:col-span-1 flex justify-center">
-          {eSimDetails && (
-            <OrderSummary
-              orderId={eSimDetails?.orderCode}
-              transactionId={eSimDetails?.transaction?.transactionId}
-              orderDate={moment(eSimDetails?.esims[0]?.createdAt).format("DD/MM/YYYY")}
-              totalAmount={
-                (activeSim?.country?.currency === "USD"
-                  ? "$"
-                  : activeSim?.country?.currency) +
-                " " +
-                activeSim?.price
-              }
-              paymentMethod={eSimDetails?.transaction?.paymentGateway?.toUpperCase()}
-            />
-          )}
-        </div> */}
+          <div className="md:col-span-1 flex justify-center">
+            {eSimDetails && (
+              <OrderSummary
+                orderId={eSimDetails?.orderCode}
+                transactionId={eSimDetails?.transaction?.transactionId}
+                orderDate={moment(eSimDetails?.esims[0]?.createdAt).format("DD/MM/YYYY")}
+                totalAmount={
+                  (activeSim?.country?.currency === "USD"
+                    ? "$"
+                    : activeSim?.country?.currency) +
+                  + eSimDetails?.totalAmount
+                }
+                paymentMethod={eSimDetails?.transaction?.paymentGateway?.toUpperCase()}
+              />
+            )}
+          </div>
         </div>
       </div>
     </ProtectedRoute>

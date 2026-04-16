@@ -85,8 +85,8 @@ const EsimInfo: React.FC<EsimInfoProps> = ({
                 <div className="text-neutral-700">{purchasedOn}</div>
                 <div className="text-neutral-400">Validity Days</div>
                 <div className="text-neutral-700">{validityDays} Days</div>
-                <div className="text-neutral-400">Price</div>
-                <div className="text-neutral-700">{price}</div>
+                {/* <div className="text-neutral-400">Price</div>
+                <div className="text-neutral-700">{price}</div> */}
             </div>
 
             {/* Data Usage Section */}

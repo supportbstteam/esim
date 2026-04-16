@@ -21,7 +21,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         </h2>
         <div className="space-y-4 text-sm">
             <div className="flex justify-between">
-                <span className="text-neutral-400">Order ID</span>
+                <span className="text-neutral-400">Order No</span>
                 <span className="font-medium text-neutral-900 ">
                     {orderId}
                 </span>

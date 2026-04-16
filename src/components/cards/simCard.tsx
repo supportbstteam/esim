@@ -200,11 +200,21 @@ export const SimCard = ({ order }: any) => {
           </div>
         ) : (
           <>
-            <div className="mb-4">
-              <p className="text-xs text-gray-500 mb-1">ICCID No.</p>
+            <div className="flex justify-between">
+              <p className="text-xs text-gray-500">Order No.</p>
               <p className="text-sm font-medium text-gray-900">
-                {order?.iccid}
+                {order?.order?.orderCode}
               </p>
+            </div>
+            <div className="mb-4 space-y-2">
+              <div className="flex justify-between">
+                <p className="text-xs text-gray-500">ICCID No.</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {order?.iccid}
+                </p>
+              </div>
+
+
             </div>
 
             {/* Data usage */}

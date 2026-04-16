@@ -83,7 +83,7 @@ const OrderDetails = () => {
                         <div className="md:col-span-1 flex justify-center">
                           <ActivateCard
                             qrValue={esim?.qrCodeUrl || ""}
-                            code={esim?.qrCodeUrl || ""}
+                            code={esim?.iccid || ""}
                             handleRefund={() => {
                               postUserClaimRefund({
                                 id: orderDetails?.id,
@@ -137,7 +137,7 @@ const OrderDetails = () => {
                   (orderDetails?.country?.currency === "USD"
                     ? "$"
                     : orderDetails?.country?.currency) +
-                  " " +
+                  +
                   orderDetails?.totalAmount
                 }
                 paymentMethod={orderDetails?.transaction?.paymentGateway?.toUpperCase()}
